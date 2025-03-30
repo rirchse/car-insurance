@@ -1,9 +1,3 @@
-<?php 
-/**
- *  Template Name: The CAR Form 
- */ 
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,43 +7,345 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet">
+    
+    
+    <style>
+ 
+        .logo-img {
+            max-width: 200px;
+        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .inner-wrap {
+            margin-top: 25px;
+        }
+        .inner-wrap-btn {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 25px;
+            gap: 15px;
+        }
+        .inner-wrap-btn button {
+            flex: 0 0 20%;
+            max-width: calc(20% - 15px);
+            text-align: center;
+            padding: 10px;
+            font-size: 18px;
+            width: 100%;
+        }
+        button{
+            cursor: pointer;
+        }
+        .step {
+            text-align: center;
+            margin: 30px 0;
+        }
+        .progess-bar {
+            background: #ddd;
+            position: relative;
+            height: 2px;
+            width: 100%;
+            margin: 25px 0 50px;
+        }
+        .progress-indicator {
+            position: absolute;
+            left: 25%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            box-shadow: 0 6px 25px 0px rgb(154 159 165);
+            padding: 10px 15px;
+            border-radius: 25px;
+            color: #3d99fe;
+        }
+        .progess-active-line {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 2px;
+            background: #3d9afe;
+            width: 25%;
+        }
+        span.error-msg {
+            color: red;
+            margin: 5px 0 0;
+            display: block;
+            text-align: left;
+            font-size: .8em;
+        }
+        .error{
+            border-color: red;
+        }
+        input {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        input:hover, input:focus {
+            border-color: #111;
+            outline: none;
+        }
+        /* activa*/
+        body{ 
+            font-family: "Open Sans", sans-serif;
+            font-optical-sizing: auto;
+        }
+        .step-content-basic {
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .input {
+            border: 1px solid #ddd;
+            background: #fff;
+            border-radius: 4px;
+        }
+        .input:hover, .input:focus {
+            color: #0070e9;
+            border-color: #0070e9;
+        }
+        .action-btn {
+            border: 1px solid;
+            color: #fff;
+            background: #0070e9;
+            width: 100%;
+            padding: 20px;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: .5px;
+            margin: 30px 0;
+            border-radius: 4px;
+        }
+        .action-btn:hover, .action-btn:focus {
+            background: #000;
+            color: #fff;
+        }
+        .inner-wrap-btn .show-more {
+            display: flex;
+            border: 0;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            max-width: 100%;
+            flex: 0 0 100%;
+            margin: 7px 0;
+        }
+        .show-more svg {
+            width: 18px;
+            margin-right: 5px;
+        }
+        /*back button*/
+        .back-to-prev {
+            flex: 0 0 100%;
+            max-width: 100%;
+            justify-items: center;
+            margin: 50px 0 25px;
+            display: flex;
+            justify-content: space-around;
+        }
+        button.back, .next {
+            display: flex;        ;
+            justify-content: center;
+            align-items: center;
+            border: 0;
+            border-radius: 5px;
+            width: 150px;
+            padding: 13px 10px;
+            font-size: 1.1em;
+        }
+        button.back {
+            color: #0070e9;
+            background: #eee;
+        }
+        button.next {
+            background: #0070e9;
+            color: #eee;
+        }
+        button.back svg {
+            width: 20px;
+            margin-right: 2px;
+            transition: .2s;
+        }
+        button.back:hover svg {
+            margin-right: 5px;
+        }
+        
+        button.next svg {
+            width: 20px;
+            margin-left: 2px;
+            transition: .2s;
+        }
+        button.next:hover svg {
+            margin-left: 5px;
+        }
+        button.next:hover, button.back:focus {
+            color: #fff;
+        }
+        /* one liner button */
+        .step-content-basic .inner-wrap-btn .input {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+        /* yes no box */
+        .step-content-basic.yes-no-box .inner-wrap-btn .input {
+            flex: 0 0 45%;
+            max-width: 45%;
+            padding: 25px;
+        }
+        /* select box */
+        .ss-content .ss-list .ss-option {
+            padding: 7px 15px;
+        }
+        .ss-main {
+            padding: 10px 15px;
+            margin: 10px 0 25px;
+        }
+        /* three items */
+        .step-content-basic.three-items .inner-wrap-btn .input {
+            flex: 0 0 30%;
+            max-width: 30%;
+        }
+        /* three items */
+        .step-content-basic.five-items .inner-wrap-btn .input {
+            flex: 0 0 18%;
+            max-width: 18%;
+        }
+        .step-content-basic.five-items{
+            max-width: 600px;
+        }
+        /* The radio */
+        .radio-wrap {
+            display: inline-flex;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 0;
+            cursor: pointer;
+            font-size: 20px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            margin-left: 30px;
+        }
+
+        /* Hide the browser's default radio button */
+        .radio-wrap input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        }
+
+        /* Create a custom radio button */
+        .checkmark {
+            position: absolute;
+            top: 2px;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            border-radius: 50%;
+        }
+
+        /* On mouse-over, add a grey background color */
+        .radio-wrap:hover input ~ .checkmark {
+        background-color: #ccc;
+        }
+
+        /* When the radio button is checked, add a blue background */
+        .radio-wrap input:checked ~ .checkmark {
+        background-color: #2196F3;
+        }
+
+        /* Create the indicator (the dot/circle - hidden when not checked) */
+        .checkmark:after {
+        content: "";
+        position: absolute;
+        display: none;
+        }
+
+        /* Show the indicator (dot/circle) when checked */
+        .radio-wrap input:checked ~ .checkmark:after {
+        display: block;
+        }
+
+        /* Style the indicator (dot/circle) */
+        .radio-wrap .checkmark:after {
+            top: 9px;
+            left: 9px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+        .incident-item {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .incident-item p {
+            flex: 0 0 40%;
+            max-width: 40%;
+            text-align: left;
+        }
+
+        .input-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 14px;
+        }
+        .input-wrap img {
+            height: 48px;
+            width: auto;
+            max-width: 75px;
+            object-fit: contain;
+        }
+        .step-make .inner-wrap-btn .input {
+            flex: 13%;
+            max-width: calc(13% - 15px);
+        }
+
+        /* accident details */
+        .column-wrap {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .half-width {
+            flex: 0 0 47%;
+            max-width: 47%;;
+        }
+        .full-width {
+            flex: 0 0 100%;
+            max-width: 100%;;
+        }
+        .more-options.inner-wrap-btn {
+            margin-top: 0;
+        }
+        .mt-20{
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-<?php
-  // echo get_template_directory_uri(); 
-?>
-<!-- /dataset.json -->
-
-
     <div class="wrap">
-        <header class="container">
-            <img src="https://darkslateblue-mouse-951357.hostingersite.com/wp-content/uploads/2025/03/Main-Logo-EYB-SVG.png" alt="logo" class="logo-img">
-        </header>
-        <div class="progess-bar">
-            <div id="percent-line" class="progess-active-line" style="width: 25%;"></div>
-            <div id="percent-number" class="progress-indicator" style="left: 25%;" number="25">25%</div>
-        </div>
-        <div class="container" id="container">
-            <div class="form-wrap">
-              <div class="step step-1">
-                  <h2>Zip</h2>
-                  <div class="inner-wrap inner-wrap-input">
-                      <div class="field-wrap">
-                          <input type="text" id="zipcode" placeholder="Zip Code">
-                          <span class="error-msg" id="result"></span>
-                      </div>
-                      <div class="field-wrap">
-                        <button class="btn btn-block" onclick="ZIPCode()">Get Started Now</button>
-                      </div>
-                  </div>
-              </div>
-            </div>
-        </div>
-    </div>
-    <hr><hr>
-        <div class="wrap">
         <header class="container">
             <img src="https://darkslateblue-mouse-951357.hostingersite.com/wp-content/uploads/2025/03/Main-Logo-EYB-SVG.png" alt="logo" class="logo-img">
         </header>
@@ -1228,25 +1524,7 @@
         </div>
     </div>
 
-    <?php echo $_SERVER["HTTP_HOST"]; ?>
-    
-      <?php if($_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
-      <link rel="stylesheet" href="styles.css">
-      <script>
-        const zipcodefile = 'zipcode.json';
-        const jsonfile = 'full_ymm_dataset_1990_2025.json';
-      </script>
-      <script src="calculation-scripts.js"></script>
-      
-      <?php } else { ?>
-        <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
-        <script>
-          const zipcodefile = '<?php echo get_template_directory_uri(); ?>/jsonfile/zipcode.json';
-          const jsonfile = '<?php echo get_template_directory_uri(); ?>/jsonfile/full_ymm_dataset_1990_2025.json';
-        </script>
-        <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js"></script>
-      <?php } ?>
-  <script>
+    <script>
         new SlimSelect({
             select: '#insurance_carrier',
             settings: {
