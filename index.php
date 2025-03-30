@@ -49,7 +49,7 @@
 
     <?php echo $_SERVER["HTTP_HOST"]; ?>
     
-      <?php if($_SERVER["HTTP_HOST"] == 'localhost'){ ?>
+      <?php if($_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
       <link rel="stylesheet" href="styles.css">
       <script>
         const zipcodefile = 'zipcode.json';
