@@ -1,5 +1,3 @@
-
-
 let container = document.getElementById('container');
 let percent_line = document.getElementById('percent-line');
 let percent_number = document.getElementById('percent-number');
@@ -49,15 +47,23 @@ fetch(jsonfile) // Path to your JSON file
 .then(response => response.json()) // Parse JSON response
 .then(data => {
   const years = Object.keys(data);
-
   years.forEach((b) =>{
     let btn = document.createElement('button');
     btn.setAttribute('class', 'btn btn-lg btn-info');
-    btn.setAttribute('onclick', 'brand(this)');
+    btn.setAttribute('onclick', 'brands(this)');
     btn.setAttribute('name', b);
     btn.innerHTML = b;
     container.appendChild(btn);
   });
+
+  //create back button
+  let back = document.createElement('button');
+  back.setAttribute('class', 'btn-bk');
+  back.setAttribute('onclick', 'createZIPCodePanel()');
+  back.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+  '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+  '</svg> Back';
+  container.appendChild(back);
 
   //increase value for every action
   increasePercent(10);
@@ -65,23 +71,53 @@ fetch(jsonfile) // Path to your JSON file
 .catch(error => console.error('Error loading JSON:', error));
 }
 
+function createZIPCodePanel()
+{
+  container.innerHTML = '<div class="form-wrap">'+
+  '<div class="step step-1">'+
+        '<h2>Zip</h2>'+
+        '<div class="inner-wrap inner-wrap-input">'+
+            '<div class="field-wrap">'+
+                '<input type="text" id="zipcode" placeholder="Zip Code">'+
+                '<span class="error-msg" id="result"></span>'+
+            '</div>'+
+            '<div class="field-wrap">'+
+              '<button class="btn btn-block" onclick="ZIPCode()">Get Started Now</button>'+
+            '</div>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
+}
+
+let year = '';
 //write brand
-function brand(e)
+function brands(e)
 {
 fetch(jsonfile) // Path to your JSON file
 .then(response => response.json()) // Parse JSON response
 .then(data => {
-  const brands = Object.keys(data[e.getAttribute('name')]);
-  container.innerHTML = '<h2>Vehicle Brands</h2>';
-  brands.forEach((b) =>{
+  year = e.getAttribute('name');
+  const brands = Object.keys(data[year]);
+  container.innerHTML = '<h2>Vehicle Make</h2>';
+  brands.forEach((b) => {
     let btn = document.createElement('button');
     btn.setAttribute('class', 'btn btn-lg btn-success');
-    btn.setAttribute('onclick', 'model(this)');
+    btn.setAttribute('onclick', 'models(this)');
     btn.setAttribute('name', b);
-    btn.setAttribute('year', e.getAttribute('name'));
-    btn.innerHTML = b;
+    // btn.setAttribute('year', e.getAttribute('name'));
+    btn.innerHTML = '<div class="make"><img width="150" height="100" src="img/'+b+'.webp" alt="'+b+'"><br>'+b+'</div>';
     container.appendChild(btn);
   });
+
+  //create back button
+  let back = document.createElement('button');
+  back.setAttribute('class', 'btn-bk');
+  back.setAttribute('onclick', 'writeYears(this)');
+  back.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+  '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+  '</svg> Back';
+  container.appendChild(back);
+  
   
   //increase value for every action
   increasePercent(10);
@@ -89,15 +125,19 @@ fetch(jsonfile) // Path to your JSON file
 .catch(error => console.error('Error loading JSON:', error));
 }
 
+let brand = '';
+
 //write model
-function model(e)
+function models(e)
 {
 fetch(jsonfile) // Path to your JSON file
 .then(response => response.json()) // Parse JSON response
 .then(data => {
-  const year = e.getAttribute('year');
-  const models = Object.values(data[year][e.getAttribute('name')]);
+  brand = e.getAttribute('name');
+  // const year = e.getAttribute('year');
+  const models = Object.values(data[year][brand]);
   container.innerHTML = '<h2>Vehicle Models</h2>';
+
   models.forEach((b) =>{
     let btn = document.createElement('button');
     btn.setAttribute('class', 'btn btn-lg btn-success');
@@ -106,13 +146,23 @@ fetch(jsonfile) // Path to your JSON file
     container.appendChild(btn);
   });
 
+  //create back button
+  let back = document.createElement('button');
+  back.setAttribute('class', 'btn-bk');
+  back.setAttribute('onclick', 'brands(this)');
+  back.setAttribute('name', year);
+  back.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+  '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+  '</svg> Back';
+  container.appendChild(back);
+
   //increase value for every action
   increasePercent(10);
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
 }
 
-function number(e)
+function owner(e)
 {
-alert('No nested data in JSON file for '+e.innerHTML+' next step!');
+  alert('No nested data in JSON file for '+e.innerHTML+' next step!');
 }
