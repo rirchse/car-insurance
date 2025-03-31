@@ -21,8 +21,6 @@
   // echo get_template_directory_uri(); 
 ?>
 <!-- /dataset.json -->
-
-
     <div class="wrap">
         <header class="container">
             <img src="https://darkslateblue-mouse-951357.hostingersite.com/wp-content/uploads/2025/03/Main-Logo-EYB-SVG.png" alt="logo" class="logo-img">
@@ -31,17 +29,17 @@
             <div id="percent-line" class="progess-active-line" style="width: 25%;"></div>
             <div id="percent-number" class="progress-indicator" style="left: 25%;" number="25">25%</div>
         </div>
-        <div class="container" id="container">
-            <div class="form-wrap">
-              <div class="step step-1">
-                  <h2>Zip</h2>
+        <div class="container">
+            <div class="form-wrap" id="container">
+              <div class="step step-1 step-content-basic">
+                  <h2>Enter Your Zip Code</h2>
                   <div class="inner-wrap inner-wrap-input">
                       <div class="field-wrap">
                           <input type="text" id="zipcode" placeholder="Zip Code">
                           <span class="error-msg" id="result"></span>
                       </div>
                       <div class="field-wrap">
-                        <button class="btn btn-block" onclick="ZIPCode()">Get Started Now</button>
+                        <button class="action-btn btn" onclick="ZIPCode()">Get Started</button>
                       </div>
                   </div>
               </div>
@@ -83,10 +81,10 @@
                                 </div>
                             </button>
                             <button class="input">
-                                <div class="input-wrap">
-                                    <img src="https://cheapautocover.com/images/makes/buick.png" alt="BMW" loading="lazy">
-                                    <span>BMW</span>
-                                </div>
+                              <div class="input-wrap">
+                                <img src="https://cheapautocover.com/images/makes/buick.png" alt="BMW" loading="lazy">
+                                <span>BMW</span>
+                              </div>
                             </button>
                             <button class="input">
                                 <div class="input-wrap">
@@ -147,11 +145,6 @@
                             <button class="input">2025</button>
                             <button class="input">2025</button>
                             <button class="input">2025</button>
-                            <button class="input">2025</button>
-                            <button class="input">2025</button>
-                            <button class="input">2025</button>
-                            <button class="input">2025</button>
-                            <button class="input">2025</button>
                             <button class="show-more">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -188,11 +181,6 @@
                             <button class="input">2025</button>
                             <button class="input">2025</button>
                             <button class="input">2025</button>
-                            <button class="input">2025</button>
-                            <button class="input">2025</button>
-                            <button class="input">2025</button>
-                            <button class="input">2025</button>
-                            <button class="input">2025</button>
                         </div>
                     </div>
 
@@ -207,85 +195,6 @@
                             <button class="input">2006</button>
                             <button class="input">2005</button>
                             <button class="input">2004</button>
-                            <button class="input">2003</button>
-                            <button class="input">2002</button>
-                            <button class="input">2001</button>
-                            <button class="input">2000</button>
-                            <button class="input">1999</button>
-                            <button class="input">1998</button>
-                            <button class="input">1997</button>
-                            <button class="input">1996</button>
-                            <button class="input">1995</button>
-                            <button class="input">1994</button>
-                            <button class="input">1993</button>
-                            <button class="input">1992</button>
-                            <button class="input">1991</button>
-                            <button class="input">1990</button>
-                            <button class="input">1989</button>
-                            <button class="input">1988</button>
-                            <button class="input">1987</button>
-                            <button class="input">1986</button>
-                            <button class="input">1985</button>
-                            <button class="input">1984</button>
-                            <button class="input">1983</button>
-                            <button class="input">1982</button>
-                            <button class="input">1981</button>
-                            <button class="input">1980</button>
-                            <button class="input">1979</button>
-                            <button class="input">1978</button>
-                            <button class="input">1977</button>
-                            <button class="input">1976</button>
-                            <button class="input">1975</button>
-                            <button class="input">1974</button>
-                            <button class="input">1973</button>
-                            <button class="input">1972</button>
-                            <button class="input">1971</button>
-                            <button class="input">1970</button>
-                            <button class="input">1969</button>
-                            <button class="input">1968</button>
-                            <button class="input">1967</button>
-                            <button class="input">1966</button>
-                            <button class="input">1965</button>
-                            <button class="input">1964</button>
-                            <button class="input">1963</button>
-                            <button class="input">1962</button>
-                            <button class="input">1961</button>
-                            <button class="input">1960</button>
-                            <button class="input">1959</button>
-                            <button class="input">1958</button>
-                            <button class="input">1957</button>
-                            <button class="input">1956</button>
-                            <button class="input">1955</button>
-                            <button class="input">1954</button>
-                            <button class="input">1953</button>
-                            <button class="input">1952</button>
-                            <button class="input">1951</button>
-                            <button class="input">1950</button>
-                            <button class="input">1949</button>
-                            <button class="input">1948</button>
-                            <button class="input">1947</button>
-                            <button class="input">1946</button>
-                            <button class="input">1945</button>
-                            <button class="input">1944</button>
-                            <button class="input">1943</button>
-                            <button class="input">1942</button>
-                            <button class="input">1941</button>
-                            <button class="input">1940</button>
-                            <button class="input">1939</button>
-                            <button class="input">1938</button>
-                            <button class="input">1937</button>
-                            <button class="input">1936</button>
-                            <button class="input">1935</button>
-                            <button class="input">1934</button>
-                            <button class="input">1933</button>
-                            <button class="input">1932</button>
-                            <button class="input">1931</button>
-                            <button class="input">1930</button>
-                            <button class="input">1929</button>
-                            <button class="input">1928</button>
-                            <button class="input">1927</button>
-                            <button class="input">1926</button>
-                            <button class="input">1925</button>
                         </div>
                         <div class="back-to-prev">
                             <button class="back">
@@ -310,83 +219,6 @@
                             <button class="input">2004</button>
                             <button class="input">2003</button>
                             <button class="input">2002</button>
-                            <button class="input">2001</button>
-                            <button class="input">2000</button>
-                            <button class="input">1999</button>
-                            <button class="input">1998</button>
-                            <button class="input">1997</button>
-                            <button class="input">1996</button>
-                            <button class="input">1995</button>
-                            <button class="input">1994</button>
-                            <button class="input">1993</button>
-                            <button class="input">1992</button>
-                            <button class="input">1991</button>
-                            <button class="input">1990</button>
-                            <button class="input">1989</button>
-                            <button class="input">1988</button>
-                            <button class="input">1987</button>
-                            <button class="input">1986</button>
-                            <button class="input">1985</button>
-                            <button class="input">1984</button>
-                            <button class="input">1983</button>
-                            <button class="input">1982</button>
-                            <button class="input">1981</button>
-                            <button class="input">1980</button>
-                            <button class="input">1979</button>
-                            <button class="input">1978</button>
-                            <button class="input">1977</button>
-                            <button class="input">1976</button>
-                            <button class="input">1975</button>
-                            <button class="input">1974</button>
-                            <button class="input">1973</button>
-                            <button class="input">1972</button>
-                            <button class="input">1971</button>
-                            <button class="input">1970</button>
-                            <button class="input">1969</button>
-                            <button class="input">1968</button>
-                            <button class="input">1967</button>
-                            <button class="input">1966</button>
-                            <button class="input">1965</button>
-                            <button class="input">1964</button>
-                            <button class="input">1963</button>
-                            <button class="input">1962</button>
-                            <button class="input">1961</button>
-                            <button class="input">1960</button>
-                            <button class="input">1959</button>
-                            <button class="input">1958</button>
-                            <button class="input">1957</button>
-                            <button class="input">1956</button>
-                            <button class="input">1955</button>
-                            <button class="input">1954</button>
-                            <button class="input">1953</button>
-                            <button class="input">1952</button>
-                            <button class="input">1951</button>
-                            <button class="input">1950</button>
-                            <button class="input">1949</button>
-                            <button class="input">1948</button>
-                            <button class="input">1947</button>
-                            <button class="input">1946</button>
-                            <button class="input">1945</button>
-                            <button class="input">1944</button>
-                            <button class="input">1943</button>
-                            <button class="input">1942</button>
-                            <button class="input">1941</button>
-                            <button class="input">1940</button>
-                            <button class="input">1939</button>
-                            <button class="input">1938</button>
-                            <button class="input">1937</button>
-                            <button class="input">1936</button>
-                            <button class="input">1935</button>
-                            <button class="input">1934</button>
-                            <button class="input">1933</button>
-                            <button class="input">1932</button>
-                            <button class="input">1931</button>
-                            <button class="input">1930</button>
-                            <button class="input">1929</button>
-                            <button class="input">1928</button>
-                            <button class="input">1927</button>
-                            <button class="input">1926</button>
-                            <button class="input">1925</button>
                         </div>
                         <div class="back-to-prev">
                             <button class="back">
@@ -790,14 +622,14 @@
                             <div class="incident-item">
                                 <p>Required SR-22?</p>
                                 <p>
-                                    <label class="radio-wrap">Yes
-                                        <input type="radio" name="require_sr">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="radio-wrap">No
-                                        <input type="radio" name="require_sr" checked="checked">
-                                        <span class="checkmark"></span>
-                                    </label>
+                                  <label class="radio-wrap">Yes
+                                      <input type="radio" name="require_sr">
+                                      <span class="checkmark"></span>
+                                  </label>
+                                  <label class="radio-wrap">No
+                                      <input type="radio" name="require_sr" checked="checked">
+                                      <span class="checkmark"></span>
+                                  </label>
                                 </p>
                             </div>
                         </div>
@@ -809,11 +641,10 @@
                                 Back
                             </button>
                             <button class="next">
-                                Next
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-                                </svg>                                                                   
-                                
+                              Next
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+                              </svg>
                             </button>
                         </div>
                     </div>
@@ -896,11 +727,10 @@
                                 Back
                             </button>
                             <button class="next">
-                                Next
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-                                </svg>                                                                   
-                                
+                              Next
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+                              </svg>
                             </button>
                         </div>
                     </div>
@@ -1039,11 +869,12 @@
                                 </select>
                             </div>
                             <div class="more-options inner-wrap-btn">
-                                <button class="show-more">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                    </svg>
-                                    Add another DUI</button>
+                              <button class="show-more">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                  Add another DUI
+                                </button>
                             </div>
                         </div>
                         <div class="back-to-prev">
@@ -1085,9 +916,8 @@
                                 Next
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-                                </svg>                                                                   
-                                
-                            </button>
+                                </svg>
+                              </button>
                         </div>
                     </div>
 
@@ -1153,11 +983,10 @@
                                 Back
                             </button>
                             <button class="next">
-                                Next
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-                                </svg>                                                                   
-                                
+                              Next
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+                              </svg>
                             </button>
                         </div>
                     </div>
@@ -1200,9 +1029,8 @@
                                 Next
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
-                                </svg>                                                                   
-                                
-                            </button>
+                                </svg>
+                              </button>
                         </div>
                     </div>
 
@@ -1220,9 +1048,7 @@
                             <button class="action-btn btn">Get My Quote</button>
                         </div>
                     </div>
-
-
-
+                
                 </form>
             </div>
         </div>
