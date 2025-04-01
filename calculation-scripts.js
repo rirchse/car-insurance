@@ -1,14 +1,20 @@
+let vehicles = [];
+let year = '';
+let brand = '';
+
 let container = document.getElementById('container');
 let percent_line = document.getElementById('percent-line');
 let percent_number = document.getElementById('percent-number');
 
 function increasePercent(increase)
 {
-let number = Number(percent_number.getAttribute('number')) + increase;
-percent_number.innerHTML = number+'%';
-percent_number.style.left = number+'%';
-percent_line.style.width = number+'%';
-percent_number.setAttribute('number', number);
+  let number = Number(percent_number.getAttribute('number')) + increase;
+  percent_number.innerHTML = number+'%';
+  percent_number.style.left = number+'%';
+  percent_line.style.width = number+'%';
+  percent_number.setAttribute('number', number);
+
+  console.log(vehicles);
 }
 // check zip code
 function ZIPCode()
@@ -91,8 +97,6 @@ function createZIPCodePanel()
         '</div>'+
     '</div>';
 }
-
-let year = '';
 //write brand
 function brands(e)
 {
@@ -127,16 +131,16 @@ fetch(jsonfile) // Path to your JSON file
   '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
   '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
   '</svg> Back </button>';
-  container.appendChild(back);
-  
+  container.appendChild(back);  
   
   //increase value for every action
   increasePercent(10);
+
+  //data push to vehicle array
+  vehicles.push(year);
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
 }
-
-let brand = '';
 
 //write model
 function models(e)
@@ -171,6 +175,9 @@ fetch(jsonfile) // Path to your JSON file
 
   //increase value for every action
   increasePercent(10);
+
+  //data push to vehicle array
+  vehicles.push(brand);
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
 }
@@ -193,6 +200,12 @@ function owner(e)
           '</svg> Back '+
       '</button>'+
   '</div>';
+
+  //increase value for every action
+  increasePercent(5);
+
+  //data push to vehicle array
+  vehicles.push(e.innerHTML);
 }
 
 function milage(e)
@@ -213,6 +226,12 @@ function milage(e)
           '</svg> Back '+
       '</button>'+
   '</div>';
+
+  //increase value for every action
+  increasePercent(5);
+
+  //data push to vehicle array
+  vehicles.push(e.innerHTML);
 }
 
 function coverage(e)
@@ -234,6 +253,12 @@ function coverage(e)
           '</svg> Back '+
       '</button>'+
   '</div>';
+
+  //increase value for every action
+  increasePercent(5);
+
+  //data push to vehicle array
+  vehicles.push(e.innerHTML);
 }
 
 function anotherVehicle(e)
@@ -260,7 +285,7 @@ function insurance(e)
   '<h2>Insurance Details</h2>'+
     '<div class="inner-wrap">'+
       '<h4 style="text-align: left;">Current Insurance Carier</h4>'+
-      '<select name="" id="insurance_carrier" class="select-box-carrier">'+
+      '<select name="carier" id="insurance_carrier" class="select-box-carrier carier">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Other">Other</option>'+
           '<option value="Not Currently Insured">Not Currently Insured</option>'+
@@ -294,7 +319,7 @@ function insurance(e)
           '<option value="USAA">USAA</option>'+
       '</select>'+
       '<h4 style="text-align: left;">Continuous Coverage</h4>'+
-      '<select name="" id="insurance_coverage" class="select-box-coverage">'+
+      '<select name="coverage" id="insurance_coverage" class="select-box-coverage coverage">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Less Than 6 Months">Less Than 6 Months</option>'+
           '<option value="6 Months">6 Months</option>'+
@@ -305,20 +330,24 @@ function insurance(e)
           '<option value="More Than 5 Years">More Than 5 Years</option>'+
       '</select>'+
     '</div>'+
-  '</div>'+
-  '<div class="back-to-prev">'+
+    '<div class="back-to-prev">'+
       '<button class="back" onclick="anotherVehicle(this)" name="'+brand+'">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-  '</div>'+
-  '<h2>Add another driver? (Save Additional 20%)</h2>'+
-  '<div class="inner-wrap inner-wrap-btn">'+
-      '<button class="input" onclick="addDriver()">YES</button>'+
-      '<button class="input" onclick="ownerAddress()">NO</button>'+
+      '<button class="next" onclick="addDriver()"> Next'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+          '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
+        '</svg>'+
+      '</button>'+
+    '</div>'+
   '</div>';
+
+  styleLoad();
 }
+
+// insurance('e');
 
 /** ------------------ Add Driver Section --------------- */
 function addDriver()
@@ -395,16 +424,10 @@ function birthMonth()
 
 function birthDay()
 {
-  let days = '';
-  for(let d = 1; d < 31; d++)
-  {
-    days += '<button class="input" onclick="birthYear(this)">'+d+'</button>';
-  }
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">1st Driver</h5>'+
   '<h2>Birth Day</h2>'+
-    '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      days
+    '<div class="inner-wrap inner-wrap-btn" id="birth_day">'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -414,24 +437,420 @@ function birthDay()
           '</svg> Back '+
       '</button>'+
   '</div>';
+  
+  for(let d = 1; d < 31; d++)
+  {
+    let day = document.createElement('button');
+    day.setAttribute('class', 'input');
+    day.setAttribute('onclick', 'birthYear(this)');
+    day.innerHTML = d;
+    document.getElementById('birth_day').appendChild(day);
+    // days += '<button class="input" onclick="birthYear(this)">'+d+'</button>';
+  }
 }
 
 function birthYear()
 {
-  let days = '';
+  container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
+    '<h5 style="color: #666">1st Driver</h5>'+
+    '<h2>Birth Year</h2>'+
+    '<div class="inner-wrap inner-wrap-btn" id="birth_year">'+
+    '</div>'+
+    '<div class="back-to-prev">'+
+      '<button class="back" onclick="birthDay(this)" name="'+brand+'">'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+            '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+        '</svg> Back '+
+      '</button>'+
+    '</div>'+
+  '</div>';
+
   for(let d = 2007; d > 1970; d--)
   {
-    days += '<button class="input" onclick="birthYear(this)">'+d+'</button>';
+    let y = document.createElement('button');
+    y.setAttribute('class', 'input');
+    y.setAttribute('onclick', 'incident(this)');
+    y.innerHTML = d;
+    document.getElementById('birth_year').appendChild(y);
   }
-  container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
+}
+// birthYear();
+
+function incident()
+{
+  container.innerHTML = '<div class="step step-number step-content-basic five-items">'+
   '<h5 style="color: #666">1st Driver</h5>'+
-  '<h2>Birth Year</h2>'+
-    '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      days
+  '<h2>Incidents In The Past 3 Years</h2>'+
+    '<div class="inner-wrap checkbox-wrap" id="incident">'+
+      '<div class="incident-item">'+
+        '<p>Had an accident</p>'+
+        '<p>'+
+            '<label class="radio-wrap">Yes'+
+                '<input type="radio" name="had_accident">'+
+                '<span class="checkmark"></span>'+
+            '</label>'+
+            '<label class="radio-wrap">No'+
+                '<input type="radio" name="had_accident" checked="checked">'+
+                '<span class="checkmark"></span>'+
+            '</label>'+
+        '</p>'+
+    '</div>'+
+    '<div class="incident-item">'+
+        '<p>Received a ticket</p>'+
+        '<p>'+
+            '<label class="radio-wrap">Yes'+
+                '<input type="radio" name="recived_ticket">'+
+                '<span class="checkmark"></span>'+
+            '</label>'+
+            '<label class="radio-wrap">No'+
+                '<input type="radio" name="recived_ticket" checked="checked">'+
+                '<span class="checkmark"></span>'+
+            '</label>'+
+        '</p>'+
+    '</div>'+
+    '<div class="incident-item">'+
+        '<p>Received a DUI</p>'+
+        '<p>'+
+            '<label class="radio-wrap">Yes'+
+                '<input type="radio" name="received_dui">'+
+                '<span class="checkmark"></span>'+
+            '</label>'+
+            '<label class="radio-wrap">No'+
+                '<input type="radio" name="received_dui" checked="checked">'+
+                '<span class="checkmark"></span>'+
+            '</label>'+
+        '</p>'+
+    '</div>'+
+    '<div class="incident-item">'+
+        '<p>Required SR-22?</p>'+
+        '<p>'+
+          '<label class="radio-wrap">Yes'+
+              '<input type="radio" name="require_sr">'+
+              '<span class="checkmark"></span>'+
+          '</label>'+
+          '<label class="radio-wrap">No'+
+              '<input type="radio" name="require_sr" checked="checked">'+
+              '<span class="checkmark"></span>'+
+          '</label>'+
+        '</p>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="birthMonth(this)" name="'+brand+'">'+
+      '<button class="back" onclick="birthYear(this)" name="'+brand+'">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+              '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+          '</svg> Back '+
+      '</button>'+
+      '<button class="next" onclick="accident()"> Next'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+          '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
+        '</svg>'+
+      '</button>'+
+    '</div>'+
+  '</div>';
+
+  styleLoad();
+}
+
+function accident()
+{
+  container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
+  '<h5 style="color: #666">1st Driver</h5>'+
+  '<h2>Accident Details</h2>'+
+    '<div class="inner-wrap column-wrap" id="incident">'+
+      '<div class="half-width">'+
+      '<h4 style="text-align: left;">Month</h4>'+
+      '<select name="" id="accident_month" class="select-box-accident-month">'+
+          '<option data-placeholder="true"></option>'+
+          '<option value="January">January</option>'+
+          '<option value="February">February</option>'+
+          '<option value="March">March</option>'+
+          '<option value="April">April</option>'+
+          '<option value="May">May</option>'+
+          '<option value="June">June</option>'+
+          '<option value="July">July</option>'+
+          '<option value="August">August</option>'+
+          '<option value="September">September</option>'+
+          '<option value="October">October</option>'+
+          '<option value="November">November</option>'+
+          '<option value="December">December</option>'+
+      '</select>'+
+  '</div>'+
+  '<div class="half-width">'+
+      '<h4 style="text-align: left;">Year</h4>'+
+      '<select name="" id="accident_year" class="select-box-accident-year">'+
+          '<option data-placeholder="true"></option>'+
+          '<option value="2024">2024</option>'+
+          '<option value="2023">2023</option>'+
+          '<option value="2022">2022</option>'+
+          '<option value="2021">2021</option>'+
+      '</select>'+
+  '</div>'+
+  '<div class="full-width">'+
+      '<h4 style="text-align: left;">Accident Description</h4>'+
+      '<select name="" id="accident_desc" class="select-box-accident-desc">'+
+          '<option data-placeholder="true"></option>'+
+          '<option value="Other">Other</option>'+
+          '<option value="Other Vehicle Hit Yours">Other Vehicle Hit Yours</option>'+
+          '<option value="Vehicle Damaged Avoiding Accident">Vehicle Damaged Avoiding Accident</option>'+
+          '<option value="Vehicle Hit Pedestrian">Vehicle Hit Pedestrian</option>'+
+          '<option value="Vehicle Hit Property ">Vehicle Hit Property   </option>'+
+          '<option value="Vehicle Hit Vehicle">Vehicle Hit Vehicle</option>'+
+      '</select>'+
+  '</div>'+
+  '<div class="full-width">'+
+      '<h4 style="text-align: left;">At Fault?</h4>'+
+      '<select name="" id="accident_fault" class="select-box-accident-year">'+
+          '<option data-placeholder="true"></option>'+
+          '<option value="yes">Yes</option>'+
+          '<option value="no">No</option>'+
+      '</select>'+
+  '</div>'+
+  '<div class="full-width">'+
+      '<h4 style="text-align: left;">Damaged</h4>'+
+      '<select name="" id="accident_damage" class="select-box-accident-year">'+
+          '<option data-placeholder="true"></option>'+
+          '<option value="Both">Both</option>'+
+          '<option value="No Damage">No Damage</option>'+
+          '<option value="People">People</option>'+
+          '<option value="Property">Property</option>'+
+      '</select>'+
+  '</div>'+
+  '<div class="more-options inner-wrap-btn">'+
+      '<button class="show-more">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+              '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
+          '</svg>'+
+          'Add another accident</button>'+
+    '</div>'+
+  '</div>'+
+  '<div class="back-to-prev">'+
+      '<button class="back" onclick="incident(this)" name="'+brand+'">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+              '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+          '</svg> Back '+
+      '</button>'+
+      '<button class="next" onclick="ticket()"> Next'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+          '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
+        '</svg>'+
+      '</button>'+
+    '</div>'+
+  '</div>';
+
+  styleLoad();
+}
+
+// accident();
+
+function ticket()
+{
+  container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
+  '<h5 style="color: #666">1st Driver</h5>'+
+  '<h2>Ticket Details</h2>'+
+    '<div class="inner-wrap column-wrap" id="incident">'+
+    '<div class="half-width">'+
+      '<h4 style="text-align: left;">Month</h4>'+
+      '<select name="" id="ticket_month" class="select-box-ticket-month">'+
+          '<option data-placeholder="true"></option>'+
+          '<option value="January">January</option>'+
+          '<option value="February">February</option>'+
+          '<option value="March">March</option>'+
+          '<option value="April">April</option>'+
+          '<option value="May">May</option>'+
+          '<option value="June">June</option>'+
+          '<option value="July">July</option>'+
+          '<option value="August">August</option>'+
+          '<option value="September">September</option>'+
+          '<option value="October">October</option>'+
+          '<option value="November">November</option>'+
+          '<option value="December">December</option>'+
+      '</select>'+
+  '</div>'+
+  '<div class="half-width">'+
+      '<h4 style="text-align: left;">Year</h4>'+
+      '<select name="" id="ticket_year" class="select-box-accident-year">'+
+          '<option data-placeholder="true"></option>'+
+          '<option value="2025">2025</option>'+
+          '<option value="2024">2024</option>'+
+          '<option value="2023">2023</option>'+
+          '<option value="2022">2022</option>'+
+      '</select>'+
+  '</div>'+
+  '<div class="full-width">'+
+      '<h4 style="text-align: left;">Ticket Description</h4>'+
+      '<select name="" id="ticket_desc" class="select-box-accident-desc">'+
+          '<option data-placeholder="true"></option>'+
+          '<option value="Careless Driving">Careless Driving</option>'+
+          '<option value="Carpool Lane Violaion">Carpool Lane Violaion</option>'+
+          '<option value="Child Not In Car Seat">Child Not In Car Seat</option>'+
+          '<option value="Defective Equipment">Defective Equipment</option>'+
+          '<option value="Defective Vehicle Reduced Violation">Defective Vehicle Reduced Violation</option>'+
+          '<option value="Driving Without A license">Driving Without A license</option>'+
+          '<option value="Excessive Noise">Excessive Noise</option>'+
+          '<option value="Exhibition Driving">Exhibition Driving</option>'+
+          '<option value="Expired Drivers License">Expired Drivers License</option>'+
+          '<option value="Expired Emissions">Expired Emissions</option>'+
+          '<option value="Expired Registration">Expired Registration</option>'+
+          '<option value="Failure To Obey Traffic Signal">Failure To Obey Traffic Signal</option>'+
+          '<option value="Failure To Signal">Failure To Signal</option>'+
+          '<option value="Failure To Stop">Failure To Stop</option>'+
+          '<option value="...">...</option>'+
+          '<option value="...">...</option>'+
+      '</select>'+
+  '</div>'+
+  '<div class="more-options inner-wrap-btn">'+
+      '<button class="show-more">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+              '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
+          '</svg>'+
+          'Add another ticket</button>'+
+    '</div>'+
+  '</div>'+
+  '<div class="back-to-prev">'+
+      '<button class="back" onclick="accident(this)" name="'+brand+'">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+              '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+          '</svg> Back '+
+      '</button>'+
+      '<button class="next" onclick="DUI()"> Next'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+          '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
+        '</svg>'+
+      '</button>'+
+    '</div>'+
+  '</div>';
+
+  styleLoad();
+}
+
+// ticket();
+
+function DUI()
+{
+  container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
+  '<h5 style="color: #666">1st Driver</h5>'+
+  '<h2>DUI Details</h2>'+
+    '<div class="inner-wrap column-wrap" id="incident">'+
+    '<div class="half-width">'+
+      '<h4 style="text-align: left;">Month</h4>'+
+      '<select name="" id="dui_month" class="select-box-dui-month">'+
+          '<option data-placeholder="true"></option>'+
+          '<option value="January">January</option>'+
+          '<option value="February">February</option>'+
+          '<option value="March">March</option>'+
+          '<option value="April">April</option>'+
+          '<option value="May">May</option>'+
+          '<option value="June">June</option>'+
+          '<option value="July">July</option>'+
+          '<option value="August">August</option>'+
+          '<option value="September">September</option>'+
+          '<option value="October">October</option>'+
+          '<option value="November">November</option>'+
+          '<option value="December">December</option>'+
+      '</select>'+
+  '</div>'+
+  '<div class="half-width">'+
+      '<h4 style="text-align: left;">Year</h4>'+
+      '<select name="" id="dui_year" class="select-box-dui-year">'+
+          '<option data-placeholder="true"></option>'+
+          '<option value="2025">2025</option>'+
+          '<option value="2024">2024</option>'+
+          '<option value="2023">2023</option>'+
+          '<option value="2022">2022</option>'+
+      '</select>'+
+  '</div>'+
+  '<div class="full-width">'+
+      '<h4 style="text-align: left;">State</h4>'+
+      '<select name="" id="dui_state" class="select-box-dui-state">'+
+          '<option data-placeholder="true"></option>'+
+          '<option value="Careless Driving">Careless Driving</option>'+
+          '<option value="Carpool Lane Violaion">Carpool Lane Violaion</option>'+
+          '<option value="Child Not In Car Seat">Child Not In Car Seat</option>'+
+          '<option value="Defective Equipment">Defective Equipment</option>'+
+          '<option value="Defective Vehicle Reduced Violation">Defective Vehicle Reduced Violation</option>'+
+          '<option value="Driving Without A license">Driving Without A license</option>'+
+          '<option value="Excessive Noise">Excessive Noise</option>'+
+          '<option value="Exhibition Driving">Exhibition Driving</option>'+
+          '<option value="Expired Drivers License">Expired Drivers License</option>'+
+          '<option value="Expired Emissions">Expired Emissions</option>'+
+          '<option value="Expired Registration">Expired Registration</option>'+
+          '<option value="Failure To Obey Traffic Signal">Failure To Obey Traffic Signal</option>'+
+          '<option value="Failure To Signal">Failure To Signal</option>'+
+          '<option value="Failure To Stop">Failure To Stop</option>'+
+          '<option value="...">...</option>'+
+          '<option value="...">...</option>'+
+      '</select>'+
+  '</div>'+
+  '<div class="more-options inner-wrap-btn">'+
+      '<button class="show-more">'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+            '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
+        '</svg>'+
+        'Add another DUI'+
+      '</button>'+
+    '</div>'+
+  '</div>'+
+  '<div class="back-to-prev">'+
+      '<button class="back" onclick="ticket(this)" name="'+brand+'">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+              '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+          '</svg> Back '+
+      '</button>'+
+      '<button class="next" onclick="driverName()"> Next'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+          '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
+        '</svg>'+
+      '</button>'+
+      '</div>'+
+  '</div>';
+
+  styleLoad();
+}
+
+// DUI();
+
+function driverName()
+{
+  container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
+    '<h5 style="color: #666">1st Driver</h5>'+
+    '<h2>Name</h2>'+
+      '<div class="inner-wrap column-wrap" id="incident">'+
+      '<div class="full-width">'+
+        '<h4 style="text-align: left;">Legal First Name</h4>'+
+        '<input type="text" placeholder="Legal First Name">'+
+        '<h4 style="text-align: left;" class="mt-20">Legal Last Name</h4>'+
+        '<input type="text" placeholder="Legal Last Name">'+
+      '</div>'+
+    '</div>'+
+  '<div class="back-to-prev">'+
+      '<button class="back" onclick="DUI(this)" name="'+brand+'">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+              '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+          '</svg> Back '+
+      '</button>'+
+      '<button class="next" onclick="anotherDriver()"> Next'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+          '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
+        '</svg>'+
+      '</button>'+
+      '</div>'+
+  '</div>';
+}
+
+// driverName();
+
+function anotherDriver()
+{
+  container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
+  '<h2>Add Another Driver? (Save Additional 20%)</h2>'+
+    '<div class="inner-wrap inner-wrap-btn" id="moreDriver">'+
+      '<button class="input" onclick="addDriver(this)">YES</button>'+
+      '<button class="input" onclick="ownerAddress(this)">NO</button>'+
+    '</div>'+
+  '</div>'+
+  '<div class="back-to-prev">'+
+      '<button class="back" onclick="driverName(this)" name="'+brand+'">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -439,16 +858,17 @@ function birthYear()
   '</div>';
 }
 
+// anotherDriver();
 
 /** ------------------ Owner Details -------------------- */
 function ownerAddress(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic">'+
-  '<h2>Current Address</h2>'+
-    '<div class="inner-wrap column-wrap>'+
+  '<h2>Current Address-</h2>'+
+  '<div class="inner-wrap column-wrap">'+
     '<div class="full-width">'+
       '<h4 style="text-align: left;">Street Address</h4>'+
-        '<input type="text" placeholder="Street Address">'+
+      '<input type="text" placeholder="Street Address">'+
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">Zip Code</h4>'+
@@ -475,15 +895,14 @@ function ownerAddress(e)
             '<option value="...">...</option>'+
             '<option value="...">...</option>'+
         '</select>'+
+      '</div>'+
+      '<div class="full-width">'+
+          '<h4 style="text-align: left;">City</h4>'+
+          '<input type="text" placeholder="City">'+
+      '</div>'+
     '</div>'+
-    '<div class="full-width">'+
-        '<h4 style="text-align: left;">City</h4>'+
-        '<input type="text" placeholder="City">'+
-    '</div>'+
-    '</div>'+
-  '</div>'+
-  '<div class="back-to-prev">'+
-      '<button class="back" onclick="addDriver(this)" name="'+brand+'">'+
+    '<div class="back-to-prev">'+
+      '<button class="back" onclick="anotherDriver(this)" name="'+brand+'">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -493,8 +912,13 @@ function ownerAddress(e)
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
       '</button>'+
+    '</div>'+
   '</div>';
+
+  styleLoad();
 }
+
+// ownerAddress('e');
 
 function ownership()
 {
@@ -515,6 +939,8 @@ function ownership()
   '</div>';
 }
 
+// ownership();
+
 function emailAddress(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -523,24 +949,24 @@ function emailAddress(e)
       '<div class="full-width">'+
         '<h4 style="text-align: left;">Email Address</h4>'+
         '<input type="email" placeholder="Email Address">'+
-        '<input type="email" placeholder="Email Address" class="error">'+
-        '<span class="error-msg">Invalid Email Address</span>'+
-    '</div>'+
-    '</div>'+
-  '</div>'+
-  '<div class="back-to-prev">'+
-      '<button class="back" onclick="ownership(this)" name="'+brand+'">'+
+        // '<input type="email" placeholder="Email Address" class="error">'+
+        // '<span class="error-msg">Invalid Email Address</span>'+
+      '</div>'+
+    '<div class="back-to-prev">'+
+        '<button class="back" onclick="ownership(this)" name="'+brand+'">'+
+            '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+                '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+            '</svg> Back '+
+        '</button>'+
+        '<button class="next" onclick="getQuote()"> Next'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-              '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
-          '</svg> Back '+
-      '</button>'+
-      '<button class="next" onclick="getQuote()"> Next'+
-        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-          '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
-        '</svg>'+
-      '</button>'+
-  '</div>';
+            '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
+          '</svg>'+
+        '</button>'+
+      '</div>'+
+    '</div>';
 }
+// emailAddress();
 
 function getQuote(e)
 {
@@ -550,13 +976,13 @@ function getQuote(e)
         '<div class="full-width">'+
           '<h4 style="text-align: left;">Phone Number</h4>'+
           '<input type="text" placeholder="Phone Number">'+
-          '<input type="text" placeholder="Phone Number" class="error">'+
-          '<span class="error-msg">Invalid Phone Number</span>'+
+          // '<input type="text" placeholder="Phone Number" class="error">'+
+          // '<span class="error-msg">Invalid Phone Number</span>'+
         '</div>'+
-      '</div>'+
-    '<div class="field-wrap">'+
-      '<button class="action-btn btn" onclick="ZIPCode()">Get Started Now</button>'+
-    '</div>'+
-    '</div>'+
-  '</div>';
+        '<div class="field-wrap">'+
+          '<button class="action-btn btn" onclick="ZIPCode()">Get My Quote</button>'+
+        '</div>'+
+      '</div>';
 }
+
+// getQuote(5);
