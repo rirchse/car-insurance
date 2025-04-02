@@ -1,6 +1,22 @@
 let vehicles = [];
+let vehicle = [];
+let incidents = [];
+let incidentsArr = []; //incident main array
+let insuranceArr = [];
+let drivers = [];
+let birthDate = [];
+let accidentArr = [];
+let ticketArr = [];
+let duiArr = [];
+let sr22Arr = [];
+let ownerArr = [];
+let addressArr = [];
+
 let year = '';
 let brand = '';
+let driverCounter = 0;
+let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'];
+
 
 let container = document.getElementById('container');
 let percent_line = document.getElementById('percent-line');
@@ -14,7 +30,7 @@ function increasePercent(increase)
   percent_line.style.width = number+'%';
   percent_number.setAttribute('number', number);
 
-  console.log(vehicles);
+  // console.log(vehicles);
 }
 // check zip code
 function ZIPCode()
@@ -30,7 +46,7 @@ fetch(zipcodefile) // Path to your JSON file
     {
       //increase value for every action
       increasePercent(10);
-      writeYears();
+      writeYears(null);
       result.innerHTML = '';
     }
     else
@@ -46,7 +62,7 @@ fetch(zipcodefile) // Path to your JSON file
 }
 
 // read years
-function writeYears()
+function writeYears(e)
 {
   container.innerHTML = '<div class="step step-2" id="">'+
   '<h2>Vehicle Year</h2>'+
@@ -85,17 +101,17 @@ fetch(jsonfile) // Path to your JSON file
 function createZIPCodePanel()
 {
   container.innerHTML = '<div class="step step-1">'+
-        '<h2>Zip</h2>'+
-        '<div class="step step-1 step-content-basic">'+
-            '<div class="field-wrap">'+
-                '<input type="text" id="zipcode" placeholder="Zip Code">'+
-                '<span class="error-msg" id="result"></span>'+
-            '</div>'+
-            '<div class="field-wrap">'+
-              '<button class="action-btn btn" onclick="ZIPCode()">Get Started Now</button>'+
-            '</div>'+
-        '</div>'+
-    '</div>';
+    '<h2>Zip</h2>'+
+    '<div class="step step-1 step-content-basic">'+
+      '<div class="field-wrap">'+
+          '<input type="text" id="zipcode" placeholder="Zip Code">'+
+          '<span class="error-msg" id="result"></span>'+
+      '</div>'+
+      '<div class="field-wrap">'+
+        '<button class="action-btn btn" onclick="ZIPCode()">Get Started Now</button>'+
+      '</div>'+
+    '</div>'+
+  '</div>';
 }
 //write brand
 function brands(e)
@@ -127,17 +143,22 @@ fetch(jsonfile) // Path to your JSON file
   let back = document.createElement('div');
   back.setAttribute('class', 'back-to-prev');
   back.setAttribute('onclick', 'writeYears(this)');
-  back.innerHTML = '<button class="back">'+
+  back.innerHTML = '<button class="back" value="back">'+
   '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
   '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
   '</svg> Back </button>';
   container.appendChild(back);  
   
-  //increase value for every action
-  increasePercent(10);
+  if(e.value != 'back')
+  {
+    //increase value for every action
+    increasePercent(5);
 
-  //data push to vehicle array
-  vehicles.push(year);
+    //data push to vehicle array
+    vehicle.push(year);
+
+    // console.log(vehicle);
+  }
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
 }
@@ -167,17 +188,22 @@ fetch(jsonfile) // Path to your JSON file
   //create back button
   let back = document.createElement('div');
   back.setAttribute('class', 'back-to-prev');
-  back.innerHTML = '<button class="back" onclick="brands(this)" name="'+year+'">'+
+  back.innerHTML = '<button class="back" onclick="brands(this)" name="'+year+'" value="back">'+
   '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
   '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
   '</svg> Back';
   container.appendChild(back);
 
-  //increase value for every action
-  increasePercent(10);
+  if(e.value != 'back')
+  {
+    //increase value for every action
+    increasePercent(5);
 
-  //data push to vehicle array
-  vehicles.push(brand);
+    //data push to vehicle array
+    vehicle.push(brand);
+
+    // console.log(vehicle);
+  }
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
 }
@@ -194,18 +220,23 @@ function owner(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="models(this)" name="'+brand+'">'+
+      '<button class="back" onclick="models(this)" name="'+brand+'" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
   '</div>';
 
-  //increase value for every action
-  increasePercent(5);
+  if(e.value != 'back')
+  {
+    //increase value for every action
+    increasePercent(5);
 
-  //data push to vehicle array
-  vehicles.push(e.innerHTML);
+    //data push to vehicle array
+    vehicle.push(e.innerHTML);
+
+    // console.log(vehicle);
+  }
 }
 
 function milage(e)
@@ -220,18 +251,23 @@ function milage(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="owner(this)" name="'+brand+'">'+
+      '<button class="back" onclick="owner(this)" name="'+brand+'" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
   '</div>';
 
-  //increase value for every action
-  increasePercent(5);
+  if(e.value != 'back')
+  {
+    //increase value for every action
+    increasePercent(5);
 
-  //data push to vehicle array
-  vehicles.push(e.innerHTML);
+    //data push to vehicle array
+    vehicle.push(e.innerHTML);
+
+    // console.log(vehicle);
+  }  
 }
 
 function coverage(e)
@@ -247,18 +283,23 @@ function coverage(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="milage(this)" name="'+brand+'">'+
+      '<button class="back" onclick="milage(this)" name="'+brand+'" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
   '</div>';
 
-  //increase value for every action
-  increasePercent(5);
+  if(e.value != 'back')
+  {
+    //increase value for every action
+    increasePercent(5);
 
-  //data push to vehicle array
-  vehicles.push(e.innerHTML);
+    //data push to vehicle array
+    vehicle.push(e.innerHTML);
+
+    // console.log(vehicle);
+  }
 }
 
 function anotherVehicle(e)
@@ -266,26 +307,42 @@ function anotherVehicle(e)
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Vehicle? (Save Additional 20%)</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input" onclick="writeYears(this)">YES</button>'+
+      '<button class="input" onclick="writeYears(this)" name="Yes">YES</button>'+
       '<button class="input" onclick="insurance(this)">NO</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="coverage(this)" name="'+brand+'">'+
+      '<button class="back" onclick="coverage(this)" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
   '</div>';
+  
+  if(e.value != 'back')
+  {
+    //increase value for every action
+    increasePercent(5);
+  
+    //data push to vehicle array
+    vehicle.push(e.innerHTML);
+    vehicles.push(vehicle);
+  
+    // console.log(vehicle);
+    // console.log(vehicle, vehicles);
+    vehicle = [];
+  }
 }
+
 
 function insurance(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Insurance Details</h2>'+
+  '<form action="#" id="insuranceForm">'+
     '<div class="inner-wrap">'+
       '<h4 style="text-align: left;">Current Insurance Carier</h4>'+
-      '<select name="carier" id="insurance_carrier" class="select-box-carrier carier">'+
+      '<select name="career" id="insurance_carrier" class="select-box-carrier carier">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Other">Other</option>'+
           '<option value="Not Currently Insured">Not Currently Insured</option>'+
@@ -331,17 +388,18 @@ function insurance(e)
       '</select>'+
     '</div>'+
     '<div class="back-to-prev">'+
-      '<button class="back" onclick="anotherVehicle(this)" name="'+brand+'">'+
+      '<button class="back" onclick="anotherVehicle(this)" name="" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-      '<button class="next" onclick="addDriver()"> Next'+
+      '<button class="next" onclick="checkInsuranceForm()"> Next'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
       '</button>'+
     '</div>'+
+    '</form>'+
   '</div>';
 
   styleLoad();
@@ -349,11 +407,33 @@ function insurance(e)
 
 // insurance('e');
 
+function checkInsuranceForm(e)
+{
+  // let form = document.getElementById('insuranceForm');
+  let form = document.querySelector('#insuranceForm');
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        let career = form.elements['career'];
+        let coverage = form.elements['coverage'];
+        if(career.value != '' && coverage.value != '')
+        {
+          insuranceArr.push(career.value);
+          insuranceArr.push(coverage.value);
+
+          drivers.push(insuranceArr);
+
+          addDriver();
+        }
+
+    });
+}
+
 /** ------------------ Add Driver Section --------------- */
 function addDriver()
 {
   container.innerHTML = '<div class="step step-number step-content-basic">'+
-  '<h5 style="color: #666">1st Driver</h5>'+
+  '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Gender</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
       '<button class="input" onclick="driverMaritalStatus(this)">Male</button>'+
@@ -369,10 +449,10 @@ function addDriver()
   '</div>';
 }
 
-function driverMaritalStatus()
+function driverMaritalStatus(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
-  '<h5 style="color: #666">1st Driver</h5>'+
+  '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Marital Status</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
       '<button class="input" onclick="birthMonth(this)">Married</button>'+
@@ -385,18 +465,29 @@ function driverMaritalStatus()
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="addDriver(this)" name="'+brand+'">'+
+      '<button class="back" onclick="addDriver(this)" name="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
   '</div>';
+
+  if(e.value != 'back')
+  {
+    //increase value for every action
+    increasePercent(5);
+  
+    //data push to vehicle array
+    drivers.push(e.innerHTML);
+  
+    // console.log(drivers);
+  }
 }
 
-function birthMonth()
+function birthMonth(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
-  '<h5 style="color: #666">1st Driver</h5>'+
+  '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Birth Month</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
       '<button class="input" onclick="birthDay(this)">January</button>'+
@@ -414,18 +505,29 @@ function birthMonth()
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="driverMaritalStatus(this)" name="'+brand+'">'+
+      '<button class="back" onclick="driverMaritalStatus(this)" name="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
   '</div>';
+
+  if(e.value != 'back')
+  {
+    //increase value for every action
+    increasePercent(5);
+  
+    //data push to vehicle array
+    drivers.push(e.innerHTML);
+  
+    // console.log(drivers);
+  }
 }
 
-function birthDay()
+function birthDay(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
-  '<h5 style="color: #666">1st Driver</h5>'+
+  '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Birth Day</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="birth_day">'+
     '</div>'+
@@ -445,14 +547,24 @@ function birthDay()
     day.setAttribute('onclick', 'birthYear(this)');
     day.innerHTML = d;
     document.getElementById('birth_day').appendChild(day);
-    // days += '<button class="input" onclick="birthYear(this)">'+d+'</button>';
+  }
+
+  if(e.value != 'back')
+  {
+    //increase value for every action
+    increasePercent(5);
+  
+    //birth month push to birthDate array
+    birthDate.push(e.innerHTML);
+  
+    // console.log(birthDate);
   }
 }
 
-function birthYear()
+function birthYear(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
-    '<h5 style="color: #666">1st Driver</h5>'+
+    '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
     '<h2>Birth Year</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="birth_year">'+
     '</div>'+
@@ -473,24 +585,35 @@ function birthYear()
     y.innerHTML = d;
     document.getElementById('birth_year').appendChild(y);
   }
+
+  if(e.value != 'back')
+  {
+    //increase value for every action
+    increasePercent(5);
+  
+    //birth day push to birthDate array
+    birthDate.push(e.innerHTML);
+  
+    // console.log(birthDate);
+  }
 }
 // birthYear();
 
-function incident()
+function incident(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic five-items">'+
-  '<h5 style="color: #666">1st Driver</h5>'+
+  '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Incidents In The Past 3 Years</h2>'+
     '<div class="inner-wrap checkbox-wrap" id="incident">'+
       '<div class="incident-item">'+
         '<p>Had an accident</p>'+
         '<p>'+
             '<label class="radio-wrap">Yes'+
-                '<input type="radio" name="had_accident">'+
+                '<input type="radio" name="accident" onchange="checkIncident(this)" value="Yes">'+
                 '<span class="checkmark"></span>'+
             '</label>'+
             '<label class="radio-wrap">No'+
-                '<input type="radio" name="had_accident" checked="checked">'+
+                '<input type="radio" name="accident" checked="checked" onchange="checkIncident(this)" value="No">'+
                 '<span class="checkmark"></span>'+
             '</label>'+
         '</p>'+
@@ -499,11 +622,11 @@ function incident()
         '<p>Received a ticket</p>'+
         '<p>'+
             '<label class="radio-wrap">Yes'+
-                '<input type="radio" name="recived_ticket">'+
+                '<input type="radio" name="ticket" onchange="checkIncident(this)" value="Yes">'+
                 '<span class="checkmark"></span>'+
             '</label>'+
             '<label class="radio-wrap">No'+
-                '<input type="radio" name="recived_ticket" checked="checked">'+
+                '<input type="radio" name="ticket" checked="checked" onchange="checkIncident(this)" value="No">'+
                 '<span class="checkmark"></span>'+
             '</label>'+
         '</p>'+
@@ -512,11 +635,11 @@ function incident()
         '<p>Received a DUI</p>'+
         '<p>'+
             '<label class="radio-wrap">Yes'+
-                '<input type="radio" name="received_dui">'+
+                '<input type="radio" name="dui" onchange="checkIncident(this)" value="Yes">'+
                 '<span class="checkmark"></span>'+
             '</label>'+
             '<label class="radio-wrap">No'+
-                '<input type="radio" name="received_dui" checked="checked">'+
+                '<input type="radio" name="dui" checked="checked" onchange="checkIncident(this)" value="No">'+
                 '<span class="checkmark"></span>'+
             '</label>'+
         '</p>'+
@@ -525,11 +648,11 @@ function incident()
         '<p>Required SR-22?</p>'+
         '<p>'+
           '<label class="radio-wrap">Yes'+
-              '<input type="radio" name="require_sr">'+
+              '<input type="radio" name="sr-22" onchange="checkIncident(this)" value="Yes">'+
               '<span class="checkmark"></span>'+
           '</label>'+
           '<label class="radio-wrap">No'+
-              '<input type="radio" name="require_sr" checked="checked">'+
+              '<input type="radio" name="sr-22" checked="checked" onchange="checkIncident(this)" value="No">'+
               '<span class="checkmark"></span>'+
           '</label>'+
         '</p>'+
@@ -541,7 +664,7 @@ function incident()
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-      '<button class="next" onclick="accident()"> Next'+
+      '<button class="next" onclick="nextIncident(this)" name="0"> Next'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
@@ -550,17 +673,53 @@ function incident()
   '</div>';
 
   styleLoad();
+
+  if(e.value != 'back')
+    {
+      //increase value for every action
+      increasePercent(5);
+    
+      //birth year push to birthDate array
+      birthDate.push(e.innerHTML);
+
+      drivers.push(birthDate);
+    
+      console.log(drivers);
+    }
 }
 
-function accident()
+// incident();
+
+
+/** check incidents */
+function checkIncident(e)
+{
+  if(e.value == 'Yes')
+  {
+    incidents.push(e.name);
+  }
+  else
+  {
+    let index = incidents.indexOf(e.name);
+    if(index !== -1)
+    {
+      incidents.splice(index, 1);
+    }
+  }
+
+  // console.log(incidents);
+}
+
+function accident(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
-  '<h5 style="color: #666">1st Driver</h5>'+
+  '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Accident Details</h2>'+
+  '<form action=#" id="accidentForm">'+
     '<div class="inner-wrap column-wrap" id="incident">'+
       '<div class="half-width">'+
       '<h4 style="text-align: left;">Month</h4>'+
-      '<select name="" id="accident_month" class="select-box-accident-month">'+
+      '<select name="month" id="accident_month" class="select-box-accident-month">'+
           '<option data-placeholder="true"></option>'+
           '<option value="January">January</option>'+
           '<option value="February">February</option>'+
@@ -578,7 +737,7 @@ function accident()
   '</div>'+
   '<div class="half-width">'+
       '<h4 style="text-align: left;">Year</h4>'+
-      '<select name="" id="accident_year" class="select-box-accident-year">'+
+      '<select name="year" id="accident_year" class="select-box-accident-year">'+
           '<option data-placeholder="true"></option>'+
           '<option value="2024">2024</option>'+
           '<option value="2023">2023</option>'+
@@ -588,7 +747,7 @@ function accident()
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">Accident Description</h4>'+
-      '<select name="" id="accident_desc" class="select-box-accident-desc">'+
+      '<select name="description" id="accident_desc" class="select-box-accident-desc">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Other">Other</option>'+
           '<option value="Other Vehicle Hit Yours">Other Vehicle Hit Yours</option>'+
@@ -600,7 +759,7 @@ function accident()
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">At Fault?</h4>'+
-      '<select name="" id="accident_fault" class="select-box-accident-year">'+
+      '<select name="fault" id="accident_fault" class="select-box-accident-year">'+
           '<option data-placeholder="true"></option>'+
           '<option value="yes">Yes</option>'+
           '<option value="no">No</option>'+
@@ -608,7 +767,7 @@ function accident()
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">Damaged</h4>'+
-      '<select name="" id="accident_damage" class="select-box-accident-year">'+
+      '<select name="damage" id="accident_damage" class="select-box-accident-year">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Both">Both</option>'+
           '<option value="No Damage">No Damage</option>'+
@@ -630,12 +789,13 @@ function accident()
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-      '<button class="next" onclick="ticket()"> Next'+
+      '<button class="next" onclick="checkAccidentForm(this)" name="1"> Next'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
       '</button>'+
     '</div>'+
+    '</form>'+
   '</div>';
 
   styleLoad();
@@ -643,15 +803,49 @@ function accident()
 
 // accident();
 
-function ticket()
+/** -------------------- check accident form ------------ */
+function checkAccidentForm(e)
+{
+  let form = document.querySelector('#accidentForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // console.log(form);
+
+    let month = form.elements['month'];
+    let year = form.elements['year'];
+    let description = form.elements['description'];
+    let fault = form.elements['fault'];
+    let damage = form.elements['damage'];
+
+    if(month.value != '' && year.value != '' && description.value != '' && fault.value != '' && damage.value != '')
+    {
+      accidentArr.push(month.value);
+      accidentArr.push(year.value);
+      accidentArr.push(description.value);
+      accidentArr.push(fault.value);
+      accidentArr.push(damage.value);
+
+      drivers.push(accidentArr);
+
+      console.log(drivers);
+
+      nextIncident(e);
+    }
+
+  });
+}
+
+function ticket(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
-  '<h5 style="color: #666">1st Driver</h5>'+
+  '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Ticket Details</h2>'+
+  '<form action="#" id="ticketForm">'+
     '<div class="inner-wrap column-wrap" id="incident">'+
     '<div class="half-width">'+
       '<h4 style="text-align: left;">Month</h4>'+
-      '<select name="" id="ticket_month" class="select-box-ticket-month">'+
+      '<select name="month" id="ticket_month" class="select-box-ticket-month">'+
           '<option data-placeholder="true"></option>'+
           '<option value="January">January</option>'+
           '<option value="February">February</option>'+
@@ -669,7 +863,7 @@ function ticket()
   '</div>'+
   '<div class="half-width">'+
       '<h4 style="text-align: left;">Year</h4>'+
-      '<select name="" id="ticket_year" class="select-box-accident-year">'+
+      '<select name="year" id="ticket_year" class="select-box-accident-year">'+
           '<option data-placeholder="true"></option>'+
           '<option value="2025">2025</option>'+
           '<option value="2024">2024</option>'+
@@ -679,7 +873,7 @@ function ticket()
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">Ticket Description</h4>'+
-      '<select name="" id="ticket_desc" class="select-box-accident-desc">'+
+      '<select name="description" id="ticket_desc" class="select-box-accident-desc">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Careless Driving">Careless Driving</option>'+
           '<option value="Carpool Lane Violaion">Carpool Lane Violaion</option>'+
@@ -708,33 +902,63 @@ function ticket()
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="accident(this)" name="'+brand+'">'+
+      '<button class="back" onclick="accident(this)" name="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-      '<button class="next" onclick="DUI()"> Next'+
+      '<button class="next" onclick="checkTicketForm(this)" name="2"> Next'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
       '</button>'+
     '</div>'+
+    '</form>'+
   '</div>';
 
   styleLoad();
 }
 
 // ticket();
+/** -------------------- check accident form ------------ */
+function checkTicketForm(e)
+{
+  let form = document.querySelector('#ticketForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
 
-function DUI()
+    // console.log(form);
+
+    let month = form.elements['month'];
+    let year = form.elements['year'];
+    let description = form.elements['description'];
+
+    if(month.value != '' && year.value != '' && description.value != '')
+    {
+      ticketArr.push(month.value);
+      ticketArr.push(year.value);
+      ticketArr.push(description.value);
+
+      drivers.push(ticketArr);
+
+      console.log(drivers);
+
+      nextIncident(e);
+    }
+
+  });
+}
+
+function dui(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
-  '<h5 style="color: #666">1st Driver</h5>'+
+  '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>DUI Details</h2>'+
+  '<form action="#" id="duiForm">'+
     '<div class="inner-wrap column-wrap" id="incident">'+
     '<div class="half-width">'+
       '<h4 style="text-align: left;">Month</h4>'+
-      '<select name="" id="dui_month" class="select-box-dui-month">'+
+      '<select name="month" id="dui_month" class="select-box-dui-month">'+
           '<option data-placeholder="true"></option>'+
           '<option value="January">January</option>'+
           '<option value="February">February</option>'+
@@ -752,7 +976,7 @@ function DUI()
   '</div>'+
   '<div class="half-width">'+
       '<h4 style="text-align: left;">Year</h4>'+
-      '<select name="" id="dui_year" class="select-box-dui-year">'+
+      '<select name="year" id="dui_year" class="select-box-dui-year">'+
           '<option data-placeholder="true"></option>'+
           '<option value="2025">2025</option>'+
           '<option value="2024">2024</option>'+
@@ -762,7 +986,7 @@ function DUI()
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">State</h4>'+
-      '<select name="" id="dui_state" class="select-box-dui-state">'+
+      '<select name="state" id="dui_state" class="select-box-dui-state">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Careless Driving">Careless Driving</option>'+
           '<option value="Carpool Lane Violaion">Carpool Lane Violaion</option>'+
@@ -792,56 +1016,171 @@ function DUI()
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="ticket(this)" name="'+brand+'">'+
+      '<button class="back" onclick="ticket(this)" name="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-      '<button class="next" onclick="driverName()"> Next'+
+      '<button class="next" onclick="checkDuiForm(this)" name="3"> Next'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
       '</button>'+
       '</div>'+
+      '</form>'+
   '</div>';
 
   styleLoad();
 }
 
-// DUI();
+// dui();
+
+/** -------------------- check accident form ------------ */
+function checkDuiForm(e)
+{
+  let form = document.querySelector('#duiForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // console.log(form);
+
+    let month = form.elements['month'];
+    let year = form.elements['year'];
+    let state = form.elements['state'];
+
+    if(month.value != '' && year.value != '' && state.value != '')
+    {
+      duiArr.push(month.value);
+      duiArr.push(year.value);
+      duiArr.push(state.value);
+
+      drivers.push(duiArr);
+
+      console.log(drivers);
+
+      nextIncident(e);
+    }
+
+  });
+}
 
 function driverName()
 {
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
-    '<h5 style="color: #666">1st Driver</h5>'+
+    '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
     '<h2>Name</h2>'+
+    '<form action="#" id="driverNameForm">'+
       '<div class="inner-wrap column-wrap" id="incident">'+
       '<div class="full-width">'+
         '<h4 style="text-align: left;">Legal First Name</h4>'+
-        '<input type="text" placeholder="Legal First Name">'+
+        '<input type="text" placeholder="Legal First Name" name="first_name">'+
         '<h4 style="text-align: left;" class="mt-20">Legal Last Name</h4>'+
-        '<input type="text" placeholder="Legal Last Name">'+
+        '<input type="text" placeholder="Legal Last Name" name="last_name">'+
       '</div>'+
     '</div>'+
-  '<div class="back-to-prev">'+
-      '<button class="back" onclick="DUI(this)" name="'+brand+'">'+
-          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+    '<div class="back-to-prev">'+
+      '<button class="back" onclick="dui(this)" name="back">'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-      '<button class="next" onclick="anotherDriver()"> Next'+
+      '<button class="next" onclick="checkNameForm(this)" name="4"> Next'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
       '</button>'+
       '</div>'+
+    '</form>'+
   '</div>';
 }
 
 // driverName();
 
+/** -------------------- check accident form ------------ */
+function checkNameForm(e)
+{
+  let form = document.querySelector('#driverNameForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // console.log(form);
+
+    let first_name = form.elements['first_name'];
+    let last_name = form.elements['last_name'];
+
+    if(first_name.value != '' && last_name.value != '')
+    {
+      sr22Arr.push(first_name.value);
+      sr22Arr.push(last_name.value);
+
+      drivers.push(sr22Arr);
+
+      console.log(drivers);
+
+      nextIncident(e);
+    }
+
+  });
+}
+
+/** ------------------- next incident ------------ */
+let incidentIndex = 0;
+function nextIncident(e)
+{
+  if(e.name == 'back'){
+    incidentIndex--;
+  }
+
+  let order = ['accident', 'ticket', 'dui', 'sr-22'];
+  incidents.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+
+  if(incidents[incidentIndex] == 'accident')
+  {
+    accident();
+    if(e.name == 'back'){
+      incidentIndex--;
+    }else{
+      incidentIndex++;
+    }
+  }
+  else if(incidents[incidentIndex] == 'ticket')
+  {
+    ticket();
+    if(e.name == 'back'){
+      incidentIndex--;
+    }else{
+      incidentIndex++;
+    }
+  }
+  else if(incidents[incidentIndex] == 'dui')
+  {
+    dui();
+    if(e.name == 'back'){
+      incidentIndex--;
+    }else{
+      incidentIndex++;
+    }
+  }
+  else if(incidents[incidentIndex] == 'sr-22')
+  {
+    driverName();
+    if(e.name == 'back'){
+      incidentIndex--;
+    }else{
+      incidentIndex++;
+    }
+  }
+  else
+  {
+    anotherDriver();
+  }
+  
+  // console.log(incidentIndex);
+}
+
 function anotherDriver()
 {
+  driverCounter++;
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Driver? (Save Additional 20%)</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="moreDriver">'+
@@ -865,18 +1204,19 @@ function ownerAddress(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Current Address-</h2>'+
+  '<form action="#" id="addressForm">'+
   '<div class="inner-wrap column-wrap">'+
     '<div class="full-width">'+
       '<h4 style="text-align: left;">Street Address</h4>'+
-      '<input type="text" placeholder="Street Address">'+
+      '<input type="text" name="address" placeholder="Street Address">'+
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">Zip Code</h4>'+
-        '<input type="text" placeholder="Zip Code">'+
+        '<input type="text" name="zip" placeholder="Zip Code">'+
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">State</h4>'+
-        '<select name="" id="address_state" class="select-box-address-state">'+
+        '<select name="state" id="address_state" class="select-box-address-state">'+
             '<option data-placeholder="true"></option>'+
             '<option value="Careless Driving">Careless Driving</option>'+
             '<option value="Carpool Lane Violaion">Carpool Lane Violaion</option>'+
@@ -898,7 +1238,7 @@ function ownerAddress(e)
       '</div>'+
       '<div class="full-width">'+
           '<h4 style="text-align: left;">City</h4>'+
-          '<input type="text" placeholder="City">'+
+          '<input type="text" name="city" placeholder="City">'+
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
@@ -907,18 +1247,50 @@ function ownerAddress(e)
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-      '<button class="next" onclick="ownership()"> Next'+
+      '<button class="next" onclick="checkAddressForm(this)"> Next'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
       '</button>'+
     '</div>'+
+    '</form>'+
   '</div>';
 
   styleLoad();
 }
 
 // ownerAddress('e');
+
+/** -------------------- check accident form ------------ */
+function checkAddressForm(e)
+{
+  let form = document.querySelector('#addressForm');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // console.log(form);
+
+    let address = form.elements['address'];
+    let zip = form.elements['zip'];
+    let state = form.elements['state'];
+    let city = form.elements['city'];
+
+    if(address.value != '' && zip.value != '' && state.value != '' && city.value != '')
+    {
+      addressArr.push(address.value);
+      addressArr.push(zip.value);
+      addressArr.push(state.value);
+      addressArr.push(city.value);
+
+      ownerArr.push(addressArr);
+
+      console.log(ownerArr);
+
+      ownership();
+    }
+
+  });
+}
 
 function ownership()
 {
@@ -948,7 +1320,7 @@ function emailAddress(e)
     '<div class="inner-wrap column-wrap>'+
       '<div class="full-width">'+
         '<h4 style="text-align: left;">Email Address</h4>'+
-        '<input type="email" placeholder="Email Address">'+
+        '<input type="email" id="email" placeholder="Email Address">'+
         // '<input type="email" placeholder="Email Address" class="error">'+
         // '<span class="error-msg">Invalid Email Address</span>'+
       '</div>'+
@@ -958,15 +1330,27 @@ function emailAddress(e)
                 '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
             '</svg> Back '+
         '</button>'+
-        '<button class="next" onclick="getQuote()"> Next'+
+        '<button class="next" onclick="emailForm(this)"> Next'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
             '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
           '</svg>'+
         '</button>'+
       '</div>'+
     '</div>';
+
+    ownerArr.push(e.innerHTML);
 }
 // emailAddress();
+
+function emailForm(e)
+{
+  let email = document.getElementById('email');
+  if(email.value != '')
+  {
+    ownerArr.push(email.value);
+    getQuote(e);
+  }
+}
 
 function getQuote(e)
 {
@@ -975,14 +1359,34 @@ function getQuote(e)
       '<div class="inner-wrap column-wrap>'+
         '<div class="full-width">'+
           '<h4 style="text-align: left;">Phone Number</h4>'+
-          '<input type="text" placeholder="Phone Number">'+
+          '<input type="text" id="phone" placeholder="Phone Number">'+
           // '<input type="text" placeholder="Phone Number" class="error">'+
           // '<span class="error-msg">Invalid Phone Number</span>'+
         '</div>'+
         '<div class="field-wrap">'+
-          '<button class="action-btn btn" onclick="ZIPCode()">Get My Quote</button>'+
+          '<button class="action-btn btn" onclick="checkQuote(this)">Get My Quote</button>'+
         '</div>'+
       '</div>';
 }
 
 // getQuote(5);
+
+function checkQuote(e)
+{
+  let phone = document.getElementById('phone');
+  if(phone.value != '')
+  {
+    ownerArr.push(phone.value);
+
+    let data = {
+      'vehicles': vehicles,
+      'incidents': incidents,
+      'drivers': drivers,
+      'owner': ownerArr
+    }
+
+    // console.log(data);
+
+    document.getElementById('result').textContent = JSON.stringify(data, null, 4);
+  }
+}

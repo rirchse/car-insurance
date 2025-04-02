@@ -44,29 +44,15 @@
               </div>
             </div>
         </div>
+
+        <h4>
+            <pre id="result"></pre>
+        </h4>
     </div>
 
-    <?php echo $_SERVER["HTTP_HOST"]; ?>
-    
-      <?php if($_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
-      <link rel="stylesheet" href="styles.css">
-      <script>
-        const zipcodefile = 'zipcode.json';
-        const jsonfile = 'full_ymm_dataset_1990_2025.json';
-      </script>
-      <script src="calculation-scripts.js"></script>
-      
-      <?php } else { ?>
-        <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
-        <script>
-          const zipcodefile = '<?php echo get_template_directory_uri(); ?>/jsonfile/zipcode.json';
-          const jsonfile = '<?php echo get_template_directory_uri(); ?>/jsonfile/full_ymm_dataset_1990_2025.json';
-        </script>
-        <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js"></script>
-      <?php } ?>
-
-      <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
-  <script>
+    <!-- <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script> -->
+    <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
+<script>
     function styleLoad()
     {
         new SlimSelect({
@@ -186,6 +172,26 @@
 
     styleLoad();
         
-    </script>
+</script>
+
+    <?php echo $_SERVER["HTTP_HOST"]; ?>
+    
+      <?php if($_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
+      <link rel="stylesheet" href="styles.css">
+      <script>
+        const zipcodefile = 'zipcode.json';
+        const jsonfile = 'full_ymm_dataset_1990_2025.json';
+      </script>
+      <script src="calculation-scripts.js"></script>
+      
+      <?php } else { ?>
+        <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
+        <script>
+          const zipcodefile = '<?php echo get_template_directory_uri(); ?>/jsonfile/zipcode.json';
+          const jsonfile = '<?php echo get_template_directory_uri(); ?>/jsonfile/full_ymm_dataset_1990_2025.json';
+        </script>
+        <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js"></script>
+      <?php } ?>
+
 </body>
 </html>
