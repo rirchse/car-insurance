@@ -42,6 +42,19 @@
                       </div>
                   </div>
               </div>
+              <div class="step step-1 step-content-basic">
+                  <h2>🎉 Thank You!</h2>
+                  <h3 class="thanks-subtitle">Your Free Car Insurance Quote is on Its Way</h3>
+                  <p class="thanks-body">Thank you for taking the time to complete your car insurance quote request. Our team is reviewing your details, and you’ll receive your personalized quote shortly.</p>
+                  <hr class="thanks-separator">
+                  <h3>Check out our other services</h3>
+                  <div class="thanks-links">
+                    <a href="/">Home Insurance</a>
+                    <a href="/">Life Insurance</a>
+                    <a href="/">Health Insurance</a>
+                    <a href="/">Business Insurance</a>
+                  </div>
+              </div>
             </div>
         </div>
 
