@@ -62,17 +62,25 @@
     <!-- <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script> -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
 <script>
+    let accidentMonth = new SlimSelect({
+        select: '#accident_month',
+        settings: {
+            placeholderText: 'Month',
+            showSearch: false, 
+            focusSearch: false, 
+        }
+    });
 
-let insurance_carrier = new SlimSelect({
-    select: '#insurance_carrier',
-    settings: {
-        placeholderText: 'Continuous Coverage',
-        showSearch: false, 
-        focusSearch: false, 
-    }
-});
     function styleLoad()
     {
+        let insurance_carrier = new SlimSelect({
+            select: '#insurance_carrier',
+            settings: {
+                placeholderText: 'Continuous Coverage',
+                showSearch: false, 
+                focusSearch: false, 
+            }
+        });
         
         let insurance_coverage = new SlimSelect({
             select: '#insurance_coverage',
@@ -90,7 +98,7 @@ let insurance_carrier = new SlimSelect({
                 showSearch: false, 
                 focusSearch: false, 
             }
-        })
+        });
         let accident_year = new SlimSelect({
             select: '#accident_year',
             settings: {

@@ -802,16 +802,21 @@ function accident(e)
   styleLoad();
 }
 
-// accident();
+accident();
 
 /** -------------------- check accident form ------------ */
 function checkAccidentForm(e)
 {
+  new SlimSelect({ select: '#accident_month' });
   let form = document.querySelector('#accidentForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    console.log(insurance_carrier);
+    let selectValue = document.getElementById('accident_month');
+
+    // let data = accidentMonth.getData();
+
+    console.log(selectValue);
 
     let month = form.elements['month'];
     let year = form.elements['year'];
