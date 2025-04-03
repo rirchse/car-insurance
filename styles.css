@@ -338,7 +338,8 @@ display: block;
 
 .footer-wrap {
   text-align: center;
-  margin: 40px 0 25px;
+  margin-top: 40px;
+  margin-bottom: 25px;
 }
 .footer-wrap a {
   text-decoration: none;
