@@ -802,7 +802,7 @@ function accident(e)
   styleLoad();
 }
 
-accident();
+// accident();
 
 /** -------------------- check accident form ------------ */
 function checkAccidentForm(e)
