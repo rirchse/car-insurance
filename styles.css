@@ -9,6 +9,7 @@
 .container{
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 15px;
 }
 .inner-wrap {
   margin-top: 25px;
@@ -335,7 +336,21 @@ display: block;
 
 
 
-
+.footer-wrap {
+  text-align: center;
+  margin-bottom: 25px;
+}
+.footer-wrap a {
+  text-decoration: none;
+  margin: 5px 10px;
+  color: #0070e9;
+}
+.footer-wrap a:hover, .footer-wrap a:focus {
+  color: #000;
+}
+.form-wrap {
+  min-height: 450px;
+}
 
 /*mobile fixes*/
 @media only screen and (max-width: 767px){
