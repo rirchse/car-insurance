@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multistep form</title>
+    <title>Get Your Free Insurance Quote Now | Erase Your Bills</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
@@ -45,9 +45,18 @@
             </div>
         </div>
 
-        <h4>
-            <pre id="result"></pre>
-        </h4>
+        <div class="container">
+            <h4>
+                <pre id="result"></pre>
+            </h4>
+        </div>
+        <div class="footer-bar"></div>
+        <footer class="container footer-wrap">
+            <p>
+                <a href="/terms">Terms and Conditions</a>
+                <a href="/privacy">Privacy Policy</a>
+            </p>
+        </footer>
     </div>
 
     <!-- <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script> -->
