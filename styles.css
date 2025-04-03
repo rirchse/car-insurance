@@ -352,6 +352,42 @@ display: block;
 .form-wrap {
   min-height: 450px;
 }
+/* thank you */
+.thanks-subtitle {
+  margin-top: 8px;
+  margin-bottom: 14px;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+.thanks-body {
+  margin-bottom: 20px;
+  font-size: .9em;
+} 
+
+hr.thanks-separator {
+    border: 0;
+    border-top: 1px solid #ddd;
+    margin-bottom: 15px;
+}
+.thanks-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.thanks-links a {
+    text-decoration: none;
+    color: #fff;
+    background: #3d9afe;
+    flex: 0 0 47%;
+    max-width: 47%;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 5px;
+    font-weight: 700;
+}
+.thanks-links a:hover, .thanks-links a:focus {
+    background-color: #000;
+}
 
 /*mobile fixes*/
 @media only screen and (max-width: 767px){
