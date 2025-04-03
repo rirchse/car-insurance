@@ -53,26 +53,28 @@
     <!-- <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script> -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
 <script>
+
+let insurance_carrier = new SlimSelect({
+    select: '#insurance_carrier',
+    settings: {
+        placeholderText: 'Continuous Coverage',
+        showSearch: false, 
+        focusSearch: false, 
+    }
+});
     function styleLoad()
     {
-        new SlimSelect({
-            select: '#insurance_carrier',
-            settings: {
-                placeholderText: 'Continuous Coverage',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        });
         
-        new SlimSelect({
+        let insurance_coverage = new SlimSelect({
             select: '#insurance_coverage',
             settings: {
                 placeholderText: 'Continuous Coverage',
                 showSearch: false, 
                 focusSearch: false, 
             }
-        })
-        new SlimSelect({
+        });
+
+        let accident_month = new SlimSelect({
             select: '#accident_month',
             settings: {
                 placeholderText: 'Month',
@@ -80,7 +82,7 @@
                 focusSearch: false, 
             }
         })
-        new SlimSelect({
+        let accident_year = new SlimSelect({
             select: '#accident_year',
             settings: {
                 placeholderText: 'Year',
@@ -88,7 +90,7 @@
                 focusSearch: false, 
             }
         })
-        new SlimSelect({
+        let accident_desc = new SlimSelect({
             select: '#accident_desc',
             settings: {
                 placeholderText: 'Accident Description',
@@ -96,7 +98,7 @@
                 focusSearch: false, 
             }
         })
-        new SlimSelect({
+        let accident_fault = new SlimSelect({
             select: '#accident_fault',
             settings: {
                 placeholderText: 'At Fault?',
@@ -104,7 +106,7 @@
                 focusSearch: false, 
             }
         })
-        new SlimSelect({
+        let accident_damage = new SlimSelect({
             select: '#accident_damage',
             settings: {
                 placeholderText: 'Damaged',
@@ -112,7 +114,7 @@
                 focusSearch: false, 
             }
         })
-        new SlimSelect({
+        let ticket_month = new SlimSelect({
             select: '#ticket_month',
             settings: {
                 placeholderText: 'Month',
@@ -120,7 +122,7 @@
                 focusSearch: false, 
             }
         })
-        new SlimSelect({
+        let ticket_year = new SlimSelect({
             select: '#ticket_year',
             settings: {
                 placeholderText: 'Year',
@@ -128,7 +130,7 @@
                 focusSearch: false, 
             }
         })
-        new SlimSelect({
+        let ticket_desc = new SlimSelect({
             select: '#ticket_desc',
             settings: {
                 placeholderText: 'Ticket Description',
@@ -136,7 +138,7 @@
                 focusSearch: false, 
             }
         })
-        new SlimSelect({
+        let dui_month = new SlimSelect({
             select: '#dui_month',
             settings: {
                 placeholderText: 'Month',
@@ -144,7 +146,7 @@
                 focusSearch: false, 
             }
         })
-        new SlimSelect({
+        let dui_year = new SlimSelect({
             select: '#dui_year',
             settings: {
                 placeholderText: 'Year',
@@ -152,7 +154,7 @@
                 focusSearch: false, 
             }
         })
-        new SlimSelect({
+        let dui_state = new SlimSelect({
             select: '#dui_state',
             settings: {
                 placeholderText: 'State',
@@ -160,7 +162,7 @@
                 focusSearch: false, 
             }
         })
-        new SlimSelect({
+        let address_state = new SlimSelect({
             select: '#address_state',
             settings: {
                 placeholderText: 'State',

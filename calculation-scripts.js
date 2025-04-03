@@ -802,7 +802,7 @@ function accident(e)
   styleLoad();
 }
 
-// accident();
+accident();
 
 /** -------------------- check accident form ------------ */
 function checkAccidentForm(e)
@@ -811,7 +811,7 @@ function checkAccidentForm(e)
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // console.log(form);
+    console.log(insurance_carrier);
 
     let month = form.elements['month'];
     let year = form.elements['year'];
