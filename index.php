@@ -42,19 +42,6 @@
                       </div>
                   </div>
               </div>
-              <div class="step step-1 step-content-basic">
-                  <h2>🎉 Thank You!</h2>
-                  <h3 class="thanks-subtitle">Your Free Car Insurance Quote is on Its Way</h3>
-                  <p class="thanks-body">Thank you for taking the time to complete your car insurance quote request. Our team is reviewing your details, and you’ll receive your personalized quote shortly.</p>
-                  <hr class="thanks-separator">
-                  <h3>Check out our other services</h3>
-                  <div class="thanks-links">
-                    <a href="/">Home Insurance</a>
-                    <a href="/">Life Insurance</a>
-                    <a href="/">Health Insurance</a>
-                    <a href="/">Business Insurance</a>
-                  </div>
-              </div>
             </div>
         </div>
 
@@ -74,137 +61,131 @@
 
     <!-- <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script> -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
-<script>
-    let accidentMonth = new SlimSelect({
-        select: '#accident_month',
-        settings: {
-            placeholderText: 'Month',
-            showSearch: false, 
-            focusSearch: false, 
+    <script>
+
+        function styleLoad()
+        {
+            let insurance_carrier = new SlimSelect({
+                select: '#insurance_carrier',
+                settings: {
+                    placeholderText: 'Continuous Coverage',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+            
+            let insurance_coverage = new SlimSelect({
+                select: '#insurance_coverage',
+                settings: {
+                    placeholderText: 'Continuous Coverage',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+
+            let accident_month = new SlimSelect({
+                select: '#accident_month',
+                settings: {
+                    placeholderText: 'Month',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+
+            let accident_year = new SlimSelect({
+                select: '#accident_year',
+                settings: {
+                    placeholderText: 'Year',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+            
+            let accident_desc = new SlimSelect({
+                select: '#accident_desc',
+                settings: {
+                    placeholderText: 'Accident Description',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+            let accident_fault = new SlimSelect({
+                select: '#accident_fault',
+                settings: {
+                    placeholderText: 'At Fault?',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+            let accident_damage = new SlimSelect({
+                select: '#accident_damage',
+                settings: {
+                    placeholderText: 'Damaged',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+            let ticket_month = new SlimSelect({
+                select: '#ticket_month',
+                settings: {
+                    placeholderText: 'Month',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+            let ticket_year = new SlimSelect({
+                select: '#ticket_year',
+                settings: {
+                    placeholderText: 'Year',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+            let ticket_desc = new SlimSelect({
+                select: '#ticket_desc',
+                settings: {
+                    placeholderText: 'Ticket Description',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+            let dui_month = new SlimSelect({
+                select: '#dui_month',
+                settings: {
+                    placeholderText: 'Month',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+            let dui_year = new SlimSelect({
+                select: '#dui_year',
+                settings: {
+                    placeholderText: 'Year',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+            let dui_state = new SlimSelect({
+                select: '#dui_state',
+                settings: {
+                    placeholderText: 'State',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
+            let address_state = new SlimSelect({
+                select: '#address_state',
+                settings: {
+                    placeholderText: 'State',
+                    showSearch: false, 
+                    focusSearch: false, 
+                }
+            });
         }
-    });
 
-    function styleLoad()
-    {
-        let insurance_carrier = new SlimSelect({
-            select: '#insurance_carrier',
-            settings: {
-                placeholderText: 'Continuous Coverage',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        });
-        
-        let insurance_coverage = new SlimSelect({
-            select: '#insurance_coverage',
-            settings: {
-                placeholderText: 'Continuous Coverage',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        });
-
-        let accident_month = new SlimSelect({
-            select: '#accident_month',
-            settings: {
-                placeholderText: 'Month',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        });
-        let accident_year = new SlimSelect({
-            select: '#accident_year',
-            settings: {
-                placeholderText: 'Year',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        })
-        let accident_desc = new SlimSelect({
-            select: '#accident_desc',
-            settings: {
-                placeholderText: 'Accident Description',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        })
-        let accident_fault = new SlimSelect({
-            select: '#accident_fault',
-            settings: {
-                placeholderText: 'At Fault?',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        })
-        let accident_damage = new SlimSelect({
-            select: '#accident_damage',
-            settings: {
-                placeholderText: 'Damaged',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        })
-        let ticket_month = new SlimSelect({
-            select: '#ticket_month',
-            settings: {
-                placeholderText: 'Month',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        })
-        let ticket_year = new SlimSelect({
-            select: '#ticket_year',
-            settings: {
-                placeholderText: 'Year',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        })
-        let ticket_desc = new SlimSelect({
-            select: '#ticket_desc',
-            settings: {
-                placeholderText: 'Ticket Description',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        })
-        let dui_month = new SlimSelect({
-            select: '#dui_month',
-            settings: {
-                placeholderText: 'Month',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        })
-        let dui_year = new SlimSelect({
-            select: '#dui_year',
-            settings: {
-                placeholderText: 'Year',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        })
-        let dui_state = new SlimSelect({
-            select: '#dui_state',
-            settings: {
-                placeholderText: 'State',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        })
-        let address_state = new SlimSelect({
-            select: '#address_state',
-            settings: {
-                placeholderText: 'State',
-                showSearch: false, 
-                focusSearch: false, 
-            }
-        })
-    }
-
-    styleLoad();
-        
-</script>
+        styleLoad();
+            
+    </script>
 
     <?php echo $_SERVER["HTTP_HOST"]; ?>
     

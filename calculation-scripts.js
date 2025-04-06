@@ -14,6 +14,7 @@ let addressArr = [];
 
 let year = '';
 let brand = '';
+let vehicleCounter = 0;
 let driverCounter = 0;
 let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'];
 
@@ -23,15 +24,14 @@ let percent_line = document.getElementById('percent-line');
 let percent_number = document.getElementById('percent-number');
 
 function increasePercent(increase)
-{
+{   
   let number = Number(percent_number.getAttribute('number')) + increase;
   percent_number.innerHTML = number+'%';
   percent_number.style.left = number+'%';
   percent_line.style.width = number+'%';
   percent_number.setAttribute('number', number);
-
-  // console.log(vehicles);
 }
+
 // check zip code
 function ZIPCode()
 {
@@ -65,6 +65,7 @@ fetch(zipcodefile) // Path to your JSON file
 function writeYears(e)
 {
   container.innerHTML = '<div class="step step-2" id="">'+
+  '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Vehicle Year</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="year">'+
     '</div>'+
@@ -93,7 +94,10 @@ fetch(jsonfile) // Path to your JSON file
   container.appendChild(back);
 
   //increase value for every action
-  increasePercent(10);
+  if(vehicleCounter == 0)
+  {
+    increasePercent(10);
+  }
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
 }
@@ -117,6 +121,7 @@ function createZIPCodePanel()
 function brands(e)
 {
   container.innerHTML = '<div class="step step-make">'+
+  '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Vehicle Make</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="make">'+
     '</div>'+
@@ -152,7 +157,10 @@ fetch(jsonfile) // Path to your JSON file
   if(e.value != 'back')
   {
     //increase value for every action
-    increasePercent(5);
+    if(vehicleCounter == 0)
+    {
+      increasePercent(5);
+    }
 
     //data push to vehicle array
     vehicle.push(year);
@@ -167,6 +175,7 @@ fetch(jsonfile) // Path to your JSON file
 function models(e)
 {
   container.innerHTML = '<div class="step step-make">'+
+  '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Vehicle Model</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
     '</div>'+
@@ -197,7 +206,10 @@ fetch(jsonfile) // Path to your JSON file
   if(e.value != 'back')
   {
     //increase value for every action
-    increasePercent(5);
+    if(vehicleCounter == 0)
+    {
+      increasePercent(5);
+    }
 
     //data push to vehicle array
     vehicle.push(brand);
@@ -211,6 +223,7 @@ fetch(jsonfile) // Path to your JSON file
 function owner(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic">'+
+  '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Vehicle Ownership</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
       '<button class="input" onclick="milage(this)">Finance</button>'+
@@ -230,7 +243,10 @@ function owner(e)
   if(e.value != 'back')
   {
     //increase value for every action
-    increasePercent(5);
+    if(vehicleCounter == 0)
+    {
+      increasePercent(5);
+    }
 
     //data push to vehicle array
     vehicle.push(e.innerHTML);
@@ -242,6 +258,7 @@ function owner(e)
 function milage(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic">'+
+  '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Annual Mileage</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
       '<button class="input" onclick="coverage(this)">Under 5,000</button>'+
@@ -261,7 +278,10 @@ function milage(e)
   if(e.value != 'back')
   {
     //increase value for every action
-    increasePercent(5);
+    if(vehicleCounter == 0)
+    {
+      increasePercent(5);
+    }
 
     //data push to vehicle array
     vehicle.push(e.innerHTML);
@@ -273,6 +293,7 @@ function milage(e)
 function coverage(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic">'+
+  '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Desired Coverage Level</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
       '<button class="input" onclick="anotherVehicle(this)">Superior</button>'+
@@ -293,21 +314,56 @@ function coverage(e)
   if(e.value != 'back')
   {
     //increase value for every action
-    increasePercent(5);
+    if(vehicleCounter == 0)
+    {
+      increasePercent(5);
+    }
 
     //data push to vehicle array
     vehicle.push(e.innerHTML);
+    vehicles.push(vehicle);
 
     // console.log(vehicle);
   }
 }
 
+
 function anotherVehicle(e)
 {
-  container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
+  let html = '';
+  if(vehicles)
+  {
+    html+='<table class="table">'+
+    '<tr>'+
+      '<th>SL NO.</th>'+
+      '<th>Year</th>'+
+      '<th>Make</th>'+
+      '<th>Model</th>'+
+      '<th>Finance</th>'+
+      '<th>Milage</th>'+
+    '</tr>';
+    vehicles.forEach((arr, n) => {
+      html+='<tr>'+
+      '<td>'+(n+1)+'</td>';
+
+      arr.forEach((v) => {
+        html+='<td>'+v+'</td>';
+      });
+      html+='</tr>';
+    });
+    html+='</table>';
+  };
+
+  // console.log(html);
+
+  container.innerHTML = '<div class="step step-make">'+
+    '<h3>Selected Vehicles</h3>'+
+      html+
+  '</div>'+
+  '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Vehicle? (Save Additional 20%)</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input" onclick="writeYears(this)" name="Yes">YES</button>'+
+      '<button class="input" onclick="checkAnotherVehicle(this)" name="Yes">YES</button>'+
       '<button class="input" onclick="insurance(this)">NO</button>'+
     '</div>'+
   '</div>'+
@@ -322,18 +378,19 @@ function anotherVehicle(e)
   if(e.value != 'back')
   {
     //increase value for every action
-    increasePercent(5);
-  
-    //data push to vehicle array
-    vehicle.push(e.innerHTML);
-    vehicles.push(vehicle);
-  
-    // console.log(vehicle);
-    // console.log(vehicle, vehicles);
+    // increasePercent(5);
     vehicle = [];
   }
 }
 
+function checkAnotherVehicle(e)
+{
+  vehicleCounter++;
+  if(e.name == 'Yes')
+  {
+    writeYears();
+  }
+}
 
 function insurance(e)
 {
@@ -475,7 +532,10 @@ function driverMaritalStatus(e)
   if(e.value != 'back')
   {
     //increase value for every action
-    increasePercent(5);
+    if(driverCounter == 0)
+    {
+      increasePercent(5);
+    }
   
     //data push to vehicle array
     drivers.push(e.innerHTML);
@@ -515,7 +575,10 @@ function birthMonth(e)
   if(e.value != 'back')
   {
     //increase value for every action
-    increasePercent(5);
+    if(driverCounter == 0)
+    {
+      increasePercent(5);
+    }
   
     //data push to vehicle array
     drivers.push(e.innerHTML);
@@ -552,7 +615,10 @@ function birthDay(e)
   if(e.value != 'back')
   {
     //increase value for every action
-    increasePercent(5);
+    if(driverCounter == 0)
+    {
+      increasePercent(5);
+    }
   
     //birth month push to birthDate array
     birthDate.push(e.innerHTML);
@@ -589,7 +655,10 @@ function birthYear(e)
   if(e.value != 'back')
   {
     //increase value for every action
-    increasePercent(5);
+    if(driverCounter == 0)
+    {
+      increasePercent(5);
+    }
   
     //birth day push to birthDate array
     birthDate.push(e.innerHTML);
@@ -677,7 +746,10 @@ function incident(e)
   if(e.value != 'back')
     {
       //increase value for every action
-      increasePercent(5);
+      if(driverCounter == 0)
+      {
+        increasePercent(5);
+      }
     
       //birth year push to birthDate array
       birthDate.push(e.innerHTML);
@@ -802,27 +874,31 @@ function accident(e)
   styleLoad();
 }
 
-accident();
+// accident();
 
 /** -------------------- check accident form ------------ */
 function checkAccidentForm(e)
 {
-  new SlimSelect({ select: '#accident_month' });
+  function formObj(data){
+    return new SlimSelect({select: data});
+  }
+  // let form_data = new SlimSelect({ select: '#accident_month'});
+
   let form = document.querySelector('#accidentForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    let selectValue = document.getElementById('accident_month');
-
-    // let data = accidentMonth.getData();
-
-    console.log(selectValue);
+    let accident_month = formObj('#accident_month')
+    // accident_month.getSelected()[0];
+    // console.log(accident_month.style.border = '1px solid #f00');
 
     let month = form.elements['month'];
     let year = form.elements['year'];
     let description = form.elements['description'];
     let fault = form.elements['fault'];
     let damage = form.elements['damage'];
+
+    // console.log(month.value, year.value, description.value, fault.value, damage.value);
 
     if(month.value != '' && year.value != '' && description.value != '' && fault.value != '' && damage.value != '')
     {
@@ -1386,13 +1462,36 @@ function checkQuote(e)
 
     let data = {
       'vehicles': vehicles,
-      'incidents': incidents,
+      'incidents': {
+        'accident': accidentArr,
+        'ticket': ticketArr,
+        'dui': duiArr,
+        'sr22': sr22Arr
+      },
       'drivers': drivers,
       'owner': ownerArr
     }
 
     // console.log(data);
+    thankYou();
 
     document.getElementById('result').textContent = JSON.stringify(data, null, 4);
   }
+}
+
+function thankYou()
+{
+  container.innerHTML = '<div class="step step-1 step-content-basic">'+
+    '<h2>🎉 Thank You!</h2>'+
+    '<h3 class="thanks-subtitle">Your Free Car Insurance Quote is on Its Way</+h3>'+
+    '<p class="thanks-body">Thank you for taking the time to complete your car +insurance quote request. Our team is reviewing your details, and you’ll receive your personalized quote shortly.</p>'+
+    '<hr class="thanks-separator">'+
+    '<h3>Check out our other services</h3>'+
+    '<div class="thanks-links">'+
+      '<a href="/">Home Insurance</a>'+
+      '<a href="/">Life Insurance</a>'+
+      '<a href="/">Health Insurance</a>'+
+      '<a href="/">Business Insurance</a>'+
+    '</div>'+
+  '</div>';
 }
