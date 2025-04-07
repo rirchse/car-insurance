@@ -5,9 +5,13 @@ let incidentsArr = []; //incident main array
 let insuranceArr = [];
 let drivers = [];
 let birthDate = [];
+let accidentsArr = [];
 let accidentArr = [];
+let ticketsArr = [];
 let ticketArr = [];
+let duisArr = [];
 let duiArr = [];
+let sr22sArr = [];
 let sr22Arr = [];
 let ownerArr = [];
 let addressArr = [];
@@ -30,6 +34,62 @@ function increasePercent(increase)
   percent_number.style.left = number+'%';
   percent_line.style.width = number+'%';
   percent_number.setAttribute('number', number);
+}
+
+// // check all error and set the border color
+function checkErr(e)
+{
+  let elm = e.nextElementSibling;
+  if(e.value == ''){
+    elm.style.borderColor = 'red';
+    return false;
+  }
+  else{
+    elm.style.borderColor = '#ddd';
+    return true;
+  }    
+}
+
+// check error input
+function checkErrInput(e)
+{
+  // let elm = e.nextElementSibling;
+  if(e.value == ''){
+    e.style.borderColor = 'red';
+    return false;
+  }
+  else{
+    e.style.borderColor = '#ddd';
+    return true;
+  }
+}
+
+// check valid email address
+function checkEmail(e)
+{
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if(e.value == '' || !regex.test(e.value)){
+    e.style.borderColor = 'red';
+    return false;
+  }
+  else{
+    e.style.borderColor = '#ddd';
+    return true;
+  }
+}
+
+// check valid email address
+function checkPhone(e)
+{
+  const regex = /^(?:\+1\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
+  if(e.value == '' || !regex.test(e.value)){
+    e.style.borderColor = 'red';
+    return false;
+  }
+  else{
+    e.style.borderColor = '#ddd';
+    return true;
+  }
 }
 
 // check zip code
@@ -327,7 +387,6 @@ function coverage(e)
   }
 }
 
-
 function anotherVehicle(e)
 {
   let html = '';
@@ -399,7 +458,7 @@ function insurance(e)
   '<form action="#" id="insuranceForm">'+
     '<div class="inner-wrap">'+
       '<h4 style="text-align: left;">Current Insurance Carier</h4>'+
-      '<select name="career" id="insurance_carrier" class="select-box-carrier carier">'+
+      '<select name="career" id="insurance_carrier" class="select-box-carrier carier" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Other">Other</option>'+
           '<option value="Not Currently Insured">Not Currently Insured</option>'+
@@ -432,8 +491,9 @@ function insurance(e)
           '<option value="Travelers">Travelers</option>'+
           '<option value="USAA">USAA</option>'+
       '</select>'+
+      '<p class="error" id="carrier_err"></p>'+
       '<h4 style="text-align: left;">Continuous Coverage</h4>'+
-      '<select name="coverage" id="insurance_coverage" class="select-box-coverage coverage">'+
+      '<select name="coverage" id="insurance_coverage" class="select-box-coverage coverage" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Less Than 6 Months">Less Than 6 Months</option>'+
           '<option value="6 Months">6 Months</option>'+
@@ -443,6 +503,7 @@ function insurance(e)
           '<option value="3 to 5 Years">3 to 5 Years</option>'+
           '<option value="More Than 5 Years">More Than 5 Years</option>'+
       '</select>'+
+      '<p class="error" id="coverage_err"></p>'+
     '</div>'+
     '<div class="back-to-prev">'+
       '<button class="back" onclick="anotherVehicle(this)" name="" value="back">'+
@@ -466,13 +527,16 @@ function insurance(e)
 
 function checkInsuranceForm(e)
 {
-  // let form = document.getElementById('insuranceForm');
   let form = document.querySelector('#insuranceForm');
     form.addEventListener('submit', function(event) {
         event.preventDefault();
 
         let career = form.elements['career'];
         let coverage = form.elements['coverage'];
+
+        checkErr(career);
+        checkErr(coverage);
+        
         if(career.value != '' && coverage.value != '')
         {
           insuranceArr.push(career.value);
@@ -791,7 +855,7 @@ function accident(e)
     '<div class="inner-wrap column-wrap" id="incident">'+
       '<div class="half-width">'+
       '<h4 style="text-align: left;">Month</h4>'+
-      '<select name="month" id="accident_month" class="select-box-accident-month">'+
+      '<select name="month" id="accident_month" class="select-box-accident-month" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="January">January</option>'+
           '<option value="February">February</option>'+
@@ -809,7 +873,7 @@ function accident(e)
   '</div>'+
   '<div class="half-width">'+
       '<h4 style="text-align: left;">Year</h4>'+
-      '<select name="year" id="accident_year" class="select-box-accident-year">'+
+      '<select name="year" id="accident_year" class="select-box-accident-year" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="2024">2024</option>'+
           '<option value="2023">2023</option>'+
@@ -819,7 +883,7 @@ function accident(e)
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">Accident Description</h4>'+
-      '<select name="description" id="accident_desc" class="select-box-accident-desc">'+
+      '<select name="description" id="accident_desc" class="select-box-accident-desc" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Other">Other</option>'+
           '<option value="Other Vehicle Hit Yours">Other Vehicle Hit Yours</option>'+
@@ -831,7 +895,7 @@ function accident(e)
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">At Fault?</h4>'+
-      '<select name="fault" id="accident_fault" class="select-box-accident-year">'+
+      '<select name="fault" id="accident_fault" class="select-box-accident-year" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="yes">Yes</option>'+
           '<option value="no">No</option>'+
@@ -839,7 +903,7 @@ function accident(e)
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">Damaged</h4>'+
-      '<select name="damage" id="accident_damage" class="select-box-accident-year">'+
+      '<select name="damage" id="accident_damage" class="select-box-accident-year" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Both">Both</option>'+
           '<option value="No Damage">No Damage</option>'+
@@ -879,18 +943,9 @@ function accident(e)
 /** -------------------- check accident form ------------ */
 function checkAccidentForm(e)
 {
-  function formObj(data){
-    return new SlimSelect({select: data});
-  }
-  // let form_data = new SlimSelect({ select: '#accident_month'});
-
   let form = document.querySelector('#accidentForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
-
-    let accident_month = formObj('#accident_month')
-    // accident_month.getSelected()[0];
-    // console.log(accident_month.style.border = '1px solid #f00');
 
     let month = form.elements['month'];
     let year = form.elements['year'];
@@ -898,7 +953,12 @@ function checkAccidentForm(e)
     let fault = form.elements['fault'];
     let damage = form.elements['damage'];
 
-    // console.log(month.value, year.value, description.value, fault.value, damage.value);
+    // check error
+    checkErr(month);
+    checkErr(year);
+    checkErr(description);
+    checkErr(fault);
+    checkErr(damage);
 
     if(month.value != '' && year.value != '' && description.value != '' && fault.value != '' && damage.value != '')
     {
@@ -927,7 +987,7 @@ function ticket(e)
     '<div class="inner-wrap column-wrap" id="incident">'+
     '<div class="half-width">'+
       '<h4 style="text-align: left;">Month</h4>'+
-      '<select name="month" id="ticket_month" class="select-box-ticket-month">'+
+      '<select name="month" id="ticket_month" class="select-box-ticket-month" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="January">January</option>'+
           '<option value="February">February</option>'+
@@ -945,7 +1005,7 @@ function ticket(e)
   '</div>'+
   '<div class="half-width">'+
       '<h4 style="text-align: left;">Year</h4>'+
-      '<select name="year" id="ticket_year" class="select-box-accident-year">'+
+      '<select name="year" id="ticket_year" class="select-box-accident-year" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="2025">2025</option>'+
           '<option value="2024">2024</option>'+
@@ -955,7 +1015,7 @@ function ticket(e)
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">Ticket Description</h4>'+
-      '<select name="description" id="ticket_desc" class="select-box-accident-desc">'+
+      '<select name="description" id="ticket_desc" class="select-box-accident-desc" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Careless Driving">Careless Driving</option>'+
           '<option value="Carpool Lane Violaion">Carpool Lane Violaion</option>'+
@@ -1010,11 +1070,13 @@ function checkTicketForm(e)
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // console.log(form);
-
     let month = form.elements['month'];
     let year = form.elements['year'];
     let description = form.elements['description'];
+
+    checkErr(month);
+    checkErr(year);
+    checkErr(description);
 
     if(month.value != '' && year.value != '' && description.value != '')
     {
@@ -1041,7 +1103,7 @@ function dui(e)
     '<div class="inner-wrap column-wrap" id="incident">'+
     '<div class="half-width">'+
       '<h4 style="text-align: left;">Month</h4>'+
-      '<select name="month" id="dui_month" class="select-box-dui-month">'+
+      '<select name="month" id="dui_month" class="select-box-dui-month" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="January">January</option>'+
           '<option value="February">February</option>'+
@@ -1059,7 +1121,7 @@ function dui(e)
   '</div>'+
   '<div class="half-width">'+
       '<h4 style="text-align: left;">Year</h4>'+
-      '<select name="year" id="dui_year" class="select-box-dui-year">'+
+      '<select name="year" id="dui_year" class="select-box-dui-year" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="2025">2025</option>'+
           '<option value="2024">2024</option>'+
@@ -1069,7 +1131,7 @@ function dui(e)
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">State</h4>'+
-      '<select name="state" id="dui_state" class="select-box-dui-state">'+
+      '<select name="state" id="dui_state" class="select-box-dui-state" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Careless Driving">Careless Driving</option>'+
           '<option value="Carpool Lane Violaion">Carpool Lane Violaion</option>'+
@@ -1125,11 +1187,14 @@ function checkDuiForm(e)
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // console.log(form);
-
     let month = form.elements['month'];
     let year = form.elements['year'];
     let state = form.elements['state'];
+
+    checkErr(month);
+    checkErr(year);
+    checkErr(state);
+
 
     if(month.value != '' && year.value != '' && state.value != '')
     {
@@ -1156,9 +1221,9 @@ function driverName()
       '<div class="inner-wrap column-wrap" id="incident">'+
       '<div class="full-width">'+
         '<h4 style="text-align: left;">Legal First Name</h4>'+
-        '<input type="text" placeholder="Legal First Name" name="first_name">'+
+        '<input type="text" placeholder="Legal First Name" name="first_name" onkeyup="checkErrInput(this)">'+
         '<h4 style="text-align: left;" class="mt-20">Legal Last Name</h4>'+
-        '<input type="text" placeholder="Legal Last Name" name="last_name">'+
+        '<input type="text" placeholder="Legal Last Name" name="last_name" onkeyup="checkErrInput(this)">'+
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
@@ -1186,10 +1251,11 @@ function checkNameForm(e)
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // console.log(form);
-
     let first_name = form.elements['first_name'];
     let last_name = form.elements['last_name'];
+    
+    checkErrInput(first_name);
+    checkErrInput(last_name);
 
     if(first_name.value != '' && last_name.value != '')
     {
@@ -1290,15 +1356,15 @@ function ownerAddress(e)
   '<div class="inner-wrap column-wrap">'+
     '<div class="full-width">'+
       '<h4 style="text-align: left;">Street Address</h4>'+
-      '<input type="text" name="address" placeholder="Street Address">'+
+      '<input type="text" name="address" placeholder="Street Address" onkeyup="checkErrInput(this)">'+
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">Zip Code</h4>'+
-        '<input type="text" name="zip" placeholder="Zip Code">'+
+        '<input type="text" name="zip" placeholder="Zip Code" onkeyup="checkErrInput(this)">'+
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">State</h4>'+
-        '<select name="state" id="address_state" class="select-box-address-state">'+
+        '<select name="state" id="address_state" class="select-box-address-state" onchange="checkErr(this)">'+
             '<option data-placeholder="true"></option>'+
             '<option value="Careless Driving">Careless Driving</option>'+
             '<option value="Carpool Lane Violaion">Carpool Lane Violaion</option>'+
@@ -1320,7 +1386,7 @@ function ownerAddress(e)
       '</div>'+
       '<div class="full-width">'+
           '<h4 style="text-align: left;">City</h4>'+
-          '<input type="text" name="city" placeholder="City">'+
+          '<input type="text" name="city" placeholder="City" onkeyup="checkErrInput(this)">'+
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
@@ -1350,12 +1416,15 @@ function checkAddressForm(e)
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // console.log(form);
-
     let address = form.elements['address'];
     let zip = form.elements['zip'];
     let state = form.elements['state'];
     let city = form.elements['city'];
+
+    checkErrInput(address);
+    checkErrInput(zip);
+    checkErr(state);
+    checkErrInput(city);
 
     if(address.value != '' && zip.value != '' && state.value != '' && city.value != '')
     {
@@ -1402,7 +1471,7 @@ function emailAddress(e)
     '<div class="inner-wrap column-wrap>'+
       '<div class="full-width">'+
         '<h4 style="text-align: left;">Email Address</h4>'+
-        '<input type="email" id="email" placeholder="Email Address">'+
+        '<input type="email" id="email" placeholder="Email Address" onkeyup="checkEmail(this)">'+
         // '<input type="email" placeholder="Email Address" class="error">'+
         // '<span class="error-msg">Invalid Email Address</span>'+
       '</div>'+
@@ -1427,7 +1496,8 @@ function emailAddress(e)
 function emailForm(e)
 {
   let email = document.getElementById('email');
-  if(email.value != '')
+
+  if(checkEmail(email))
   {
     ownerArr.push(email.value);
     getQuote(e);
@@ -1441,7 +1511,7 @@ function getQuote(e)
       '<div class="inner-wrap column-wrap>'+
         '<div class="full-width">'+
           '<h4 style="text-align: left;">Phone Number</h4>'+
-          '<input type="text" id="phone" placeholder="Phone Number">'+
+          '<input type="text" id="phone" name="phone" placeholder="Phone Number" onkeyup="checkPhone(this)">'+
           // '<input type="text" placeholder="Phone Number" class="error">'+
           // '<span class="error-msg">Invalid Phone Number</span>'+
         '</div>'+
@@ -1456,7 +1526,8 @@ function getQuote(e)
 function checkQuote(e)
 {
   let phone = document.getElementById('phone');
-  if(phone.value != '')
+
+  if(checkPhone(phone))
   {
     ownerArr.push(phone.value);
 
@@ -1472,7 +1543,7 @@ function checkQuote(e)
       'owner': ownerArr
     }
 
-    // console.log(data);
+    console.log(data);
     thankYou();
 
     document.getElementById('result').textContent = JSON.stringify(data, null, 4);

@@ -413,3 +413,4 @@ hr.thanks-separator {
 .table{width: 100%; border-collapse: collapse; margin-top: 15px;}
 /* .table th{text-align: left;} */
 .table th, .table td{ border:1px solid #ddd; padding:5px}
+.error {color:red}
