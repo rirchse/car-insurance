@@ -192,7 +192,7 @@
       <?php if($_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
       <link rel="stylesheet" href="styles.css">
       <script>
-        const zipcodefile = 'zipcode.json';
+        const zipcodefile = 'zipcode.json?v=1.10';
         const jsonfile = 'full_ymm_dataset_1990_2025.json';
       </script>
       <script src="calculation-scripts.js?v=0.120"></script>

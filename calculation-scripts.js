@@ -85,10 +85,12 @@ function checkPhone(e)
   const regex = /^(?:\+1\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
   if(e.value == '' || !regex.test(e.value)){
     e.style.borderColor = 'red';
+    e.nextElementSibling.innerHTML = 'Invalid Phone Number';
     return false;
   }
   else{
     e.style.borderColor = '#ddd';
+    e.nextElementSibling.innerHTML = '';
     return true;
   }
 }
@@ -1384,21 +1386,20 @@ function ownerAddress(e)
         '<h4 style="text-align: left;">State</h4>'+
         '<select name="state" id="address_state" class="select-box-address-state" onchange="checkErr(this)">'+
             '<option data-placeholder="true"></option>'+
-            '<option value="Careless Driving">Careless Driving</option>'+
-            '<option value="Carpool Lane Violaion">Carpool Lane Violaion</option>'+
-            '<option value="Child Not In Car Seat">Child Not In Car Seat</option>'+
-            '<option value="Defective Equipment">Defective Equipment</option>'+
-            '<option value="Defective Vehicle Reduced Violation">Defective Vehicle Reduced Violation</option>'+
-            '<option value="Driving Without A license">Driving Without A license</option>'+
-            '<option value="Excessive Noise">Excessive Noise</option>'+
-            '<option value="Exhibition Driving">Exhibition Driving</option>'+
-            '<option value="Expired Drivers License">Expired Drivers License</option>'+
-            '<option value="Expired Emissions">Expired Emissions</option>'+
-            '<option value="Expired Registration">Expired Registration</option>'+
-            '<option value="Failure To Obey Traffic Signal">Failure To Obey Traffic Signal</option>'+
-            '<option value="Failure To Signal">Failure To Signal</option>'+
-            '<option value="Failure To Stop">Failure To Stop</option>'+
-            '<option value="...">...</option>'+
+            '<option value="Alabama">Alabama</option>'+
+            '<option value="Alaska">Alaska</option>'+
+            '<option value="Arizona">Arizona</option>'+
+            '<option value="Arkansas">Arkansas</option>'+
+            '<option value="California">California</option>'+
+            '<option value="Colorado">Colorado</option>'+
+            '<option value="Connecticut">Connecticut</option>'+
+            '<option value="Delaware">Delaware</option>'+
+            '<option value="Florida">Florida</option>'+
+            '<option value="Georgia">Georgia</option>'+
+            '<option value="Hawaii">Hawaii</option>'+
+            '<option value="Idaho">Idaho</option>'+
+            '<option value="Illinois">Illinois</option>'+
+            '<option value="Indiana">Indiana</option>'+
             '<option value="...">...</option>'+
         '</select>'+
       '</div>'+
@@ -1536,9 +1537,9 @@ function getQuote(e)
       '<div class="inner-wrap column-wrap>'+
         '<div class="full-width">'+
           '<h4 style="text-align: left;">Phone Number</h4>'+
-          '<input type="text" id="phone" name="phone" placeholder="Phone Number" onkeyup="checkPhone(this)">'+
+          '<input type="text" id="phone" name="phone" placeholder="+1 123 456 7890" onkeyup="checkPhone(this)">'+
           // '<input type="text" placeholder="Phone Number" class="error">'+
-          // '<span class="error-msg">Invalid Phone Number</span>'+
+          '<span class="error-msg"></span>'+
         '</div>'+
         '<div class="field-wrap">'+
           '<button class="action-btn btn" onclick="checkQuote(this)">Get My Quote</button>'+
@@ -1546,7 +1547,7 @@ function getQuote(e)
       '</div>';
 }
 
-// getQuote(5);
+getQuote(5);
 
 function checkQuote(e)
 {
@@ -1581,10 +1582,10 @@ function thankYou()
     '<hr class="thanks-separator">'+
     '<h3>Check out our other services</h3>'+
     '<div class="thanks-links">'+
-      '<a href="/">Home Insurance</a>'+
-      '<a href="/">Life Insurance</a>'+
-      '<a href="/">Health Insurance</a>'+
-      '<a href="/">Business Insurance</a>'+
+      '<a href="#">Home Insurance</a>'+
+      '<a href="#">Life Insurance</a>'+
+      '<a href="#">Health Insurance</a>'+
+      '<a href="#">Business Insurance</a>'+
     '</div>'+
   '</div>';
 }
