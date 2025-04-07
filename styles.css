@@ -41,7 +41,7 @@ button{
   position: relative;
   height: 2px;
   width: 100%;
-  margin: 25px 0 50px;
+  margin: 25px 0;
 }
 .progress-indicator {
   position: absolute;
@@ -53,6 +53,7 @@ button{
   padding: 10px 15px;
   border-radius: 25px;
   color: #3d99fe;
+  margin-left: -72px;
 }
 .progess-active-line {
   position: absolute;

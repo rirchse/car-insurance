@@ -4,6 +4,7 @@ let incidents = [];
 let incidentsArr = []; //incident main array
 let insuranceArr = [];
 let drivers = [];
+let driver = [];
 let birthDate = [];
 let accidentsArr = [];
 let accidentArr = [];
@@ -156,7 +157,7 @@ fetch(jsonfile) // Path to your JSON file
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(10);
+    increasePercent(5);
   }
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
@@ -305,7 +306,7 @@ function owner(e)
     //increase value for every action
     if(vehicleCounter == 0)
     {
-      increasePercent(5);
+      increasePercent(3);
     }
 
     //data push to vehicle array
@@ -340,7 +341,7 @@ function milage(e)
     //increase value for every action
     if(vehicleCounter == 0)
     {
-      increasePercent(5);
+      increasePercent(2);
     }
 
     //data push to vehicle array
@@ -376,7 +377,7 @@ function coverage(e)
     //increase value for every action
     if(vehicleCounter == 0)
     {
-      increasePercent(5);
+      increasePercent(3);
     }
 
     //data push to vehicle array
@@ -413,10 +414,12 @@ function anotherVehicle(e)
     html+='</table>';
   };
 
+  html = '';
+
   // console.log(html);
 
   container.innerHTML = '<div class="step step-make">'+
-    '<h3>Selected Vehicles</h3>'+
+    // '<h3>Selected Vehicles</h3>'+
       html+
   '</div>'+
   '<div class="step step-number step-content-basic yes-no-box">'+
@@ -534,15 +537,15 @@ function checkInsuranceForm(e)
         let career = form.elements['career'];
         let coverage = form.elements['coverage'];
 
-        checkErr(career);
-        checkErr(coverage);
+        let carrierCheck = checkErr(career);
+        let coverageCheck = checkErr(coverage);
         
-        if(career.value != '' && coverage.value != '')
+        if(carrierCheck && coverageCheck)
         {
           insuranceArr.push(career.value);
           insuranceArr.push(coverage.value);
 
-          drivers.push(insuranceArr);
+          ownerArr.push(insuranceArr);
 
           addDriver();
         }
@@ -602,7 +605,7 @@ function driverMaritalStatus(e)
     }
   
     //data push to vehicle array
-    drivers.push(e.innerHTML);
+    driver.push(e.innerHTML);
   
     // console.log(drivers);
   }
@@ -645,7 +648,7 @@ function birthMonth(e)
     }
   
     //data push to vehicle array
-    drivers.push(e.innerHTML);
+    driver.push(e.innerHTML);
   
     // console.log(drivers);
   }
@@ -681,7 +684,7 @@ function birthDay(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(5);
+      increasePercent(3);
     }
   
     //birth month push to birthDate array
@@ -721,7 +724,7 @@ function birthYear(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(5);
+      increasePercent(2);
     }
   
     //birth day push to birthDate array
@@ -818,7 +821,7 @@ function incident(e)
       //birth year push to birthDate array
       birthDate.push(e.innerHTML);
 
-      drivers.push(birthDate);
+      driver.push(birthDate);
     
       console.log(drivers);
     }
@@ -968,7 +971,8 @@ function checkAccidentForm(e)
       accidentArr.push(fault.value);
       accidentArr.push(damage.value);
 
-      drivers.push(accidentArr);
+      accidentsArr.push(accidentArr);
+      accidentArr = [];
 
       console.log(drivers);
 
@@ -1036,12 +1040,12 @@ function ticket(e)
       '</select>'+
   '</div>'+
   '<div class="more-options inner-wrap-btn">'+
-      '<button class="show-more">'+
-          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-              '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
-          '</svg>'+
-          'Add another ticket'+
-        '</button>'+
+      // '<button class="show-more">'+
+      //     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+      //         '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
+      //     '</svg>'+
+      //     'Add another ticket'+
+      //   '</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -1084,7 +1088,8 @@ function checkTicketForm(e)
       ticketArr.push(year.value);
       ticketArr.push(description.value);
 
-      drivers.push(ticketArr);
+      ticketsArr.push(ticketArr);
+      ticketArr = [];
 
       console.log(drivers);
 
@@ -1202,7 +1207,8 @@ function checkDuiForm(e)
       duiArr.push(year.value);
       duiArr.push(state.value);
 
-      drivers.push(duiArr);
+      duisArr.push(duiArr);
+      duiArr = [];
 
       console.log(drivers);
 
@@ -1262,11 +1268,22 @@ function checkNameForm(e)
       sr22Arr.push(first_name.value);
       sr22Arr.push(last_name.value);
 
-      drivers.push(sr22Arr);
+      sr22sArr.push(sr22Arr);
+      sr22Arr = [];
+
+      incidents.push(accidentsArr, ticketsArr, duisArr, sr22sArr);
+      drivers.push(incidents);
+      incidents = [];
 
       console.log(drivers);
 
       nextIncident(e);
+
+      //increase value for every action
+      if(driverCounter == 0)
+      {
+        increasePercent(2);
+      }
     }
 
   });
@@ -1343,6 +1360,7 @@ function anotherDriver()
           '</svg> Back '+
       '</button>'+
   '</div>';
+
 }
 
 // anotherDriver();
@@ -1434,10 +1452,14 @@ function checkAddressForm(e)
       addressArr.push(city.value);
 
       ownerArr.push(addressArr);
+      addressArr = [];
 
       console.log(ownerArr);
 
       ownership();
+
+      //increase value for every action
+      increasePercent(5);
     }
 
   });
@@ -1501,6 +1523,9 @@ function emailForm(e)
   {
     ownerArr.push(email.value);
     getQuote(e);
+
+    //increase value for every action
+    increasePercent(5);
   }
 }
 
@@ -1533,18 +1558,15 @@ function checkQuote(e)
 
     let data = {
       'vehicles': vehicles,
-      'incidents': {
-        'accident': accidentArr,
-        'ticket': ticketArr,
-        'dui': duiArr,
-        'sr22': sr22Arr
-      },
       'drivers': drivers,
       'owner': ownerArr
     }
 
     console.log(data);
     thankYou();
+
+    //increase value for every action
+    increasePercent(12);
 
     document.getElementById('result').textContent = JSON.stringify(data, null, 4);
   }

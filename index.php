@@ -47,7 +47,7 @@
 
         <div class="container">
             <h4>
-                <pre id="result"></pre>
+                <pre id="result" style="display:none"></pre>
             </h4>
         </div>
         <div class="footer-bar"></div>
@@ -100,7 +100,7 @@
                     focusSearch: false, 
                 }
             });
-            
+
             let accident_desc = new SlimSelect({
                 select: '#accident_desc',
                 settings: {
@@ -187,7 +187,7 @@
             
     </script>
 
-    <?php echo $_SERVER["HTTP_HOST"]; ?>
+    <!-- <?php echo $_SERVER["HTTP_HOST"]; ?> -->
     
       <?php if($_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
       <link rel="stylesheet" href="styles.css">
@@ -195,7 +195,7 @@
         const zipcodefile = 'zipcode.json';
         const jsonfile = 'full_ymm_dataset_1990_2025.json';
       </script>
-      <script src="calculation-scripts.js"></script>
+      <script src="calculation-scripts.js?v=0.120"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
