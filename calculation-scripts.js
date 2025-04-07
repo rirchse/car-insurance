@@ -1547,7 +1547,7 @@ function getQuote(e)
       '</div>';
 }
 
-getQuote(5);
+// getQuote(5);
 
 function checkQuote(e)
 {
