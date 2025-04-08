@@ -6,6 +6,14 @@
   margin: 0;
   padding: 0;
 }
+input,
+textarea,
+select,
+.ss-main,
+.ss-single-selected,
+.ss-list {
+  font-size: 16px;
+}
 .container{
   max-width: 1200px;
   margin: 0 auto;
@@ -89,6 +97,7 @@ input:hover, input:focus {
 body{ 
   font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
+  font-size: 16px;
 }
 .step-content-basic {
   max-width: 400px;
