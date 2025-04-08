@@ -360,7 +360,16 @@
             opacity: .5;
             font-size: 16px;
         }
-        .input-field-wrap input:focus ~ label {
+        /* .input-field-wrap input:focus ~ label  {
+            top: -12px;
+            left: 6px;
+            opacity: 1;
+            background: #fff;
+            padding: 0 4px;
+            font-size: 14px
+        } */
+        /* .input-field-wrap input:focus + label, .input-field-wrap input:valid + label */
+        .input-field-wrap input:focus + label, .input-field-wrap input:not(:focus):valid ~ label{
             top: -12px;
             left: 6px;
             opacity: 1;
@@ -368,6 +377,7 @@
             padding: 0 4px;
             font-size: 14px
         }
+     
     </style>
 </head>
 <body>
@@ -391,7 +401,7 @@
                             </div>
                             <div class="field-wrap">
                                 <div class="input-field-wrap">
-                                    <input type="text" id="zipcode">
+                                    <input type="text" id="zipcode" required>
                                     <label for="">Zip code</label>
                                 </div>
                             </div>

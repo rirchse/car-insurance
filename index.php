@@ -35,7 +35,7 @@
                   <div class="inner-wrap inner-wrap-input">
                       <div class="field-wrap">
                             <div class="input-field-wrap">
-                                <input type="text" id="zipcode">
+                                <input type="text" id="zipcode" required>
                                 <label for="">Zip code</label>
                             </div>
                             <span class="error-msg" id="result"></span>

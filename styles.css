@@ -113,7 +113,7 @@ body{
   border-radius: 4px;
 }
 .input:hover, .input:focus {
-  color: #fff;
+  color: #0070e9;
   border-color: #0070e9;
   background: #0070e9;
 }
@@ -419,7 +419,7 @@ hr.thanks-separator {
   opacity: .5;
   font-size: 16px;
 }
-.input-field-wrap input:focus ~ label {
+.input-field-wrap input:focus ~ label, .input-field-wrap input:not(:focus):valid ~ label {
   top: -12px;
   left: 6px;
   opacity: 1;
