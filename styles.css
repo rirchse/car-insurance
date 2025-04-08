@@ -107,6 +107,7 @@ body{
   margin-right: auto;
 }
 .input {
+  -webkit-tap-highlight-color: transparent;
   border: 1px solid #ddd;
   background: #fff;
   border-radius: 4px;
