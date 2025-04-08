@@ -112,8 +112,9 @@ body{
   border-radius: 4px;
 }
 .input:hover, .input:focus {
-  color: #0070e9;
+  color: #fff;
   border-color: #0070e9;
+  background: #0070e9;
 }
 .action-btn {
   border: 1px solid;
@@ -399,6 +400,31 @@ hr.thanks-separator {
 }
 .thanks-links a:hover, .thanks-links a:focus {
     background-color: #000;
+}
+
+/* moving label up on focus */
+.input-field-wrap {
+  position: relative;
+}
+.input-field-wrap label {
+  position: absolute;
+  left: 15px;
+  width: auto;
+  height: auto;
+  text-align: left;
+  pointer-events: none;
+  transition: .1s;
+  top: 10px;
+  opacity: .5;
+  font-size: 16px;
+}
+.input-field-wrap input:focus ~ label {
+  top: -12px;
+  left: 6px;
+  opacity: 1;
+  background: #fff;
+  padding: 0 4px;
+  font-size: 14px
 }
 
 /*mobile fixes*/

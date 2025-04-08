@@ -116,8 +116,9 @@
             border-radius: 4px;
         }
         .input:hover, .input:focus {
-            color: #0070e9;
+            color: #fff;
             border-color: #0070e9;
+            background: #0070e9;
         }
         .action-btn {
             border: 1px solid;
@@ -343,6 +344,29 @@
         .mt-20{
             margin-top: 20px;
         }
+        .input-field-wrap {
+            position: relative;
+        }
+        .input-field-wrap label {
+            position: absolute;
+            left: 15px;
+            width: auto;
+            height: auto;
+            text-align: left;
+            pointer-events: none;
+            transition: .1s;
+            top: 10px;
+            opacity: .5;
+            font-size: 16px;
+        }
+        .input-field-wrap input:focus ~ label {
+            top: -12px;
+            left: 6px;
+            opacity: 1;
+            background: #fff;
+            padding: 0 4px;
+            font-size: 14px
+        }
     </style>
 </head>
 <body>
@@ -364,6 +388,13 @@
                                 <input type="text" placeholder="Zip Code">
                                 <span class="error-msg">Invalid Zip code</span>
                             </div>
+                            <div class="field-wrap">
+                                <div class="input-field-wrap">
+                                    <input type="text" id="zipcode">
+                                    <label for="">Zip code</label>
+                                </div>
+                            </div>
+                            
                             <div class="field-wrap">
                                 <button class="action-btn btn">Get Started</button>
                             </div>

@@ -34,8 +34,11 @@
                   <h2>Enter Your Zip Code</h2>
                   <div class="inner-wrap inner-wrap-input">
                       <div class="field-wrap">
-                          <input type="text" id="zipcode" placeholder="Zip Code">
-                          <span class="error-msg" id="result"></span>
+                            <div class="input-field-wrap">
+                                <input type="text" id="zipcode">
+                                <label for="">Zip code</label>
+                            </div>
+                            <span class="error-msg" id="result"></span>
                       </div>
                       <div class="field-wrap">
                         <button class="action-btn btn" onclick="ZIPCode()">Get Started</button>
