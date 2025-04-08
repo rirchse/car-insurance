@@ -313,14 +313,14 @@
             font-size: 14px;
         }
         .input-wrap img {
-            height: 48px;
+            height: 65px;
             width: auto;
-            max-width: 75px;
+            max-width: 90px;
             object-fit: contain;
         }
         .step-make .inner-wrap-btn .input {
-            flex: 13%;
-            max-width: calc(13% - 15px);
+            flex: 25%;
+            max-width: calc(25% - 15px);
         }
 
         /* accident details */
@@ -425,6 +425,16 @@
                             
                         </div>
                         <div class="more-options inner-wrap-btn">
+                            <select name="" id="show_more_select" class="select-box-showmore">
+                                <option data-placeholder="true"></option>
+                                <option value="Less Than 6 Months">Less Than 6 Months</option>
+                                <option value="6 Months">6 Months</option>
+                                <option value="1 Year">1 Year</option>
+                                <option value="2 Years">2 Years</option>
+                                <option value="3 Years">3 Years</option>
+                                <option value="3 to 5 Years">3 to 5 Years</option>
+                                <option value="More Than 5 Years">More Than 5 Years</option>
+                            </select>
                             <button class="show-more">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -1526,6 +1536,15 @@
     </div>
 
     <script>
+        
+        new SlimSelect({
+            select: '#show_more_select',
+            settings: {
+                placeholderText: 'Other Make',
+                showSearch: true, 
+                focusSearch: true, 
+            }
+        })
         new SlimSelect({
             select: '#insurance_carrier',
             settings: {
