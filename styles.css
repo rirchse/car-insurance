@@ -30,6 +30,7 @@ select,
   gap: 15px;
 }
 .inner-wrap-btn button {
+  -webkit-tap-highlight-color: transparent;
   flex: 0 0 20%;
   max-width: calc(20% - 15px);
   text-align: center;
@@ -38,6 +39,7 @@ select,
   width: 100%;
 }
 button{
+  -webkit-tap-highlight-color: transparent;
   cursor: pointer;
 }
 .step {
@@ -113,7 +115,7 @@ body{
   border-radius: 4px;
 }
 .input:hover, .input:focus {
-  color: #0070e9;
+  color: #fff;
   border-color: #0070e9;
   background: #0070e9;
 }
