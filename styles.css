@@ -309,14 +309,14 @@ display: block;
   font-size: 14px;
 }
 .input-wrap img {
-  height: 48px;
+  height: 65px;
   width: auto;
-  max-width: 75px;
+  max-width: 90px;
   object-fit: contain;
 }
 .step-make .inner-wrap-btn .input {
-  flex: 13%;
-  max-width: calc(13% - 15px);
+  flex: 25%;
+  max-width: calc(25% - 15px);
 }
 
 /* accident details */
