@@ -58,10 +58,12 @@ button{
   transform: translateY(-50%);
   background: #fff;
   box-shadow: 0 6px 25px 0px rgb(154 159 165);
-  padding: 10px 15px;
+  padding: 10px 5px;
   border-radius: 25px;
   color: #3d99fe;
-  margin-left: -72px;
+  margin-left: -30px;
+  width: 60px;
+  text-align: center;
 }
 .progess-active-line {
   position: absolute;
