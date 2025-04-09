@@ -170,8 +170,12 @@ function createZIPCodePanel()
   container.innerHTML = '<div class="step step-1">'+
     '<h2>Zip</h2>'+
     '<div class="step step-1 step-content-basic">'+
+    
       '<div class="field-wrap">'+
-          '<input type="text" id="zipcode" placeholder="Zip Code">'+
+          '<div class="input-field-wrap">'+
+              '<input type="text" id="zipcode" required>'+
+              '<label for="">Zip code</label>'+
+          '</div>'+
           '<span class="error-msg" id="result"></span>'+
       '</div>'+
       '<div class="field-wrap">'+
@@ -587,7 +591,6 @@ function driverMaritalStatus(e)
       '<button class="input" onclick="birthMonth(this)">Domestic Partner</button>'+
       '<button class="input" onclick="birthMonth(this)">Separated</button>'+
       '<button class="input" onclick="birthMonth(this)">Widowed</button>'+
-      '<button class="input" onclick="birthMonth(this)">Unknown</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -1473,7 +1476,7 @@ function ownership()
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
       '<button class="input" onclick="emailAddress(this)">OWN</button>'+
       '<button class="input" onclick="emailAddress(this)">RENT</button>'+
-      '<button class="input" onclick="emailAddress(this)">ANOTHER</button>'+
+      '<button class="input" onclick="emailAddress(this)">OTHER</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -1537,7 +1540,7 @@ function getQuote(e)
       '<div class="inner-wrap column-wrap>'+
         '<div class="full-width">'+
           '<h4 style="text-align: left;">Phone Number</h4>'+
-          '<input type="text" id="phone" name="phone" placeholder="+1 123 456 7890" onkeyup="checkPhone(this)">'+
+          '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)">'+
           // '<input type="text" placeholder="Phone Number" class="error">'+
           '<span class="error-msg"></span>'+
         '</div>'+
