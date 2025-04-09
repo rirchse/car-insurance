@@ -1,0 +1,321 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Erase your Bills</title>
+  <link href="https://fonts.cdnfonts.com/css/sf-pro-display" rel="stylesheet">
+  <style>
+ /* General */
+body {
+  font-family: 'SF Pro Display', sans-serif;
+  background: linear-gradient(180deg, #FFFFFF 5%, #3d9aff, #3d9aff);
+  color: #333;
+  /* margin: 0; */
+  margin: auto;
+  margin-top: 5%;
+  margin-bottom: 4%;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  min-height: 100vh;
+  max-width: 1290px;
+}
+
+.container {
+  background-color: #FFFFFF;
+}
+
+.main-container {
+  text-align: center;
+  background-color: transparent;
+  padding: 20px;
+  width: 90%;
+  /* max-width: 400px; */
+  border-radius: 10px;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+}
+
+h1 {
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: bold;
+  color: #3d9aff;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+/* Relief Details */
+.relief-details {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-top: 20px;
+  /* display: flex;
+  flex-direction: column; */
+  gap: 20px; /* Spacing between rows */
+}
+
+.relief-details > div {
+  position: relative;
+  /* display: flex;
+  justify-content: space-between; */
+  /* align-items: center; */
+  /* padding: 3% 5%; */
+}
+
+.relief-details > div::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  width: 90%;
+  border-bottom: 1px solid #e0e0e0;
+  visibility: hidden; /* Hidden by default */
+  transition: visibility 0.3s ease-in-out; /* Transition for smoothing */
+}
+
+.relief-details > div.visible-after::after {
+  visibility: visible; /* Shown when the container has the class */
+}
+
+
+.relief-details > div:last-child::after {
+  content: none; /* Removes the line from the last element */
+}
+
+.relief-details .label {
+  font-size: 1rem;
+  color: #333;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: 700;
+
+}
+
+.relief-details .value {
+  color: #12765B;
+  font-weight: bold;
+  font-size: 1rem;
+  font-family: 'SF Pro Display', sans-serif;
+
+}
+
+/* Hide elements by default */
+.hidden {
+  visibility: hidden;
+  display: none;
+}
+
+/* Button */
+button {
+  background-color: #000;
+  color: white;
+  font-family: 'SF Pro Display', sans-serif;
+  font-weight: bold;
+  border: none;
+  padding: 20px;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+  background-color: dark#3d9aff;
+}
+
+/* "Checking..." message */
+.checking-message {
+  font-size: 1rem;
+  color: blue;
+  font-weight: bold;
+  text-align: left;
+  /* margin: 10px 0; */
+}
+
+/* Total Removed Box */
+.total-removed-box {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+  padding: 7% 5%;
+  display: flex;
+  justify-content: space-between;
+
+
+}
+
+.total-removed-box p {
+  font-size: 1.2rem;
+  margin: 10px 0;
+  color: #333;
+  font-weight: bold;
+  font-family: 'SF Pro Display', sans-serif;
+
+}
+
+.total-removed-box .value {
+  font-size: 1.2rem;
+  color: #12765B;
+  font-weight: bold;
+  font-family: 'SF Pro Display', sans-serif;
+
+}
+
+.total-removed-box .label {
+  font-size: 1.2rem;
+  color: #000000;
+  font-weight: bold;
+  font-family: 'SF Pro Display', sans-serif;
+
+}
+
+.options {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+
+/* Fade and slide down animation */
+/* Apply 3% 5% padding */
+.with-padding {
+  padding: 3% 5%;
+}
+
+/* "slide-in" effect with transition */
+.slide-in {
+  /* Initial state */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: transform 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
+}
+
+/* Final state */
+.slide-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* Divider lines */
+.relief-details > div::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 5%;
+  width: 90%;
+  border-bottom: 1px solid #e0e0e0;
+  visibility: hidden; /* Hidden by default */
+  transition: visibility 0.5s ease-in-out, opacity 0.5s ease-in-out;
+}
+
+.relief-details > div.visible-after::after {
+  visibility: visible; /* Shows the line when it has this class */
+  opacity: 1;
+}
+
+.label, .value {
+  visibility: hidden;
+}
+
+
+/* checking-message: base color #46C2E8 */
+.checking-message {
+  color: #3d9aff;
+  /* margin: 10px 0 10px !important; */
+  align-self: center;
+  font-family: 'SF Pro Display', sans-serif;
+}
+
+/* Define the animation for the blink */
+@keyframes shortBlink {
+  0%   { color: #3d9aff; }
+  50%  { color: #000; }
+  100% { color: #3d9aff; }
+}
+
+/* Class that activates the blink */
+.short-blink {
+  animation: shortBlink 0.5s; /* Duration 0.5s, you can adjust it */
+}
+
+.container-slide-in{
+  transition: transform 0.4s ease, opacity 0.4s ease, padding-bottom 0.4s ease;
+}
+    /* hidden */
+    .hidden {
+      display: none;
+    }
+    .logo img{
+        max-width: 200px;
+        height: auto;
+        display: block;
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="logo"><img src="https://eraseyourbills.com/wp-content/uploads/2025/02/Main-Logo-EYB-SVG.png" alt=""></div>
+    <!-- <h1>Erase your Bills</h1> -->
+    <h2>Your discounts for driving.</h2>
+
+    <div class="relief-details container">
+      <div class="past-due-container aligned">
+        <p class="past-due-bills hidden options">
+          <span class="label">Safe Driver Discount:</span>
+          <!-- initial value for JS -->
+          <span class="value">$2,800.00</span>
+        </p>
+      </div>
+      <div class="credit-cards-container aligned">
+        <p class="credit-cards hidden options">
+          <span class="label">Multi-Car Discount:</span>
+          <!-- initial value for JS -->
+          <span class="value">$12,670.00</span>
+        </p>
+      </div>
+      <div class="past-debts-container aligned">
+        <p class="past-debts hidden options">
+          <span class="label">No DUI:</span>
+          <!-- initial value for JS -->
+          <span class="value">$3,600.00</span>
+        </p>
+      </div>
+      <div class="extra-container aligned">
+        <p class="extra-option hidden options">
+          <span class="label">Age, Race, Gender Removed:</span>
+          <!-- initial value for JS -->
+          <span class="value">$3,600.00</span>
+        </p>
+      </div>
+     
+    </div>
+
+    <div class="total-removed-box container hidden">
+      <span class="label">Total Removed:</span> 
+      <!-- initial value for JS -->
+      <span class="value">$19,070.00</span>
+    </div>
+
+    <button class="callButton hidden">CALL TO CLAIM</button>
+  </div>
+  <!-- logics -->
+  <script src="script-a.js"></script>
+  <script src="script-b.js"> </script>
+</body>
+</html>
