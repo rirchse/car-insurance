@@ -1,145 +1,36 @@
-// script.js
-
-// Elements
-const pastDueContainer = document.querySelector(".past-due-container");
-const creditCardsContainer = document.querySelector(".credit-cards-container");
-const pastDebtsContainer = document.querySelector(".past-debts-container");
-const extraContainer = document.querySelector(".extra-container");
-
-const pastDueBills = document.querySelector(".past-due-bills");
-const creditCards = document.querySelector(".credit-cards");
-const pastDebts = document.querySelector(".past-debts");
-const extra = document.querySelector(".extra-option");
-
-const totalRemovedBox = document.querySelector(".total-removed-box");
-const callButton = document.querySelector(".callButton");
-
-/**
- * Displays "Checking..." inside a container with a dot effect,
- * and when finished, removes the text and shows the final element.
- *
- * @param {HTMLElement} container - The container that will display "Checking..."
- * @param {HTMLElement} element   - The final content to be displayed upon completion
- * @param {boolean} isFirst       - If it's the first container (to remove delays)
- */
-function showCheckingInContainer(container, element, isFirst = false) {
-  return new Promise((resolve) => {
-    // 1) Measure the height of "Checking..."
-    const tempMessage = document.createElement("p");
-    tempMessage.classList.add("checking-message");
-    tempMessage.textContent = "Checking...";
-    tempMessage.style.visibility = "hidden";
-    tempMessage.style.position = "absolute";
-    document.body.appendChild(tempMessage);
-
-    const requiredHeight = tempMessage.offsetHeight;
-    document.body.removeChild(tempMessage);
-
-    // Assign that height as a minimum to the container
-
-
-    // 2) Create the actual Checking message
-    const checkingMessage = document.createElement("p");
-    checkingMessage.classList.add("checking-message");
-    checkingMessage.textContent = "Checking"; // dots will be added
-
-    let dotCount = 0;
-    const maxDots = 3;
-    let checkingInterval;
-    let checkingTimeout;
-
-    // -- Outer delay --
-    // For the first container: 0 ms
-    // For the following: 500 ms
-    setTimeout(() => {
-      container.classList.add("container-slide-in");
-      container.style.minHeight = requiredHeight + 34 + "px";
-      container.style.padding = "3% 5%";
-
-      // -- Inner delay (before placing "Checking...") --
-      // For the first container: 0 ms
-      // For the following: 1000 ms
-      setTimeout(() => {
-        container.appendChild(checkingMessage);
-
-        // Interval that adds dots every 500 ms
-        checkingInterval = setInterval(() => {
-          if (dotCount < maxDots) {
-            dotCount++;
-            checkingMessage.textContent = "Checking " + ".".repeat(dotCount);
-
-            // Blink
-            checkingMessage.classList.remove("short-blink");
-            void checkingMessage.offsetWidth; // reflow
-            checkingMessage.classList.add("short-blink");
-          } else {
-            clearInterval(checkingInterval);
-            clearTimeout(checkingTimeout);
-            container.removeChild(checkingMessage);
-
-            // Show the final element
-            element.classList.remove("hidden");
-            setTimeout(() => {
-              element.classList.add("show");
-              element.querySelectorAll("span").forEach(span => {
-                span.style.visibility = "visible";
-              });
-              container.classList.add("visible-after");
-            }, 50);
-
-            setTimeout(() => resolve(), 100);
-          }
-        }, 500);
-
-        // 2s timeout in case it doesn't reach 3 dots
-        checkingTimeout = setTimeout(() => {
-          clearInterval(checkingInterval);
-          container.removeChild(checkingMessage);
-
-          element.classList.remove("hidden");
-          setTimeout(() => {
-            element.classList.add("show");
-            container.classList.add("visible-after");
-            element.querySelectorAll("span").forEach(span => {
-              span.style.visibility = "visible";
-            });
-          }, 50);
-
-          setTimeout(() => resolve(), 100);
-        }, 2000);
-
-      }, isFirst ? 0 : 1000);  // (B) ← remove delay for the first container
-
-    }, isFirst ? 0 : 500);      // (A) ← remove 500ms delay for the first container
+window.addEventListener('DOMContentLoaded', () => {
+    // Minimum and maximum range
+    const min = 15000;
+    const max = 25000;
+  
+    // Generate random total amount automatically
+    // const total = Math.floor(Math.random() * (max - min + 1)) + min;
+  
+  
+    // Generate 4 partials within the specified ranges
+    const partial1 = Math.floor(Math.random() * (560 - 240 + 1)) + 240;
+    const partial2 = Math.floor(Math.random() * (340 - 120 + 1)) + 120;
+    const partial3 = Math.floor(Math.random() * (760 - 420 + 1)) + 420;
+    const partial4 = Math.floor(Math.random() * (890 - 220 + 1)) + 220;
+  
+    const total = partial1 + partial2 + partial3 + partial4;
+  
+    // Format numbers with commas
+    const formatNumber = (num) => num.toLocaleString('en-US');
+  
+    // Inject values into the HTML
+    document.querySelector('.past-due-bills .value').textContent = `$${formatNumber(partial1)}.00`;
+    document.querySelector('.credit-cards .value').textContent = `$${formatNumber(partial2)}.00`;
+    document.querySelector('.past-debts .value').textContent = `$${formatNumber(partial3)}.00`;
+    document.querySelector('.extra-option .value').textContent = `$${formatNumber(partial4)}.00`;
+  
+    // Show the total
+    document.querySelector('.total-removed-box .value').textContent = `$${formatNumber(total)}.00`;
+  
+    // // Remove 'hidden' class so they appear
+    // document.querySelector('.past-due-bills').classList.remove('hidden');
+    // document.querySelector('.credit-cards').classList.remove('hidden');
+    // document.querySelector('.past-debts').classList.remove('hidden');
+    // document.querySelector('.total-removed-box').classList.remove('hidden');
+    // document.querySelector('.callButton').classList.remove('hidden');
   });
-}
-
-// Animation flow
-async function startAnimation() {
-  // First call: remove both delays
-  await showCheckingInContainer(pastDueContainer, pastDueBills, true);
-
-  // Subsequent calls: with delay
-  await showCheckingInContainer(creditCardsContainer, creditCards);
-  await showCheckingInContainer(pastDebtsContainer, pastDebts);
-  await showCheckingInContainer(extraContainer, extra);
-
-  // Show Total Removed and the button after the main flow
-  setTimeout(() => {
-    totalRemovedBox.classList.remove("hidden");
-    totalRemovedBox.querySelectorAll("span").forEach(span => {
-      span.style.visibility = "visible";
-    });
-    totalRemovedBox.classList.add("slide-in");
-    setTimeout(() => totalRemovedBox.classList.add("show"), 50);
-
-    callButton.classList.remove("hidden");
-    callButton.classList.add("slide-in");
-    setTimeout(() => callButton.classList.add("show"), 50);
-  }, 1000);
-}
-
-// Start the animation when the page loads
-document.addEventListener("DOMContentLoaded", () => {
-  startAnimation();
-});
