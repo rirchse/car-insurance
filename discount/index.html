@@ -116,7 +116,7 @@ h2 {
 }
 
 /* Button */
-button {
+.callButton {
   background-color: #000;
   color: white;
   font-family: 'SF Pro Display', sans-serif;
@@ -129,9 +129,11 @@ button {
   margin-top: 20px;
   width: 100%;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+  display: block;
+  text-decoration: none;
 }
 
-button:hover {
+.callButton:hover {
   background-color: dark#3d9aff;
 }
 
@@ -312,7 +314,7 @@ button:hover {
       <span class="value">$19,070.00</span>
     </div>
 
-    <button class="callButton hidden">CALL TO CLAIM</button>
+    <a class="callButton hidden" href="https://eraseyourbills.com/">CALL TO CLAIM</a>
   </div>
   <!-- logics -->
   <script src="script-a.js"></script>
