@@ -1,24 +1,51 @@
-let vehicles = [];
-let vehicle = [];
-let incidents = [];
-let incidentsArr = []; //incident main array
-let insuranceArr = [];
-let drivers = [];
-let driver = [];
-let birthDate = [];
-let accidentsArr = [];
-let accidentArr = [];
-let ticketsArr = [];
-let ticketArr = [];
-let duisArr = [];
-let duiArr = [];
-let sr22sArr = [];
-let sr22Arr = [];
-let ownerArr = [];
-let addressArr = [];
+// let vehicles = [];
+// let vehicle = [];
+// let incidents = [];
+// let incidentsArr = []; //incident main array
+// let insuranceArr = [];
+// let drivers = [];
+// let driver = [];
+// let birthDate = [];
+// let accidentsArr = [];
+// let accidentArr = [];
+// let ticketsArr = [];
+// let ticketArr = [];
+// let duisArr = [];
+// let duiArr = [];
+// let sr22sArr = [];
+// let sr22Arr = [];
+// let ownerArr = [];
+// let addressArr = [];
+
+let formdata = {
+  vehicles: {
+    list: [],
+    current: []
+  },
+  drivers: {
+    list: [],
+    current: {
+      general: [],
+      dob: [],
+      incidents: {
+        part:[],
+        accident: [],
+        ticket: [],
+        dui: [],
+        sr22: []
+      }
+    }
+  },
+  owner: {
+    insurance: [],
+    address: [],
+    contact: []
+  }
+};
 
 let year = '';
 let brand = '';
+let model = '';
 let vehicleCounter = 0;
 let driverCounter = 0;
 let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'];
@@ -193,11 +220,6 @@ function brands(e)
       {
         increasePercent(5);
       }
-
-      //data push to vehicle array
-      vehicle.push(year);
-
-      // console.log(vehicle);
     }
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
@@ -241,6 +263,8 @@ function writeYears(e)
     {
       increasePercent(5);
     }
+    formdata.vehicles.current.push(brand);
+    console.log(formdata);
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
 }
@@ -263,6 +287,7 @@ fetch(jsonfile) // Path to your JSON file
   models.forEach((b) =>{
     let btn = document.createElement('button');
     btn.setAttribute('class', 'input');
+    btn.setAttribute('name', b);
     btn.setAttribute('onclick', 'owner(this)');
     btn.innerHTML = b;
     document.getElementById('model').appendChild(btn);
@@ -285,10 +310,8 @@ fetch(jsonfile) // Path to your JSON file
       increasePercent(5);
     }
 
-    //data push to vehicle array
-    vehicle.push(brand);
-
-    // console.log(vehicle);
+    formdata.vehicles.current.push(year);
+    console.log(formdata);
   }
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
@@ -322,10 +345,8 @@ function owner(e)
       increasePercent(3);
     }
 
-    //data push to vehicle array
-    vehicle.push(e.innerHTML);
-
-    // console.log(vehicle);
+    formdata.vehicles.current.push(e.name);
+    console.log(formdata);
   }
 }
 
@@ -357,10 +378,8 @@ function milage(e)
       increasePercent(2);
     }
 
-    //data push to vehicle array
-    vehicle.push(e.innerHTML);
-
-    // console.log(vehicle);
+    formdata.vehicles.current.push(e.innerHTML);
+    console.log(formdata);
   }  
 }
 
@@ -393,41 +412,38 @@ function coverage(e)
       increasePercent(3);
     }
 
-    //data push to vehicle array
-    vehicle.push(e.innerHTML);
-    vehicles.push(vehicle);
-
-    // console.log(vehicle);
+    formdata.vehicles.current.push(e.innerHTML);
+    console.log(formdata);
   }
 }
 
 function anotherVehicle(e)
 {
   let html = '';
-  if(vehicles)
-  {
-    html+='<table class="table">'+
-    '<tr>'+
-      '<th>SL NO.</th>'+
-      '<th>Year</th>'+
-      '<th>Make</th>'+
-      '<th>Model</th>'+
-      '<th>Finance</th>'+
-      '<th>Milage</th>'+
-    '</tr>';
-    vehicles.forEach((arr, n) => {
-      html+='<tr>'+
-      '<td>'+(n+1)+'</td>';
+  // if(vehicles)
+  // {
+  //   html+='<table class="table">'+
+  //   '<tr>'+
+  //     '<th>SL NO.</th>'+
+  //     '<th>Year</th>'+
+  //     '<th>Make</th>'+
+  //     '<th>Model</th>'+
+  //     '<th>Finance</th>'+
+  //     '<th>Milage</th>'+
+  //   '</tr>';
+  //   vehicles.forEach((arr, n) => {
+  //     html+='<tr>'+
+  //     '<td>'+(n+1)+'</td>';
 
-      arr.forEach((v) => {
-        html+='<td>'+v+'</td>';
-      });
-      html+='</tr>';
-    });
-    html+='</table>';
-  };
+  //     arr.forEach((v) => {
+  //       html+='<td>'+v+'</td>';
+  //     });
+  //     html+='</tr>';
+  //   });
+  //   html+='</table>';
+  // };
 
-  html = '';
+  // html = '';
 
   // console.log(html);
 
@@ -453,8 +469,9 @@ function anotherVehicle(e)
   if(e.value != 'back')
   {
     //increase value for every action
-    // increasePercent(5);
-    vehicle = [];
+    increasePercent(5);
+    formdata.vehicles.list.push(formdata.vehicles.current);
+    formdata.vehicles.current = [];
   }
 }
 
@@ -555,10 +572,7 @@ function checkInsuranceForm(e)
         
         if(carrierCheck && coverageCheck)
         {
-          insuranceArr.push(career.value);
-          insuranceArr.push(coverage.value);
-
-          ownerArr.push(insuranceArr);
+          formdata.owner.insurance.push(career.value, coverage.value);
 
           addDriver();
         }
@@ -619,9 +633,9 @@ function driverMaritalStatus(e)
     }
   
     //data push to vehicle array
-    driver.push(e.innerHTML);
+    formdata.drivers.current.general.push(e.innerHTML);
   
-    // console.log(drivers);
+    console.log(formdata);
   }
 }
 
@@ -662,9 +676,9 @@ function birthMonth(e)
     }
   
     //data push to vehicle array
-    driver.push(e.innerHTML);
+    formdata.drivers.current.general.push(e.innerHTML);
   
-    // console.log(drivers);
+    console.log(formdata);
   }
 }
 
@@ -702,9 +716,9 @@ function birthDay(e)
     }
   
     //birth month push to birthDate array
-    birthDate.push(e.innerHTML);
+    formdata.drivers.current.dob.push(e.innerHTML);
   
-    // console.log(birthDate);
+    console.log(formdata);
   }
 }
 
@@ -742,9 +756,9 @@ function birthYear(e)
     }
   
     //birth day push to birthDate array
-    birthDate.push(e.innerHTML);
+    formdata.drivers.current.dob.push(e.innerHTML);
   
-    // console.log(birthDate);
+    console.log(formdata);
   }
 }
 // birthYear();
@@ -833,11 +847,9 @@ function incident(e)
     }
   
     //birth year push to birthDate array
-    birthDate.push(e.innerHTML);
-
-    driver.push(birthDate);
+    formdata.drivers.current.dob.push(e.innerHTML);
   
-    console.log(drivers);
+    console.log(formdata);
   }
 }
 
@@ -847,20 +859,21 @@ function incident(e)
 /** check incidents */
 function checkIncident(e)
 {
+  let parts = formdata.drivers.current.incidents.part;
   if(e.value == 'Yes')
   {
-    incidents.push(e.name);
+    parts.push(e.name);
   }
   else
   {
-    let index = incidents.indexOf(e.name);
+    let index = parts.indexOf(e.name);
     if(index !== -1)
     {
-      incidents.splice(index, 1);
+      parts.splice(index, 1);
     }
   }
 
-  // console.log(incidents);
+  console.log(parts);
 }
 
 function accident(e)
@@ -975,24 +988,18 @@ function checkAccidentForm(e)
     let damage = form.elements['damage'];
 
     // check error
-    checkErr(month);
-    checkErr(year);
-    checkErr(description);
-    checkErr(fault);
-    checkErr(damage);
+    let checkMonth = checkErr(month);
+    let checkYear = checkErr(year);
+    let checkDesc = checkErr(description);
+    let checkFault = checkErr(fault);
+    let checkDamage = checkErr(damage);
 
-    if(month.value != '' && year.value != '' && description.value != '' && fault.value != '' && damage.value != '')
+    if(checkMonth && checkYear && checkDesc && checkFault && checkDamage)
     {
-      accidentArr.push(month.value);
-      accidentArr.push(year.value);
-      accidentArr.push(description.value);
-      accidentArr.push(fault.value);
-      accidentArr.push(damage.value);
+      let accidents = formdata.drivers.current.incidents.accident;
+      accidents.push(month.value, year.value, description.value, fault.value, damage.value);
 
-      accidentsArr.push(accidentArr);
-      accidentArr = [];
-
-      // console.log(drivers);
+      console.log(accidents);
 
       nextIncident(e);
     }
@@ -1096,20 +1103,16 @@ function checkTicketForm(e)
     let year = form.elements['year'];
     let description = form.elements['description'];
 
-    checkErr(month);
-    checkErr(year);
-    checkErr(description);
+    let checkMonth = checkErr(month);
+    let checkYear = checkErr(year);
+    let checkDesc = checkErr(description);
 
-    if(month.value != '' && year.value != '' && description.value != '')
+    if(checkMonth && checkYear && checkDesc)
     {
-      ticketArr.push(month.value);
-      ticketArr.push(year.value);
-      ticketArr.push(description.value);
+      let tickets = formdata.drivers.current.incidents.ticket;
+      tickets.push(month.value, year.value, description.value);
 
-      ticketsArr.push(ticketArr);
-      ticketArr = [];
-
-      console.log(drivers);
+      console.log(tickets);
 
       nextIncident(e);
     }
@@ -1214,21 +1217,17 @@ function checkDuiForm(e)
     let year = form.elements['year'];
     let state = form.elements['state'];
 
-    checkErr(month);
-    checkErr(year);
-    checkErr(state);
+    let checkMonth = checkErr(month);
+    let checkYear = checkErr(year);
+    let checkState = checkErr(state);
 
 
-    if(month.value != '' && year.value != '' && state.value != '')
+    if(checkMonth && checkYear && checkState)
     {
-      duiArr.push(month.value);
-      duiArr.push(year.value);
-      duiArr.push(state.value);
+      let dui = formdata.drivers.current.incidents.dui;
+      dui.push(month.value, year.value, state.value);
 
-      duisArr.push(duiArr);
-      duiArr = [];
-
-      console.log(drivers);
+      console.log(dui);
 
       nextIncident(e);
     }
@@ -1291,22 +1290,15 @@ function checkNameForm(e)
     let first_name = form.elements['first_name'];
     let last_name = form.elements['last_name'];
     
-    checkErrInput(first_name);
-    checkErrInput(last_name);
+    let checkFirst = checkErrInput(first_name);
+    let checkLast = checkErrInput(last_name);
 
-    if(first_name.value != '' && last_name.value != '')
+    if(checkFirst && checkLast)
     {
-      sr22Arr.push(first_name.value);
-      sr22Arr.push(last_name.value);
+      let sr22 = formdata.drivers.current.incidents.sr22;
+      sr22.push(first_name.value, last_name.value);
 
-      sr22sArr.push(sr22Arr);
-      sr22Arr = [];
-
-      incidents.push(accidentsArr, ticketsArr, duisArr, sr22sArr);
-      drivers.push(incidents);
-      incidents = [];
-
-      console.log(drivers);
+      console.log(sr22);
 
       nextIncident(e);
 
@@ -1324,14 +1316,15 @@ function checkNameForm(e)
 let incidentIndex = 0;
 function nextIncident(e)
 {
+  let parts = formdata.drivers.current.incidents.part;
   if(e.name == 'back'){
     incidentIndex--;
   }
 
   let order = ['accident', 'ticket', 'dui', 'sr-22'];
-  incidents.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+  parts.sort((a, b) => order.indexOf(a) - order.indexOf(b));
 
-  if(incidents[incidentIndex] == 'accident')
+  if(parts[incidentIndex] == 'accident')
   {
     accident(e);
     if(e.name == 'back'){
@@ -1340,7 +1333,7 @@ function nextIncident(e)
       incidentIndex++;
     }
   }
-  else if(incidents[incidentIndex] == 'ticket')
+  else if(parts[incidentIndex] == 'ticket')
   {
     ticket(e);
     if(e.name == 'back'){
@@ -1349,7 +1342,7 @@ function nextIncident(e)
       incidentIndex++;
     }
   }
-  else if(incidents[incidentIndex] == 'dui')
+  else if(parts[incidentIndex] == 'dui')
   {
     dui(e);
     if(e.name == 'back'){
@@ -1358,7 +1351,7 @@ function nextIncident(e)
       incidentIndex++;
     }
   }
-  else if(incidents[incidentIndex] == 'sr-22')
+  else if(parts[incidentIndex] == 'sr-22')
   {
     driverName(e);
     if(e.name == 'back'){
@@ -1391,6 +1384,16 @@ function anotherDriver()
           '</svg> Back '+
       '</button>'+
   '</div>';
+
+  formdata.drivers.list.push(formdata.drivers.current);
+  // formdata.drivers.current.general = [];
+  // formdata.drivers.current.dob = [];
+  // formdata.drivers.current.incidents.part = [];
+  // formdata.drivers.current.incidents.accident = [];
+  // formdata.drivers.current.incidents.ticket = [];
+  // formdata.drivers.current.incidents.dui = [];
+  // formdata.drivers.current.incidents.sr22 = [];
+  console.log(formdata.drivers);
 
 }
 
@@ -1469,22 +1472,16 @@ function checkAddressForm(e)
     let state = form.elements['state'];
     let city = form.elements['city'];
 
-    checkErrInput(address);
-    checkErrInput(zip);
-    checkErr(state);
-    checkErrInput(city);
+    let checkAddr = checkErrInput(address);
+    let checkZip = checkErrInput(zip);
+    let checkState = checkErr(state);
+    let checkCity = checkErrInput(city);
 
-    if(address.value != '' && zip.value != '' && state.value != '' && city.value != '')
+    if(checkAddr && checkZip && checkState && checkCity)
     {
-      addressArr.push(address.value);
-      addressArr.push(zip.value);
-      addressArr.push(state.value);
-      addressArr.push(city.value);
+      formdata.owner.address.push(address.value, zip.value, state.value, city.value);
 
-      ownerArr.push(addressArr);
-      addressArr = [];
-
-      console.log(ownerArr);
+      console.log(formdata.owner.address);
 
       ownership();
 
@@ -1541,7 +1538,8 @@ function emailAddress(e)
       '</div>'+
     '</div>';
 
-    ownerArr.push(e.innerHTML);
+    formdata.owner.contact.push(e.innerHTML);
+    console.log(formdata.owner.contact);
 }
 // emailAddress();
 
@@ -1551,7 +1549,7 @@ function emailForm(e)
 
   if(checkEmail(email))
   {
-    ownerArr.push(email.value);
+    formdata.owner.contact.push(email.value);
     getQuote(e);
 
     //increase value for every action
@@ -1584,21 +1582,21 @@ function checkQuote(e)
 
   if(checkPhone(phone))
   {
-    ownerArr.push(phone.value);
+    formdata.owner.contact.push(phone.value);
 
-    let data = {
-      'vehicles': vehicles,
-      'drivers': drivers,
-      'owner': ownerArr
-    }
+    // let data = {
+    //   'vehicles': vehicles,
+    //   'drivers': drivers,
+    //   'owner': ownerArr
+    // }
 
-    console.log(data);
+    // console.log(data);
     thankYou();
 
     //increase value for every action
     increasePercent(12);
 
-    document.getElementById('result').textContent = JSON.stringify(data, null, 4);
+    document.getElementById('result').textContent = JSON.stringify(formdata, null, 4);
   }
 }
 

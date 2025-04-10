@@ -19,6 +19,72 @@
         async
         defer>
     </script>
+    <script>
+        let autocomplete;
+
+        function initAutocomplete() {
+            const input = document.getElementById('autocomplete');
+            autocomplete = new google.maps.places.Autocomplete(input, {
+                types: ['geocode'],
+                componentRestrictions: { country: 'us' } // Change to your country if needed
+            });
+
+            // This listener will trigger when a place is selected (not on every keyup)
+            autocomplete.addListener('place_changed', fillInAddress);
+        }
+
+        function fillInAddress() {
+            const place = autocomplete.getPlace();
+
+            let city = '';
+            let state = '';
+            let zip = '';
+
+            if (place.address_components) {
+                place.address_components.forEach(component => {
+                    const types = component.types;
+                    types.includes('postal_code') === true;
+                    console.log(types.includes('postal_code') === true);
+                    
+                    if (types.includes('postal_code')) {
+                        zip = component.long_name;
+                    }
+                    if (types.includes('administrative_area_level_1')) {
+                        state = component.short_name;
+                    }
+                    if (types.includes('locality')) {
+                        city = component.long_name;
+                    }
+                });
+
+                document.getElementById('city').value = city;
+                // document.getElementById('state').value = state;
+                document.getElementById('zip').value = zip;
+
+                // let address_state = document.getElementById('address_state');
+               
+
+                // let create = document.createElement('option');
+                // create.innerHTML = state;
+                // address_state.prepend(create);
+
+                // const slim = new SlimSelect({ select: '#address_state' });
+                // setTimeout(() => {
+                //     slim.setSelected('1'); // Select the newly added top option
+                // }, 100);
+            }
+        }
+
+        // This function just helps force place_changed on keyup (optional)
+        function triggerAutocomplete() {
+            // Manually trigger place_changed by simulating 'Enter' key
+            const input = document.getElementById('autocomplete');
+            const e = new KeyboardEvent('keydown', { keyCode: 13 });
+            input.dispatchEvent(e);
+        }
+
+        window.initAutocomplete = initAutocomplete;
+    </script>
 </head>
 <body onload="initAutocomplete()">
 <?php
@@ -55,7 +121,7 @@
 
         <div class="container">
             <h4>
-                <pre id="result" style="display:none"></pre>
+                <pre id="result" style="display:block"></pre>
             </h4>
         </div>
         <div class="footer-bar"></div>
@@ -217,74 +283,6 @@
         </script>
         <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js"></script>
       <?php } ?>
-
-    <script>
-        let autocomplete;
-
-        function initAutocomplete() {
-            const input = document.getElementById('autocomplete');
-            autocomplete = new google.maps.places.Autocomplete(input, {
-                types: ['geocode'],
-                componentRestrictions: { country: 'us' } // Change to your country if needed
-            });
-
-            // This listener will trigger when a place is selected (not on every keyup)
-            autocomplete.addListener('place_changed', fillInAddress);
-        }
-
-        function fillInAddress() {
-            const place = autocomplete.getPlace();
-            // console.log(place.address_components);
-
-            let city = '';
-            let state = '';
-            let zip = '';
-
-            if (place.address_components) {
-                place.address_components.forEach(component => {
-                    const types = component.types;
-                    types.includes('postal_code') === true;
-                    console.log(types.includes('postal_code') === true);
-                    
-                    if (types.includes('postal_code')) {
-                        zip = component.long_name;
-                    }
-                    if (types.includes('administrative_area_level_1')) {
-                        state = component.short_name;
-                    }
-                    if (types.includes('locality')) {
-                        city = component.long_name;
-                    }
-                });
-
-                document.getElementById('city').value = city;
-                // document.getElementById('state').value = state;
-                document.getElementById('zip').value = zip;
-
-                let address_state = document.getElementById('address_state');
-               
-
-                let create = document.createElement('option');
-                create.innerHTML = state;
-                address_state.prepend(create);
-
-                const slim = new SlimSelect({ select: '#address_state' });
-                setTimeout(() => {
-                    slim.setSelected('1'); // Select the newly added top option
-                }, 100);
-            }
-        }
-
-        // This function just helps force place_changed on keyup (optional)
-        function triggerAutocomplete() {
-            // Manually trigger place_changed by simulating 'Enter' key
-            const input = document.getElementById('autocomplete');
-            const e = new KeyboardEvent('keydown', { keyCode: 13 });
-            input.dispatchEvent(e);
-        }
-
-        window.initAutocomplete = initAutocomplete;
-    </script>
 
 </body>
 </html>
