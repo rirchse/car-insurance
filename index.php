@@ -14,8 +14,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet">
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1fXk1aYT3j2QqnUVlNvKDCV1Zf4qDHHQ&libraries=places"
+        async
+        defer>
+    </script>
 </head>
-<body>
+<body onload="initAutocomplete()">
 <?php
   // echo get_template_directory_uri(); 
 ?>
@@ -65,6 +70,10 @@
     <!-- <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script> -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <script>
+        function resetForm()
+        {
+            let addressForm = document.querySelector('#addressForm');addressForm.reset()
+        }
 
         function styleLoad()
         {
@@ -196,18 +205,86 @@
       <link rel="stylesheet" href="styles.css">
       <script>
         const zipcodefile = 'zipcode.json?v=1.10';
-        const jsonfile = 'full_ymm_dataset_1990_2025.json';
+        const jsonfile = 'merged_make_year_model.json';
       </script>
-      <script src="calculation-scripts.js?v=0.120"></script>
+      <script src="calculation-scripts.js?v=0.130"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
         <script>
           const zipcodefile = '<?php echo get_template_directory_uri(); ?>/jsonfile/zipcode.json';
-          const jsonfile = '<?php echo get_template_directory_uri(); ?>/jsonfile/full_ymm_dataset_1990_2025.json';
+          const jsonfile = '<?php echo get_template_directory_uri(); ?>/jsonfile/merged_make_year_model.json';
         </script>
         <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js"></script>
       <?php } ?>
+
+    <script>
+        let autocomplete;
+
+        function initAutocomplete() {
+            const input = document.getElementById('autocomplete');
+            autocomplete = new google.maps.places.Autocomplete(input, {
+                types: ['geocode'],
+                componentRestrictions: { country: 'us' } // Change to your country if needed
+            });
+
+            // This listener will trigger when a place is selected (not on every keyup)
+            autocomplete.addListener('place_changed', fillInAddress);
+        }
+
+        function fillInAddress() {
+            const place = autocomplete.getPlace();
+            // console.log(place.address_components);
+
+            let city = '';
+            let state = '';
+            let zip = '';
+
+            if (place.address_components) {
+                place.address_components.forEach(component => {
+                    const types = component.types;
+                    types.includes('postal_code') === true;
+                    console.log(types.includes('postal_code') === true);
+                    
+                    if (types.includes('postal_code')) {
+                        zip = component.long_name;
+                    }
+                    if (types.includes('administrative_area_level_1')) {
+                        state = component.short_name;
+                    }
+                    if (types.includes('locality')) {
+                        city = component.long_name;
+                    }
+                });
+
+                document.getElementById('city').value = city;
+                // document.getElementById('state').value = state;
+                document.getElementById('zip').value = zip;
+
+                let address_state = document.getElementById('address_state');
+               
+
+                let create = document.createElement('option');
+                create.innerHTML = state;
+                address_state.prepend(create);
+
+                const slim = new SlimSelect({ select: '#address_state' });
+                setTimeout(() => {
+                    slim.setSelected('1'); // Select the newly added top option
+                }, 100);
+            }
+        }
+
+        // This function just helps force place_changed on keyup (optional)
+        function triggerAutocomplete() {
+            // Manually trigger place_changed by simulating 'Enter' key
+            const input = document.getElementById('autocomplete');
+            const e = new KeyboardEvent('keydown', { keyCode: 13 });
+            input.dispatchEvent(e);
+        }
+
+        window.initAutocomplete = initAutocomplete;
+    </script>
 
 </body>
 </html>

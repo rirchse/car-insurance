@@ -95,76 +95,6 @@ function checkPhone(e)
   }
 }
 
-// check zip code
-function ZIPCode()
-{
-let zipcode = document.getElementById('zipcode');
-let result = document.getElementById('result');
-
-fetch(zipcodefile) // Path to your JSON file
-.then(response => response.json()) // Parse JSON response
-.then(data => {
-  data.zipcodes.forEach((zip) =>{
-    if(zip == zipcode.value)
-    {
-      //increase value for every action
-      increasePercent(10);
-      writeYears(null);
-      result.innerHTML = '';
-    }
-    else
-    {
-      result.innerHTML = 'Invalid ZIP Code';
-    }
-    // console.log(zip);
-  });
-  // console.log(data.zipcodes[0]);
-
-}) // Use the data
-.catch(error => console.error('Error loading JSON:', error));
-}
-
-// read years
-function writeYears(e)
-{
-  container.innerHTML = '<div class="step step-2" id="">'+
-  '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
-  '<h2>Vehicle Year</h2>'+
-    '<div class="inner-wrap inner-wrap-btn" id="year">'+
-    '</div>'+
-  '</div>';
-
-fetch(jsonfile) // Path to your JSON file
-.then(response => response.json()) // Parse JSON response
-.then(data => {
-  const years = Object.keys(data);
-  years.sort((a,b) => b - a);
-  years.forEach((b) =>{
-    let btn = document.createElement('button');
-    btn.setAttribute('class', 'input');
-    btn.setAttribute('onclick', 'brands(this)');
-    btn.setAttribute('name', b);
-    btn.innerHTML = b;
-    document.getElementById('year').appendChild(btn);
-  });
-
-  //create back button
-  let back = document.createElement('div');
-  back.setAttribute('class', 'back-to-prev');
-  back.innerHTML = '<button class="back" onclick="createZIPCodePanel()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-  '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
-  '</svg> Back </div>';
-  container.appendChild(back);
-
-  //increase value for every action
-  if(vehicleCounter == 0)
-  {
-    increasePercent(5);
-  }
-}) // Use the data
-.catch(error => console.error('Error loading JSON:', error));
-}
-
 function createZIPCodePanel()
 {
   container.innerHTML = '<div class="step step-1">'+
@@ -184,6 +114,38 @@ function createZIPCodePanel()
     '</div>'+
   '</div>';
 }
+
+// check zip code
+function ZIPCode()
+{
+let zipcode = document.getElementById('zipcode');
+let result = document.getElementById('result');
+
+fetch(zipcodefile) // Path to your JSON file
+.then(response => response.json()) // Parse JSON response
+.then(data => {
+  data.zipcodes.forEach((zip) =>{
+    if(zip == zipcode.value)
+    {
+      //increase value for every action
+      increasePercent(10);
+      // writeYears(null);
+      brands(null);
+      result.innerHTML = '';
+    }
+    else
+    {
+      checkErrInput(zipcode);
+      result.innerHTML = 'Invalid ZIP Code';
+    }
+    // console.log(zip);
+  });
+  // console.log(data.zipcodes[0]);
+
+}) // Use the data
+.catch(error => console.error('Error loading JSON:', error));
+}
+
 //write brand
 function brands(e)
 {
@@ -194,48 +156,89 @@ function brands(e)
     '</div>'+
   '</div>';
 
-fetch(jsonfile) // Path to your JSON file
-.then(response => response.json()) // Parse JSON response
-.then(data => {
-  year = e.getAttribute('name');
-  const brands = Object.keys(data[year]);
-  brands.forEach((b) => {
-    let btn = document.createElement('button');
-    btn.setAttribute('class', 'input');
-    btn.setAttribute('onclick', 'models(this)');
-    btn.setAttribute('name', b);
-    btn.innerHTML = '<div class="input-wrap">'+
-    '<img width="150" height="100" src="img/'+b+'.webp" alt="'+b+'">'+
-      '<span>'+b+'</span>'+
-    '</div>';
-    document.getElementById('make').appendChild(btn);
-  });
+  fetch(jsonfile) // Path to your JSON file
+  .then(response => response.json()) // Parse JSON response
+  .then(data => {
+    const brands = Object.keys(data);
+    brands.forEach((b) => {
+      let btn = document.createElement('button');
+      btn.setAttribute('class', 'input');
+      btn.setAttribute('onclick', 'writeYears(this)');
+      btn.setAttribute('name', b);
+      btn.innerHTML = '<div class="input-wrap">'+
+      '<img width="150" height="100" src="img/'+b+'.webp" alt="'+b+'">'+
+        '<span>'+b+'</span>'+
+      '</div>';
+      document.getElementById('make').appendChild(btn);
+    });
 
-  //create back button
-  let back = document.createElement('div');
-  back.setAttribute('class', 'back-to-prev');
-  back.setAttribute('onclick', 'writeYears(this)');
-  back.innerHTML = '<button class="back" value="back">'+
-  '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-  '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
-  '</svg> Back </button>';
-  container.appendChild(back);  
-  
-  if(e.value != 'back')
-  {
+    //create back button
+    let back = document.createElement('div');
+    back.setAttribute('class', 'back-to-prev');
+    back.setAttribute('onclick', 'createZIPCodePanel(this)');
+    back.innerHTML = '<button class="back" value="back">'+
+    '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+    '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+    '</svg> Back </button>';
+    container.appendChild(back);  
+    
+    if(e.value != 'back')
+    {
+      //increase value for every action
+      if(vehicleCounter == 0)
+      {
+        increasePercent(5);
+      }
+
+      //data push to vehicle array
+      vehicle.push(year);
+
+      // console.log(vehicle);
+    }
+  }) // Use the data
+  .catch(error => console.error('Error loading JSON:', error));
+}
+
+// read years
+function writeYears(e)
+{
+  container.innerHTML = '<div class="step step-2" id="">'+
+  '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
+  '<h2>Vehicle Year</h2>'+
+    '<div class="inner-wrap inner-wrap-btn" id="year">'+
+    '</div>'+
+  '</div>';
+
+  fetch(jsonfile) // Path to your JSON file
+  .then(response => response.json()) // Parse JSON response
+  .then(data => {
+    brand = e.getAttribute('name');
+    const years = Object.keys(data[brand]);
+    years.sort((a,b) => b - a);
+    years.forEach((b) =>{
+      let btn = document.createElement('button');
+      btn.setAttribute('class', 'input');
+      btn.setAttribute('onclick', 'models(this)');
+      btn.setAttribute('name', b);
+      btn.innerHTML = b;
+      document.getElementById('year').appendChild(btn);
+    });
+
+    //create back button
+    let back = document.createElement('div');
+    back.setAttribute('class', 'back-to-prev');
+    back.innerHTML = '<button class="back" onclick="createZIPCodePanel()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+    '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+    '</svg> Back </div>';
+    container.appendChild(back);
+
     //increase value for every action
     if(vehicleCounter == 0)
     {
       increasePercent(5);
     }
-
-    //data push to vehicle array
-    vehicle.push(year);
-
-    // console.log(vehicle);
-  }
-}) // Use the data
-.catch(error => console.error('Error loading JSON:', error));
+  }) // Use the data
+  .catch(error => console.error('Error loading JSON:', error));
 }
 
 //write model
@@ -251,8 +254,8 @@ function models(e)
 fetch(jsonfile) // Path to your JSON file
 .then(response => response.json()) // Parse JSON response
 .then(data => {
-  brand = e.getAttribute('name');
-  const models = Object.values(data[year][brand]);
+  year = e.getAttribute('name');
+  const models = Object.values(data[brand][year]);
   models.forEach((b) =>{
     let btn = document.createElement('button');
     btn.setAttribute('class', 'input');
@@ -264,7 +267,7 @@ fetch(jsonfile) // Path to your JSON file
   //create back button
   let back = document.createElement('div');
   back.setAttribute('class', 'back-to-prev');
-  back.innerHTML = '<button class="back" onclick="brands(this)" name="'+year+'" value="back">'+
+  back.innerHTML = '<button class="back" onclick="writeYears(this)" name="'+year+'" value="back">'+
   '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
   '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
   '</svg> Back';
@@ -456,7 +459,7 @@ function checkAnotherVehicle(e)
   vehicleCounter++;
   if(e.name == 'Yes')
   {
-    writeYears();
+    brands();
   }
 }
 
@@ -578,6 +581,8 @@ function addDriver()
       '</button>'+
   '</div>';
 }
+
+// addDriver();
 
 function driverMaritalStatus(e)
 {
@@ -816,20 +821,20 @@ function incident(e)
   styleLoad();
 
   if(e.value != 'back')
+  {
+    //increase value for every action
+    if(driverCounter == 0)
     {
-      //increase value for every action
-      if(driverCounter == 0)
-      {
-        increasePercent(5);
-      }
-    
-      //birth year push to birthDate array
-      birthDate.push(e.innerHTML);
-
-      driver.push(birthDate);
-    
-      console.log(drivers);
+      increasePercent(5);
     }
+  
+    //birth year push to birthDate array
+    birthDate.push(e.innerHTML);
+
+    driver.push(birthDate);
+  
+    console.log(drivers);
+  }
 }
 
 // incident();
@@ -856,8 +861,11 @@ function checkIncident(e)
 
 function accident(e)
 {
-  container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
-  '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
+  e.parentNode.parentNode.style.display = 'none';
+
+  let htmlForm = document.createElement('div');
+  htmlForm.setAttribute('class', 'step step-number step-content-basic three-items');
+  htmlForm.innerHTML = '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Accident Details</h2>'+
   '<form action=#" id="accidentForm">'+
     '<div class="inner-wrap column-wrap" id="incident">'+
@@ -929,7 +937,7 @@ function accident(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="incident(this)" name="'+brand+'">'+
+      '<button class="back" onclick="getBack(this)" name="'+brand+'">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -940,8 +948,9 @@ function accident(e)
         '</svg>'+
       '</button>'+
     '</div>'+
-    '</form>'+
-  '</div>';
+    '</form>';
+
+    container.appendChild(htmlForm);
 
   styleLoad();
 }
@@ -979,7 +988,7 @@ function checkAccidentForm(e)
       accidentsArr.push(accidentArr);
       accidentArr = [];
 
-      console.log(drivers);
+      // console.log(drivers);
 
       nextIncident(e);
     }
@@ -1307,7 +1316,7 @@ function nextIncident(e)
 
   if(incidents[incidentIndex] == 'accident')
   {
-    accident();
+    accident(e);
     if(e.name == 'back'){
       incidentIndex--;
     }else{
@@ -1316,7 +1325,7 @@ function nextIncident(e)
   }
   else if(incidents[incidentIndex] == 'ticket')
   {
-    ticket();
+    ticket(e);
     if(e.name == 'back'){
       incidentIndex--;
     }else{
@@ -1325,7 +1334,7 @@ function nextIncident(e)
   }
   else if(incidents[incidentIndex] == 'dui')
   {
-    dui();
+    dui(e);
     if(e.name == 'back'){
       incidentIndex--;
     }else{
@@ -1334,7 +1343,7 @@ function nextIncident(e)
   }
   else if(incidents[incidentIndex] == 'sr-22')
   {
-    driverName();
+    driverName(e);
     if(e.name == 'back'){
       incidentIndex--;
     }else{
@@ -1379,15 +1388,15 @@ function ownerAddress(e)
   '<div class="inner-wrap column-wrap">'+
     '<div class="full-width">'+
       '<h4 style="text-align: left;">Street Address</h4>'+
-      '<input type="text" name="address" placeholder="Street Address" onkeyup="checkErrInput(this)">'+
+      '<input id="autocomplete" type="text" name="address" placeholder="Street Address" onkeyup="fillInAddress()">'+
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">Zip Code</h4>'+
-        '<input type="text" name="zip" placeholder="Zip Code" onkeyup="checkErrInput(this)">'+
+        '<input type="text" name="zip" placeholder="Zip Code" onkeyup="checkErrInput(this)" id="zip">'+
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">State</h4>'+
-        '<select name="state" id="address_state" class="select-box-address-state" onchange="checkErr(this)">'+
+        '<select name="state" id="address_state" class="select-box-address-state" onchange="checkErr(this);">'+
             '<option data-placeholder="true"></option>'+
             '<option value="Alabama">Alabama</option>'+
             '<option value="Alaska">Alaska</option>'+
@@ -1408,7 +1417,7 @@ function ownerAddress(e)
       '</div>'+
       '<div class="full-width">'+
           '<h4 style="text-align: left;">City</h4>'+
-          '<input type="text" name="city" placeholder="City" onkeyup="checkErrInput(this)">'+
+          '<input type="text" name="city" placeholder="City" onkeyup="checkErrInput(this)" id="city">'+
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
@@ -1591,4 +1600,10 @@ function thankYou()
       '<a href="#">Business Insurance</a>'+
     '</div>'+
   '</div>';
+}
+
+function getBack(e){
+  console.log(e.parentNode.parentNode);
+  e.parentNode.parentNode.previousElementSibling.style.display = 'block';
+  // e.parentNode.parentNode.style.display = 'none';
 }
