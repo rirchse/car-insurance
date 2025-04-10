@@ -149,6 +149,7 @@ fetch(zipcodefile) // Path to your JSON file
 //write brand
 function brands(e)
 {
+  let number = 0;
   container.innerHTML = '<div class="step step-make">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Vehicle Make</h2>'+
@@ -160,16 +161,19 @@ function brands(e)
   .then(response => response.json()) // Parse JSON response
   .then(data => {
     const brands = Object.keys(data);
-    brands.forEach((b) => {
-      let btn = document.createElement('button');
-      btn.setAttribute('class', 'input');
-      btn.setAttribute('onclick', 'writeYears(this)');
-      btn.setAttribute('name', b);
-      btn.innerHTML = '<div class="input-wrap">'+
-      '<img width="150" height="100" src="img/'+b+'.webp" alt="'+b+'">'+
-        '<span>'+b+'</span>'+
-      '</div>';
-      document.getElementById('make').appendChild(btn);
+    brands.forEach((b, n) => {
+      number += n;
+      if(n < 12) {
+        let btn = document.createElement('button');
+        btn.setAttribute('class', 'input');
+        btn.setAttribute('onclick', 'writeYears(this)');
+        btn.setAttribute('name', b);
+        btn.innerHTML = '<div class="input-wrap">'+
+        '<img width="150" height="100" src="img/'+b+'.webp" alt="'+b+'">'+
+          '<span>'+b+'</span>'+
+        '</div>';
+        document.getElementById('make').appendChild(btn);
+      }
     });
 
     //create back button
@@ -227,7 +231,7 @@ function writeYears(e)
     //create back button
     let back = document.createElement('div');
     back.setAttribute('class', 'back-to-prev');
-    back.innerHTML = '<button class="back" onclick="createZIPCodePanel()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+    back.innerHTML = '<button class="back" onclick="brands(this)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
     '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
     '</svg> Back </div>';
     container.appendChild(back);
@@ -267,7 +271,7 @@ fetch(jsonfile) // Path to your JSON file
   //create back button
   let back = document.createElement('div');
   back.setAttribute('class', 'back-to-prev');
-  back.innerHTML = '<button class="back" onclick="writeYears(this)" name="'+year+'" value="back">'+
+  back.innerHTML = '<button class="back" onclick="writeYears(this)" name="'+brand+'" value="back">'+
   '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
   '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
   '</svg> Back';
@@ -303,7 +307,7 @@ function owner(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="models(this)" name="'+brand+'" value="back">'+
+      '<button class="back" onclick="models(this)" name="'+year+'" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -1241,9 +1245,22 @@ function driverName()
       '<div class="inner-wrap column-wrap" id="incident">'+
       '<div class="full-width">'+
         '<h4 style="text-align: left;">Legal First Name</h4>'+
-        '<input type="text" placeholder="Legal First Name" name="first_name" onkeyup="checkErrInput(this)">'+
+        '<div class="inner-wrap inner-wrap-input">'+
+          '<div class="field-wrap">'+
+            '<div class="input-field-wrap">'+
+              '<input type="text" placeholder="Legal First Name" name="first_name" onkeyup="checkErrInput(this)">'+
+              '<label>First Name</label>'+
+            '</div>'+
+          '</div>'+
+        '</div>'+
         '<h4 style="text-align: left;" class="mt-20">Legal Last Name</h4>'+
-        '<input type="text" placeholder="Legal Last Name" name="last_name" onkeyup="checkErrInput(this)">'+
+        '<div class="inner-wrap inner-wrap-input">'+
+          '<div class="field-wrap">'+
+            '<div class="input-field-wrap">'+
+            '<input type="text" placeholder="Legal Last Name" name="last_name" onkeyup="checkErrInput(this)">'+
+            '<label>Last Name</label>'+
+          '</div>'+
+        '</div>'+
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
