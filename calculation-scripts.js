@@ -1,22 +1,3 @@
-// let vehicles = [];
-// let vehicle = [];
-// let incidents = [];
-// let incidentsArr = []; //incident main array
-// let insuranceArr = [];
-// let drivers = [];
-// let driver = [];
-// let birthDate = [];
-// let accidentsArr = [];
-// let accidentArr = [];
-// let ticketsArr = [];
-// let ticketArr = [];
-// let duisArr = [];
-// let duiArr = [];
-// let sr22sArr = [];
-// let sr22Arr = [];
-// let ownerArr = [];
-// let addressArr = [];
-
 let formdata = {
   vehicles: {
     list: [],
@@ -1458,7 +1439,7 @@ function ownerAddress(e)
   styleLoad();
 }
 
-// ownerAddress('e');
+ownerAddress('e');
 
 /** -------------------- check accident form ------------ */
 function checkAddressForm(e)
