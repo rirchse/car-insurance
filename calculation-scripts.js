@@ -168,15 +168,18 @@ function brands(e)
     const brands = Object.keys(data);
     brands.forEach((b, n) => {
       number += n;
-      if(n < 12) {
-        let btn = document.createElement('button');
-        btn.setAttribute('class', 'input');
-        btn.setAttribute('onclick', 'writeYears(this)');
-        btn.setAttribute('name', b);
-        btn.innerHTML = '<div class="input-wrap">'+
+      let btn = document.createElement('button');
+      btn.setAttribute('class', 'input');
+      btn.setAttribute('onclick', 'writeYears(this)');
+      btn.setAttribute('name', b);
+      btn.innerHTML = '<div class="input-wrap">'+
         '<img width="150" height="100" src="img/'+b+'.webp" alt="'+b+'">'+
-          '<span>'+b+'</span>'+
-        '</div>';
+        '<span>'+b+'</span>'+
+      '</div>';
+
+      if (e != null && e.value == 'more') {
+        document.getElementById('make').appendChild(btn);
+      } else if (e == null && n < 12 || e != null && n < 12) {
         document.getElementById('make').appendChild(btn);
       }
     });
@@ -184,14 +187,14 @@ function brands(e)
     let moreBtn = document.createElement('div');
     moreBtn.setAttribute('class', 'more-options inner-wrap-btn');
     moreBtn.innerHTML = 
-      '<button class="show-more">'+
-          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-              '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
+      '<button class="show-more" name="more" onclick="brands(this)">'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+          '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
           '</svg>'+
-          'Load More...'+
+        'Load More...'+
       '</button>';
 
-    if(number > 12)
+    if(number > 12 && e == null || e.value != 'more' && number > 12 )
     {
       container.appendChild(moreBtn);
     }
@@ -199,8 +202,7 @@ function brands(e)
     //create back button
     let back = document.createElement('div');
     back.setAttribute('class', 'back-to-prev');
-    back.setAttribute('onclick', 'createZIPCodePanel(this)');
-    back.innerHTML = '<button class="back" value="back">'+
+    back.innerHTML = '<button class="back" value="back" onclick="createZIPCodePanel(this)">'+
     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
     '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
     '</svg> Back </button>';
@@ -221,6 +223,7 @@ function brands(e)
 // read years
 function writeYears(e)
 {
+  let number = 0;
   container.innerHTML = '<div class="step step-2" id="">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Vehicle Year</h2>'+
@@ -234,14 +237,36 @@ function writeYears(e)
     brand = e.getAttribute('name');
     const years = Object.keys(data[brand]);
     years.sort((a,b) => b - a);
-    years.forEach((b) =>{
+    years.forEach((b, n) => {
+      number += n;
       let btn = document.createElement('button');
       btn.setAttribute('class', 'input');
       btn.setAttribute('onclick', 'models(this)');
       btn.setAttribute('name', b);
       btn.innerHTML = b;
-      document.getElementById('year').appendChild(btn);
+
+      if (e.value == 'more') {
+        document.getElementById('year').appendChild(btn);
+      } else if (e.value != 'more' && n < 12) {
+        document.getElementById('year').appendChild(btn);
+      }
+      
     });
+    
+    let moreBtn = document.createElement('div');
+    moreBtn.setAttribute('class', 'more-options inner-wrap-btn');
+    moreBtn.innerHTML = 
+      '<button class="show-more" value="more" onclick="writeYears(this)" name="'+brand+'">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+              '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
+          '</svg>'+
+          'Load More...'+
+      '</button>';
+
+    if (e.value != 'more' && number > 12)
+    {
+      container.appendChild(moreBtn);
+    }
 
     //create back button
     let back = document.createElement('div');
@@ -265,6 +290,7 @@ function writeYears(e)
 //write model
 function models(e)
 {
+  let number = 0;
   container.innerHTML = '<div class="step step-make">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Vehicle Model</h2>'+
@@ -277,14 +303,35 @@ fetch(jsonfile) // Path to your JSON file
 .then(data => {
   year = e.getAttribute('name');
   const models = Object.values(data[brand][year]);
-  models.forEach((b) =>{
+  models.forEach((b, n) => {
+    number += n;
     let btn = document.createElement('button');
     btn.setAttribute('class', 'input');
     btn.setAttribute('name', b);
     btn.setAttribute('onclick', 'owner(this)');
     btn.innerHTML = b;
-    document.getElementById('model').appendChild(btn);
+
+    if (e.value == 'more') {
+      document.getElementById('model').appendChild(btn);
+    } else if (e.value != 'more' && n < 12) {
+      document.getElementById('model').appendChild(btn);
+    }
   });
+    
+  let moreBtn = document.createElement('div');
+  moreBtn.setAttribute('class', 'more-options inner-wrap-btn');
+  moreBtn.innerHTML = 
+    '<button class="show-more" value="more" onclick="models(this)" name="'+year+'">'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+            '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
+        '</svg>'+
+        'Load More...'+
+    '</button>';
+
+  if (e.value != 'more' && number > 12)
+  {
+    container.appendChild(moreBtn);
+  }
 
   //create back button
   let back = document.createElement('div');
@@ -1449,9 +1496,10 @@ function ownerAddress()
   '</div>';
 
   styleLoad();
+  initAutocomplete();
 }
 
-ownerAddress('e');
+// ownerAddress('e');
 
 /** -------------------- check accident form ------------ */
 function checkAddressForm(e)
