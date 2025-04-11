@@ -24,11 +24,8 @@ let formdata = {
   }
 };
 
-let year = '';
-let brand = '';
-let model = '';
-let vehicleCounter = 0;
-let driverCounter = 0;
+let year = '', brand = '', model = '';
+let vehicleCounter = 0, driverCounter = 0;
 let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'];
 
 
@@ -183,6 +180,21 @@ function brands(e)
         document.getElementById('make').appendChild(btn);
       }
     });
+
+    let moreBtn = document.createElement('div');
+    moreBtn.setAttribute('class', 'more-options inner-wrap-btn');
+    moreBtn.innerHTML = 
+      '<button class="show-more">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+              '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
+          '</svg>'+
+          'Load More...'+
+      '</button>';
+
+    if(number > 12)
+    {
+      container.appendChild(moreBtn);
+    }
 
     //create back button
     let back = document.createElement('div');
@@ -1381,10 +1393,10 @@ function anotherDriver()
 // anotherDriver();
 
 /** ------------------ Owner Details -------------------- */
-function ownerAddress(e)
+function ownerAddress()
 {
   container.innerHTML = '<div class="step step-number step-content-basic">'+
-  '<h2>Current Address-</h2>'+
+  '<h2>Current Address</h2>'+
   '<form action="#" id="addressForm">'+
   '<div class="inner-wrap column-wrap">'+
     '<div class="full-width">'+
@@ -1439,7 +1451,7 @@ function ownerAddress(e)
   styleLoad();
 }
 
-// ownerAddress('e');
+ownerAddress('e');
 
 /** -------------------- check accident form ------------ */
 function checkAddressForm(e)
