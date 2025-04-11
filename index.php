@@ -61,17 +61,16 @@
                 // document.getElementById('state').value = state;
                 document.getElementById('zip').value = zip;
 
-                // let address_state = document.getElementById('address_state');
-               
+                let address_state = document.getElementById('address_state');               
 
-                // let create = document.createElement('option');
-                // create.innerHTML = state;
-                // address_state.prepend(create);
+                let create = document.createElement('option');
+                create.innerHTML = state;
+                address_state.prepend(create);
 
-                // const slim = new SlimSelect({ select: '#address_state' });
-                // setTimeout(() => {
-                //     slim.setSelected('1'); // Select the newly added top option
-                // }, 100);
+                const slim = new SlimSelect({ select: '#address_state' });
+                setTimeout(() => {
+                    slim.setSelected('1'); // Select the newly added top option
+                }, 100);
             }
         }
 
