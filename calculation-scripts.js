@@ -1439,7 +1439,7 @@ function ownerAddress(e)
   styleLoad();
 }
 
-ownerAddress('e');
+// ownerAddress('e');
 
 /** -------------------- check accident form ------------ */
 function checkAddressForm(e)
