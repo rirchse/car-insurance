@@ -272,7 +272,7 @@
         const zipcodefile = 'zipcode.json?v=1.10';
         const jsonfile = 'merged_make_year_model.json';
       </script>
-      <script src="calculation-scripts.js?v=0.130"></script>
+      <script src="calculation-scripts.js?v=0.140"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
