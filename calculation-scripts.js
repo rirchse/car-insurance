@@ -24,6 +24,15 @@ let formdata = {
   }
 };
 
+
+// var forward = [];
+// var backward = [];
+
+let incidents = {
+  forward : [],
+  backward : []
+};
+
 let year = '', brand = '', model = '';
 let vehicleCounter = 0, driverCounter = 0;
 let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'];
@@ -36,6 +45,9 @@ let percent_number = document.getElementById('percent-number');
 function increasePercent(increase)
 {   
   let number = Number(percent_number.getAttribute('number')) + increase;
+  if(number >= 100){
+    number = 100;
+  }
   percent_number.innerHTML = number+'%';
   percent_number.style.left = number+'%';
   percent_line.style.width = number+'%';
@@ -213,7 +225,7 @@ function brands(e)
       //increase value for every action
       if(vehicleCounter == 0)
       {
-        increasePercent(5);
+        increasePercent(10);
       }
     }
   }) // Use the data
@@ -279,7 +291,7 @@ function writeYears(e)
     //increase value for every action
     if(vehicleCounter == 0)
     {
-      increasePercent(5);
+      increasePercent(10);
     }
     formdata.vehicles.current.push(brand);
     console.log(formdata);
@@ -347,7 +359,7 @@ fetch(jsonfile) // Path to your JSON file
     //increase value for every action
     if(vehicleCounter == 0)
     {
-      increasePercent(5);
+      increasePercent(10);
     }
 
     formdata.vehicles.current.push(year);
@@ -878,7 +890,7 @@ function incident(e)
 
   styleLoad();
 
-  if(e.value != 'back')
+  if(e != null && e.value != 'back')
   {
     //increase value for every action
     if(driverCounter == 0)
@@ -888,7 +900,6 @@ function incident(e)
   
     //birth year push to birthDate array
     formdata.drivers.current.dob.push(e.innerHTML);
-  
     console.log(formdata);
   }
 }
@@ -896,13 +907,14 @@ function incident(e)
 // incident();
 
 
-/** check incidents */
+/** selects incidents parts  */
 function checkIncident(e)
 {
   let parts = formdata.drivers.current.incidents.part;
   if(e.value == 'Yes')
   {
     parts.push(e.name);
+    incidents.forward.push(e.name);
   }
   else
   {
@@ -910,19 +922,16 @@ function checkIncident(e)
     if(index !== -1)
     {
       parts.splice(index, 1);
+      incidents.forward.splice(index, 1);
     }
   }
-
-  console.log(parts);
+  console.log(incidents.forward);
 }
 
 function accident(e)
 {
-  e.parentNode.parentNode.style.display = 'none';
-
-  let htmlForm = document.createElement('div');
-  htmlForm.setAttribute('class', 'step step-number step-content-basic three-items');
-  htmlForm.innerHTML = '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
+  container.innerHTML ='<div class="step step-number step-content-basic three-items">'+
+  '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Accident Details</h2>'+
   '<form action=#" id="accidentForm">'+
     '<div class="inner-wrap column-wrap" id="incident">'+
@@ -994,20 +1003,22 @@ function accident(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="getBack(this)" name="'+brand+'">'+
+      '<button type="button" class="back" onclick="incident(this)" name="'+brand+'" value="accident">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-      '<button class="next" onclick="checkAccidentForm(this)" name="1"> Next'+
+      '<button type="submit" class="next" onclick="checkAccidentForm(this)" name="1"> Next'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
       '</button>'+
     '</div>'+
-    '</form>';
+    '</form>'+
+    '</div>';
 
-    container.appendChild(htmlForm);
+    // container.innerHTML = htmlForm;
+    // container.appendChild(htmlForm);
 
   styleLoad();
 }
@@ -1040,6 +1051,9 @@ function checkAccidentForm(e)
       accidents.push(month.value, year.value, description.value, fault.value, damage.value);
 
       console.log(accidents);
+
+      //push accident key to the backward object
+      incidents.backward.push('accident');
 
       nextIncident(e);
     }
@@ -1101,7 +1115,6 @@ function ticket(e)
           '<option value="Failure To Signal">Failure To Signal</option>'+
           '<option value="Failure To Stop">Failure To Stop</option>'+
           '<option value="...">...</option>'+
-          '<option value="...">...</option>'+
       '</select>'+
   '</div>'+
   '<div class="more-options inner-wrap-btn">'+
@@ -1114,12 +1127,12 @@ function ticket(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="accident(this)" name="back">'+
+      '<button type="button" class="back" onclick="backIncident(this)" name="back" value="ticket">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-      '<button class="next" onclick="checkTicketForm(this)" name="2"> Next'+
+      '<button type="submit" class="next" onclick="checkTicketForm(this)" name="2"> Next'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
@@ -1153,6 +1166,8 @@ function checkTicketForm(e)
       tickets.push(month.value, year.value, description.value);
 
       console.log(tickets);
+    
+      incidents.backward.push('ticket');
 
       nextIncident(e);
     }
@@ -1199,21 +1214,20 @@ function dui(e)
       '<h4 style="text-align: left;">State</h4>'+
       '<select name="state" id="dui_state" class="select-box-dui-state" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="Careless Driving">Careless Driving</option>'+
-          '<option value="Carpool Lane Violaion">Carpool Lane Violaion</option>'+
-          '<option value="Child Not In Car Seat">Child Not In Car Seat</option>'+
-          '<option value="Defective Equipment">Defective Equipment</option>'+
-          '<option value="Defective Vehicle Reduced Violation">Defective Vehicle Reduced Violation</option>'+
-          '<option value="Driving Without A license">Driving Without A license</option>'+
-          '<option value="Excessive Noise">Excessive Noise</option>'+
-          '<option value="Exhibition Driving">Exhibition Driving</option>'+
-          '<option value="Expired Drivers License">Expired Drivers License</option>'+
-          '<option value="Expired Emissions">Expired Emissions</option>'+
-          '<option value="Expired Registration">Expired Registration</option>'+
-          '<option value="Failure To Obey Traffic Signal">Failure To Obey Traffic Signal</option>'+
-          '<option value="Failure To Signal">Failure To Signal</option>'+
-          '<option value="Failure To Stop">Failure To Stop</option>'+
-          '<option value="...">...</option>'+
+          '<option value="Alabama">Alabama</option>'+
+          '<option value="Alaska">Alaska</option>'+
+          '<option value="Arizona">Arizona</option>'+
+          '<option value="Arkansas">Arkansas</option>'+
+          '<option value="California">California</option>'+
+          '<option value="Colorado">Colorado</option>'+
+          '<option value="Connecticut">Connecticut</option>'+
+          '<option value="Delaware">Delaware</option>'+
+          '<option value="Florida">Florida</option>'+
+          '<option value="Georgia">Georgia</option>'+
+          '<option value="Hawaii">Hawaii</option>'+
+          '<option value="Idaho">Idaho</option>'+
+          '<option value="Illinois">Illinois</option>'+
+          '<option value="Indiana">Indiana</option>'+
           '<option value="...">...</option>'+
       '</select>'+
   '</div>'+
@@ -1227,12 +1241,12 @@ function dui(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="ticket(this)" name="back">'+
+      '<button type="button" class="back" onclick="backIncident(this)" name="back" value="dui">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-      '<button class="next" onclick="checkDuiForm(this)" name="3"> Next'+
+      '<button type="submit" class="next" onclick="checkDuiForm(this)" name="3"> Next'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
@@ -1269,6 +1283,8 @@ function checkDuiForm(e)
 
       console.log(dui);
 
+      incidents.backward.push('dui');
+
       nextIncident(e);
     }
 
@@ -1303,12 +1319,12 @@ function driverName()
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
-      '<button class="back" onclick="dui(this)" name="back">'+
+      '<button type="button" class="back" onclick="backIncident(this)" name="back" value="sr-22">'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
-      '<button class="next" onclick="checkNameForm(this)" name="4"> Next'+
+      '<button type="submit" class="next" onclick="checkNameForm(this)" name="4"> Next'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />'+
         '</svg>'+
@@ -1340,6 +1356,8 @@ function checkNameForm(e)
 
       console.log(sr22);
 
+      incidents.backward.push('sr-22');
+
       nextIncident(e);
 
       //increase value for every action
@@ -1353,58 +1371,71 @@ function checkNameForm(e)
 }
 
 /** ------------------- next incident ------------ */
-let incidentIndex = 0;
 function nextIncident(e)
 {
-  let parts = formdata.drivers.current.incidents.part;
-  if(e.name == 'back'){
-    incidentIndex--;
-  }
-
-  let order = ['accident', 'ticket', 'dui', 'sr-22'];
-  parts.sort((a, b) => order.indexOf(a) - order.indexOf(b));
-
-  if(parts[incidentIndex] == 'accident')
+  if(incidents.forward.includes('accident'))
   {
     accident(e);
-    if(e.name == 'back'){
-      incidentIndex--;
-    }else{
-      incidentIndex++;
-    }
+    incidents.forward.splice(incidents.forward.indexOf('accident'), 1);
   }
-  else if(parts[incidentIndex] == 'ticket')
+  else if(incidents.forward.includes('ticket'))
   {
     ticket(e);
-    if(e.name == 'back'){
-      incidentIndex--;
-    }else{
-      incidentIndex++;
-    }
+    incidents.forward.splice(incidents.forward.indexOf('ticket'), 1);
   }
-  else if(parts[incidentIndex] == 'dui')
+  else if(incidents.forward.includes('dui'))
   {
     dui(e);
-    if(e.name == 'back'){
-      incidentIndex--;
-    }else{
-      incidentIndex++;
-    }
+    incidents.forward.splice(incidents.forward.indexOf('dui'), 1);
   }
-  else if(parts[incidentIndex] == 'sr-22')
+  else if(incidents.forward.includes('sr-22'))
   {
     driverName(e);
-    if(e.name == 'back'){
-      incidentIndex--;
-    }else{
-      incidentIndex++;
-    }
+    incidents.forward.splice(incidents.forward.indexOf('sr-22'), 1);
   }
   else
   {
     anotherDriver();
   }
-  // console.log(incidentIndex);
+  
+  console.log(incidents);
+}
+
+/** ------------------- back incident ------------ */
+function backIncident(e)
+{
+  console.log(incidents.forward);
+  
+  if(incidents.backward.includes('sr-22'))
+  {
+    driverName(e);
+    incidents.forward.push(e.value);
+    incidents.backward.splice(incidents.backward.indexOf('sr-22'), 1);
+  }
+  else if(incidents.backward.includes('dui'))
+  {
+    dui(e);
+    incidents.forward.push(e.value);
+    incidents.backward.splice(incidents.backward.indexOf('dui'), 1);
+  }
+  else if(incidents.backward.includes('ticket'))
+  {
+    ticket(e);
+    incidents.forward.push(e.value);
+    incidents.backward.splice(incidents.backward.indexOf('ticket'), 1);
+  }
+  else if(incidents.backward.includes('accident'))
+  {
+    accident(e);
+    incidents.forward.push(e.value);
+    incidents.backward.splice(incidents.backward.indexOf('accident'), 1);
+  }
+  else
+  {
+    incident();
+  }
+
+  console.log(incidents);
 }
 
 function anotherDriver()
@@ -1418,7 +1449,7 @@ function anotherDriver()
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="driverName(this)" name="'+brand+'">'+
+      '<button class="back" onclick="backIncident(this)" name="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -1442,6 +1473,7 @@ function anotherDriver()
 /** ------------------ Owner Details -------------------- */
 function ownerAddress()
 {
+  // window.initAutocomplete = initAutocomplete;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Current Address</h2>'+
   '<form action="#" id="addressForm">'+
@@ -1625,12 +1657,6 @@ function checkQuote(e)
   {
     formdata.owner.contact.push(phone.value);
 
-    // let data = {
-    //   'vehicles': vehicles,
-    //   'drivers': drivers,
-    //   'owner': ownerArr
-    // }
-
     // console.log(data);
     thankYou();
 
@@ -1658,8 +1684,8 @@ function thankYou()
   '</div>';
 }
 
-function getBack(e){
-  console.log(e.parentNode.parentNode);
-  e.parentNode.parentNode.previousElementSibling.style.display = 'block';
-  // e.parentNode.parentNode.style.display = 'none';
-}
+// function getBack(e){
+//   console.log(e.parentNode.parentNode);
+//   e.parentNode.parentNode.previousElementSibling.style.display = 'block';
+//   // e.parentNode.parentNode.style.display = 'none';
+// }
