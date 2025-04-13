@@ -92,7 +92,7 @@
 <!-- /dataset.json -->
     <div class="wrap">
         <header class="container">
-            <img src="https://darkslateblue-mouse-951357.hostingersite.com/wp-content/uploads/2025/03/Main-Logo-EYB-SVG.png" alt="logo" class="logo-img">
+            <img src="logo-erase-your-bill.png" alt="logo" class="logo-img">
         </header>
         <div class="progess-bar">
             <div id="percent-line" class="progess-active-line" style="width: 25%;"></div>
