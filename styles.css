@@ -50,8 +50,7 @@ button{
   background: #ddd;
   position: relative;
   height: 2px;
-  width: 100%;
-  margin: 25px 0;
+  margin: 25px 15% 50px;
 }
 .progress-indicator {
   position: absolute;
@@ -60,11 +59,11 @@ button{
   transform: translateY(-50%);
   background: #fff;
   box-shadow: 0 6px 25px 0px rgb(154 159 165);
-  padding: 10px 5px;
+  padding: 10px 10px;
   border-radius: 25px;
   color: #3d99fe;
-  margin-left: -30px;
   width: 60px;
+  margin-left: -30px;
   text-align: center;
 }
 .progess-active-line {
@@ -357,13 +356,15 @@ display: block;
   margin-top: 40px;
   margin-bottom: 25px;
 }
-.footer-wrap a {
+a {
   text-decoration: none;
-  margin: 5px 10px;
   color: #0070e9;
 }
-.footer-wrap a:hover, .footer-wrap a:focus {
+ a:hover, a:focus {
   color: #000;
+}
+.footer-wrap a {
+  margin: 5px 10px;
 }
 .form-wrap {
   min-height: 450px;
@@ -421,7 +422,7 @@ hr.thanks-separator {
   opacity: .5;
   font-size: 16px;
 }
-.input-field-wrap input:focus ~ label, .input-field-wrap input:not(:focus):valid ~ label {
+.input-field-wrap input:focus + label, .input-field-wrap input:not(:focus):valid ~ label{
   top: -12px;
   left: 6px;
   opacity: 1;
@@ -429,9 +430,53 @@ hr.thanks-separator {
   padding: 0 4px;
   font-size: 14px
 }
+input::placeholder {
+  color: transparent;
+}
+input:focus::placeholder {
+  color: #ddd;
+}
+.agent-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+svg.agent-checkbox {
+  width: 24px;
+  height: 24px;
+  fill: #0070e9;
+  margin-right: 6px;
+}
+.agent-wrap p {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+.agent-wrap img {
+  height: 60px;
+  width: auto;
+  max-width: 60px;
+  border-radius: 50px;
+}
+.tcpa-wrap {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 30px;
+}
 
 /*mobile fixes*/
 @media only screen and (max-width: 767px){
+  .progess-bar {
+    background: #ddd;
+    position: relative;
+    height: 2px;
+    margin: 25px 2% 50px;
+  }
   .inner-wrap-btn button {
     flex: 0 0 25%;
     max-width: calc( 25% - 15px);

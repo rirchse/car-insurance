@@ -94,9 +94,11 @@
         <header class="container">
             <img src="logo-erase-your-bill.png" alt="logo" class="logo-img">
         </header>
-        <div class="progess-bar">
-            <div id="percent-line" class="progess-active-line" style="width: 25%;"></div>
-            <div id="percent-number" class="progress-indicator" style="left: 25%;" number="25">25%</div>
+        <div class="container">
+            <div class="progess-bar">
+                <div id="percent-line" class="progess-active-line" style="width: 25%;"></div>
+                <div id="percent-number" class="progress-indicator" style="left: 25%;" number="25">25%</div>
+            </div>
         </div>
         <div class="container">
             <div class="form-wrap" id="container">

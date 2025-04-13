@@ -11,9 +11,7 @@
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet">
     
-    
     <style>
- 
         .logo-img {
             max-width: 200px;
         }
@@ -55,8 +53,7 @@
             background: #ddd;
             position: relative;
             height: 2px;
-            width: 100%;
-            margin: 25px 0 50px;
+            margin: 25px 15% 50px;
         }
         .progress-indicator {
             position: absolute;
@@ -65,9 +62,12 @@
             transform: translateY(-50%);
             background: #fff;
             box-shadow: 0 6px 25px 0px rgb(154 159 165);
-            padding: 10px 15px;
+            padding: 10px 10px;
             border-radius: 25px;
             color: #3d99fe;
+            width: 60px;
+            margin-left: -30px;
+            text-align: center;
         }
         .progess-active-line {
             position: absolute;
@@ -377,7 +377,44 @@
             padding: 0 4px;
             font-size: 14px
         }
-     
+        input::placeholder {
+            color: transparent;
+        }
+        input:focus::placeholder {
+            color: #ddd;
+        }
+        .agent-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        svg.agent-checkbox {
+            width: 24px;
+            height: 24px;
+            fill: #0070e9;
+            margin-right: 6px;
+        }
+        .agent-wrap p {
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+        .agent-wrap img {
+            height: 60px;
+            width: auto;
+            max-width: 60px;
+            border-radius: 50px;
+        }
+        .tcpa-wrap {
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
@@ -385,9 +422,11 @@
         <header class="container">
             <img src="https://darkslateblue-mouse-951357.hostingersite.com/wp-content/uploads/2025/03/Main-Logo-EYB-SVG.png" alt="logo" class="logo-img">
         </header>
-        <div class="progess-bar">
-            <div class="progess-active-line" style="width: 25%;"></div>
-            <div class="progress-indicator" style="left: 25%;">25%</div>
+        <div class="container">
+            <div class="progess-bar">
+                <div class="progess-active-line" style="width: 25%;"></div>
+                <div class="progress-indicator" style="left: 25%;">25%</div>
+            </div>
         </div>
         <div class="container">
             <div class="form-wrap">
@@ -1556,18 +1595,46 @@
                     </div>
 
                     <div class="step step-number step-content-basic">
-                        <h2>Last Step, Get Your Quotes</h2>
+                        <h5 style="color: #0070e9; text-transform: uppercase;">Last Step: Phone Number</h5>
+                        <h2 style="text-transform: uppercase;">Contact Number</h2>
                         <div class="inner-wrap column-wrap">
                             <div class="full-width">
-                                <h4 style="text-align: left;">Phone Number</h4>
-                                <input type="text" placeholder="Phone Number">
+                                <!-- <input type="text" placeholder="Phone Number">
                                 <input type="text" placeholder="Phone Number" class="error">
-                                <span class="error-msg">Invalid Phone Number</span>
+                                <span class="error-msg">Invalid Phone Number</span> -->
+                                <div class="input-field-wrap">
+                                    <input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" required>
+                                    <label for="">Phone number</label>
+                                </div>
+                                <span class="error-msg"></span>
                             </div>
                         </div>
                         <div class="field-wrap">
                             <button class="action-btn btn">Get My Quote</button>
                         </div>
+                        <div class="agent-wrap">
+                            <img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">
+                            <p>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="agent-checkbox" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+                                <span>Your car insurance quotes are ready</span>
+                            </p>
+                            
+                        </div>
+                    </div>
+                    <div class="tcpa-wrap">
+                        <p>
+                            We take your privacy seriously. By clicking the "Submit" button above, I give my express written
+                            consent by electronic signature to [Publisher Name] and its <a href="#">Marketing Partners</a>, agents, affiliates or
+                            third parties acting on its behalf to receive marketing communications, or to obtain additional
+                            information for such purposes via telephone calls or SMS/MMS text message, calls using a live
+                            agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or
+                            email from this website and/or partner companies or their agents at the landline or wireless number I
+                            provided, even if my number/email is currently listed on any federal, state, or company Do Not
+                            Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not
+                            required as a condition of purchasing any goods or services and that I may revoke my consent at any
+                            time. I also acknowledge that I am at least 18 years of age and I have read and agree to this
+                            website's <a href="#">Privacy Policy</a> and <a href="#">Terms and Conditions</a>.
+                        </p>
                     </div>
 
 
