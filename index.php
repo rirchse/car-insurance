@@ -270,12 +270,12 @@
     <!-- <?php echo $_SERVER["HTTP_HOST"]; ?> -->
     
       <?php if($_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
-      <link rel="stylesheet" href="styles.css">
+      <link rel="stylesheet" href="styles.css?v=0.101">
       <script>
         const zipcodefile = 'zipcode.json?v=1.10';
         const jsonfile = 'merged_make_year_model.json';
       </script>
-      <script src="calculation-scripts.js?v=0.180"></script>
+      <script src="calculation-scripts.js?v=0.190"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">

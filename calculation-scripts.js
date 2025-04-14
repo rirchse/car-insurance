@@ -195,7 +195,7 @@ function brands(e)
       let btn = document.createElement('button');
       btn.setAttribute('class', 'input');
       if(formdata.vehicles.current[0] == b){
-        btn.setAttribute('class', 'active');
+        btn.setAttribute('class', 'input active');
       }
       btn.setAttribute('onclick', 'checkBrands(this)');
       btn.setAttribute('name', b);
@@ -284,7 +284,7 @@ function writeYears(e)
       let btn = document.createElement('button');
       btn.setAttribute('class', 'input');
       if(formdata.vehicles.current[1] == b){
-        btn.setAttribute('class', 'active');
+        btn.setAttribute('class', 'input active');
       }
       btn.setAttribute('onclick', 'checkYears(this)');
       btn.setAttribute('name', b);
@@ -368,7 +368,7 @@ fetch(jsonfile) // Path to your JSON file
     let btn = document.createElement('button');
     btn.setAttribute('class', 'input');
     if(formdata.vehicles.current[2] == b){
-      btn.setAttribute('class', 'active');
+      btn.setAttribute('class', 'input active');
     }
     btn.setAttribute('name', b);
     btn.setAttribute('onclick', 'checkModel(this)');
@@ -853,7 +853,7 @@ function birthDay(e)
     let day = document.createElement('button');
     day.setAttribute('class', 'input');
     if(dob[1] == d){
-      day.setAttribute('class', 'active');
+      day.setAttribute('class', 'input active');
     }
     day.setAttribute('onclick', 'birthYear(this)');
     day.value = d;
@@ -898,7 +898,7 @@ function birthYear(e)
     let y = document.createElement('button');
     y.setAttribute('class', 'input');
     if(dob[2] == d){
-      y.setAttribute('class', 'active');
+      y.setAttribute('class', 'input active');
     }
     y.setAttribute('onclick', 'incident(this)');
     y.innerHTML = d;
@@ -1598,6 +1598,7 @@ function checkAnotherDriver(e)
   if(e.value == 'YES')
   {
     driverCounter++;
+
     formdata.drivers.current = {
       names: [],
       general: [],
@@ -1756,7 +1757,7 @@ function emailAddress(e)
     '<div class="inner-wrap column-wrap>'+
       '<div class="full-width">'+
         '<h4 style="text-align: left;">Email Address</h4>'+
-        '<input type="email" id="email" placeholder="Email Address" onkeyup="checkEmail(this)" value=" '+email+'">'+
+        '<input type="email" id="email" placeholder="Email Address" onkeyup="checkEmail(this)" value=" '+email+'" required>'+
         // '<input type="email" placeholder="Email Address" class="error">'+
         // '<span class="error-msg">Invalid Email Address</span>'+
       '</div>'+
@@ -1802,7 +1803,7 @@ function getQuote(e)
       '<div class="inner-wrap column-wrap>'+
         '<div class="full-width">'+
           '<h4 style="text-align: left;">Phone Number</h4>'+
-          '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" value=" '+phone+'">'+
+          '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" value=" '+phone+'" required>'+
           // '<input type="text" placeholder="Phone Number" class="error">'+
           '<span class="error-msg"></span>'+
         '</div>'+
