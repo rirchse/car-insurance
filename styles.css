@@ -500,3 +500,4 @@ svg.agent-checkbox {
 /* .table th{text-align: left;} */
 .table th, .table td{ border:1px solid #ddd; padding:5px}
 .error {color:red}
+.active {background: #3d9afe;}

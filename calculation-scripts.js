@@ -6,14 +6,14 @@ let formdata = {
   drivers: {
     list: [],
     current: {
+      names: [],
       general: [],
       dob: [],
       incidents: {
         part:[],
         accident: [],
         ticket: [],
-        dui: [],
-        sr22: []
+        dui: []
       }
     }
   },
@@ -23,10 +23,6 @@ let formdata = {
     contact: []
   }
 };
-
-
-// var forward = [];
-// var backward = [];
 
 let incidents = {
   forward : [],
@@ -128,6 +124,14 @@ function createZIPCodePanel()
       '<div class="field-wrap">'+
         '<button class="action-btn btn" onclick="ZIPCode()">Get Started Now</button>'+
       '</div>'+
+      '<div class="more-options inner-wrap-btn">'+
+        '<button class="show-more" onclick="brands(this)">'+
+          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+              '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
+          '</svg>'+
+          'Continue...'+
+        '</button>'+
+      '</div>'+
     '</div>'+
   '</div>';
 }
@@ -182,6 +186,9 @@ function brands(e)
       number += n;
       let btn = document.createElement('button');
       btn.setAttribute('class', 'input');
+      if(formdata.vehicles.current[0] == b){
+        btn.setAttribute('class', 'active');
+      }
       btn.setAttribute('onclick', 'writeYears(this)');
       btn.setAttribute('name', b);
       btn.innerHTML = '<div class="input-wrap">'+
@@ -225,7 +232,7 @@ function brands(e)
       //increase value for every action
       if(vehicleCounter == 0)
       {
-        increasePercent(10);
+        increasePercent(15);
       }
     }
   }) // Use the data
@@ -253,6 +260,9 @@ function writeYears(e)
       number += n;
       let btn = document.createElement('button');
       btn.setAttribute('class', 'input');
+      if(formdata.vehicles.current[1] == b){
+        btn.setAttribute('class', 'active');
+      }
       btn.setAttribute('onclick', 'models(this)');
       btn.setAttribute('name', b);
       btn.innerHTML = b;
@@ -291,10 +301,11 @@ function writeYears(e)
     //increase value for every action
     if(vehicleCounter == 0)
     {
-      increasePercent(10);
+      increasePercent(15);
     }
-    formdata.vehicles.current.push(brand);
-    console.log(formdata);
+    // store brand to the object
+    formdata.vehicles.current[0] = brand;
+    console.log(formdata.vehicles.current);
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
 }
@@ -319,6 +330,9 @@ fetch(jsonfile) // Path to your JSON file
     number += n;
     let btn = document.createElement('button');
     btn.setAttribute('class', 'input');
+    if(formdata.vehicles.current[2] == b){
+      btn.setAttribute('class', 'active');
+    }
     btn.setAttribute('name', b);
     btn.setAttribute('onclick', 'owner(this)');
     btn.innerHTML = b;
@@ -359,11 +373,11 @@ fetch(jsonfile) // Path to your JSON file
     //increase value for every action
     if(vehicleCounter == 0)
     {
-      increasePercent(10);
+      increasePercent(15);
     }
-
-    formdata.vehicles.current.push(year);
-    console.log(formdata);
+    // store year to the vehicle object
+    formdata.vehicles.current[1] = year;
+    console.log(formdata.vehicles.current);
   }
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
@@ -371,14 +385,15 @@ fetch(jsonfile) // Path to your JSON file
 
 function owner(e)
 {
+  let own = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Vehicle Ownership</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input" onclick="milage(this)">Finance</button>'+
-      '<button class="input" onclick="milage(this)">Lease</button>'+
-      '<button class="input" onclick="milage(this)">Own</button>'+
-      '<button class="input" onclick="milage(this)">Other</button>'+
+      '<button class="input '+(own[3] == 'Finance' ? 'active': '')+'" onclick="milage(this)">Finance</button>'+
+      '<button class="input '+(own[3] == 'Lease' ? 'active': '')+'" onclick="milage(this)">Lease</button>'+
+      '<button class="input '+(own[3] == 'Own' ? 'active': '')+'" onclick="milage(this)">Own</button>'+
+      '<button class="input '+(own[3] == 'Other' ? 'active': '')+'" onclick="milage(this)">Other</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -394,24 +409,25 @@ function owner(e)
     //increase value for every action
     if(vehicleCounter == 0)
     {
-      increasePercent(3);
+      increasePercent(15);
     }
-
-    formdata.vehicles.current.push(e.name);
-    console.log(formdata);
+    // store model to the vehicle object
+    formdata.vehicles.current[2] = e.name;
+    console.log(formdata.vehicles.current);
   }
 }
 
 function milage(e)
 {
+  let mile = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Annual Mileage</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input" onclick="coverage(this)">Under 5,000</button>'+
-      '<button class="input" onclick="coverage(this)">5,001-10,000</button>'+
-      '<button class="input" onclick="coverage(this)">10,001-15,000</button>'+
-      '<button class="input" onclick="coverage(this)">15,000+</button>'+
+      '<button class="input '+(mile[4] == 'Under 5,000' ? 'active': '')+'" onclick="coverage(this)">Under 5,000</button>'+
+      '<button class="input '+(mile[4] == '5,001-10,000' ? 'active': '')+'" onclick="coverage(this)">5,001-10,000</button>'+
+      '<button class="input '+(mile[4] == '10,001-15,000' ? 'active': '')+'" onclick="coverage(this)">10,001-15,000</button>'+
+      '<button class="input '+(mile[4] == '15,000+' ? 'active': '')+'" onclick="coverage(this)">15,000+</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -427,25 +443,26 @@ function milage(e)
     //increase value for every action
     if(vehicleCounter == 0)
     {
-      increasePercent(2);
+      increasePercent(10);
     }
-
-    formdata.vehicles.current.push(e.innerHTML);
-    console.log(formdata);
+    //store owner to the vehicle object
+    formdata.vehicles.current[3] = e.innerHTML;
+    console.log(formdata.vehicles.current);
   }  
 }
 
 function coverage(e)
 {
+  let cover = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Desired Coverage Level</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input" onclick="anotherVehicle(this)">Superior</button>'+
-      '<button class="input" onclick="anotherVehicle(this)">Standard</button>'+
-      '<button class="input" onclick="anotherVehicle(this)">Basic</button>'+
-      '<button class="input" onclick="anotherVehicle(this)">State</button>'+
-      '<button class="input" onclick="anotherVehicle(this)">Minimum</button>'+
+      '<button class="input '+(cover[5] == 'Superior' ? 'active': '')+'" onclick="anotherVehicle(this)">Superior</button>'+
+      '<button class="input '+(cover[5] == 'Standard' ? 'active': '')+'" onclick="anotherVehicle(this)">Standard</button>'+
+      '<button class="input '+(cover[5] == 'Basic' ? 'active': '')+'" onclick="anotherVehicle(this)">Basic</button>'+
+      '<button class="input '+(cover[5] == 'State' ? 'active': '')+'" onclick="anotherVehicle(this)">State</button>'+
+      '<button class="input '+(cover[5] == 'Minimum' ? 'active': '')+'" onclick="anotherVehicle(this)">Minimum</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -461,11 +478,11 @@ function coverage(e)
     //increase value for every action
     if(vehicleCounter == 0)
     {
-      increasePercent(3);
+      increasePercent(9);
     }
-
-    formdata.vehicles.current.push(e.innerHTML);
-    console.log(formdata);
+    //store milage to the vehicle object
+    formdata.vehicles.current[4] = e.innerHTML;
+    console.log(formdata.vehicles.current);
   }
 }
 
@@ -521,9 +538,11 @@ function anotherVehicle(e)
   if(e.value != 'back')
   {
     //increase value for every action
-    increasePercent(5);
+    // increasePercent(5);
+    //store coverage to the vehicle object
+    formdata.vehicles.current[5] = e.innerHTML;
     formdata.vehicles.list.push(formdata.vehicles.current);
-    formdata.vehicles.current = [];
+    console.log(formdata.vehicles.current);
   }
 }
 
@@ -533,11 +552,14 @@ function checkAnotherVehicle(e)
   if(e.name == 'Yes')
   {
     brands();
+    formdata.vehicles.current = [];
   }
 }
 
 function insurance(e)
 {
+  let insure = formdata.owner.insurance;
+  console.log(insure);
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Insurance Details</h2>'+
   '<form action="#" id="insuranceForm">'+
@@ -545,48 +567,48 @@ function insurance(e)
       '<h4 style="text-align: left;">Current Insurance Carier</h4>'+
       '<select name="career" id="insurance_carrier" class="select-box-carrier carier" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="Other">Other</option>'+
-          '<option value="Not Currently Insured">Not Currently Insured</option>'+
-          '<option value="21st Century">21st Century</option>'+
-          '<option value="AAA">AAA</option>'+
-          '<option value="Allstate">Allstate</option>'+
-          '<option value="American Family">American Family</option>'+
-          '<option value="Bristol West">Bristol West</option>'+
-          '<option value="Dairyland Insurance">Dairyland Insurance</option>'+
-          '<option value="Direct General">Direct General</option>'+
-          '<option value="Elephant">Elephant</option>'+
-          '<option value="Erie Insurance">Erie Insurance</option>'+
-          '<option value="Esurance">Esurance</option>'+
-          '<option value="Farm Bureau/Farm Family/Rural">Farm Bureau/Farm Family/Rural</option>'+
-          '<option value="Farmers">Farmers</option>'+
-          '<option value="Farmers Insurance">Farmers Insurance</option>'+
-          '<option value="Gainsco">Gainsco</option>'+
-          '<option value="Geico">Geico</option>'+
-          '<option value="Liberty Mutual">Liberty Mutual</option>'+
-          '<option value="Mercury">Mercury</option>'+
-          '<option value="Nationwide">Nationwide</option>'+
-          '<option value="Plymouth Rock">Plymouth Rock</option>'+
-          '<option value="Progressive">Progressive</option>'+
-          '<option value="Prudential">Prudential</option>'+
-          '<option value="SafeAuto">SafeAuto</option>'+
-          '<option value="Safeco">Safeco</option>'+
-          '<option value="State Farm">State Farm</option>'+
-          '<option value="The General">The General</option>'+
-          '<option value="The Hartford">The Hartford</option>'+
-          '<option value="Travelers">Travelers</option>'+
-          '<option value="USAA">USAA</option>'+
+          '<option value="Other"'+(insure[0] == 'Other'? 'selected':'')+'>Other</option>'+
+          '<option value="Not Currently Insured"'+(insure[0] == 'Not Currently Insured'? 'selected':'')+'>Not Currently Insured</option>'+
+          '<option value="21st Century"'+(insure[0] == '21st Century'? 'selected':'')+'>21st Century</option>'+
+          '<option value="AAA"'+(insure[0] == 'AAA'? 'selected':'')+'>AAA</option>'+
+          '<option value="Allstate"'+(insure[0] == 'Allstate'? 'selected':'')+'>Allstate</option>'+
+          '<option value="American Family"'+(insure[0] == 'American Family'? 'selected':'')+'>American Family</option>'+
+          '<option value="Bristol West"'+(insure[0] == 'Bristol West'? 'selected':'')+'>Bristol West</option>'+
+          '<option value="Dairyland Insurance"'+(insure[0] == 'Dairyland Insurance'? 'selected':'')+'>Dairyland Insurance</option>'+
+          '<option value="Direct General"'+(insure[0] == 'Direct General'? 'selected':'')+'>Direct General</option>'+
+          '<option value="Elephant"'+(insure[0] == 'Elephant'? 'selected':'')+'>Elephant</option>'+
+          '<option value="Erie Insurance"'+(insure[0] == 'Erie Insurance'? 'selected':'')+'>Erie Insurance</option>'+
+          '<option value="Esurance"'+(insure[0] == 'Esurance'? 'selected':'')+'>Esurance</option>'+
+          '<option value="Farm Bureau/Farm Family/Rural"'+(insure[0] == 'Farm Bureau/Farm Family/Rural'? 'selected':'')+'>Farm Bureau/Farm Family/Rural</option>'+
+          '<option value="Farmers"'+(insure[0] == 'Farmers'? 'selected':'')+'>Farmers</option>'+
+          '<option value="Farmers Insurance"'+(insure[0] == 'Farmers Insurance'? 'selected':'')+'>Farmers Insurance</option>'+
+          '<option value="Gainsco"'+(insure[0] == 'Gainsco'? 'selected':'')+'>Gainsco</option>'+
+          '<option value="Geico"'+(insure[0] == 'Geico'? 'selected':'')+'>Geico</option>'+
+          '<option value="Liberty Mutual"'+(insure[0] == 'Liberty Mutual'? 'selected':'')+'>Liberty Mutual</option>'+
+          '<option value="Mercury"'+(insure[0] == 'Mercury'? 'selected':'')+'>Mercury</option>'+
+          '<option value="Nationwide"'+(insure[0] == 'Nationwide'? 'selected':'')+'>Nationwide</option>'+
+          '<option value="Plymouth Rock"'+(insure[0] == 'Plymouth Rock'? 'selected':'')+'>Plymouth Rock</option>'+
+          '<option value="Progressive"'+(insure[0] == 'Progressive'? 'selected':'')+'>Progressive</option>'+
+          '<option value="Prudential"'+(insure[0] == 'Prudential'? 'selected':'')+'>Prudential</option>'+
+          '<option value="SafeAuto"'+(insure[0] == 'SafeAuto'? 'selected':'')+'>SafeAuto</option>'+
+          '<option value="Safeco"'+(insure[0] == 'Safeco'? 'selected':'')+'>Safeco</option>'+
+          '<option value="State Farm"'+(insure[0] == 'State Farm'? 'selected':'')+'>State Farm</option>'+
+          '<option value="The General"'+(insure[0] == 'The General'? 'selected':'')+'>The General</option>'+
+          '<option value="The Hartford"'+(insure[0] == 'The Hartford'? 'selected':'')+'>The Hartford</option>'+
+          '<option value="Travelers"'+(insure[0] == 'Travelers'? 'selected':'')+'>Travelers</option>'+
+          '<option value="USAA"'+(insure[0] == 'USAA'? 'selected':'')+'>USAA</option>'+
       '</select>'+
       '<p class="error" id="carrier_err"></p>'+
       '<h4 style="text-align: left;">Continuous Coverage</h4>'+
       '<select name="coverage" id="insurance_coverage" class="select-box-coverage coverage" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="Less Than 6 Months">Less Than 6 Months</option>'+
-          '<option value="6 Months">6 Months</option>'+
-          '<option value="1 Year">1 Year</option>'+
-          '<option value="2 Years">2 Years</option>'+
-          '<option value="3 Years">3 Years</option>'+
-          '<option value="3 to 5 Years">3 to 5 Years</option>'+
-          '<option value="More Than 5 Years">More Than 5 Years</option>'+
+          '<option value="Less Than 6 Months" '+(insure[1] == 'Less Than 6 Months'? 'selected':'')+'>Less Than 6 Months</option>'+
+          '<option value="6 Months" '+(insure[1] == '6 Months'? 'selected':'')+'>6 Months</option>'+
+          '<option value="1 Year" '+(insure[1] == '1 Year'? 'selected':'')+'>1 Year</option>'+
+          '<option value="2 Years" '+(insure[1] == '2 Years'? 'selected':'')+'>2 Years</option>'+
+          '<option value="3 Years" '+(insure[1] == '3 Years'? 'selected':'')+'>3 Years</option>'+
+          '<option value="3 to 5 Years" '+(insure[1] == '3 to 5 Years'? 'selected':'')+'>3 to 5 Years</option>'+
+          '<option value="More Than 5 Years" '+(insure[1] == 'More Than 5 Years'? 'selected':'')+'>More Than 5 Years</option>'+
       '</select>'+
       '<p class="error" id="coverage_err"></p>'+
     '</div>'+
@@ -624,7 +646,7 @@ function checkInsuranceForm(e)
         
         if(carrierCheck && coverageCheck)
         {
-          formdata.owner.insurance.push(career.value, coverage.value);
+          formdata.owner.insurance = [career.value, coverage.value];
 
           addDriver();
         }
@@ -635,12 +657,13 @@ function checkInsuranceForm(e)
 /** ------------------ Add Driver Section --------------- */
 function addDriver()
 {
+  let driver = formdata.drivers.current.general;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Gender</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input" onclick="driverMaritalStatus(this)">Male</button>'+
-      '<button class="input" onclick="driverMaritalStatus(this)">Female</button>'+
+      '<button class="input '+(driver[0] == 'Male' ? 'active' : '')+'" onclick="driverMaritalStatus(this)">Male</button>'+
+      '<button class="input '+(driver[0] == 'Female' ? 'active' : '')+'" onclick="driverMaritalStatus(this)">Female</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -656,16 +679,17 @@ function addDriver()
 
 function driverMaritalStatus(e)
 {
+  let driver = formdata.drivers.current.general;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Marital Status</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input" onclick="birthMonth(this)">Married</button>'+
-      '<button class="input" onclick="birthMonth(this)">Single</button>'+
-      '<button class="input" onclick="birthMonth(this)">Divorced</button>'+
-      '<button class="input" onclick="birthMonth(this)">Domestic Partner</button>'+
-      '<button class="input" onclick="birthMonth(this)">Separated</button>'+
-      '<button class="input" onclick="birthMonth(this)">Widowed</button>'+
+      '<button class="input '+(driver[1] == 'Married' ? 'active' : '')+'" onclick="birthMonth(this)">Married</button>'+
+      '<button class="input '+(driver[1] == 'Single' ? 'active' : '')+'" onclick="birthMonth(this)">Single</button>'+
+      '<button class="input '+(driver[1] == 'Divorced' ? 'active' : '')+'" onclick="birthMonth(this)">Divorced</button>'+
+      '<button class="input '+(driver[1] == 'Domestic Partner' ? 'active' : '')+'" onclick="birthMonth(this)">Domestic Partner</button>'+
+      '<button class="input '+(driver[1] == 'Separated' ? 'active' : '')+'" onclick="birthMonth(this)">Separated</button>'+
+      '<button class="input '+(driver[1] == 'Widowed' ? 'active' : '')+'" onclick="birthMonth(this)">Widowed</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -681,11 +705,11 @@ function driverMaritalStatus(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(5);
+      // increasePercent(5);
     }
   
-    //data push to vehicle array
-    formdata.drivers.current.general.push(e.innerHTML);
+    //store gender to driver array
+    formdata.drivers.current.general[0] = e.innerHTML;
   
     console.log(formdata);
   }
@@ -693,22 +717,23 @@ function driverMaritalStatus(e)
 
 function birthMonth(e)
 {
+  let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Birth Month</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input" onclick="birthDay(this)">January</button>'+
-      '<button class="input" onclick="birthDay(this)">February</button>'+
-      '<button class="input" onclick="birthDay(this)">March</button>'+
-      '<button class="input" onclick="birthDay(this)">April</button>'+
-      '<button class="input" onclick="birthDay(this)">May</button>'+
-      '<button class="input" onclick="birthDay(this)">June</button>'+
-      '<button class="input" onclick="birthDay(this)">July</button>'+
-      '<button class="input" onclick="birthDay(this)">August</button>'+
-      '<button class="input" onclick="birthDay(this)">September</button>'+
-      '<button class="input" onclick="birthDay(this)">October</button>'+
-      '<button class="input" onclick="birthDay(this)">November</button>'+
-      '<button class="input" onclick="birthDay(this)">December</button>'+
+      '<button class="input '+(dob[0] == 'January'? 'active' : '')+'" onclick="birthDay(this)">January</button>'+
+      '<button class="input '+(dob[0] == 'February'? 'active' : '')+'" onclick="birthDay(this)">February</button>'+
+      '<button class="input '+(dob[0] == 'March'? 'active' : '')+'" onclick="birthDay(this)">March</button>'+
+      '<button class="input '+(dob[0] == 'April'? 'active' : '')+'" onclick="birthDay(this)">April</button>'+
+      '<button class="input '+(dob[0] == 'May'? 'active' : '')+'" onclick="birthDay(this)">May</button>'+
+      '<button class="input '+(dob[0] == 'June'? 'active' : '')+'" onclick="birthDay(this)">June</button>'+
+      '<button class="input '+(dob[0] == 'July'? 'active' : '')+'" onclick="birthDay(this)">July</button>'+
+      '<button class="input '+(dob[0] == 'August'? 'active' : '')+'" onclick="birthDay(this)">August</button>'+
+      '<button class="input '+(dob[0] == 'September'? 'active' : '')+'" onclick="birthDay(this)">September</button>'+
+      '<button class="input '+(dob[0] == 'October'? 'active' : '')+'" onclick="birthDay(this)">October</button>'+
+      '<button class="input '+(dob[0] == 'November'? 'active' : '')+'" onclick="birthDay(this)">November</button>'+
+      '<button class="input '+(dob[0] == 'December'? 'active' : '')+'" onclick="birthDay(this)">December</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -724,18 +749,19 @@ function birthMonth(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(5);
+      // increasePercent(5);
     }
   
-    //data push to vehicle array
-    formdata.drivers.current.general.push(e.innerHTML);
+    //store marital status to the drivers general array
+    formdata.drivers.current.general[1] = e.innerHTML;
   
-    console.log(formdata);
+    console.log(formdata.drivers.current.general);
   }
 }
 
 function birthDay(e)
 {
+  let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Birth Day</h2>'+
@@ -743,7 +769,7 @@ function birthDay(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="birthMonth(this)" name="'+brand+'">'+
+      '<button class="back" onclick="birthMonth(this)" name="" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -754,7 +780,11 @@ function birthDay(e)
   {
     let day = document.createElement('button');
     day.setAttribute('class', 'input');
+    if(dob[1] == d){
+      day.setAttribute('class', 'active');
+    }
     day.setAttribute('onclick', 'birthYear(this)');
+    day.value = d;
     day.innerHTML = d;
     document.getElementById('birth_day').appendChild(day);
   }
@@ -764,25 +794,26 @@ function birthDay(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(3);
+      // increasePercent(3);
     }
   
-    //birth month push to birthDate array
-    formdata.drivers.current.dob.push(e.innerHTML);
+    //birth day store to current.dob array
+    formdata.drivers.current.dob[0] = e.innerHTML;
   
-    console.log(formdata);
+    console.log(formdata.drivers.current.dob);
   }
 }
 
 function birthYear(e)
 {
+  let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
     '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
     '<h2>Birth Year</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="birth_year">'+
     '</div>'+
     '<div class="back-to-prev">'+
-      '<button class="back" onclick="birthDay(this)" name="'+brand+'">'+
+      '<button class="back" onclick="birthDay(this)" name="" value="back">'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
             '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
         '</svg> Back '+
@@ -794,6 +825,9 @@ function birthYear(e)
   {
     let y = document.createElement('button');
     y.setAttribute('class', 'input');
+    if(dob[2] == d){
+      y.setAttribute('class', 'active');
+    }
     y.setAttribute('onclick', 'incident(this)');
     y.innerHTML = d;
     document.getElementById('birth_year').appendChild(y);
@@ -804,19 +838,22 @@ function birthYear(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(2);
+      // increasePercent(2);
     }
   
     //birth day push to birthDate array
-    formdata.drivers.current.dob.push(e.innerHTML);
+    formdata.drivers.current.dob[1] = e.innerHTML;
   
-    console.log(formdata);
+    console.log(formdata.drivers.current);
   }
 }
 // birthYear();
 
 function incident(e)
 {
+  let dob = formdata.drivers.current.dob;
+  let parts = formdata.drivers.current.incidents.part;
+  
   container.innerHTML = '<div class="step step-number step-content-basic five-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Incidents In The Past 3 Years</h2>'+
@@ -825,11 +862,11 @@ function incident(e)
         '<p>Had an accident</p>'+
         '<p>'+
             '<label class="radio-wrap">Yes'+
-                '<input type="radio" name="accident" onchange="checkIncident(this)" value="Yes">'+
+                '<input type="radio" name="accident" onchange="checkIncident(this)" value="Yes" '+(parts.includes('accident')? 'checked':'')+'>'+
                 '<span class="checkmark"></span>'+
             '</label>'+
             '<label class="radio-wrap">No'+
-                '<input type="radio" name="accident" checked="checked" onchange="checkIncident(this)" value="No">'+
+                '<input type="radio" name="accident" onchange="checkIncident(this)" value="No" '+(!parts.includes('accident')? 'checked':'')+'>'+
                 '<span class="checkmark"></span>'+
             '</label>'+
         '</p>'+
@@ -838,11 +875,11 @@ function incident(e)
         '<p>Received a ticket</p>'+
         '<p>'+
             '<label class="radio-wrap">Yes'+
-                '<input type="radio" name="ticket" onchange="checkIncident(this)" value="Yes">'+
+                '<input type="radio" name="ticket" onchange="checkIncident(this)" value="Yes" '+(parts.includes('ticket')? 'checked':'')+'>'+
                 '<span class="checkmark"></span>'+
             '</label>'+
             '<label class="radio-wrap">No'+
-                '<input type="radio" name="ticket" checked="checked" onchange="checkIncident(this)" value="No">'+
+                '<input type="radio" name="ticket" onchange="checkIncident(this)" value="No" '+(!parts.includes('ticket')? 'checked':'')+'>'+
                 '<span class="checkmark"></span>'+
             '</label>'+
         '</p>'+
@@ -851,11 +888,11 @@ function incident(e)
         '<p>Received a DUI</p>'+
         '<p>'+
             '<label class="radio-wrap">Yes'+
-                '<input type="radio" name="dui" onchange="checkIncident(this)" value="Yes">'+
+                '<input type="radio" name="dui" onchange="checkIncident(this)" value="Yes" '+(parts.includes('dui')? 'checked':'')+'>'+
                 '<span class="checkmark"></span>'+
             '</label>'+
             '<label class="radio-wrap">No'+
-                '<input type="radio" name="dui" checked="checked" onchange="checkIncident(this)" value="No">'+
+                '<input type="radio" name="dui" onchange="checkIncident(this)" value="No" '+(!parts.includes('dui')? 'checked':'')+'>'+
                 '<span class="checkmark"></span>'+
             '</label>'+
         '</p>'+
@@ -864,18 +901,18 @@ function incident(e)
         '<p>Required SR-22?</p>'+
         '<p>'+
           '<label class="radio-wrap">Yes'+
-              '<input type="radio" name="sr-22" onchange="checkIncident(this)" value="Yes">'+
+              '<input type="radio" name="sr-22" onchange="checkIncident(this)" value="Yes" '+(parts.includes('Yes')? 'checked':'')+'>'+
               '<span class="checkmark"></span>'+
           '</label>'+
           '<label class="radio-wrap">No'+
-              '<input type="radio" name="sr-22" checked="checked" onchange="checkIncident(this)" value="No">'+
+              '<input type="radio" name="sr-22" onchange="checkIncident(this)" value="No" '+(parts == '' || parts.includes('No')? 'checked':'')+'>'+
               '<span class="checkmark"></span>'+
           '</label>'+
         '</p>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="birthYear(this)" name="'+brand+'">'+
+      '<button class="back" onclick="birthYear(this)" name="" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -895,12 +932,12 @@ function incident(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(5);
+      // increasePercent(5);
     }
   
     //birth year push to birthDate array
-    formdata.drivers.current.dob.push(e.innerHTML);
-    console.log(formdata);
+    formdata.drivers.current.dob[2] = e.innerHTML;
+    console.log(formdata.drivers.current.dob);
   }
 }
 
@@ -913,23 +950,49 @@ function checkIncident(e)
   let parts = formdata.drivers.current.incidents.part;
   if(e.value == 'Yes')
   {
-    parts.push(e.name);
-    incidents.forward.push(e.name);
+    if(e.name == 'sr-22')
+    {
+      let i = parts.indexOf('No');
+      if(i != -1){
+        parts.splice(i, 1);
+      }
+      parts.push(e.value);
+    }
+    else
+    {
+      parts.push(e.name);
+      incidents.forward.push(e.name);
+    }
   }
   else
   {
-    let index = parts.indexOf(e.name);
-    if(index !== -1)
+    if(e.name == 'sr-22')
     {
-      parts.splice(index, 1);
-      incidents.forward.splice(index, 1);
+      let i = parts.indexOf('Yes');
+      if(i !== -1)
+      {
+        parts.splice(i, 1);
+      }
+      parts.push(e.value);
+    }
+    else
+    {
+      let index = parts.indexOf(e.name);
+      if(index !== -1)
+      {
+        parts.splice(index, 1);
+        incidents.forward.splice(index, 1);
+      }
     }
   }
-  console.log(incidents.forward);
+
+  console.log(parts);
+  // console.log(incidents.forward);
 }
 
 function accident(e)
 {
+  let act = formdata.drivers.current.incidents.accident;
   container.innerHTML ='<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Accident Details</h2>'+
@@ -939,58 +1002,58 @@ function accident(e)
       '<h4 style="text-align: left;">Month</h4>'+
       '<select name="month" id="accident_month" class="select-box-accident-month" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="January">January</option>'+
-          '<option value="February">February</option>'+
-          '<option value="March">March</option>'+
-          '<option value="April">April</option>'+
-          '<option value="May">May</option>'+
-          '<option value="June">June</option>'+
-          '<option value="July">July</option>'+
-          '<option value="August">August</option>'+
-          '<option value="September">September</option>'+
-          '<option value="October">October</option>'+
-          '<option value="November">November</option>'+
-          '<option value="December">December</option>'+
+          '<option value="January" '+(act[0] == 'January'? 'selected' : '')+'>January</option>'+
+          '<option value="February" '+(act[0] == 'February'? 'selected' : '')+'>February</option>'+
+          '<option value="March" '+(act[0] == 'March'? 'selected' : '')+'>March</option>'+
+          '<option value="April" '+(act[0] == 'April'? 'selected' : '')+'>April</option>'+
+          '<option value="May" '+(act[0] == 'May'? 'selected' : '')+'>May</option>'+
+          '<option value="June" '+(act[0] == 'June'? 'selected' : '')+'>June</option>'+
+          '<option value="July" '+(act[0] == 'July'? 'selected' : '')+'>July</option>'+
+          '<option value="August" '+(act[0] == 'August'? 'selected' : '')+'>August</option>'+
+          '<option value="September" '+(act[0] == 'September'? 'selected' : '')+'>September</option>'+
+          '<option value="October" '+(act[0] == 'October'? 'selected' : '')+'>October</option>'+
+          '<option value="November" '+(act[0] == 'November'? 'selected' : '')+'>November</option>'+
+          '<option value="December" '+(act[0] == 'December'? 'selected' : '')+'>December</option>'+
       '</select>'+
   '</div>'+
   '<div class="half-width">'+
       '<h4 style="text-align: left;">Year</h4>'+
       '<select name="year" id="accident_year" class="select-box-accident-year" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="2024">2024</option>'+
-          '<option value="2023">2023</option>'+
-          '<option value="2022">2022</option>'+
-          '<option value="2021">2021</option>'+
+          '<option value="2024" '+(act[1] == '2024'? 'selected' : '')+'>2024</option>'+
+          '<option value="2023" '+(act[1] == '2023'? 'selected' : '')+'>2023</option>'+
+          '<option value="2022" '+(act[1] == '2022'? 'selected' : '')+'>2022</option>'+
+          '<option value="2021" '+(act[1] == '2021'? 'selected' : '')+'>2021</option>'+
       '</select>'+
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">Accident Description</h4>'+
       '<select name="description" id="accident_desc" class="select-box-accident-desc" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="Other">Other</option>'+
-          '<option value="Other Vehicle Hit Yours">Other Vehicle Hit Yours</option>'+
-          '<option value="Vehicle Damaged Avoiding Accident">Vehicle Damaged Avoiding Accident</option>'+
-          '<option value="Vehicle Hit Pedestrian">Vehicle Hit Pedestrian</option>'+
-          '<option value="Vehicle Hit Property ">Vehicle Hit Property   </option>'+
-          '<option value="Vehicle Hit Vehicle">Vehicle Hit Vehicle</option>'+
+          '<option value="Other" '+(act[2] == 'Other'? 'selected' : '')+'>Other</option>'+
+          '<option value="Other Vehicle Hit Yours" '+(act[2] == 'Other Vehicle Hit Yours'? 'selected' : '')+'>Other Vehicle Hit Yours</option>'+
+          '<option value="Vehicle Damaged Avoiding Accident" '+(act[2] == 'Vehicle Damaged Avoiding Accident'? 'selected' : '')+'>Vehicle Damaged Avoiding Accident</option>'+
+          '<option value="Vehicle Hit Pedestrian" '+(act[2] == 'Vehicle Hit Pedestrian'? 'selected' : '')+'>Vehicle Hit Pedestrian</option>'+
+          '<option value="Vehicle Hit Property" '+(act[2] == 'Vehicle Hit Property'? 'selected' : '')+'>Vehicle Hit Property</option>'+
+          '<option value="Vehicle Hit Vehicle" '+(act[2] == 'Vehicle Hit Vehicle'? 'selected' : '')+'>Vehicle Hit Vehicle</option>'+
       '</select>'+
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">At Fault?</h4>'+
       '<select name="fault" id="accident_fault" class="select-box-accident-year" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="yes">Yes</option>'+
-          '<option value="no">No</option>'+
+          '<option value="Yes" '+(act[3] == 'Yes'? 'selected' : '')+'>Yes</option>'+
+          '<option value="No" '+(act[3] == 'No'? 'selected' : '')+'>No</option>'+
       '</select>'+
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">Damaged</h4>'+
       '<select name="damage" id="accident_damage" class="select-box-accident-year" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="Both">Both</option>'+
-          '<option value="No Damage">No Damage</option>'+
-          '<option value="People">People</option>'+
-          '<option value="Property">Property</option>'+
+          '<option value="Both" '+(act[4] == 'Both'? 'selected' : '')+'>Both</option>'+
+          '<option value="No Damage" '+(act[4] == 'No Damage'? 'selected' : '')+'>No Damage</option>'+
+          '<option value="People" '+(act[4] == 'People'? 'selected' : '')+'>People</option>'+
+          '<option value="Property" '+(act[4] == 'Property'? 'selected' : '')+'>Property</option>'+
       '</select>'+
   '</div>'+
   '<div class="more-options inner-wrap-btn">'+
@@ -1003,7 +1066,7 @@ function accident(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button type="button" class="back" onclick="incident(this)" name="'+brand+'" value="accident">'+
+      '<button type="button" class="back" onclick="backIncident(this)" name="back" value="accident">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -1016,9 +1079,6 @@ function accident(e)
     '</div>'+
     '</form>'+
     '</div>';
-
-    // container.innerHTML = htmlForm;
-    // container.appendChild(htmlForm);
 
   styleLoad();
 }
@@ -1047,10 +1107,9 @@ function checkAccidentForm(e)
 
     if(checkMonth && checkYear && checkDesc && checkFault && checkDamage)
     {
-      let accidents = formdata.drivers.current.incidents.accident;
-      accidents.push(month.value, year.value, description.value, fault.value, damage.value);
+      formdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
 
-      console.log(accidents);
+      console.log(formdata.drivers.current.incidents.accident);
 
       //push accident key to the backward object
       incidents.backward.push('accident');
@@ -1063,6 +1122,7 @@ function checkAccidentForm(e)
 
 function ticket(e)
 {
+  let act = formdata.drivers.current.incidents.ticket;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Ticket Details</h2>'+
@@ -1072,48 +1132,48 @@ function ticket(e)
       '<h4 style="text-align: left;">Month</h4>'+
       '<select name="month" id="ticket_month" class="select-box-ticket-month" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="January">January</option>'+
-          '<option value="February">February</option>'+
-          '<option value="March">March</option>'+
-          '<option value="April">April</option>'+
-          '<option value="May">May</option>'+
-          '<option value="June">June</option>'+
-          '<option value="July">July</option>'+
-          '<option value="August">August</option>'+
-          '<option value="September">September</option>'+
-          '<option value="October">October</option>'+
-          '<option value="November">November</option>'+
-          '<option value="December">December</option>'+
+          '<option value="January" '+(act[0] == 'January'? 'selected' : '')+'>January</option>'+
+          '<option value="February" '+(act[0] == 'February'? 'selected' : '')+'>February</option>'+
+          '<option value="March" '+(act[0] == 'March'? 'selected' : '')+'>March</option>'+
+          '<option value="April" '+(act[0] == 'April'? 'selected' : '')+'>April</option>'+
+          '<option value="May" '+(act[0] == 'May'? 'selected' : '')+'>May</option>'+
+          '<option value="June" '+(act[0] == 'June'? 'selected' : '')+'>June</option>'+
+          '<option value="July" '+(act[0] == 'July'? 'selected' : '')+'>July</option>'+
+          '<option value="August" '+(act[0] == 'August'? 'selected' : '')+'>August</option>'+
+          '<option value="September" '+(act[0] == 'September'? 'selected' : '')+'>September</option>'+
+          '<option value="October" '+(act[0] == 'October'? 'selected' : '')+'>October</option>'+
+          '<option value="November" '+(act[0] == 'November'? 'selected' : '')+'>November</option>'+
+          '<option value="December" '+(act[0] == 'December'? 'selected' : '')+'>December</option>'+
       '</select>'+
   '</div>'+
   '<div class="half-width">'+
       '<h4 style="text-align: left;">Year</h4>'+
       '<select name="year" id="ticket_year" class="select-box-accident-year" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="2025">2025</option>'+
-          '<option value="2024">2024</option>'+
-          '<option value="2023">2023</option>'+
-          '<option value="2022">2022</option>'+
+          '<option value="2025" '+(act[1] == '2025'? 'selected' : '')+'>2025</option>'+
+          '<option value="2024" '+(act[1] == '2024'? 'selected' : '')+'>2024</option>'+
+          '<option value="2023" '+(act[1] == '2023'? 'selected' : '')+'>2023</option>'+
+          '<option value="2022" '+(act[1] == '2022'? 'selected' : '')+'>2022</option>'+
       '</select>'+
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">Ticket Description</h4>'+
       '<select name="description" id="ticket_desc" class="select-box-accident-desc" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="Careless Driving">Careless Driving</option>'+
-          '<option value="Carpool Lane Violaion">Carpool Lane Violaion</option>'+
-          '<option value="Child Not In Car Seat">Child Not In Car Seat</option>'+
-          '<option value="Defective Equipment">Defective Equipment</option>'+
-          '<option value="Defective Vehicle Reduced Violation">Defective Vehicle Reduced Violation</option>'+
-          '<option value="Driving Without A license">Driving Without A license</option>'+
-          '<option value="Excessive Noise">Excessive Noise</option>'+
-          '<option value="Exhibition Driving">Exhibition Driving</option>'+
-          '<option value="Expired Drivers License">Expired Drivers License</option>'+
-          '<option value="Expired Emissions">Expired Emissions</option>'+
-          '<option value="Expired Registration">Expired Registration</option>'+
-          '<option value="Failure To Obey Traffic Signal">Failure To Obey Traffic Signal</option>'+
-          '<option value="Failure To Signal">Failure To Signal</option>'+
-          '<option value="Failure To Stop">Failure To Stop</option>'+
+          '<option value="Careless Driving" '+(act[2] == 'Careless Driving'? 'selected' : '')+'>Careless Driving</option>'+
+          '<option value="Carpool Lane Violaion" '+(act[2] == 'Carpool Lane Violaion'? 'selected' : '')+'>Carpool Lane Violaion</option>'+
+          '<option value="Child Not In Car Seat" '+(act[2] == 'Child Not In Car Seat'? 'selected' : '')+'>Child Not In Car Seat</option>'+
+          '<option value="Defective Equipment" '+(act[2] == 'Defective Equipment'? 'selected' : '')+'>Defective Equipment</option>'+
+          '<option value="Defective Vehicle Reduced Violation" '+(act[2] == 'Defective Vehicle Reduced Violation'? 'selected' : '')+'>Defective Vehicle Reduced Violation</option>'+
+          '<option value="Driving Without A license" '+(act[2] == 'Driving Without A license'? 'selected' : '')+'>Driving Without A license</option>'+
+          '<option value="Excessive Noise" '+(act[2] == 'Excessive Noise'? 'selected' : '')+'>Excessive Noise</option>'+
+          '<option value="Exhibition Driving" '+(act[2] == 'Exhibition Driving'? 'selected' : '')+'>Exhibition Driving</option>'+
+          '<option value="Expired Drivers License" '+(act[2] == 'Expired Drivers License'? 'selected' : '')+'>Expired Drivers License</option>'+
+          '<option value="Expired Emissions" '+(act[2] == 'Expired Emissions'? 'selected' : '')+'>Expired Emissions</option>'+
+          '<option value="Expired Registration" '+(act[2] == 'Expired Registration'? 'selected' : '')+'>Expired Registration</option>'+
+          '<option value="Failure To Obey Traffic Signal" '+(act[2] == 'Failure To Obey Traffic Signal'? 'selected' : '')+'>Failure To Obey Traffic Signal</option>'+
+          '<option value="Failure To Signal" '+(act[2] == 'Failure To Signal'? 'selected' : '')+'>Failure To Signal</option>'+
+          '<option value="Failure To Stop" '+(act[2] == 'Failure To Stop'? 'selected' : '')+'>Failure To Stop</option>'+
           '<option value="...">...</option>'+
       '</select>'+
   '</div>'+
@@ -1162,10 +1222,9 @@ function checkTicketForm(e)
 
     if(checkMonth && checkYear && checkDesc)
     {
-      let tickets = formdata.drivers.current.incidents.ticket;
-      tickets.push(month.value, year.value, description.value);
+      formdata.drivers.current.incidents.ticket = [month.value, year.value, description.value];
 
-      console.log(tickets);
+      console.log(formdata.drivers.current.incidents.ticket);
     
       incidents.backward.push('ticket');
 
@@ -1177,6 +1236,7 @@ function checkTicketForm(e)
 
 function dui(e)
 {
+  let act = formdata.drivers.current.incidents.dui;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>DUI Details</h2>'+
@@ -1186,48 +1246,48 @@ function dui(e)
       '<h4 style="text-align: left;">Month</h4>'+
       '<select name="month" id="dui_month" class="select-box-dui-month" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="January">January</option>'+
-          '<option value="February">February</option>'+
-          '<option value="March">March</option>'+
-          '<option value="April">April</option>'+
-          '<option value="May">May</option>'+
-          '<option value="June">June</option>'+
-          '<option value="July">July</option>'+
-          '<option value="August">August</option>'+
-          '<option value="September">September</option>'+
-          '<option value="October">October</option>'+
-          '<option value="November">November</option>'+
-          '<option value="December">December</option>'+
+          '<option value="January" '+(act[0] == 'January'? 'selected' : '')+'>January</option>'+
+          '<option value="February" '+(act[0] == 'February'? 'selected' : '')+'>February</option>'+
+          '<option value="March" '+(act[0] == 'March'? 'selected' : '')+'>March</option>'+
+          '<option value="April" '+(act[0] == 'April'? 'selected' : '')+'>April</option>'+
+          '<option value="May" '+(act[0] == 'May'? 'selected' : '')+'>May</option>'+
+          '<option value="June" '+(act[0] == 'June'? 'selected' : '')+'>June</option>'+
+          '<option value="July" '+(act[0] == 'July'? 'selected' : '')+'>July</option>'+
+          '<option value="August" '+(act[0] == 'August'? 'selected' : '')+'>August</option>'+
+          '<option value="September" '+(act[0] == 'September'? 'selected' : '')+'>September</option>'+
+          '<option value="October" '+(act[0] == 'October'? 'selected' : '')+'>October</option>'+
+          '<option value="November" '+(act[0] == 'November'? 'selected' : '')+'>November</option>'+
+          '<option value="December" '+(act[0] == 'December'? 'selected' : '')+'>December</option>'+
       '</select>'+
   '</div>'+
   '<div class="half-width">'+
       '<h4 style="text-align: left;">Year</h4>'+
       '<select name="year" id="dui_year" class="select-box-dui-year" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="2025">2025</option>'+
-          '<option value="2024">2024</option>'+
-          '<option value="2023">2023</option>'+
-          '<option value="2022">2022</option>'+
+          '<option value="2025" '+(act[1] == '2025'? 'selected' : '')+'>2025</option>'+
+          '<option value="2024" '+(act[1] == '2024'? 'selected' : '')+'>2024</option>'+
+          '<option value="2023" '+(act[1] == '2023'? 'selected' : '')+'>2023</option>'+
+          '<option value="2022" '+(act[1] == '2022'? 'selected' : '')+'>2022</option>'+
       '</select>'+
   '</div>'+
   '<div class="full-width">'+
       '<h4 style="text-align: left;">State</h4>'+
       '<select name="state" id="dui_state" class="select-box-dui-state" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="Alabama">Alabama</option>'+
-          '<option value="Alaska">Alaska</option>'+
-          '<option value="Arizona">Arizona</option>'+
-          '<option value="Arkansas">Arkansas</option>'+
-          '<option value="California">California</option>'+
-          '<option value="Colorado">Colorado</option>'+
-          '<option value="Connecticut">Connecticut</option>'+
-          '<option value="Delaware">Delaware</option>'+
-          '<option value="Florida">Florida</option>'+
-          '<option value="Georgia">Georgia</option>'+
-          '<option value="Hawaii">Hawaii</option>'+
-          '<option value="Idaho">Idaho</option>'+
-          '<option value="Illinois">Illinois</option>'+
-          '<option value="Indiana">Indiana</option>'+
+          '<option value="Alabama" '+(act[2] == 'Alabama'? 'selected' : '')+'>Alabama</option>'+
+          '<option value="Alaska" '+(act[2] == 'Alaska'? 'selected' : '')+'>Alaska</option>'+
+          '<option value="Arizona" '+(act[2] == 'Arizona'? 'selected' : '')+'>Arizona</option>'+
+          '<option value="Arkansas" '+(act[2] == 'Arkansas'? 'selected' : '')+'>Arkansas</option>'+
+          '<option value="California" '+(act[2] == 'California'? 'selected' : '')+'>California</option>'+
+          '<option value="Colorado" '+(act[2] == 'Colorado'? 'selected' : '')+'>Colorado</option>'+
+          '<option value="Connecticut" '+(act[2] == 'Connecticut'? 'selected' : '')+'>Connecticut</option>'+
+          '<option value="Delaware" '+(act[2] == 'Delaware'? 'selected' : '')+'>Delaware</option>'+
+          '<option value="Florida" '+(act[2] == 'Florida'? 'selected' : '')+'>Florida</option>'+
+          '<option value="Georgia" '+(act[2] == 'Georgia'? 'selected' : '')+'>Georgia</option>'+
+          '<option value="Hawaii" '+(act[2] == 'Hawaii'? 'selected' : '')+'>Hawaii</option>'+
+          '<option value="Idaho" '+(act[2] == 'Idaho'? 'selected' : '')+'>Idaho</option>'+
+          '<option value="Illinois" '+(act[2] == 'Illinois'? 'selected' : '')+'>Illinois</option>'+
+          '<option value="Indiana" '+(act[2] == 'Indiana'? 'selected' : '')+'>Indiana</option>'+
           '<option value="...">...</option>'+
       '</select>'+
   '</div>'+
@@ -1278,10 +1338,9 @@ function checkDuiForm(e)
 
     if(checkMonth && checkYear && checkState)
     {
-      let dui = formdata.drivers.current.incidents.dui;
-      dui.push(month.value, year.value, state.value);
+      formdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
 
-      console.log(dui);
+      console.log(formdata.drivers.current.incidents.dui);
 
       incidents.backward.push('dui');
 
@@ -1293,6 +1352,17 @@ function checkDuiForm(e)
 
 function driverName()
 {
+  let first_name = '', last_name = '';
+  let names = formdata.drivers.current.names;
+  if(names[0])
+  {
+    first_name = names[0];
+  }
+  if(names[1])
+  {
+    last_name = names[1];
+  }
+  
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
     '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
     '<h2>Name</h2>'+
@@ -1303,7 +1373,7 @@ function driverName()
         '<div class="inner-wrap inner-wrap-input">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
-              '<input type="text" placeholder="Legal First Name" name="first_name" onkeyup="checkErrInput(this)">'+
+              '<input type="text" placeholder="Legal First Name" name="first_name" onkeyup="checkErrInput(this)" value="'+first_name+'">'+
               '<label>First Name</label>'+
             '</div>'+
           '</div>'+
@@ -1312,7 +1382,7 @@ function driverName()
         '<div class="inner-wrap inner-wrap-input">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
-            '<input type="text" placeholder="Legal Last Name" name="last_name" onkeyup="checkErrInput(this)">'+
+            '<input type="text" placeholder="Legal Last Name" name="last_name" onkeyup="checkErrInput(this)" value="'+last_name+'">'+
             '<label>Last Name</label>'+
           '</div>'+
         '</div>'+
@@ -1351,19 +1421,18 @@ function checkNameForm(e)
 
     if(checkFirst && checkLast)
     {
-      let sr22 = formdata.drivers.current.incidents.sr22;
-      sr22.push(first_name.value, last_name.value);
+      formdata.drivers.current.names = [first_name.value, last_name.value];
 
-      console.log(sr22);
+      console.log(formdata.drivers.current.names);
 
-      incidents.backward.push('sr-22');
+      // incidents.backward.push('sr-22');
 
-      nextIncident(e);
+      anotherDriver();
 
       //increase value for every action
       if(driverCounter == 0)
       {
-        increasePercent(2);
+        increasePercent(0);
       }
     }
 
@@ -1388,14 +1457,9 @@ function nextIncident(e)
     dui(e);
     incidents.forward.splice(incidents.forward.indexOf('dui'), 1);
   }
-  else if(incidents.forward.includes('sr-22'))
-  {
-    driverName(e);
-    incidents.forward.splice(incidents.forward.indexOf('sr-22'), 1);
-  }
   else
   {
-    anotherDriver();
+    driverName();
   }
   
   console.log(incidents);
@@ -1404,30 +1468,25 @@ function nextIncident(e)
 /** ------------------- back incident ------------ */
 function backIncident(e)
 {
+  incidents.forward.push(e.value);
   console.log(incidents.forward);
-  
-  if(incidents.backward.includes('sr-22'))
-  {
-    driverName(e);
-    incidents.forward.push(e.value);
-    incidents.backward.splice(incidents.backward.indexOf('sr-22'), 1);
-  }
-  else if(incidents.backward.includes('dui'))
+
+  if(incidents.backward.includes('dui'))
   {
     dui(e);
-    incidents.forward.push(e.value);
+    // incidents.forward.push(e.value);
     incidents.backward.splice(incidents.backward.indexOf('dui'), 1);
   }
   else if(incidents.backward.includes('ticket'))
   {
     ticket(e);
-    incidents.forward.push(e.value);
+    // incidents.forward.push(e.value);
     incidents.backward.splice(incidents.backward.indexOf('ticket'), 1);
   }
   else if(incidents.backward.includes('accident'))
   {
     accident(e);
-    incidents.forward.push(e.value);
+    // incidents.forward.push(e.value);
     incidents.backward.splice(incidents.backward.indexOf('accident'), 1);
   }
   else
@@ -1444,8 +1503,8 @@ function anotherDriver()
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Driver? (Save Additional 20%)</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="moreDriver">'+
-      '<button class="input" onclick="addDriver(this)">YES</button>'+
-      '<button class="input" onclick="ownerAddress(this)">NO</button>'+
+      '<button class="input" onclick="checkAnotherDriver(this)" value="YES">YES</button>'+
+      '<button class="input" onclick="ownerAddress(this)" value="NO">NO</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -1457,59 +1516,88 @@ function anotherDriver()
   '</div>';
 
   formdata.drivers.list.push(formdata.drivers.current);
-  // formdata.drivers.current.general = [];
-  // formdata.drivers.current.dob = [];
-  // formdata.drivers.current.incidents.part = [];
-  // formdata.drivers.current.incidents.accident = [];
-  // formdata.drivers.current.incidents.ticket = [];
-  // formdata.drivers.current.incidents.dui = [];
-  // formdata.drivers.current.incidents.sr22 = [];
   console.log(formdata.drivers);
 
 }
 
 // anotherDriver();
 
+function checkAnotherDriver(e)
+{
+  if(e.value == 'YES')
+  {
+    formdata.drivers.current = {
+      names: [],
+      general: [],
+      dob: [],
+      incidents : {
+        part: [],
+        accident: [],
+        ticket: [],
+        dui: []
+      }
+    };
+    addDriver();
+  }
+}
+
 /** ------------------ Owner Details -------------------- */
 function ownerAddress()
 {
-  // window.initAutocomplete = initAutocomplete;
+  let address = '', zip = '', state = '', city = '';
+  let addr = formdata.owner.address;
+  if(addr[0])
+  {
+    address = addr[0];
+  }
+  if(addr[1])
+  {
+    zip = addr[1];
+  }
+  if(addr[2])
+  {
+    state = addr[2];
+  }
+  if(addr[3])
+  {
+    city = addr[3];
+  }
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Current Address</h2>'+
   '<form action="#" id="addressForm">'+
   '<div class="inner-wrap column-wrap">'+
     '<div class="full-width">'+
       '<h4 style="text-align: left;">Street Address</h4>'+
-      '<input id="autocomplete" type="text" name="address" placeholder="Street Address" onkeyup="fillInAddress()">'+
+      '<input id="autocomplete" type="text" name="address" placeholder="Street Address" onkeyup="fillInAddress()" value="'+address+'">'+
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">Zip Code</h4>'+
-        '<input type="text" name="zip" placeholder="Zip Code" onkeyup="checkErrInput(this)" id="zip">'+
+        '<input type="text" name="zip" placeholder="Zip Code" onkeyup="checkErrInput(this)" id="zip" value="'+zip+'">'+
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">State</h4>'+
         '<select name="state" id="address_state" class="select-box-address-state" onchange="checkErr(this);">'+
             '<option data-placeholder="true"></option>'+
-            '<option value="Alabama">Alabama</option>'+
-            '<option value="Alaska">Alaska</option>'+
-            '<option value="Arizona">Arizona</option>'+
-            '<option value="Arkansas">Arkansas</option>'+
-            '<option value="California">California</option>'+
-            '<option value="Colorado">Colorado</option>'+
-            '<option value="Connecticut">Connecticut</option>'+
-            '<option value="Delaware">Delaware</option>'+
-            '<option value="Florida">Florida</option>'+
-            '<option value="Georgia">Georgia</option>'+
-            '<option value="Hawaii">Hawaii</option>'+
-            '<option value="Idaho">Idaho</option>'+
-            '<option value="Illinois">Illinois</option>'+
-            '<option value="Indiana">Indiana</option>'+
+            '<option value="Alabama" '+(state == 'Alabama'? 'selected' : '')+'>Alabama</option>'+
+            '<option value="Alaska" '+(state == 'Alaska'? 'selected' : '')+'>Alaska</option>'+
+            '<option value="Arizona" '+(state == 'Arizona'? 'selected' : '')+'>Arizona</option>'+
+            '<option value="Arkansas" '+(state == 'Arkansas'? 'selected' : '')+'>Arkansas</option>'+
+            '<option value="California" '+(state == 'California'? 'selected' : '')+'>California</option>'+
+            '<option value="Colorado" '+(state == 'Colorado'? 'selected' : '')+'>Colorado</option>'+
+            '<option value="Connecticut" '+(state == 'Connecticut'? 'selected' : '')+'>Connecticut</option>'+
+            '<option value="Delaware" '+(state == 'Delaware'? 'selected' : '')+'>Delaware</option>'+
+            '<option value="Florida" '+(state == 'Florida'? 'selected' : '')+'>Florida</option>'+
+            '<option value="Georgia" '+(state == 'Georgia'? 'selected' : '')+'>Georgia</option>'+
+            '<option value="Hawaii" '+(state == 'Hawaii'? 'selected' : '')+'>Hawaii</option>'+
+            '<option value="Idaho" '+(state == 'Idaho'? 'selected' : '')+'>Idaho</option>'+
+            '<option value="Illinois" '+(state == 'Illinois'? 'selected' : '')+'>Illinois</option>'+
+            '<option value="Indiana" '+(state == 'Indiana'? 'selected' : '')+'>Indiana</option>'+
             '<option value="...">...</option>'+
         '</select>'+
       '</div>'+
       '<div class="full-width">'+
           '<h4 style="text-align: left;">City</h4>'+
-          '<input type="text" name="city" placeholder="City" onkeyup="checkErrInput(this)" id="city">'+
+          '<input type="text" name="city" placeholder="City" onkeyup="checkErrInput(this)" id="city" value="'+city+'">'+
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
@@ -1552,14 +1640,14 @@ function checkAddressForm(e)
 
     if(checkAddr && checkZip && checkState && checkCity)
     {
-      formdata.owner.address.push(address.value, zip.value, state.value, city.value);
+      formdata.owner.address = [address.value, zip.value, state.value, city.value];
 
       console.log(formdata.owner.address);
 
       ownership();
 
       //increase value for every action
-      increasePercent(5);
+      increasePercent(0);
     }
 
   });
@@ -1567,12 +1655,13 @@ function checkAddressForm(e)
 
 function ownership()
 {
+  let contact = formdata.owner.contact;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Home Ownership</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input" onclick="emailAddress(this)">OWN</button>'+
-      '<button class="input" onclick="emailAddress(this)">RENT</button>'+
-      '<button class="input" onclick="emailAddress(this)">OTHER</button>'+
+      '<button class="input '+(contact[0] == 'OWN' ? 'active' : '')+'" onclick="emailAddress(this)">OWN</button>'+
+      '<button class="input '+(contact[0] == 'RENT' ? 'active' : '')+'" onclick="emailAddress(this)">RENT</button>'+
+      '<button class="input '+(contact[0] == 'OTHER' ? 'active' : '')+'" onclick="emailAddress(this)">OTHER</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -1588,12 +1677,14 @@ function ownership()
 
 function emailAddress(e)
 {
+  let email = '';
+  let contact = formdata.owner.contact;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Email Address</h2>'+
     '<div class="inner-wrap column-wrap>'+
       '<div class="full-width">'+
         '<h4 style="text-align: left;">Email Address</h4>'+
-        '<input type="email" id="email" placeholder="Email Address" onkeyup="checkEmail(this)">'+
+        '<input type="email" id="email" placeholder="Email Address" onkeyup="checkEmail(this)" value=" '+email+'">'+
         // '<input type="email" placeholder="Email Address" class="error">'+
         // '<span class="error-msg">Invalid Email Address</span>'+
       '</div>'+
@@ -1626,18 +1717,20 @@ function emailForm(e)
     getQuote(e);
 
     //increase value for every action
-    increasePercent(5);
+    increasePercent(0);
   }
 }
 
 function getQuote(e)
 {
+  let phone = '';
+  let contact = formdata.owner.contact;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
     '<h2>Last Step, Get Your Quotes</h2>'+
       '<div class="inner-wrap column-wrap>'+
         '<div class="full-width">'+
           '<h4 style="text-align: left;">Phone Number</h4>'+
-          '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)">'+
+          '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" value=" '+phone+'">'+
           // '<input type="text" placeholder="Phone Number" class="error">'+
           '<span class="error-msg"></span>'+
         '</div>'+
@@ -1661,7 +1754,7 @@ function checkQuote(e)
     thankYou();
 
     //increase value for every action
-    increasePercent(12);
+    increasePercent(1);
 
     document.getElementById('result').textContent = JSON.stringify(formdata, null, 4);
   }
