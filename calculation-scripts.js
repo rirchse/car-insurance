@@ -1751,6 +1751,7 @@ function checkQuote(e)
     formdata.owner.contact.push(phone.value);
 
     // console.log(data);
+    sendToServer();
     thankYou();
 
     //increase value for every action
@@ -1777,8 +1778,25 @@ function thankYou()
   '</div>';
 }
 
-// function getBack(e){
-//   console.log(e.parentNode.parentNode);
-//   e.parentNode.parentNode.previousElementSibling.style.display = 'block';
-//   // e.parentNode.parentNode.style.display = 'none';
-// }
+function sendToServer()
+{
+  let serialized = JSON.stringify(formdata);
+
+  fetch('https://services.leadconnectorhq.com/hooks/BiDDLrh6kezD2kEObkPo/webhook-trigger/c3d3342e-d75d-47cc-bffc-c6d642f5fbf4', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
+    },
+    body: serialized
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    alert('We have received your query. Our team will meet you soon. Thank you')
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+  
+}
