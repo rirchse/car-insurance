@@ -108,7 +108,7 @@ function checkPhone(e)
   }
 }
 
-function createZIPCodePanel()
+function createZIPCodePanel(e)
 {
   container.innerHTML = '<div class="step step-1">'+
     '<h2>Zip</h2>'+
@@ -125,7 +125,7 @@ function createZIPCodePanel()
         '<button class="action-btn btn" onclick="ZIPCode()">Get Started Now</button>'+
       '</div>'+
       '<div class="more-options inner-wrap-btn">'+
-        '<button class="show-more" onclick="brands(this)">'+
+        '<button class="show-more" onclick="brands(this)" value="next">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
           '</svg>'+
@@ -134,37 +134,45 @@ function createZIPCodePanel()
       '</div>'+
     '</div>'+
   '</div>';
+
+  if(vehicleCounter == 0 && e.value == 'back')
+  {
+    increasePercent(-10);
+  }
 }
 
 // check zip code
 function ZIPCode()
 {
-let zipcode = document.getElementById('zipcode');
-let result = document.getElementById('result');
+ let zipcode = document.getElementById('zipcode');
+ let result = document.getElementById('result');
 
-fetch(zipcodefile) // Path to your JSON file
-.then(response => response.json()) // Parse JSON response
-.then(data => {
-  data.zipcodes.forEach((zip) =>{
-    if(zip == zipcode.value)
-    {
-      //increase value for every action
-      increasePercent(10);
-      // writeYears(null);
-      brands(null);
-      result.innerHTML = '';
-    }
-    else
-    {
-      checkErrInput(zipcode);
-      result.innerHTML = 'Invalid ZIP Code';
-    }
-    // console.log(zip);
-  });
-  // console.log(data.zipcodes[0]);
+  fetch(zipcodefile) // Path to your JSON file
+  .then(response => response.json()) // Parse JSON response
+  .then(data => {
+    data.zipcodes.forEach((zip) =>{
+      if(zip == zipcode.value)
+      {
+        if(vehicleCounter == 0){
+          //increase value for every action
+          increasePercent(10);
+        }
 
-}) // Use the data
-.catch(error => console.error('Error loading JSON:', error));
+        // execute brands
+        brands(null);
+        result.innerHTML = '';
+      }
+      else
+      {
+        checkErrInput(zipcode);
+        result.innerHTML = 'Invalid ZIP Code';
+      }
+      // console.log(zip);
+    });
+    // console.log(data.zipcodes[0]);
+
+  }) // Use the data
+  .catch(error => console.error('Error loading JSON:', error));
 }
 
 //write brand
@@ -189,7 +197,7 @@ function brands(e)
       if(formdata.vehicles.current[0] == b){
         btn.setAttribute('class', 'active');
       }
-      btn.setAttribute('onclick', 'writeYears(this)');
+      btn.setAttribute('onclick', 'checkBrands(this)');
       btn.setAttribute('name', b);
       btn.innerHTML = '<div class="input-wrap">'+
         '<img width="150" height="100" src="img/'+b+'.webp" alt="'+b+'">'+
@@ -225,18 +233,33 @@ function brands(e)
     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
     '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
     '</svg> Back </button>';
-    container.appendChild(back);  
-    
-    if(e.value != 'back')
-    {
-      //increase value for every action
-      if(vehicleCounter == 0)
-      {
-        increasePercent(15);
-      }
-    }
+    container.appendChild(back);
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
+
+  if(vehicleCounter == 0 && e.value == 'next')
+  {
+    increasePercent(10);
+  }
+
+  if(vehicleCounter == 0 && e.value == 'back')
+  {
+    increasePercent(-10);
+  }
+}
+
+function checkBrands(e)
+{
+  // let brand = formdata.vehicles.current;
+  // console.log(brand[0]);
+  //increase value for every action
+  if(vehicleCounter == 0)
+  {
+    increasePercent(10);
+  }
+  //call to the write years
+  writeYears(e);
+
 }
 
 // read years
@@ -263,7 +286,7 @@ function writeYears(e)
       if(formdata.vehicles.current[1] == b){
         btn.setAttribute('class', 'active');
       }
-      btn.setAttribute('onclick', 'models(this)');
+      btn.setAttribute('onclick', 'checkYears(this)');
       btn.setAttribute('name', b);
       btn.innerHTML = b;
 
@@ -293,21 +316,35 @@ function writeYears(e)
     //create back button
     let back = document.createElement('div');
     back.setAttribute('class', 'back-to-prev');
-    back.innerHTML = '<button class="back" onclick="brands(this)"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+    back.innerHTML = '<button class="back" onclick="brands(this)" value="back"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
     '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
     '</svg> Back </div>';
     container.appendChild(back);
 
-    //increase value for every action
-    if(vehicleCounter == 0)
+    if(vehicleCounter == 0 && e.value == 'back')
     {
-      increasePercent(15);
+      increasePercent(-15);
     }
+
     // store brand to the object
     formdata.vehicles.current[0] = brand;
     console.log(formdata.vehicles.current);
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
+}
+
+function checkYears(e)
+{
+  // let brand = formdata.vehicles.current;
+  // console.log(brand[1]);
+  //increase value for every action
+  if(vehicleCounter == 0)
+  {
+    increasePercent(15);
+  }
+  //call to the write years
+  models(e);
+
 }
 
 //write model
@@ -334,7 +371,7 @@ fetch(jsonfile) // Path to your JSON file
       btn.setAttribute('class', 'active');
     }
     btn.setAttribute('name', b);
-    btn.setAttribute('onclick', 'owner(this)');
+    btn.setAttribute('onclick', 'checkModel(this)');
     btn.innerHTML = b;
 
     if (e.value == 'more') {
@@ -370,17 +407,27 @@ fetch(jsonfile) // Path to your JSON file
 
   if(e.value != 'back')
   {
-    //increase value for every action
-    if(vehicleCounter == 0)
-    {
-      increasePercent(15);
-    }
     // store year to the vehicle object
     formdata.vehicles.current[1] = year;
     console.log(formdata.vehicles.current);
   }
+
+  if(vehicleCounter == 0 && e.value == 'back')
+  {
+    increasePercent(-10);
+  }
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
+}
+
+function checkModel(e)
+{
+  //increase value for every action
+  if(vehicleCounter == 0)
+  {
+    increasePercent(10);
+  }
+  owner(e);
 }
 
 function owner(e)
@@ -390,10 +437,10 @@ function owner(e)
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Vehicle Ownership</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(own[3] == 'Finance' ? 'active': '')+'" onclick="milage(this)">Finance</button>'+
-      '<button class="input '+(own[3] == 'Lease' ? 'active': '')+'" onclick="milage(this)">Lease</button>'+
-      '<button class="input '+(own[3] == 'Own' ? 'active': '')+'" onclick="milage(this)">Own</button>'+
-      '<button class="input '+(own[3] == 'Other' ? 'active': '')+'" onclick="milage(this)">Other</button>'+
+      '<button class="input '+(own[3] == 'Finance' ? 'active': '')+'" onclick="checkOwner(this)">Finance</button>'+
+      '<button class="input '+(own[3] == 'Lease' ? 'active': '')+'" onclick="checkOwner(this)">Lease</button>'+
+      '<button class="input '+(own[3] == 'Own' ? 'active': '')+'" onclick="checkOwner(this)">Own</button>'+
+      '<button class="input '+(own[3] == 'Other' ? 'active': '')+'" onclick="checkOwner(this)">Other</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -406,15 +453,24 @@ function owner(e)
 
   if(e.value != 'back')
   {
-    //increase value for every action
-    if(vehicleCounter == 0)
-    {
-      increasePercent(15);
-    }
     // store model to the vehicle object
     formdata.vehicles.current[2] = e.name;
     console.log(formdata.vehicles.current);
   }
+
+  if(vehicleCounter == 0 && e.value == 'back'){
+    increasePercent(-10);
+  }
+}
+
+function checkOwner(e)
+{
+  //increase value for every action
+  if(vehicleCounter == 0)
+  {
+    increasePercent(10);
+  }
+  milage(e);
 }
 
 function milage(e)
@@ -424,10 +480,10 @@ function milage(e)
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Annual Mileage</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(mile[4] == 'Under 5,000' ? 'active': '')+'" onclick="coverage(this)">Under 5,000</button>'+
-      '<button class="input '+(mile[4] == '5,001-10,000' ? 'active': '')+'" onclick="coverage(this)">5,001-10,000</button>'+
-      '<button class="input '+(mile[4] == '10,001-15,000' ? 'active': '')+'" onclick="coverage(this)">10,001-15,000</button>'+
-      '<button class="input '+(mile[4] == '15,000+' ? 'active': '')+'" onclick="coverage(this)">15,000+</button>'+
+      '<button class="input '+(mile[4] == 'Under 5,000' ? 'active': '')+'" onclick="checkMilage(this)">Under 5,000</button>'+
+      '<button class="input '+(mile[4] == '5,001-10,000' ? 'active': '')+'" onclick="checkMilage(this)">5,001-10,000</button>'+
+      '<button class="input '+(mile[4] == '10,001-15,000' ? 'active': '')+'" onclick="checkMilage(this)">10,001-15,000</button>'+
+      '<button class="input '+(mile[4] == '15,000+' ? 'active': '')+'" onclick="checkMilage(this)">15,000+</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -440,15 +496,23 @@ function milage(e)
 
   if(e.value != 'back')
   {
-    //increase value for every action
-    if(vehicleCounter == 0)
-    {
-      increasePercent(10);
-    }
     //store owner to the vehicle object
     formdata.vehicles.current[3] = e.innerHTML;
     console.log(formdata.vehicles.current);
-  }  
+  }
+  if(vehicleCounter == 0 && e.value == 'back'){
+    increasePercent(-10);
+  }
+}
+
+function checkMilage(e)
+{
+  //increase value for every action
+  if(vehicleCounter == 0)
+  {
+    increasePercent(10);
+  }
+  coverage(e);
 }
 
 function coverage(e)
@@ -458,11 +522,11 @@ function coverage(e)
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Desired Coverage Level</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(cover[5] == 'Superior' ? 'active': '')+'" onclick="anotherVehicle(this)">Superior</button>'+
-      '<button class="input '+(cover[5] == 'Standard' ? 'active': '')+'" onclick="anotherVehicle(this)">Standard</button>'+
-      '<button class="input '+(cover[5] == 'Basic' ? 'active': '')+'" onclick="anotherVehicle(this)">Basic</button>'+
-      '<button class="input '+(cover[5] == 'State' ? 'active': '')+'" onclick="anotherVehicle(this)">State</button>'+
-      '<button class="input '+(cover[5] == 'Minimum' ? 'active': '')+'" onclick="anotherVehicle(this)">Minimum</button>'+
+      '<button class="input '+(cover[5] == 'Superior' ? 'active': '')+'" onclick="checkCoverage(this)">Superior</button>'+
+      '<button class="input '+(cover[5] == 'Standard' ? 'active': '')+'" onclick="checkCoverage(this)">Standard</button>'+
+      '<button class="input '+(cover[5] == 'Basic' ? 'active': '')+'" onclick="checkCoverage(this)">Basic</button>'+
+      '<button class="input '+(cover[5] == 'State' ? 'active': '')+'" onclick="checkCoverage(this)">State</button>'+
+      '<button class="input '+(cover[5] == 'Minimum' ? 'active': '')+'" onclick="checkCoverage(this)">Minimum</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -475,15 +539,23 @@ function coverage(e)
 
   if(e.value != 'back')
   {
-    //increase value for every action
-    if(vehicleCounter == 0)
-    {
-      increasePercent(9);
-    }
     //store milage to the vehicle object
     formdata.vehicles.current[4] = e.innerHTML;
     console.log(formdata.vehicles.current);
   }
+  if(vehicleCounter == 0 && e.value == 'back'){
+    increasePercent(-9);
+  }
+}
+
+function checkCoverage(e)
+{
+  //increase value for every action
+  if(vehicleCounter == 0)
+  {
+    increasePercent(9);
+  }
+  anotherVehicle(e);
 }
 
 function anotherVehicle(e)
@@ -548,10 +620,10 @@ function anotherVehicle(e)
 
 function checkAnotherVehicle(e)
 {
-  vehicleCounter++;
   if(e.name == 'Yes')
   {
-    brands();
+    vehicleCounter++;
+    brands(e);
     formdata.vehicles.current = [];
   }
 }
@@ -1373,7 +1445,7 @@ function driverName()
         '<div class="inner-wrap inner-wrap-input">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
-              '<input type="text" placeholder="Legal First Name" name="first_name" onkeyup="checkErrInput(this)" value="'+first_name+'">'+
+              '<input type="text" placeholder="Legal First Name" name="first_name" onkeyup="checkErrInput(this)" value="'+first_name+'" required>'+
               '<label>First Name</label>'+
             '</div>'+
           '</div>'+
@@ -1382,7 +1454,7 @@ function driverName()
         '<div class="inner-wrap inner-wrap-input">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
-            '<input type="text" placeholder="Legal Last Name" name="last_name" onkeyup="checkErrInput(this)" value="'+last_name+'">'+
+            '<input type="text" placeholder="Legal Last Name" name="last_name" onkeyup="checkErrInput(this)" value="'+last_name+'" required>'+
             '<label>Last Name</label>'+
           '</div>'+
         '</div>'+
