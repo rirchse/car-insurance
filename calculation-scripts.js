@@ -1571,7 +1571,6 @@ function backIncident(e)
 
 function anotherDriver()
 {
-  driverCounter++;
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Driver? (Save Additional 20%)</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="moreDriver">'+
@@ -1598,6 +1597,7 @@ function checkAnotherDriver(e)
 {
   if(e.value == 'YES')
   {
+    driverCounter++;
     formdata.drivers.current = {
       names: [],
       general: [],
@@ -1829,7 +1829,7 @@ function checkQuote(e)
     //increase value for every action
     increasePercent(1);
 
-    document.getElementById('result').textContent = JSON.stringify(formdata, null, 4);
+    // document.getElementById('result').textContent = JSON.stringify(formdata, null, 4);
   }
 }
 
