@@ -1652,7 +1652,7 @@ function ownerAddress()
         '<div class="input-field-wrap">'+
             '<input type="text" name="zip" placeholder="Zip" onkeyup="checkErrInput(this)" id="zip" value="'+zip+'" required>'+
             '<label for="">Zip</label>'+
-        '</div>'
+        '</div>'+
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">State</h4>'+
@@ -1680,7 +1680,7 @@ function ownerAddress()
           '<div class="input-field-wrap">'+
               '<input type="text" name="city" placeholder="City" onkeyup="checkErrInput(this)" id="city" value="'+city+'" required>'+
               '<label for="">City</label>'+
-          '</div>'
+          '</div>'+
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
