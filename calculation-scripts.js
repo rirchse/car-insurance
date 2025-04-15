@@ -1441,24 +1441,24 @@ function driverName()
     '<form action="#" id="driverNameForm">'+
       '<div class="inner-wrap column-wrap" id="incident">'+
       '<div class="full-width">'+
-        '<h4 style="text-align: left;">Legal First Name</h4>'+
+        // '<h4 style="text-align: left;">Legal First Name</h4>'+
         '<div class="inner-wrap inner-wrap-input">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
-              '<input type="text" placeholder="Legal First Name" name="first_name" onkeyup="checkErrInput(this)" value="'+first_name+'" required>'+
+              '<input type="text" placeholder="First Name" name="first_name" onkeyup="checkErrInput(this)" value="'+first_name+'" required>'+
               '<label>First Name</label>'+
             '</div>'+
           '</div>'+
         '</div>'+
-        '<h4 style="text-align: left;" class="mt-20">Legal Last Name</h4>'+
-        '<div class="inner-wrap inner-wrap-input">'+
+        // '<h4 style="text-align: left;" class="mt-20">Legal Last Name</h4>'+
+        '<div class="inner-wrap inner-wrap-input mt-20">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
-            '<input type="text" placeholder="Legal Last Name" name="last_name" onkeyup="checkErrInput(this)" value="'+last_name+'" required>'+
-            '<label>Last Name</label>'+
+                '<input type="text" placeholder="Last Name" name="last_name" onkeyup="checkErrInput(this)" value="'+last_name+'" required>'+
+                '<label>Last Name</label>'+
+            '</div>'+
           '</div>'+
         '</div>'+
-      '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
       '<button type="button" class="back" onclick="backIncident(this)" name="back" value="sr-22">'+
@@ -1641,11 +1641,18 @@ function ownerAddress()
   '<div class="inner-wrap column-wrap">'+
     '<div class="full-width">'+
       '<h4 style="text-align: left;">Street Address</h4>'+
-      '<input id="autocomplete" type="text" name="address" placeholder="Street Address" onkeyup="fillInAddress()" value="'+address+'">'+
+      '<div class="input-field-wrap">'+
+          '<input id="autocomplete" type="text" name="address" placeholder="Address" onkeyup="fillInAddress()" value="'+address+'" required>'+
+          '<label for="">Address</label>'+
+      '</div>'
+      // '<input id="autocomplete" type="text" name="address" placeholder="Street Address" onkeyup="fillInAddress()" value="'+address+'">'+
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">Zip Code</h4>'+
-        '<input type="text" name="zip" placeholder="Zip Code" onkeyup="checkErrInput(this)" id="zip" value="'+zip+'">'+
+        '<div class="input-field-wrap">'+
+            '<input type="text" name="zip" placeholder="Zip" onkeyup="checkErrInput(this)" id="zip" value="'+zip+'" required>'+
+            '<label for="">Zip</label>'+
+        '</div>'
     '</div>'+
     '<div class="half-width">'+
         '<h4 style="text-align: left;">State</h4>'+
@@ -1670,7 +1677,10 @@ function ownerAddress()
       '</div>'+
       '<div class="full-width">'+
           '<h4 style="text-align: left;">City</h4>'+
-          '<input type="text" name="city" placeholder="City" onkeyup="checkErrInput(this)" id="city" value="'+city+'">'+
+          '<div class="input-field-wrap">'+
+              '<input type="text" name="city" placeholder="City" onkeyup="checkErrInput(this)" id="city" value="'+city+'" required>'+
+              '<label for="">City</label>'+
+          '</div>'
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
@@ -1756,8 +1766,12 @@ function emailAddress(e)
   '<h2>Email Address</h2>'+
     '<div class="inner-wrap column-wrap>'+
       '<div class="full-width">'+
-        '<h4 style="text-align: left;">Email Address</h4>'+
-        '<input type="email" id="email" placeholder="Email Address" onkeyup="checkEmail(this)" value=" '+email+'" required>'+
+        // '<h4 style="text-align: left;">Email Address</h4>'+
+        '<div class="input-field-wrap">'+
+            '<input type="email" id="email" name="phone" placeholder="Email" onkeyup="checkEmail(this)" value=" '+email+'" required>'+
+            '<label for="">Email Address</label>'+
+        '</div>'+
+        // '<input type="email" id="email" placeholder="Email Address" onkeyup="checkEmail(this)" value=" '+email+'" required>'+
         // '<input type="email" placeholder="Email Address" class="error">'+
         // '<span class="error-msg">Invalid Email Address</span>'+
       '</div>'+
@@ -1804,7 +1818,6 @@ function getQuote(e)
         '<div class="full-width">'+
           '<h4 style="text-align: left;">Phone Number</h4>'+
           '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" value=" '+phone+'" required>'+
-          // '<input type="text" placeholder="Phone Number" class="error">'+
           '<span class="error-msg"></span>'+
         '</div>'+
         '<div class="field-wrap">'+
