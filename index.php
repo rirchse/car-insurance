@@ -270,7 +270,7 @@
 
     <!-- <?php echo $_SERVER["HTTP_HOST"]; ?> -->
     
-      <?php if($_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
+      <?php if($_SERVER["HTTP_HOST"] == 'localhost:8888' || $_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
       <link rel="stylesheet" href="styles.css?v=0.101">
       <script>
         const zipcodefile = 'zipcode.json?v=1.10';
