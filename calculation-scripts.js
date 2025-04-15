@@ -1441,7 +1441,7 @@ function driverName()
     '<form action="#" id="driverNameForm">'+
       '<div class="inner-wrap column-wrap" id="incident">'+
       '<div class="full-width">'+
-        '<h4 style="text-align: left;">Legal First Name</h4>'+
+        // '<h4 style="text-align: left;">Legal First Name</h4>'+
         '<div class="inner-wrap inner-wrap-input">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
@@ -1450,7 +1450,7 @@ function driverName()
             '</div>'+
           '</div>'+
         '</div>'+
-        '<h4 style="text-align: left;" class="mt-20">Legal Last Name</h4>'+
+        // '<h4 style="text-align: left;" class="mt-20">Legal Last Name</h4>'+
         '<div class="inner-wrap inner-wrap-input">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
