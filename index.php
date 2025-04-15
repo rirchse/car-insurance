@@ -121,11 +121,6 @@
             </div>
         </div>
 
-        <div class="container">
-            <h4>
-                <pre id="result" style="display:block"></pre>
-            </h4>
-        </div>
         <div class="footer-bar"></div>
         <footer class="container footer-wrap">
             <p>
@@ -133,7 +128,6 @@
                 <a href="/privacy">Privacy Policy</a>
             </p>
         </footer>
-        <p><img id="testimg" src="" alt="test json image" onclick="checkImg()"></p>
     </div>
 
     <!-- <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script> -->
@@ -286,14 +280,6 @@
             })
             .catch(error => console.error('Error Loading JSON:', error));
         });
-
-        // test perposes used codes
-        let testimg = document.getElementById('testimg');
-        function checkImg()
-        {
-            testimg.src = imgdata['Acura'];
-        }
-        //end test code
         
       </script>
       <script src="calculation-scripts.js?v=0.190"></script>

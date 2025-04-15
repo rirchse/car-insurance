@@ -110,7 +110,7 @@ function checkPhone(e)
 
 function createZIPCodePanel(e)
 {
-  container.innerHTML = '<div class="step step-1">'+
+  let html = '<div class="step step-1">'+
     '<h2>Zip</h2>'+
     '<div class="step step-1 step-content-basic">'+
     
@@ -123,21 +123,31 @@ function createZIPCodePanel(e)
       '</div>'+
       '<div class="field-wrap">'+
         '<button class="action-btn btn" onclick="ZIPCode()">Get Started Now</button>'+
-      '</div>'+
-      '<div class="more-options inner-wrap-btn">'+
+      '</div>';
+      if(e.value == 'back')
+      {
+      html += '<div class="more-options inner-wrap-btn">'+
         '<button class="show-more" onclick="brands(this)" value="next">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
           '</svg>'+
           'Continue...'+
         '</button>'+
-      '</div>'+
-    '</div>'+
+      '</div>';
+      }
+    html += '</div>'+
   '</div>';
+
+  container.innerHTML = html;
 
   if(vehicleCounter == 0 && e.value == 'back')
   {
     increasePercent(-10);
+  }
+
+  if(vehicleCounter > 0 && e.value == 'back')
+  {
+    anotherVehicle();
   }
 }
 
@@ -622,7 +632,8 @@ function checkAnotherVehicle(e)
 {
   if(e.name == 'Yes')
   {
-    vehicleCounter++;
+    let vlist = formdata.vehicles.list.length;
+    vehicleCounter = vlist++;
     brands(e);
     formdata.vehicles.current = [];
   }
@@ -1801,6 +1812,8 @@ function emailForm(e)
   if(checkEmail(email))
   {
     formdata.owner.contact.push(email.value);
+    //store data to the local storage
+    localStorage.setItem('localdata', JSON.stringify(formdata));
     getQuote(e);
 
     //increase value for every action
@@ -1826,19 +1839,29 @@ function getQuote(e)
       '</div>'+
       '<div class="field-wrap">'+
           '<button class="action-btn btn" onclick="checkQuote(this)">Get My Quote</button>'+
+          '<a href="#" onclick="removeLocal()"> >> Let\'s start from scratch</a>'+
+          '<br><br><hr><p style="color:red">All data will show here...</p><hr><br>'+
       '</div>'+
       '<div class="agent-wrap">'+
           '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
           '<p>'+
               '<svg xmlns="http://www.w3.org/2000/svg" class="agent-checkbox" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>'+
               '<span>Your car insurance quotes are ready</span>'+
-          '</p>'+
-          
+          '</p>'+          
       '</div>'+
+  '</div>'+
+  '<div class="container">'+
+    '<h4>'+
+      '<pre id="result" style="display:block"></pre>'+
+    '</h4>'+
   '</div>'+
   '<div class="tcpa-wrap">'+
       '<p>We take your privacy seriously. By clicking the "Submit" button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href="#">Marketing Partners</a>, agents, affiliates or third parties acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href="#">Privacy Policy</a> and <a href="#">Terms and Conditions</a>.</p>'+
   '</div>';
+
+  // check local data
+  // console.log(localStorage.getItem('localdata'));
+  // document.getElementById('result').textContent = localStorage.getItem('localdata');
 }
 
 // getQuote(5);
@@ -1858,7 +1881,6 @@ function checkQuote(e)
     //increase value for every action
     increasePercent(1);
 
-    // document.getElementById('result').textContent = JSON.stringify(formdata, null, 4);
   }
 }
 
@@ -1900,4 +1922,29 @@ function sendToServer()
     console.error('Error:', error);
   });
   
+}
+
+// check local data exist
+function checkLocalData()
+{
+  let localdata = localStorage.getItem('localdata');
+  if(localdata){
+    container.innerHTML = '<div class="step step-1">'+
+    '<div class="step step-1 step-content-basic">'+
+    '<div class="field-wrap">'+
+        '<button class="action-btn btn" onclick="getQuote()">Get My Quote'+ 
+        '<span class="notifiy">1</span>'+
+        '</button>'+
+      '</div>'+
+      '</div>'+
+    '</div>';
+  }
+}
+
+checkLocalData();
+
+function removeLocal()
+{
+  localStorage.removeItem('localdata');
+  createZIPCodePanel();
 }
