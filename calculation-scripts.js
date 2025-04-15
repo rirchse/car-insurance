@@ -1813,17 +1813,32 @@ function getQuote(e)
   let phone = '';
   let contact = formdata.owner.contact;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
-    '<h2>Last Step, Get Your Quotes</h2>'+
-      '<div class="inner-wrap column-wrap>'+
-        '<div class="full-width">'+
-          '<h4 style="text-align: left;">Phone Number</h4>'+
-          '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" value=" '+phone+'" required>'+
-          '<span class="error-msg"></span>'+
-        '</div>'+
-        '<div class="field-wrap">'+
+      '<h5 style="color: #0070e9; text-transform: uppercase;">Last Step: Phone Number</h5>'+
+      '<h2 style="text-transform: uppercase;">Contact Number</h2>'+
+      '<div class="inner-wrap column-wrap">'+
+          '<div class="full-width">'+
+              '<div class="input-field-wrap">'+
+                  '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" value=" '+phone+'" required>'+
+                  '<label for="">Phone number</label>'+
+              '</div>'+
+              '<span class="error-msg"></span>'+
+          '</div>'+
+      '</div>'+
+      '<div class="field-wrap">'+
           '<button class="action-btn btn" onclick="checkQuote(this)">Get My Quote</button>'+
-        '</div>'+
-      '</div>';
+      '</div>'+
+      '<div class="agent-wrap">'+
+          '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
+          '<p>'+
+              '<svg xmlns="http://www.w3.org/2000/svg" class="agent-checkbox" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>'+
+              '<span>Your car insurance quotes are ready</span>'+
+          '</p>'+
+          
+      '</div>'+
+  '</div>'+
+  '<div class="tcpa-wrap">'+
+      '<p>We take your privacy seriously. By clicking the "Submit" button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href="#">Marketing Partners</a>, agents, affiliates or third parties acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href="#">Privacy Policy</a> and <a href="#">Terms and Conditions</a>.</p>'+
+  '</div>';
 }
 
 // getQuote(5);
