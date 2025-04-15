@@ -98,12 +98,12 @@ function checkPhone(e)
   const regex = /^(?:\+1\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
   if(e.value == '' || !regex.test(e.value)){
     e.style.borderColor = 'red';
-    e.nextElementSibling.innerHTML = 'Invalid Phone Number';
+    e.parentNode.nextElementSibling.innerHTML = 'Invalid Phone Number';
     return false;
   }
   else{
     e.style.borderColor = '#ddd';
-    e.nextElementSibling.innerHTML = '';
+    e.parentNode.nextElementSibling.innerHTML = '';
     return true;
   }
 }
@@ -124,7 +124,7 @@ function createZIPCodePanel(e)
       '<div class="field-wrap">'+
         '<button class="action-btn btn" onclick="ZIPCode()">Get Started Now</button>'+
       '</div>';
-      if(e.value == 'back')
+      if(e != null && e.value == 'back')
       {
       html += '<div class="more-options inner-wrap-btn">'+
         '<button class="show-more" onclick="brands(this)" value="next">'+
@@ -1831,7 +1831,7 @@ function getQuote(e)
       '<div class="inner-wrap column-wrap">'+
           '<div class="full-width">'+
               '<div class="input-field-wrap">'+
-                  '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" value=" '+phone+'" required>'+
+                  '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" value="'+phone+'" required>'+
                   '<label for="">Phone number</label>'+
               '</div>'+
               '<span class="error-msg"></span>'+
@@ -1864,7 +1864,7 @@ function getQuote(e)
   // document.getElementById('result').textContent = localStorage.getItem('localdata');
 }
 
-// getQuote(5);
+getQuote(5);
 
 function checkQuote(e)
 {
@@ -1938,6 +1938,8 @@ function checkLocalData()
       '</div>'+
       '</div>'+
     '</div>';
+    
+    increasePercent(74);
   }
 }
 
