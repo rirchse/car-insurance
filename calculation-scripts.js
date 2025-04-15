@@ -200,7 +200,7 @@ function brands(e)
       btn.setAttribute('onclick', 'checkBrands(this)');
       btn.setAttribute('name', b);
       btn.innerHTML = '<div class="input-wrap">'+
-        '<img width="150" height="100" src="img/'+b+'.webp" alt="'+b+'">'+
+        '<img width="150" height="100" src="'+imgdata[b]+'" alt="'+b+'">'+
         '<span>'+b+'</span>'+
       '</div>';
 

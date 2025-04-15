@@ -133,6 +133,7 @@
                 <a href="/privacy">Privacy Policy</a>
             </p>
         </footer>
+        <p><img id="testimg" src="" alt="test json image" onclick="checkImg()"></p>
     </div>
 
     <!-- <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script> -->
@@ -274,6 +275,26 @@
       <script>
         const zipcodefile = 'zipcode.json?v=1.10';
         const jsonfile = 'merged_make_year_model.json';
+        const imgfile = 'img.json';
+
+        let imgdata = [];
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch(imgfile)
+            .then(response => response.json())
+            .then(data => {
+                imgdata = data;
+            })
+            .catch(error => console.error('Error Loading JSON:', error));
+        });
+
+        // test perposes used codes
+        let testimg = document.getElementById('testimg');
+        function checkImg()
+        {
+            testimg.src = imgdata['Acura'];
+        }
+        //end test code
+        
       </script>
       <script src="calculation-scripts.js?v=0.190"></script>
       
