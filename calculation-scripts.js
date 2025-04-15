@@ -1441,7 +1441,7 @@ function driverName()
     '<form action="#" id="driverNameForm">'+
       '<div class="inner-wrap column-wrap" id="incident">'+
       '<div class="full-width">'+
-        // '<h4 style="text-align: left;">Legal First Name</h4>'+
+        '<h4 style="text-align: left;">Legal First Name</h4>'+
         '<div class="inner-wrap inner-wrap-input">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
@@ -1450,8 +1450,8 @@ function driverName()
             '</div>'+
           '</div>'+
         '</div>'+
-        // '<h4 style="text-align: left;" class="mt-20">Legal Last Name</h4>'+
-        '<div class="inner-wrap inner-wrap-input mt-20">'+
+        '<h4 style="text-align: left;" class="mt-20">Legal Last Name</h4>'+
+        '<div class="inner-wrap inner-wrap-input">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
                 '<input type="text" placeholder="Last Name" name="last_name" onkeyup="checkErrInput(this)" value="'+last_name+'" required>'+
@@ -1644,7 +1644,7 @@ function ownerAddress()
       '<div class="input-field-wrap">'+
           '<input id="autocomplete" type="text" name="address" placeholder="Address" onkeyup="fillInAddress()" value="'+address+'" required>'+
           '<label for="">Address</label>'+
-      '</div>'
+      '</div>'+
       // '<input id="autocomplete" type="text" name="address" placeholder="Street Address" onkeyup="fillInAddress()" value="'+address+'">'+
     '</div>'+
     '<div class="half-width">'+
