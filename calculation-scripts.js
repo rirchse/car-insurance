@@ -1864,7 +1864,7 @@ function getQuote(e)
   // document.getElementById('result').textContent = localStorage.getItem('localdata');
 }
 
-getQuote(5);
+// getQuote(5);
 
 function checkQuote(e)
 {
