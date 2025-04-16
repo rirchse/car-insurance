@@ -155,11 +155,17 @@
                         </div>
                         <div class="data-column item-details">
                             <div class="item-details-content">
-                            <p>
-                                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGwtb3BhY2l0eT0iLjAxIiBmaWxsPSIjRkZGIiBkPSJNMCAwaDQ4djQ4SDB6Ii8+PHBhdGggZD0iTTI0IDEzLjY2MmMxMS4yMTYgMCAyMC4zMDggNC41NDYgMjAuMzA4IDEwLjE1MyAwIDUuNjA4LTkuMDkyIDEwLjE1NC0yMC4zMDggMTAuMTU0UzMuNjkyIDI5LjQyMyAzLjY5MiAyMy44MTVjMC01LjYwNyA5LjA5Mi0xMC4xNTMgMjAuMzA4LTEwLjE1M3ptMCAxLjI4Yy05Ljg4NiAwLTE3LjkyOSAzLjk4LTE3LjkyOSA4Ljg3MyAwIDQuODk0IDguMDQzIDguODc1IDE3LjkyOSA4Ljg3NXMxNy45MjgtMy45ODEgMTcuOTI4LTguODc1YzAtNC44OTMtOC4wNDItOC44NzQtMTcuOTI4LTguODc0em0xLjIxNSAzLjY5OGEuMjIuMjIgMCAwIDEgLjIyLjIxOHY5Ljg5YS4yMTYuMjE2IDAgMCAxLS4yMi4yMTdoLTIuNDRhLjIxNS4yMTUgMCAwIDEtLjIxOC0uMjE3di05LjI4M2EuMjAyLjIwMiAwIDAgMC0uMjA0LS4yMDNoLS4zMjhjLS4wMzEgMC0uMDMxLS4wMy0uMDMxLS4wNTN2LS41MTZjMC0uMDI0IDAtLjA1My4wMzEtLjA1M3ptOC41NTQgMGMuMTA3IDAgLjIzNy4wMTUuMjkuMTQ0bDMuMzMyIDkuOTE1YS4yMjcuMjI3IDAgMCAxLS4wMzYuMTkuMTg4LjE4OCAwIDAgMS0uMTU4LjA3NmgtMi4zOTRjLS4xMTggMC0uMjQtLjA5LS4yODktLjIxNWwtMi4wNjUtNi40MDdzLS4wMjUtLjA5LS4wOTgtLjA5Yy0uMDc2IDAtLjEuMDg5LS4xLjA5bC0yLjA0MyA2LjQwN2MtLjA0OC4xMjMtLjE3MS4yMTUtLjI4Ny4yMTVoLTIuMzk1YS4xOTMuMTkzIDAgMCAxLS4xNTgtLjA3Ni4yMi4yMiAwIDAgMS0uMDM3LS4xOWwzLjA3NS05LjE0MmEuMzQ3LjM0NyAwIDAgMCAuMDI0LS4xMTdjMC0uMTA3LS4wODItLjE3OC0uMjA0LS4xNzhoLS4yODFjLS4wMjcgMC0uMDU1LS4wMjctLjA1NS0uMDUzdi0uNTE2YzAtLjAyOC4wMjctLjA1NC4wNTUtLjA1NHptLTE5Ljc0NiAwYy4xMiAwIC4yMTcuMDk4LjIxNy4yMTh2My4yOTZjMCAuMDY2LjA0My4xMS4xMDguMTEuMDE2IDAgLjA4Ny0uMDA2LjE2LS4xMTNsMi4zMjMtMy4yNzVjLjA5Mi0uMTM1LjI1Ny0uMjM2LjM4My0uMjM2aDIuNjc0Yy4wNyAwIC4xMzUuMDQuMTcyLjEwNWEuMjA2LjIwNiAwIDAgMSAwIC4yMDlsLTIuOTgxIDQuMzk3YS4zMjcuMzI3IDAgMCAwLS4wNDYuMTM1YzAgLjAxNC4wMDQuMDIzLjAwNi4wMzQuMDAzLjAxNC4wMS4wMy4wMTguMDQ0LjAwNy4wMTEuMDExLjAyMS4wMjIuMDM3bDMuNTY2IDUuMDI1Yy4wNTQuMDc2LjA2My4xNTYuMDI2LjIyNmEuMjExLjIxMSAwIDAgMS0uMTczLjExM2gtMi44MTZjLS4xMjcgMC0uMjktLjEwMS0uMzgtLjIzN2wtMi43OTQtMy45MDUtLjAxLS4wMTRjLS4wMy0uMDQ0LS4wNjgtLjA5OS0uMTUtLjA5OS0uMDY5IDAtLjEwOC4wNDktLjEwOC4xMzR2My45MDRjMCAuMTItLjA5OC4yMTctLjIxNy4yMTdIMTEuNjVhLjIxNC4yMTQgMCAwIDEtLjIxNy0uMjE3di05LjI4M2EuMjAyLjIwMiAwIDAgMC0uMjA1LS4yMDNIMTAuOWMtLjAyNyAwLS4wNTQtLjAyNi0uMDU0LS4wNTN2LS41MTZjMC0uMDI4LjAyNi0uMDUzLjA1NC0uMDUzeiIgZmlsbD0iIzAwMCIvPjwvZz48L3N2Zz4=" alt="">
-                                <span>KIA BORREGO</span>
-                            </p>
+                                <p>
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDgiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCA0OCA0OCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGwtb3BhY2l0eT0iLjAxIiBmaWxsPSIjRkZGIiBkPSJNMCAwaDQ4djQ4SDB6Ii8+PHBhdGggZD0iTTI0IDEzLjY2MmMxMS4yMTYgMCAyMC4zMDggNC41NDYgMjAuMzA4IDEwLjE1MyAwIDUuNjA4LTkuMDkyIDEwLjE1NC0yMC4zMDggMTAuMTU0UzMuNjkyIDI5LjQyMyAzLjY5MiAyMy44MTVjMC01LjYwNyA5LjA5Mi0xMC4xNTMgMjAuMzA4LTEwLjE1M3ptMCAxLjI4Yy05Ljg4NiAwLTE3LjkyOSAzLjk4LTE3LjkyOSA4Ljg3MyAwIDQuODk0IDguMDQzIDguODc1IDE3LjkyOSA4Ljg3NXMxNy45MjgtMy45ODEgMTcuOTI4LTguODc1YzAtNC44OTMtOC4wNDItOC44NzQtMTcuOTI4LTguODc0em0xLjIxNSAzLjY5OGEuMjIuMjIgMCAwIDEgLjIyLjIxOHY5Ljg5YS4yMTYuMjE2IDAgMCAxLS4yMi4yMTdoLTIuNDRhLjIxNS4yMTUgMCAwIDEtLjIxOC0uMjE3di05LjI4M2EuMjAyLjIwMiAwIDAgMC0uMjA0LS4yMDNoLS4zMjhjLS4wMzEgMC0uMDMxLS4wMy0uMDMxLS4wNTN2LS41MTZjMC0uMDI0IDAtLjA1My4wMzEtLjA1M3ptOC41NTQgMGMuMTA3IDAgLjIzNy4wMTUuMjkuMTQ0bDMuMzMyIDkuOTE1YS4yMjcuMjI3IDAgMCAxLS4wMzYuMTkuMTg4LjE4OCAwIDAgMS0uMTU4LjA3NmgtMi4zOTRjLS4xMTggMC0uMjQtLjA5LS4yODktLjIxNWwtMi4wNjUtNi40MDdzLS4wMjUtLjA5LS4wOTgtLjA5Yy0uMDc2IDAtLjEuMDg5LS4xLjA5bC0yLjA0MyA2LjQwN2MtLjA0OC4xMjMtLjE3MS4yMTUtLjI4Ny4yMTVoLTIuMzk1YS4xOTMuMTkzIDAgMCAxLS4xNTgtLjA3Ni4yMi4yMiAwIDAgMS0uMDM3LS4xOWwzLjA3NS05LjE0MmEuMzQ3LjM0NyAwIDAgMCAuMDI0LS4xMTdjMC0uMTA3LS4wODItLjE3OC0uMjA0LS4xNzhoLS4yODFjLS4wMjcgMC0uMDU1LS4wMjctLjA1NS0uMDUzdi0uNTE2YzAtLjAyOC4wMjctLjA1NC4wNTUtLjA1NHptLTE5Ljc0NiAwYy4xMiAwIC4yMTcuMDk4LjIxNy4yMTh2My4yOTZjMCAuMDY2LjA0My4xMS4xMDguMTEuMDE2IDAgLjA4Ny0uMDA2LjE2LS4xMTNsMi4zMjMtMy4yNzVjLjA5Mi0uMTM1LjI1Ny0uMjM2LjM4My0uMjM2aDIuNjc0Yy4wNyAwIC4xMzUuMDQuMTcyLjEwNWEuMjA2LjIwNiAwIDAgMSAwIC4yMDlsLTIuOTgxIDQuMzk3YS4zMjcuMzI3IDAgMCAwLS4wNDYuMTM1YzAgLjAxNC4wMDQuMDIzLjAwNi4wMzQuMDAzLjAxNC4wMS4wMy4wMTguMDQ0LjAwNy4wMTEuMDExLjAyMS4wMjIuMDM3bDMuNTY2IDUuMDI1Yy4wNTQuMDc2LjA2My4xNTYuMDI2LjIyNmEuMjExLjIxMSAwIDAgMS0uMTczLjExM2gtMi44MTZjLS4xMjcgMC0uMjktLjEwMS0uMzgtLjIzN2wtMi43OTQtMy45MDUtLjAxLS4wMTRjLS4wMy0uMDQ0LS4wNjgtLjA5OS0uMTUtLjA5OS0uMDY5IDAtLjEwOC4wNDktLjEwOC4xMzR2My45MDRjMCAuMTItLjA5OC4yMTctLjIxNy4yMTdIMTEuNjVhLjIxNC4yMTQgMCAwIDEtLjIxNy0uMjE3di05LjI4M2EuMjAyLjIwMiAwIDAgMC0uMjA1LS4yMDNIMTAuOWMtLjAyNyAwLS4wNTQtLjAyNi0uMDU0LS4wNTN2LS41MTZjMC0uMDI4LjAyNi0uMDUzLjA1NC0uMDUzeiIgZmlsbD0iIzAwMCIvPjwvZz48L3N2Zz4=" alt="">
+                                    <span>KIA BORREGO</span>
+                                </p>
                             </div>
+                            <a href="#" class="toogle-btn-text">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                                </svg>
+                                Add another driver/vehicle
+                            </a>
                             <div class="item-details-action">
                                 <button class="edit">Edit</button>
                             </div>
@@ -171,12 +177,18 @@
                         </div>
                         <div class="data-column item-details">
                             <div class="item-details-content">
-                            <p>
-                            <svg class="" width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="48" rx="24"></rect><g transform="translate(16 12)" stroke="#000" stroke-width="2"><circle cx="8.471" cy="5.647" r="5.647"></circle><path d="M16.941 24A8.47 8.47 0 0 0 0 24"></path></g></g></svg>
-                                <span>First name</span>
-                                <span>Last name</span>
-                            </p>
+                                <p>
+                                    <svg class="" width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="48" rx="24"></rect><g transform="translate(16 12)" stroke="#000" stroke-width="2"><circle cx="8.471" cy="5.647" r="5.647"></circle><path d="M16.941 24A8.47 8.47 0 0 0 0 24"></path></g></g></svg>
+                                    <span>First name</span>
+                                    <span>Last name</span>
+                                </p>
                             </div>
+                            <a href="#" class="toogle-btn-text">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>
+                                </svg>
+                                Add another driver/vehicle
+                            </a>
                             <div class="item-details-action">
                                 <button class="edit">Edit</button>
                             </div>

@@ -497,7 +497,7 @@ svg.agent-checkbox {
   text-align: center;
 }
 a.toogle-btn-text {
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
   color: #000000;
@@ -552,7 +552,10 @@ a.toogle-btn-text {
 .data-item:last-child {
   border-bottom: 1px solid #111;
 }
-
+.data-column .toogle-btn-text {
+  justify-content: start;
+  gap: 6px;
+}
 /*mobile fixes*/
 @media only screen and (max-width: 767px){
   .progess-bar {
