@@ -182,6 +182,73 @@
                             </div>
                         </div>
                     </div>
+                    <div class="data-item">
+                        <div class="data-column item-title">
+                            <p>Insured</p>
+                        </div>
+                        <div class="data-column item-details">
+                            <div class="item-details-content">
+                                <p>No</p>
+                            </div>
+                            <div class="item-details-action">
+                                <button class="edit">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-column item-title">
+                            <p>Address</p>
+                        </div>
+                        <div class="data-column item-details">
+                            <div class="item-details-content">
+                                <p>Address <br> Zip<br>City<br>State</p>
+                            </div>
+                            <div class="item-details-action">
+                                <button class="edit">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-column item-title">
+                            <p>Home Ownership</p>
+                        </div>
+                        <div class="data-column item-details">
+                            <div class="item-details-content">
+                                <p>Own</p>
+                                <hr style="margin: 20px 0;"><!-- just for showing -->
+                                <select name="year" id="dui_year" class="select-box-dui-year" onchange="checkErr(this)">
+                                    <option data-placeholder="true"></option>
+                                    <option value="Option 1">Option 1</option>
+                                    <option value="Option 2">Option 2</option>
+                                    <option value="Option 3">Option 3</option>
+                                    <option value="Option 4">Option 4</option>
+                                </select>
+                            </div>
+                            <div class="item-details-action">
+                                <button class="edit">Edit</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-column item-title">
+                            <p>Email</p>
+                        </div>
+                        <div class="data-column item-details">
+                            <div class="item-details-content">
+                                <p>fsda@lfdsa.com</p>
+                                <hr style="margin: 20px 0;"><!-- just for showing -->
+                                <div class="input-field-wrap">
+                                    <input type="email" placeholder="Email" value="fsda@lfdsa.com" required>
+                                    <label for="">Email Address</label>
+                                </div>
+                            </div>
+                            <div class="item-details-action">
+                                <button class="edit">Edit</button>
+                                <hr><!-- just for showing -->
+                                <button class="edit">Save</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="agent-wrap">
                     <img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">
