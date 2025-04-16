@@ -608,4 +608,11 @@ a.toogle-btn-text {
   padding-left: 30px;
   padding-right: 30px;
 }
+.xbtn {
+  color:red;
+  cursor: pointer;
+  border:1px solid;
+  border-radius: 15px;
+  padding:0 7px;
+}
 

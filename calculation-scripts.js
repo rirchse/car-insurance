@@ -746,6 +746,15 @@ function checkInsuranceForm(e)
         {
           formdata.owner.insurance = [career.value, coverage.value];
 
+          if(localStorage.getItem('localdata'))
+          {
+            let local = JSON.parse(localStorage.getItem('localdata'));
+            local.owner.insurance = [career.value, coverage.value];
+            localStorage.setItem('localdata', JSON.stringify(local));
+
+            checkLocalData();
+          }
+
           addDriver();
         }
 
@@ -1522,7 +1531,7 @@ function checkNameForm(e)
 
       // incidents.backward.push('sr-22');
 
-      anotherDriver();
+      anotherDriver(e);
 
       //increase value for every action
       if(driverCounter == 0)
@@ -1592,7 +1601,7 @@ function backIncident(e)
   console.log(incidents);
 }
 
-function anotherDriver()
+function anotherDriver(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Driver? (Save Additional 20%)</h2>'+
@@ -1608,9 +1617,31 @@ function anotherDriver()
           '</svg> Back '+
       '</button>'+
   '</div>';
+  if(e.value != 'back')
+  {
+    formdata.drivers.list.push(formdata.drivers.current);
+    console.log(formdata.drivers);
 
-  formdata.drivers.list.push(formdata.drivers.current);
-  console.log(formdata.drivers);
+    if(localStorage.getItem('localdata')){
+      let local = JSON.parse(localStorage.getItem('localdata'));
+      local.drivers.list.push(formdata.drivers.current);
+      localStorage.setItem('localdata', JSON.stringify(local));
+
+      formdata.drivers.current = {
+        names: [],
+        general: [],
+        dob: [],
+        incidents : {
+          part: [],
+          accident: [],
+          ticket: [],
+          dui: []
+        }
+      };
+
+      checkLocalData();
+    }
+  }
 
 }
 
@@ -1741,6 +1772,13 @@ function checkAddressForm(e)
       formdata.owner.address = [address.value, zip.value, state.value, city.value];
 
       console.log(formdata.owner.address);
+      if(localStorage.getItem('localdata'))
+      {
+        let local = JSON.parse(localStorage.getItem('localdata'));
+        local.owner.address = [address.value, zip.value, state.value, city.value];
+        localStorage.setItem('localdata', JSON.stringify(local));
+        checkLocalData();
+      }
 
       ownership();
 
@@ -1809,8 +1847,18 @@ function emailAddress(e)
       '</div>'+
     '</div>';
 
-    formdata.owner.contact.push(e.innerHTML);
-    console.log(formdata.owner.contact);
+    if(e.value != 'back')
+    {
+      formdata.owner.contact[0] = e.innerHTML;
+      console.log(formdata.owner.contact);
+
+      if(localStorage.getItem('localdata')){
+        let local = JSON.parse(localStorage.getItem('localdata'));
+        local.owner.contact[0] = e.innerHTML;
+        localStorage.setItem('localdata', JSON.stringify(local));
+        checkLocalData();
+      }
+    }
 }
 // emailAddress();
 
@@ -1820,9 +1868,14 @@ function emailForm(e)
 
   if(checkEmail(email))
   {
-    formdata.owner.contact.push(email.value);
-    //store data to the local storage
-    localStorage.setItem('localdata', JSON.stringify(formdata));
+    formdata.owner.contact[1] = email.value;
+    if(localStorage.getItem('localdata')){
+      let local = JSON.parse(localStorage.getItem('localdata'));
+      local.owner.contact[1] = email.value;
+      localStorage.setItem('localdata', JSON.stringify(local));
+      checkLocalData();
+    }
+
     getQuote(e);
 
     //increase value for every action
@@ -1859,7 +1912,7 @@ function getQuote(e)
               '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-small"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z" clip-rule="evenodd" /></svg>'+
               'Clear Everything and Start Over'+
           '</a>'+
-          '<br><br><hr><p style="color:red">All data will show here...</p><hr><br>'+
+          // '<br><br><hr><p style="color:red">All data will show here...</p><hr><br>'+
       '</div>'+
       '<div class="agent-wrap">'+
           '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
@@ -1891,7 +1944,19 @@ function checkQuote(e)
 
   if(checkPhone(phone))
   {
-    formdata.owner.contact.push(phone.value);
+    formdata.owner.contact[2] = phone.value;
+
+    if(localStorage.getItem('localdata')){
+      let local = JSON.parse(localStorage.getItem('localdata'));
+      local.owner.contact[2] = phone.value;
+      localStorage.setItem('localdata', JSON.stringify(local));
+      checkLocalData();
+    }
+    else
+    {
+      //store data to the local storage
+      localStorage.setItem('localdata', JSON.stringify(formdata));
+    }
 
     // console.log(data);
     sendToServer();
@@ -1917,8 +1982,12 @@ function thankYou()
       '<a href="#">Health Insurance</a>'+
       '<a href="#">Business Insurance</a>'+
     '</div>'+
+    '<hr class="thanks-separator">'+
+    '<button class="action-btn btn continue" onclick="checkLocalData()">Continue...</button>'+
   '</div>';
 }
+
+// thankYou();
 
 function sendToServer()
 {
@@ -1957,6 +2026,7 @@ function checkLocalData()
         vehicleList += '<p>'+
           '<img src="'+v[0][1]+'" alt="" width="50">'+
           '<span>'+v[0][0]+'</span>'+
+          '<span class="xbtn" onclick="removeVehicle(this)" id="'+n+'">x</span>'+
         '</p>';
       });
     }
@@ -1964,20 +2034,20 @@ function checkLocalData()
     console.log(parseData.owner);
     if(parseData.drivers.list){
       parseData.drivers.list.forEach((d, n) => {
-        // console.log(d.names);
         driverList += '<p>'+
-                    '<svg class="" width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="48" rx="24"></rect><g transform="translate(16 12)" stroke="#000" stroke-width="2"><circle cx="8.471" cy="5.647" r="5.647"></circle><path d="M16.941 24A8.47 8.47 0 0 0 0 24"></path></g></g></svg>'+
-                    '<span>'+d.names[0]+'</span>'+
-                    '<span>'+d.names[1]+'</span>'+
-                '</p>';
+          '<svg class="" width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="48" rx="24"></rect><g transform="translate(16 12)" stroke="#000" stroke-width="2"><circle cx="8.471" cy="5.647" r="5.647"></circle><path d="M16.941 24A8.47 8.47 0 0 0 0 24"></path></g></g></svg>'+
+          '<span>'+d.names[0]+'</span>'+
+          '<span>'+d.names[1]+'</span>'+
+          '<span class="xbtn" onclick="removeDriver(this)" id="'+n+'">x</span>'+
+      '</p>';
       });
     }
+
     container.innerHTML = '<div class="welcome-back-wrap">'+
         '<h5 style="color: #0070e9; text-transform: uppercase;">Welcome Back <strong>'+parseData.drivers.list[0].names[0]+'</strong>!</h5>'+
         '<h2 style="text-transform: uppercase;">Your Auto Quotes Are Almost Ready For You!</h2>'+
         '<div class="continue-btn">'+
-          '<button class="action-btn btn continue">Continue</button>'+
-          '<button class="action-btn btn get-my-quote">Get my Quote<span class="notifiy">1</span></button>'+
+          '<button class="action-btn btn get-my-quote" onclick="getQuote(this)" value="">Get my Quote<span class="notifiy">1</span></button>'+
         '</div>'+
         '<div class="toogle-btn-wrap">'+
           '<a href="#" class="toogle-btn-text" onclick="this.parentNode.nextElementSibling.style.display = \'block\'">'+
@@ -1985,7 +2055,7 @@ function checkLocalData()
             '<svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" style="transform: rotate(0deg);"><path d="M7 10L12 15L17 10" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>'+
           '</a>'+
         '</div>'+
-        '<div class="saved-data-wrap" style="display:none">'+
+        '<div class="saved-data-wrap" style="display:block">'+
             '<div class="data-item">'+
               '<div class="data-column item-title">'+
                 '<p>Your Vehicles </p>'+
@@ -2001,9 +2071,6 @@ function checkLocalData()
                         '</svg>'+
                         'Add another vehicle'+
                     '</a>'+
-                    '<div class="item-details-action">'+
-                        // '<button class="edit">Edit</button>'+
-                    '</div>'+
                 '</div>'+
             '</div>'+
             '<div class="data-item">'+
@@ -2036,7 +2103,7 @@ function checkLocalData()
                         '<p>'+parseData.owner.insurance[1]+'</p>'+
                     '</div>'+
                     '<div class="item-details-action">'+
-                        // '<button class="edit">Edit</button>'+
+                        '<button class="edit" onclick="insurance(this)">Change</button>'+
                     '</div>'+
                 '</div>'+
             '</div>'+
@@ -2049,7 +2116,7 @@ function checkLocalData()
                         '<p>'+parseData.owner.address[0]+' <br> '+parseData.owner.address[1]+'<br>'+parseData.owner.address[2]+'<br>'+parseData.owner.address[3]+'</p>'+
                     '</div>'+
                     '<div class="item-details-action">'+
-                        // '<button class="edit">Edit</button>'+
+                        '<button class="edit" onclick="ownerAddress(this)">Change</button>'+
                     '</div>'+
                 '</div>'+
             '</div>'+
@@ -2070,29 +2137,43 @@ function checkLocalData()
                         // '</select>'+
                     '</div>'+
                     '<div class="item-details-action">'+
-                        // '<button class="edit">Edit</button>'+
+                        '<button class="edit" onclick="ownership(this)">Change</button>'+
                     '</div>'+
                 '</div>'+
             '</div>'+
             '<div class="data-item">'+
-                '<div class="data-column item-title">'+
-                  '<p>Email</p>'+
+              '<div class="data-column item-title">'+
+                '<p>Email</p>'+
+              '</div>'+
+              '<div class="data-column item-details">'+
+                '<div class="item-details-content">'+
+                  '<p>'+parseData.owner.contact[1]+'</p>'+
+                  // '<hr style="margin: 20px 0;"><!-- just for showing -->'+
+                  // '<div class="input-field-wrap">'+
+                  //     '<input type="email" placeholder="Email" value="'+parseData.owner.contact[1]+'" required>'+
+                  //     '<label for="">Email Address</label>'+
+                  // '</div>'+
                 '</div>'+
-                '<div class="data-column item-details">'+
-                    '<div class="item-details-content">'+
-                        '<p>'+parseData.owner.contact[1]+'</p>'+
-                        // '<hr style="margin: 20px 0;"><!-- just for showing -->'+
-                        // '<div class="input-field-wrap">'+
-                        //     '<input type="email" placeholder="Email" value="'+parseData.owner.contact[1]+'" required>'+
-                        //     '<label for="">Email Address</label>'+
-                        // '</div>'+
-                    '</div>'+
-                    '<div class="item-details-action">'+
-                        // '<button class="edit">Edit</button>'+
-                        '<hr><!-- just for showing -->'+
-                        // '<button class="edit">Save</button>'+
-                    '</div>'+
+                '<div class="item-details-action">'+
+                  '<button class="edit" onclick="emailAddress()">Change</button>'+
+                  '<hr><!-- just for showing -->'+
+                  // '<button class="edit">Save</button>'+
                 '</div>'+
+              '</div>'+
+            '</div>'+
+            '<div class="data-item">'+
+              '<div class="data-column item-title">'+
+                '<p>Contact</p>'+
+              '</div>'+
+              '<div class="data-column item-details">'+
+                '<div class="item-details-content">'+
+                  '<p>'+parseData.owner.contact[2]+'</p>'+
+                '</div>'+
+                '<div class="item-details-action">'+
+                  '<button class="edit" onclick="getQuote()">Change</button>'+
+                  '<hr><!-- just for showing -->'+
+                '</div>'+
+              '</div>'+
             '</div>'+
         '</div>'+
         '<div class="agent-wrap">'+
@@ -2112,9 +2193,30 @@ function checkLocalData()
 
 checkLocalData();
 
-function removeLocal()
+function removeLocal(e)
 {
   localStorage.removeItem('localdata');
   createZIPCodePanel();
   document.getElementById('localClearBtn').style.display = 'none';
+  e.style.display = 'none';
+}
+
+// remove vehicle
+function removeVehicle(e)
+{
+  let local = JSON.parse(localStorage.getItem('localdata'));
+  local.vehicles.list.splice(e.id, 1);
+  localStorage.setItem('localdata', JSON.stringify(local));
+  e.parentNode.style.display = 'none';
+  // console.log();
+}
+
+// remove vehicle
+function removeDriver(e)
+{
+  let local = JSON.parse(localStorage.getItem('localdata'));
+  local.drivers.list.splice(e.id, 1);
+  localStorage.setItem('localdata', JSON.stringify(local));
+  e.parentNode.style.display = 'none';
+  // console.log();
 }
