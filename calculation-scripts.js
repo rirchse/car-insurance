@@ -1931,19 +1931,164 @@ function sendToServer()
 // check local data exist
 function checkLocalData()
 {
+  let vehicleList = '', driverList = '';
   let localdata = localStorage.getItem('localdata');
+  // console.log(JSON.parse(localdata).vehicles.list);
   if(localdata){
-    container.innerHTML = '<div class="step step-1">'+
-    '<div class="step step-1 step-content-basic">'+
-    '<div class="field-wrap">'+
-        '<button class="action-btn btn" onclick="getQuote()">Get My Quote'+ 
-        '<span class="notifiy">1</span>'+
-        '</button>'+
-      '</div>'+
-      '</div>'+
+    let parseData = JSON.parse(localdata);
+    if(parseData.vehicles.list)
+    {
+      parseData.vehicles.list.forEach((v, n) => {
+        vehicleList += '<p>'+
+          '<img src="'+imgdata[v[0]]+'" alt="">'+
+          '<span>'+v[0]+'</span>'+
+        '</p>';
+      });
+    }
+
+    console.log(parseData.owner);
+    if(parseData.drivers.list){
+      parseData.drivers.list.forEach((d, n) => {
+        // console.log(d.names);
+        driverList += '<p>'+
+                    '<svg class="" width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="48" rx="24"></rect><g transform="translate(16 12)" stroke="#000" stroke-width="2"><circle cx="8.471" cy="5.647" r="5.647"></circle><path d="M16.941 24A8.47 8.47 0 0 0 0 24"></path></g></g></svg>'+
+                    '<span>'+d.names[0]+'</span>'+
+                    '<span>'+d.names[1]+'</span>'+
+                '</p>';
+      });
+    }
+    container.innerHTML = '<div class="welcome-back-wrap">'+
+        '<h5 style="color: #0070e9; text-transform: uppercase;">Welcome Back <strong>First name</strong>!</h5>'+
+        '<h2 style="text-transform: uppercase;">Your Auto Quotes Are Almost Ready For You!</h2>'+
+        '<div class="continue-btn">'+
+          '<button class="action-btn btn continue">Continue</button>'+
+          '<button class="action-btn btn get-my-quote">Get my Quote<span class="notifiy">1</span></button>'+
+        '</div>'+
+        '<div class="toogle-btn-wrap">'+
+          '<a href="#" class="toogle-btn-text" onclick="this.parentNode.nextElementSibling.style.display = \'block\'">'+
+            'See your information'+
+            '<svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" style="transform: rotate(0deg);"><path d="M7 10L12 15L17 10" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>'+
+          '</a>'+
+        '</div>'+
+        '<div class="saved-data-wrap" style="display:none">'+
+            '<div class="data-item">'+
+              '<div class="data-column item-title">'+
+                '<p>Your Vehicles </p>'+
+              '</div>'+
+                '<div class="data-column item-details">'+
+                    '<div class="item-details-content">'+
+                    vehicleList+
+                    '</div>'+
+                    '<a href="#" class="toogle-btn-text">'+
+                        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+                            '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>'+
+                        '</svg>'+
+                        'Add another vehicle'+
+                    '</a>'+
+                    '<div class="item-details-action">'+
+                        // '<button class="edit">Edit</button>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+            '<div class="data-item">'+
+                '<div class="data-column item-title">'+
+                    '<p>Listed Drivers</p>'+
+                '</div>'+
+                '<div class="data-column item-details">'+
+                    '<div class="item-details-content">'+
+                        driverList+
+                    '</div>'+
+                    '<a href="#" class="toogle-btn-text">'+
+                      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+                        '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>'+
+                        '</svg>'+
+                        'Add another driver'+
+                    '</a>'+
+                    '<div class="item-details-action">'+
+                        // '<button class="edit">Edit</button>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+            '<div class="data-item">'+
+                '<div class="data-column item-title">'+
+                    '<p>Insured</p>'+
+                '</div>'+
+                '<div class="data-column item-details">'+
+                    '<div class="item-details-content">'+
+                        '<p>No</p>'+
+                    '</div>'+
+                    '<div class="item-details-action">'+
+                        // '<button class="edit">Edit</button>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+            '<div class="data-item">'+
+                '<div class="data-column item-title">'+
+                    '<p>Address</p>'+
+                '</div>'+
+                '<div class="data-column item-details">'+
+                    '<div class="item-details-content">'+
+                        '<p>'+parseData.owner.address[0]+' <br> '+parseData.owner.address[1]+'<br>'+parseData.owner.address[2]+'<br>'+parseData.owner.address[3]+'</p>'+
+                    '</div>'+
+                    '<div class="item-details-action">'+
+                        // '<button class="edit">Edit</button>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+            '<div class="data-item">'+
+                '<div class="data-column item-title">'+
+                    '<p>Home Ownership</p>'+
+                '</div>'+
+                '<div class="data-column item-details">'+
+                    '<div class="item-details-content">'+
+                        '<p>'+parseData.owner.contact[0]+'</p>'+
+                        '<hr style="margin: 20px 0;"><!-- just for showing -->'+
+                        '<select name="year" id="dui_year" class="select-box-dui-year" onchange="checkErr(this)">'+
+                            '<option data-placeholder="true"></option>'+
+                            '<option value="Option 1">Option 1</option>'+
+                            '<option value="Option 2">Option 2</option>'+
+                            '<option value="Option 3">Option 3</option>'+
+                            '<option value="Option 4">Option 4</option>'+
+                        '</select>'+
+                    '</div>'+
+                    '<div class="item-details-action">'+
+                        // '<button class="edit">Edit</button>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+            '<div class="data-item">'+
+                '<div class="data-column item-title">'+
+                  '<p>Email</p>'+
+                '</div>'+
+                '<div class="data-column item-details">'+
+                    '<div class="item-details-content">'+
+                        '<p>'+parseData.owner.contact[1]+'</p>'+
+                        '<hr style="margin: 20px 0;"><!-- just for showing -->'+
+                        '<div class="input-field-wrap">'+
+                            '<input type="email" placeholder="Email" value="'+parseData.owner.contact[1]+'" required>'+
+                            '<label for="">Email Address</label>'+
+                        '</div>'+
+                    '</div>'+
+                    '<div class="item-details-action">'+
+                        // '<button class="edit">Edit</button>'+
+                        '<hr><!-- just for showing -->'+
+                        // '<button class="edit">Save</button>'+
+                    '</div>'+
+                '</div>'+
+            '</div>'+
+        '</div>'+
+        '<div class="agent-wrap">'+
+          '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
+          '<p>'+
+            '<span>Call an expert</span>'+
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="agent-checkbox"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm90.7 96.7c9.7-2.6 19.9 2.3 23.7 11.6l20 48c3.4 8.2 1 17.6-5.8 23.2L168 231.7c16.6 35.2 45.1 63.7 80.3 80.3l20.2-24.7c5.6-6.8 15-9.2 23.2-5.8l48 20c9.3 3.9 14.2 14 11.6 23.7l-12 44C336.9 378 329 384 320 384C196.3 384 96 283.7 96 160c0-9 6-16.9 14.7-19.3l44-12z"/></svg>'+
+            '<a href="tel:(844) 857-9195">(844) 857-9195</a>'+
+          '</p>'+            
+        '</div>'+
     '</div>';
     
     increasePercent(74);
+    styleLoad();
   }
 }
 

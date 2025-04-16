@@ -134,7 +134,7 @@
             </div>
         </div>
 
-        <div class="container">
+        <div class="container" style="display:none">
             <div class="welcome-back-wrap">
                 <h5 style="color: #0070e9; text-transform: uppercase;">Welcome Back <strong>First name</strong>!</h5>
                 <h2 style="text-transform: uppercase;">Your Auto Quotes Are Almost Ready For You!</h2>
@@ -450,7 +450,7 @@
         });
         
       </script>
-      <script src="calculation-scripts.js?v=0.210"></script>
+      <script src="calculation-scripts.js?v=0.211"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
