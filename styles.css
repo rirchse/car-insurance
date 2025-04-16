@@ -489,6 +489,70 @@ svg.agent-checkbox {
 .start-scratch-wrap .start-from-begining{
   justify-content: end;
 }
+
+
+
+/*welcome back*/
+.welcome-back-wrap{
+  text-align: center;
+}
+a.toogle-btn-text {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000000;
+}
+.welcome-back-wrap svg.agent-checkbox {
+  margin-left: 15px;
+}
+.data-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #111;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+.item-title {
+  flex: 0 0 35%;
+  max-width: 35%;
+}
+.item-details {
+  flex: 0 0 65%;
+  max-width: 65%;
+  padding-right: 80px;
+  position: relative;
+}
+.saved-data-wrap {
+  text-align: left;
+  margin: 25px 0;
+}
+.item-details-action {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.item-details-content p {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.edit {
+  border: 1px solid #ccc;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 15px;
+  background: #ddd;
+}
+.edit:hover {
+  border: 1px solid #111;
+  background: #eee;
+}
+.data-item:last-child {
+  border-bottom: 1px solid #111;
+}
+
 /*mobile fixes*/
 @media only screen and (max-width: 767px){
   .progess-bar {
@@ -521,12 +585,24 @@ svg.agent-checkbox {
 .table th, .table td{ border:1px solid #ddd; padding:5px}
 .error {color:red}
 .active {background: #3d9afe;}
-.notifiy{
-  border: 1px solid;
-  border-radius: 15px;
-  padding: 0 5px;
-  margin-top: -30px;
+.notifiy {
   position: absolute;
-  /* margin-left: 81px; */
-  background: #6EC;
+  background: #000;
+  font-size: 13px;
+  width: 24px;
+  height: 20px;
+  text-align: center;
+  line-height: 21px;
+  border-radius: 50px;
+  right: -12px;
+  top: -10px;
 }
+.continue-btn .action-btn {
+  max-width: max-content;
+  display: inline-block;
+  position: relative;
+  font-size: 19px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
