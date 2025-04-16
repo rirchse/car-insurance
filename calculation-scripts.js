@@ -336,9 +336,11 @@ function writeYears(e)
       increasePercent(-15);
     }
 
+    // console.log(e.firstElementChild.firstElementChild.src);
+
     // store brand to the object
-    formdata.vehicles.current[0] = brand;
-    console.log(formdata.vehicles.current);
+    formdata.vehicles.current[0] = [brand, e.firstElementChild.firstElementChild.src];
+    console.log(formdata.vehicles);
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
 }
@@ -625,6 +627,14 @@ function anotherVehicle(e)
     formdata.vehicles.current[5] = e.innerHTML;
     formdata.vehicles.list.push(formdata.vehicles.current);
     console.log(formdata.vehicles.current);
+
+    //data restore to the localStorage
+    if(localStorage.getItem('localdata'))
+    {
+      let localdata = JSON.parse(localStorage.getItem('localdata'));
+      localdata.vehicles.list.push(formdata.vehicles.current);
+      localStorage.setItem('localdata', JSON.stringify(localdata));
+    }
   }
 }
 
@@ -641,6 +651,11 @@ function checkAnotherVehicle(e)
 
 function insurance(e)
 {
+  if(localStorage.getItem('localdata'))
+  {
+    checkLocalData();
+  }
+
   let insure = formdata.owner.insurance;
   console.log(insure);
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -1940,8 +1955,8 @@ function checkLocalData()
     {
       parseData.vehicles.list.forEach((v, n) => {
         vehicleList += '<p>'+
-          '<img src="'+imgdata[v[0]]+'" alt="">'+
-          '<span>'+v[0]+'</span>'+
+          '<img src="'+v[0][1]+'" alt="" width="50">'+
+          '<span>'+v[0][0]+'</span>'+
         '</p>';
       });
     }
@@ -1958,7 +1973,7 @@ function checkLocalData()
       });
     }
     container.innerHTML = '<div class="welcome-back-wrap">'+
-        '<h5 style="color: #0070e9; text-transform: uppercase;">Welcome Back <strong>First name</strong>!</h5>'+
+        '<h5 style="color: #0070e9; text-transform: uppercase;">Welcome Back <strong>'+parseData.drivers.list[0].names[0]+'</strong>!</h5>'+
         '<h2 style="text-transform: uppercase;">Your Auto Quotes Are Almost Ready For You!</h2>'+
         '<div class="continue-btn">'+
           '<button class="action-btn btn continue">Continue</button>'+
@@ -1979,7 +1994,8 @@ function checkLocalData()
                     '<div class="item-details-content">'+
                     vehicleList+
                     '</div>'+
-                    '<a href="#" class="toogle-btn-text">'+
+                    '<br>'+
+                    '<a href="#" class="toogle-btn-text" onclick="brands()">'+
                         '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
                             '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>'+
                         '</svg>'+
@@ -1998,7 +2014,8 @@ function checkLocalData()
                     '<div class="item-details-content">'+
                         driverList+
                     '</div>'+
-                    '<a href="#" class="toogle-btn-text">'+
+                    '<br>'+
+                    '<a href="#" class="toogle-btn-text" onclick="addDriver()">'+
                       '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
                         '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>'+
                         '</svg>'+
@@ -2015,7 +2032,8 @@ function checkLocalData()
                 '</div>'+
                 '<div class="data-column item-details">'+
                     '<div class="item-details-content">'+
-                        '<p>No</p>'+
+                        '<p>'+parseData.owner.insurance[0]+'</p>'+
+                        '<p>'+parseData.owner.insurance[1]+'</p>'+
                     '</div>'+
                     '<div class="item-details-action">'+
                         // '<button class="edit">Edit</button>'+
@@ -2042,14 +2060,14 @@ function checkLocalData()
                 '<div class="data-column item-details">'+
                     '<div class="item-details-content">'+
                         '<p>'+parseData.owner.contact[0]+'</p>'+
-                        '<hr style="margin: 20px 0;"><!-- just for showing -->'+
-                        '<select name="year" id="dui_year" class="select-box-dui-year" onchange="checkErr(this)">'+
-                            '<option data-placeholder="true"></option>'+
-                            '<option value="Option 1">Option 1</option>'+
-                            '<option value="Option 2">Option 2</option>'+
-                            '<option value="Option 3">Option 3</option>'+
-                            '<option value="Option 4">Option 4</option>'+
-                        '</select>'+
+                        // '<hr style="margin: 20px 0;"><!-- just for showing -->'+
+                        // '<select name="year" id="dui_year" class="select-box-dui-year" onchange="checkErr(this)">'+
+                        //     '<option data-placeholder="true"></option>'+
+                        //     '<option value="Option 1">Option 1</option>'+
+                        //     '<option value="Option 2">Option 2</option>'+
+                        //     '<option value="Option 3">Option 3</option>'+
+                        //     '<option value="Option 4">Option 4</option>'+
+                        // '</select>'+
                     '</div>'+
                     '<div class="item-details-action">'+
                         // '<button class="edit">Edit</button>'+
@@ -2063,11 +2081,11 @@ function checkLocalData()
                 '<div class="data-column item-details">'+
                     '<div class="item-details-content">'+
                         '<p>'+parseData.owner.contact[1]+'</p>'+
-                        '<hr style="margin: 20px 0;"><!-- just for showing -->'+
-                        '<div class="input-field-wrap">'+
-                            '<input type="email" placeholder="Email" value="'+parseData.owner.contact[1]+'" required>'+
-                            '<label for="">Email Address</label>'+
-                        '</div>'+
+                        // '<hr style="margin: 20px 0;"><!-- just for showing -->'+
+                        // '<div class="input-field-wrap">'+
+                        //     '<input type="email" placeholder="Email" value="'+parseData.owner.contact[1]+'" required>'+
+                        //     '<label for="">Email Address</label>'+
+                        // '</div>'+
                     '</div>'+
                     '<div class="item-details-action">'+
                         // '<button class="edit">Edit</button>'+
