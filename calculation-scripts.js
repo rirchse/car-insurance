@@ -1319,6 +1319,18 @@ function checkTicketForm(e)
 
 function dui(e)
 {
+  let state = '';
+  let addr = formdata.drivers.current.incidents.dui;
+  if(addr[2])
+  {
+    state = addr[2];
+  }
+  // state array creation
+  let statelist = '<option value="">State</option>\n';
+  Object.entries(statedata).forEach(([k, s]) => {
+    statelist += '<option value="'+k+'" '+(state ? 'selected' : '')+'>'+s.name+'</option>\n';
+  });
+
   let act = formdata.drivers.current.incidents.dui;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1356,22 +1368,7 @@ function dui(e)
   '<div class="full-width">'+
       '<h4 style="text-align: left;">State</h4>'+
       '<select name="state" id="dui_state" class="select-box-dui-state" onchange="checkErr(this)">'+
-          '<option data-placeholder="true"></option>'+
-          '<option value="Alabama" '+(act[2] == 'Alabama'? 'selected' : '')+'>Alabama</option>'+
-          '<option value="Alaska" '+(act[2] == 'Alaska'? 'selected' : '')+'>Alaska</option>'+
-          '<option value="Arizona" '+(act[2] == 'Arizona'? 'selected' : '')+'>Arizona</option>'+
-          '<option value="Arkansas" '+(act[2] == 'Arkansas'? 'selected' : '')+'>Arkansas</option>'+
-          '<option value="California" '+(act[2] == 'California'? 'selected' : '')+'>California</option>'+
-          '<option value="Colorado" '+(act[2] == 'Colorado'? 'selected' : '')+'>Colorado</option>'+
-          '<option value="Connecticut" '+(act[2] == 'Connecticut'? 'selected' : '')+'>Connecticut</option>'+
-          '<option value="Delaware" '+(act[2] == 'Delaware'? 'selected' : '')+'>Delaware</option>'+
-          '<option value="Florida" '+(act[2] == 'Florida'? 'selected' : '')+'>Florida</option>'+
-          '<option value="Georgia" '+(act[2] == 'Georgia'? 'selected' : '')+'>Georgia</option>'+
-          '<option value="Hawaii" '+(act[2] == 'Hawaii'? 'selected' : '')+'>Hawaii</option>'+
-          '<option value="Idaho" '+(act[2] == 'Idaho'? 'selected' : '')+'>Idaho</option>'+
-          '<option value="Illinois" '+(act[2] == 'Illinois'? 'selected' : '')+'>Illinois</option>'+
-          '<option value="Indiana" '+(act[2] == 'Indiana'? 'selected' : '')+'>Indiana</option>'+
-          '<option value="...">...</option>'+
+        statelist+
       '</select>'+
   '</div>'+
   '<div class="more-options inner-wrap-btn">'+
@@ -1646,12 +1643,19 @@ function ownerAddress()
   {
     city = addr[3];
   }
+
+  // state array creation
+  let statelist = '<option value="">State</option>\n';
+  Object.entries(statedata).forEach(([k, s]) => {
+    statelist += '<option value="'+k+'" '+(state ? 'selected' : '')+'>'+s.name+'</option>\n';
+  });
+
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Current Address</h2>'+
-  '<form action="#" id="addressForm">'+
+  '<form action="#" id="addressForm" novalidate>'+
   '<div class="inner-wrap column-wrap">'+
     '<div class="full-width">'+
-      '<h4 style="text-align: left;">Street Address</h4>'+
+      // '<h4 style="text-align: left;">Street Address</h4>'+
       '<div class="input-field-wrap">'+
           '<input id="autocomplete" type="text" name="address" placeholder="Address" onkeyup="fillInAddress()" value="'+address+'" required>'+
           '<label for="">Address</label>'+
@@ -1659,35 +1663,20 @@ function ownerAddress()
       // '<input id="autocomplete" type="text" name="address" placeholder="Street Address" onkeyup="fillInAddress()" value="'+address+'">'+
     '</div>'+
     '<div class="half-width">'+
-        '<h4 style="text-align: left;">Zip Code</h4>'+
+        // '<h4 style="text-align: left;">Zip Code</h4>'+
         '<div class="input-field-wrap">'+
             '<input type="text" name="zip" placeholder="Zip" onkeyup="checkErrInput(this)" id="zip" value="'+zip+'" required>'+
             '<label for="">Zip</label>'+
         '</div>'+
     '</div>'+
     '<div class="half-width">'+
-        '<h4 style="text-align: left;">State</h4>'+
-        '<select name="state" id="address_state" class="select-box-address-state" onchange="checkErr(this);">'+
-            '<option data-placeholder="true"></option>'+
-            '<option value="Alabama" '+(state == 'Alabama'? 'selected' : '')+'>Alabama</option>'+
-            '<option value="Alaska" '+(state == 'Alaska'? 'selected' : '')+'>Alaska</option>'+
-            '<option value="Arizona" '+(state == 'Arizona'? 'selected' : '')+'>Arizona</option>'+
-            '<option value="Arkansas" '+(state == 'Arkansas'? 'selected' : '')+'>Arkansas</option>'+
-            '<option value="California" '+(state == 'California'? 'selected' : '')+'>California</option>'+
-            '<option value="Colorado" '+(state == 'Colorado'? 'selected' : '')+'>Colorado</option>'+
-            '<option value="Connecticut" '+(state == 'Connecticut'? 'selected' : '')+'>Connecticut</option>'+
-            '<option value="Delaware" '+(state == 'Delaware'? 'selected' : '')+'>Delaware</option>'+
-            '<option value="Florida" '+(state == 'Florida'? 'selected' : '')+'>Florida</option>'+
-            '<option value="Georgia" '+(state == 'Georgia'? 'selected' : '')+'>Georgia</option>'+
-            '<option value="Hawaii" '+(state == 'Hawaii'? 'selected' : '')+'>Hawaii</option>'+
-            '<option value="Idaho" '+(state == 'Idaho'? 'selected' : '')+'>Idaho</option>'+
-            '<option value="Illinois" '+(state == 'Illinois'? 'selected' : '')+'>Illinois</option>'+
-            '<option value="Indiana" '+(state == 'Indiana'? 'selected' : '')+'>Indiana</option>'+
-            '<option value="...">...</option>'+
+        // '<h4 style="text-align: left;">State</h4>'+
+        '<select name="state" id="address_state" class="select-box-address-state" onchange="checkErr(this);" required>'+
+            statelist+
         '</select>'+
       '</div>'+
       '<div class="full-width">'+
-          '<h4 style="text-align: left;">City</h4>'+
+          // '<h4 style="text-align: left;">City</h4>'+
           '<div class="input-field-wrap">'+
               '<input type="text" name="city" placeholder="City" onkeyup="checkErrInput(this)" id="city" value="'+city+'" required>'+
               '<label for="">City</label>'+
@@ -1773,16 +1762,21 @@ function emailAddress(e)
 {
   let email = '';
   let contact = formdata.owner.contact;
+  if(contact[1])
+  {
+    email = contact[1];
+  }
+
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Email Address</h2>'+
     '<div class="inner-wrap column-wrap>'+
       '<div class="full-width">'+
         // '<h4 style="text-align: left;">Email Address</h4>'+
         '<div class="input-field-wrap">'+
-            '<input type="email" id="email" name="phone" placeholder="Email" onkeyup="checkEmail(this)" value=" '+email+'" required>'+
+            '<input type="email" id="email" name="email" placeholder="Email" onkeyup="checkEmail(this)" value="'+email+'" required>'+
             '<label for="">Email Address</label>'+
         '</div>'+
-        // '<input type="email" id="email" placeholder="Email Address" onkeyup="checkEmail(this)" value=" '+email+'" required>'+
+        // '<input type="email" id="email" placeholder="Email Address" onkeyup="checkEmail(this)" value="'+email+'" required>'+
         // '<input type="email" placeholder="Email Address" class="error">'+
         // '<span class="error-msg">Invalid Email Address</span>'+
       '</div>'+
@@ -1825,6 +1819,11 @@ function getQuote(e)
 {
   let phone = '';
   let contact = formdata.owner.contact;
+  if(contact[2])
+  {
+    phone = contact[2];
+  }
+
   container.innerHTML = '<div class="step step-number step-content-basic">'+
       '<h5 style="color: #0070e9; text-transform: uppercase;">Last Step: Phone Number</h5>'+
       '<h2 style="text-transform: uppercase;">Contact Number</h2>'+
@@ -1838,7 +1837,9 @@ function getQuote(e)
           '</div>'+
       '</div>'+
       '<div class="field-wrap">'+
-          '<button class="action-btn btn" onclick="checkQuote(this)">Get My Quote</button>'+
+          '<button class="action-btn btn" onclick="checkQuote(this)">Get My Quote '+
+          (localStorage.getItem('localdata')? '<span class="notifiy">1</span>': '')+
+          '</button>'+
           '<a href="#" onclick="removeLocal()" class="start-from-begining">'+
               '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-small"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z" clip-rule="evenodd" /></svg>'+
               'Clear Everything and Start Over'+
@@ -1952,4 +1953,5 @@ function removeLocal()
 {
   localStorage.removeItem('localdata');
   createZIPCodePanel();
+  document.getElementById('localClearBtn').style.display = 'none';
 }

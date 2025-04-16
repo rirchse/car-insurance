@@ -39,6 +39,7 @@
 
             let city = '';
             let state = '';
+            let stateKey = '';
             let zip = '';
 
             if (place.address_components) {
@@ -51,7 +52,8 @@
                         zip = component.long_name;
                     }
                     if (types.includes('administrative_area_level_1')) {
-                        state = component.short_name;
+                        state = component.long_name;
+                        stateKey = component.short_name;
                     }
                     if (types.includes('locality')) {
                         city = component.long_name;
@@ -65,6 +67,7 @@
                 let address_state = document.getElementById('address_state');               
 
                 let create = document.createElement('option');
+                create.value = stateKey;
                 create.innerHTML = state;
                 address_state.prepend(create);
 
@@ -101,7 +104,7 @@
                 <div id="percent-number" class="progress-indicator" style="left: 25%;" number="25">25%</div>
             </div>
         </div>
-        <div class="container">
+        <div class="container" id="localClearBtn" style="display:none">
             <div class="start-scratch-wrap">
                 <a href="#" onclick="removeLocal()" class="start-from-begining">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-small">
@@ -143,6 +146,10 @@
     <!-- <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script> -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <script>
+        let localClearBtn = document.getElementById('localClearBtn');
+        if(localStorage.getItem('localdata')){
+            localClearBtn.style.display = 'block';
+        }
         function resetForm()
         {
             let addressForm = document.querySelector('#addressForm');addressForm.reset()
@@ -280,6 +287,7 @@
         const zipcodefile = 'zipcode.json?v=1.10';
         const jsonfile = 'merged_make_year_model.json';
         const imgfile = 'img.json';
+        const statefile = 'states.min.json';
 
         let imgdata = [];
         document.addEventListener('DOMContentLoaded', () => {
@@ -291,8 +299,18 @@
             .catch(error => console.error('Error Loading JSON:', error));
         });
         
+        let statedata = [];
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch(statefile)
+            .then(response => response.json())
+            .then(data => {
+                statedata = data;
+            })
+            .catch(error => console.error('Error Loading JSON:', error));
+        });
+        
       </script>
-      <script src="calculation-scripts.js?v=0.200"></script>
+      <script src="calculation-scripts.js?v=0.210"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
