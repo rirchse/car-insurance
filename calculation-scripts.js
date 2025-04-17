@@ -2017,24 +2017,34 @@ function sendToServer()
   let local = JSON.parse(localStorage.getItem('localdata'));
   local.vehicles.list.forEach((v, n) => {
     formData.vehicles.push({
-      make:v[0][0],
-      year:v[1],
-      model:v[2],
-      ownership:v[3],
-      milage:v[4],
-      coverage:v[5],
-      image:v[0][1],
+      VehicleMake:v[0][0],
+      VehicleYear:v[1],
+      VehicleModel:v[2],
+      VehicleOwnership:v[3],
+      AnnualMileage:v[4],
+      DesiredCoverageLevel:v[5],
+      // VehicleImage:v[0][1],
     });
   });
 
   local.drivers.list.forEach((d, n) => {
     formData.drivers.push({
-      first_name: d.names[0],
-      last_name: d.names[1],
-      gender: d.general[0],
-      marital_status: d.general[1],
-      birth_date: d.dob[0]+' '+d.dob[1]+' '+d.dob[2],
-      incident: d.incidents
+      FirstName: d.names[0],
+      LastName: d.names[1],
+      Gender: d.general[0],
+      MaritalStatus: d.general[1],
+      BirthDate: d.dob[0]+' '+d.dob[1]+' '+d.dob[2],
+      AccidentMonth: d.incidents.accident[0],
+      AccidentYear: d.incidents.accident[1],
+      AccidentDescription: d.incidents.accident[2],
+      AccidentFault: d.incidents.accident[3],
+      AccidentDamaged: d.incidents.accident[4],
+      TicketMonth: d.incidents.ticket[0],
+      TicketYear: d.incidents.ticket[1],
+      TicketDescription: d.incidents.ticket[2],
+      DuiMonth: d.incidents.dui[0],
+      DuiYear: d.incidents.dui[1],
+      DuiState: d.incidents.dui[2],
     });
   });
 
@@ -2043,8 +2053,8 @@ function sendToServer()
     zip: local.owner.address[1],
     state: local.owner.address[2],
     city: local.owner.address[3],
-    carier: local.owner.insurance[0],
-    coverage: local.owner.insurance[1],
+    CurrentInsuranceCarier: local.owner.insurance[0],
+    ContinuousCoverage: local.owner.insurance[1],
     owner: local.owner.contact[0],
     email: local.owner.contact[1],
     phone: local.owner.contact[2],
