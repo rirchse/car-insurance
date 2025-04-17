@@ -2022,8 +2022,7 @@ function sendToServer()
       VehicleModel:v[2],
       VehicleOwnership:v[3],
       AnnualMileage:v[4],
-      DesiredCoverageLevel:v[5],
-      // VehicleImage:v[0][1],
+      DesiredCoverageLevel:v[5]
     });
   });
 
@@ -2045,6 +2044,10 @@ function sendToServer()
       DuiMonth: d.incidents.dui[0],
       DuiYear: d.incidents.dui[1],
       DuiState: d.incidents.dui[2],
+      IncidentAccident: d.incidents.part.includes('accident') ? 'Yes': 'No',
+      IncidentTicket: d.incidents.part.includes('ticket') ? 'Yes': 'No',
+      IncidentDui: d.incidents.part.includes('dui') ? 'Yes': 'No',
+      IncidentSr22: d.incidents.part.includes('Yes') ? 'Yes': 'No',
     });
   });
 
