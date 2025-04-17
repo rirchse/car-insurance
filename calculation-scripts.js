@@ -2027,8 +2027,15 @@ function sendToServer()
     });
   });
 
-  local.drivers.list.forEach((v, n) => {
-    formData.drivers.push({});
+  local.drivers.list.forEach((d, n) => {
+    formData.drivers.push({
+      first_name: d.names[0],
+      last_name: d.names[1],
+      gender: d.general[0],
+      marital_status: d.general[1],
+      birth_date: d.dob[0]+' '+d.dob[1]+' '+d.dob[2],
+      incident: d.incidents
+    });
   });
 
   formData.owner = {
@@ -2043,7 +2050,14 @@ function sendToServer()
     phone: local.owner.contact[2],
   };
 
-  // console.log(formData);
+  //array to object conversion
+  let vehiclesObj = Object.assign({}, formData.vehicles);
+  formData.vehicles = vehiclesObj;
+
+  let driverObj = Object.assign({}, formData.drivers);
+  formData.drivers = driverObj;
+
+  console.log(driverObj);
 
   let serialized = JSON.stringify(formData);
 
