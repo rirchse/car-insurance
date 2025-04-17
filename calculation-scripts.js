@@ -188,6 +188,8 @@ function ZIPCode()
 //write brand
 function brands(e)
 {
+  let xvehicle = formdata.vehicles.current[0];
+  console.log(xvehicle);
   let number = 0;
   container.innerHTML = '<div class="step step-make">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -204,7 +206,7 @@ function brands(e)
       number += n;
       let btn = document.createElement('button');
       btn.setAttribute('class', 'input');
-      if(formdata.vehicles.current[0] == b){
+      if(xvehicle && xvehicle[0] == b){
         btn.setAttribute('class', 'input active');
       }
       btn.setAttribute('onclick', 'checkBrands(this)');
@@ -657,7 +659,10 @@ function insurance(e)
   }
 
   let insure = formdata.owner.insurance;
-  console.log(insure);
+  if(localStorage.getItem('localdata')){
+    insure = JSON.parse(localStorage.getItem('localdata')).owner.insurance;
+  }
+  // console.log(insure);
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Insurance Details</h2>'+
   '<form action="#" id="insuranceForm">'+
@@ -754,8 +759,10 @@ function checkInsuranceForm(e)
 
             checkLocalData();
           }
-
-          addDriver();
+          else
+          {
+            addDriver();
+          }
         }
 
     });
@@ -1673,6 +1680,9 @@ function ownerAddress()
 {
   let address = '', zip = '', state = '', city = '';
   let addr = formdata.owner.address;
+  if(localStorage.getItem('localdata')){
+    addr = JSON.parse(localStorage.getItem('localdata')).owner.address;
+  }
   if(addr[0])
   {
     address = addr[0];
@@ -1703,7 +1713,7 @@ function ownerAddress()
     '<div class="full-width">'+
       // '<h4 style="text-align: left;">Street Address</h4>'+
       '<div class="input-field-wrap">'+
-          '<input id="autocomplete" type="text" name="address" placeholder="Address" onkeyup="fillInAddress()" value="'+address+'" required>'+
+          '<input id="autocomplete" type="text" name="address" placeholder="Address" onkeyup="fillInAddress(event, this)" value="'+address+'" required>'+
           '<label for="">Address</label>'+
       '</div>'+
       // '<input id="autocomplete" type="text" name="address" placeholder="Street Address" onkeyup="fillInAddress()" value="'+address+'">'+
@@ -1779,8 +1789,10 @@ function checkAddressForm(e)
         localStorage.setItem('localdata', JSON.stringify(local));
         checkLocalData();
       }
-
-      ownership();
+      else
+      {
+        ownership();
+      }      
 
       //increase value for every action
       increasePercent(0);
@@ -1802,8 +1814,8 @@ function ownership()
   '</div>'+
   '<div class="back-to-prev">'+
       '<button class="back" onclick="ownerAddress(this)" name="'+brand+'">'+
-          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-              '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+        '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+          '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
   '</div>';
@@ -1815,6 +1827,11 @@ function emailAddress(e)
 {
   let email = '';
   let contact = formdata.owner.contact;
+
+  if(localStorage.getItem('localdata')){
+    contact = JSON.parse(localStorage.getItem('localdata')).owner.contact;
+  }
+
   if(contact[1])
   {
     email = contact[1];
@@ -1875,9 +1892,11 @@ function emailForm(e)
       localStorage.setItem('localdata', JSON.stringify(local));
       checkLocalData();
     }
-
-    getQuote(e);
-
+    else
+    {
+      getQuote(e);
+    }
+    
     //increase value for every action
     increasePercent(0);
   }
@@ -1887,6 +1906,11 @@ function getQuote(e)
 {
   let phone = '';
   let contact = formdata.owner.contact;
+
+  if(localStorage.getItem('localdata')){
+    contact = JSON.parse(localStorage.getItem('localdata')).owner.contact;
+  }
+
   if(contact[2])
   {
     phone = contact[2];
@@ -1905,14 +1929,8 @@ function getQuote(e)
           '</div>'+
       '</div>'+
       '<div class="field-wrap">'+
-          '<button class="action-btn btn" onclick="checkQuote(this)">Get My Quote '+
-          (localStorage.getItem('localdata')? '<span class="notifiy">1</span>': '')+
+          '<button class="action-btn btn get-my-quote" onclick="checkQuote(this)">Save & Continue '+
           '</button>'+
-          '<a href="#" onclick="removeLocal()" class="start-from-begining">'+
-              '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-small"><path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM8.28 7.22a.75.75 0 0 0-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 1 0 1.06 1.06L10 11.06l1.72 1.72a.75.75 0 1 0 1.06-1.06L11.06 10l1.72-1.72a.75.75 0 0 0-1.06-1.06L10 8.94 8.28 7.22Z" clip-rule="evenodd" /></svg>'+
-              'Clear Everything and Start Over'+
-          '</a>'+
-          // '<br><br><hr><p style="color:red">All data will show here...</p><hr><br>'+
       '</div>'+
       '<div class="agent-wrap">'+
           '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
@@ -1959,8 +1977,8 @@ function checkQuote(e)
     }
 
     // console.log(data);
-    sendToServer();
-    thankYou();
+    // sendToServer();
+    // thankYou();
 
     //increase value for every action
     increasePercent(1);
@@ -1991,7 +2009,43 @@ function thankYou()
 
 function sendToServer()
 {
-  let serialized = JSON.stringify(formdata);
+  let formData = {
+    vehicles:[],
+    drivers:[],
+    owner:[]
+  };
+  let local = JSON.parse(localStorage.getItem('localdata'));
+  local.vehicles.list.forEach((v, n) => {
+    formData.vehicles.push({
+      make:v[0][0],
+      year:v[1],
+      model:v[2],
+      ownership:v[3],
+      milage:v[4],
+      coverage:v[5],
+      image:v[0][1],
+    });
+  });
+
+  local.drivers.list.forEach((v, n) => {
+    formData.drivers.push({});
+  });
+
+  formData.owner = {
+    address: local.owner.address[0],
+    zip: local.owner.address[1],
+    state: local.owner.address[2],
+    city: local.owner.address[3],
+    carier: local.owner.insurance[0],
+    coverage: local.owner.insurance[1],
+    owner: local.owner.contact[0],
+    email: local.owner.contact[1],
+    phone: local.owner.contact[2],
+  };
+
+  // console.log(formData);
+
+  let serialized = JSON.stringify(formData);
 
   fetch('https://services.leadconnectorhq.com/hooks/BiDDLrh6kezD2kEObkPo/webhook-trigger/c3d3342e-d75d-47cc-bffc-c6d642f5fbf4', {
     method: 'POST',
@@ -2004,7 +2058,8 @@ function sendToServer()
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
-    alert('We have received your query. Our team will meet you soon. Thank you')
+    thankYou();
+    // alert('We have received your query. Our team will meet you soon. Thank you');
   })
   .catch(error => {
     console.error('Error:', error);
@@ -2031,7 +2086,7 @@ function checkLocalData()
       });
     }
 
-    console.log(parseData.owner);
+    // console.log(parseData.owner);
     if(parseData.drivers.list){
       parseData.drivers.list.forEach((d, n) => {
         driverList += '<p>'+
@@ -2047,15 +2102,15 @@ function checkLocalData()
         '<h5 style="color: #0070e9; text-transform: uppercase;">Welcome Back <strong>'+parseData.drivers.list[0].names[0]+'</strong>!</h5>'+
         '<h2 style="text-transform: uppercase;">Your Auto Quotes Are Almost Ready For You!</h2>'+
         '<div class="continue-btn">'+
-          '<button class="action-btn btn get-my-quote" onclick="getQuote(this)" value="">Get my Quote<span class="notifiy">1</span></button>'+
+          '<button class="action-btn btn get-my-quote" onclick="sendToServer(this)" value="">Get my Quote<span class="notifiy">1</span></button>'+
         '</div>'+
         '<div class="toogle-btn-wrap">'+
-          '<a href="#" class="toogle-btn-text" onclick="this.parentNode.nextElementSibling.style.display = \'block\'">'+
+          '<a href="#" class="toogle-btn-text" onclick="showHide(this)">'+
             'See your information'+
             '<svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" style="transform: rotate(0deg);"><path d="M7 10L12 15L17 10" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>'+
           '</a>'+
         '</div>'+
-        '<div class="saved-data-wrap" style="display:block">'+
+        '<div class="saved-data-wrap">'+
             '<div class="data-item">'+
               '<div class="data-column item-title">'+
                 '<p>Your Vehicles </p>'+
@@ -2088,9 +2143,6 @@ function checkLocalData()
                         '</svg>'+
                         'Add another driver'+
                     '</a>'+
-                    '<div class="item-details-action">'+
-                        // '<button class="edit">Edit</button>'+
-                    '</div>'+
                 '</div>'+
             '</div>'+
             '<div class="data-item">'+
@@ -2127,14 +2179,6 @@ function checkLocalData()
                 '<div class="data-column item-details">'+
                     '<div class="item-details-content">'+
                         '<p>'+parseData.owner.contact[0]+'</p>'+
-                        // '<hr style="margin: 20px 0;"><!-- just for showing -->'+
-                        // '<select name="year" id="dui_year" class="select-box-dui-year" onchange="checkErr(this)">'+
-                        //     '<option data-placeholder="true"></option>'+
-                        //     '<option value="Option 1">Option 1</option>'+
-                        //     '<option value="Option 2">Option 2</option>'+
-                        //     '<option value="Option 3">Option 3</option>'+
-                        //     '<option value="Option 4">Option 4</option>'+
-                        // '</select>'+
                     '</div>'+
                     '<div class="item-details-action">'+
                         '<button class="edit" onclick="ownership(this)">Change</button>'+
@@ -2148,16 +2192,10 @@ function checkLocalData()
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
                   '<p>'+parseData.owner.contact[1]+'</p>'+
-                  // '<hr style="margin: 20px 0;"><!-- just for showing -->'+
-                  // '<div class="input-field-wrap">'+
-                  //     '<input type="email" placeholder="Email" value="'+parseData.owner.contact[1]+'" required>'+
-                  //     '<label for="">Email Address</label>'+
-                  // '</div>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="emailAddress()">Change</button>'+
                   '<hr><!-- just for showing -->'+
-                  // '<button class="edit">Save</button>'+
                 '</div>'+
               '</div>'+
             '</div>'+
@@ -2195,28 +2233,52 @@ checkLocalData();
 
 function removeLocal(e)
 {
+  e.remove();
   localStorage.removeItem('localdata');
   createZIPCodePanel();
   document.getElementById('localClearBtn').style.display = 'none';
-  e.style.display = 'none';
 }
 
 // remove vehicle
 function removeVehicle(e)
 {
   let local = JSON.parse(localStorage.getItem('localdata'));
-  local.vehicles.list.splice(e.id, 1);
-  localStorage.setItem('localdata', JSON.stringify(local));
-  e.parentNode.style.display = 'none';
-  // console.log();
+  // console.log(local.vehicles.list.length);
+  if(local.vehicles.list.length > 1)
+  {
+    local.vehicles.list.splice(e.id, 1);
+    localStorage.setItem('localdata', JSON.stringify(local));
+    e.parentNode.style.display = 'none';
+    // console.log();
+  }
+  else
+  {
+    alert('Please add more vehicles to remove this one.');
+  }
 }
 
 // remove vehicle
 function removeDriver(e)
 {
   let local = JSON.parse(localStorage.getItem('localdata'));
-  local.drivers.list.splice(e.id, 1);
-  localStorage.setItem('localdata', JSON.stringify(local));
-  e.parentNode.style.display = 'none';
-  // console.log();
+  if(local.vehicles.list.length > 1)
+  {
+    local.drivers.list.splice(e.id, 1);
+    localStorage.setItem('localdata', JSON.stringify(local));
+    e.parentNode.style.display = 'none';
+    // console.log();
+  }
+  else
+  {
+    alert('Please add more drivers to remove this one.');
+  }
+}
+
+// show hide local data form
+function showHide(e)
+{
+  let panel = e.parentNode.nextElementSibling;
+  panel.classList.toggle('hide');
+  console.log(panel.style.display);
+  
 }

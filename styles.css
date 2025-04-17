@@ -616,3 +616,7 @@ a.toogle-btn-text {
   padding:0 7px;
 }
 
+.get-my-quote{
+  position: relative;
+}
+.hide{display: none;}
