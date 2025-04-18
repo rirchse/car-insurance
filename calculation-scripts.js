@@ -1564,19 +1564,16 @@ function backIncident(e)
   if(incidents.backward.includes('dui'))
   {
     dui(e);
-    // incidents.forward.push(e.value);
     incidents.backward.splice(incidents.backward.indexOf('dui'), 1);
   }
   else if(incidents.backward.includes('ticket'))
   {
     ticket(e);
-    // incidents.forward.push(e.value);
     incidents.backward.splice(incidents.backward.indexOf('ticket'), 1);
   }
   else if(incidents.backward.includes('accident'))
   {
     accident(e);
-    // incidents.forward.push(e.value);
     incidents.backward.splice(incidents.backward.indexOf('accident'), 1);
   }
   else
@@ -2008,22 +2005,37 @@ function sendToServer()
       Gender: d.general[0],
       MaritalStatus: d.general[1],
       BirthDate: d.dob[0]+' '+d.dob[1]+' '+d.dob[2],
-      AccidentMonth: d.incidents.accident[0],
-      AccidentYear: d.incidents.accident[1],
-      AccidentDescription: d.incidents.accident[2],
-      AccidentFault: d.incidents.accident[3],
-      AccidentDamaged: d.incidents.accident[4],
-      TicketMonth: d.incidents.ticket[0],
-      TicketYear: d.incidents.ticket[1],
-      TicketDescription: d.incidents.ticket[2],
-      DuiMonth: d.incidents.dui[0],
-      DuiYear: d.incidents.dui[1],
-      DuiState: d.incidents.dui[2],
       IncidentAccident: d.incidents.part.includes('accident') ? 'Yes': 'No',
       IncidentTicket: d.incidents.part.includes('ticket') ? 'Yes': 'No',
       IncidentDui: d.incidents.part.includes('dui') ? 'Yes': 'No',
       IncidentSr22: d.incidents.part.includes('Yes') ? 'Yes': 'No',
     });
+
+    if(d.incidents.part.includes('accident')) {
+      formData.drivers.push({
+        AccidentMonth: d.incidents.accident[0],
+        AccidentYear: d.incidents.accident[1],
+        AccidentDescription: d.incidents.accident[2],
+        AccidentFault: d.incidents.accident[3],
+        AccidentDamaged: d.incidents.accident[4],
+      });
+    }
+
+    if(d.incidents.part.includes('ticket')) {
+      formData.drivers.push({
+        TicketMonth: d.incidents.ticket[0],
+        TicketYear: d.incidents.ticket[1],
+        TicketDescription: d.incidents.ticket[2],
+      });
+    }
+
+    if(d.incidents.part.includes('dui')) {
+      formData.drivers.push({
+        DuiMonth: d.incidents.dui[0],
+        DuiYear: d.incidents.dui[1],
+        DuiState: d.incidents.dui[2],
+      });
+    }
   });
 
   formData.owner = {
@@ -2045,27 +2057,27 @@ function sendToServer()
   let driverObj = Object.assign({}, formData.drivers);
   formData.drivers = driverObj;
 
-  console.log(driverObj);
+  console.log(formData);
 
   let serialized = JSON.stringify(formData);
 
-  fetch('https://services.leadconnectorhq.com/hooks/BiDDLrh6kezD2kEObkPo/webhook-trigger/c3d3342e-d75d-47cc-bffc-c6d642f5fbf4', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
-    },
-    body: serialized
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    thankYou();
-    // alert('We have received your query. Our team will meet you soon. Thank you');
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+  // fetch('https://services.leadconnectorhq.com/hooks/BiDDLrh6kezD2kEObkPo/webhook-trigger/c3d3342e-d75d-47cc-bffc-c6d642f5fbf4', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
+  //   },
+  //   body: serialized
+  // })
+  // .then(response => response.json())
+  // .then(data => {
+  //   console.log('Success:', data);
+  //   thankYou();
+  //   // alert('We have received your query. Our team will meet you soon. Thank you');
+  // })
+  // .catch(error => {
+  //   console.error('Error:', error);
+  // });
   
 }
 
@@ -2264,7 +2276,7 @@ function removeVehicle(e)
 function removeDriver(e)
 {
   let local = JSON.parse(localStorage.getItem('localdata'));
-  if(local.vehicles.list.length > 1)
+  if(local.drivers.list.length > 1)
   {
     local.drivers.list.splice(e.id, 1);
     localStorage.setItem('localdata', JSON.stringify(local));
