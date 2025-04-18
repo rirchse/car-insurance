@@ -1095,13 +1095,18 @@ function checkIncident(e)
       if(index !== -1)
       {
         parts.splice(index, 1);
-        incidents.forward.splice(index, 1);
+      }
+
+      let i = incidents.forward.indexOf(e.name);
+      if(i !== -1)
+      {
+        incidents.forward.splice(i, 1);
       }
     }
   }
 
-  console.log(parts);
-  // console.log(incidents.forward);
+  console.log('parts:', parts);
+  console.log('incident forward:', incidents.forward);
 }
 
 function accident(e)
@@ -1170,14 +1175,6 @@ function accident(e)
           '<option value="Property" '+(act[4] == 'Property'? 'selected' : '')+'>Property</option>'+
       '</select>'+
   '</div>'+
-  '<div class="more-options inner-wrap-btn">'+
-      // '<button class="show-more">'+
-      //     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-      //         '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
-      //     '</svg>'+
-      //     'Add another accident'+
-      //   '</button>'+
-    '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
       '<button type="button" class="back" onclick="backIncident(this)" name="back" value="accident">'+
@@ -1291,14 +1288,6 @@ function ticket(e)
           '<option value="...">...</option>'+
       '</select>'+
   '</div>'+
-  '<div class="more-options inner-wrap-btn">'+
-      // '<button class="show-more">'+
-      //     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-      //         '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
-      //     '</svg>'+
-      //     'Add another ticket'+
-      //   '</button>'+
-    '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
       '<button type="button" class="back" onclick="backIncident(this)" name="back" value="ticket">'+
@@ -1402,14 +1391,6 @@ function dui(e)
         statelist+
       '</select>'+
   '</div>'+
-  '<div class="more-options inner-wrap-btn">'+
-      // '<button class="show-more">'+
-      //   '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-      //       '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
-      //   '</svg>'+
-      //   'Add another DUI'+
-      // '</button>'+
-    '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
       '<button type="button" class="back" onclick="backIncident(this)" name="back" value="dui">'+
@@ -1480,7 +1461,6 @@ function driverName()
     '<form action="#" id="driverNameForm">'+
       '<div class="inner-wrap column-wrap" id="incident">'+
       '<div class="full-width">'+
-        // '<h4 style="text-align: left;">Legal First Name</h4>'+
         '<div class="inner-wrap inner-wrap-input">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
@@ -1489,7 +1469,6 @@ function driverName()
             '</div>'+
           '</div>'+
         '</div>'+
-        // '<h4 style="text-align: left;" class="mt-20">Legal Last Name</h4>'+
         '<div class="inner-wrap inner-wrap-input">'+
           '<div class="field-wrap">'+
             '<div class="input-field-wrap">'+
@@ -1573,7 +1552,7 @@ function nextIncident(e)
     driverName();
   }
   
-  console.log(incidents);
+  console.log(`incident forward action: ${incidents.forward}`);
 }
 
 /** ------------------- back incident ------------ */
@@ -1605,7 +1584,7 @@ function backIncident(e)
     incident();
   }
 
-  console.log(incidents);
+  console.log(`check incidents backward action: ${incidents.backward}`);
 }
 
 function anotherDriver(e)
@@ -1974,15 +1953,11 @@ function checkQuote(e)
     {
       //store data to the local storage
       localStorage.setItem('localdata', JSON.stringify(formdata));
+      checkLocalData();
     }
-
-    // console.log(data);
-    // sendToServer();
-    // thankYou();
 
     //increase value for every action
     increasePercent(1);
-
   }
 }
 
@@ -2137,7 +2112,7 @@ function checkLocalData()
             '<svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" style="transform: rotate(0deg);"><path d="M7 10L12 15L17 10" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>'+
           '</a>'+
         '</div>'+
-        '<div class="saved-data-wrap">'+
+        '<div class="saved-data-wrap hide">'+
             '<div class="data-item">'+
               '<div class="data-column item-title">'+
                 '<p>Your Vehicles </p>'+
@@ -2250,6 +2225,8 @@ function checkLocalData()
           '</p>'+            
         '</div>'+
     '</div>';
+
+    document.getElementById('localClearBtn').style.display = 'block';
     
     increasePercent(74);
     styleLoad();
@@ -2260,10 +2237,9 @@ checkLocalData();
 
 function removeLocal(e)
 {
-  e.remove();
+  document.getElementById('localClearBtn').style.display = 'none';
   localStorage.removeItem('localdata');
   createZIPCodePanel();
-  document.getElementById('localClearBtn').style.display = 'none';
 }
 
 // remove vehicle
