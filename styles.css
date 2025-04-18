@@ -213,7 +213,7 @@ button.next:hover, button.back:focus {
 }
 .ss-main {
   padding: 10px 15px;
-  margin: 10px 0 25px;
+  margin: 10px 0 10px;
 }
 /* three items */
 .step-content-basic.three-items .inner-wrap-btn .input {

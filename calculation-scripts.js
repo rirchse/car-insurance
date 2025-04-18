@@ -50,7 +50,7 @@ function increasePercent(increase)
   percent_number.setAttribute('number', number);
 }
 
-// // check all error and set the border color
+// check all error and set the border color
 function checkErr(e)
 {
   let elm = e.nextElementSibling;
@@ -156,30 +156,47 @@ function ZIPCode()
 {
  let zipcode = document.getElementById('zipcode');
  let result = document.getElementById('result');
+//  const zipSet = new Set(zipcodes);
+
+//  zipcodes.forEach((zip) => {
+  // if(zipSet.has(parseInt(zipcode.value)))
+  // {
+  //   if(vehicleCounter == 0) {
+  //     //increase value for every action
+  //     increasePercent(10);
+  //   }
+
+  //   // execute brands
+  //   brands(null);
+  //   result.innerHTML = '';
+  // }
+  // else
+  // {
+  //   checkErrInput(zipcode);
+  //   result.innerHTML = 'Invalid ZIP Code';
+  // }
+// });
 
   fetch(zipcodefile) // Path to your JSON file
   .then(response => response.json()) // Parse JSON response
   .then(data => {
-    data.zipcodes.forEach((zip) =>{
-      if(zip == zipcode.value)
-      {
-        if(vehicleCounter == 0){
-          //increase value for every action
-          increasePercent(10);
-        }
+    const zipSet = new Set(data);
+    if(zipSet.has(parseInt(zipcode.value)))
+    {
+      if(vehicleCounter == 0){
+        //increase value for every action
+        increasePercent(10);
+      }
 
-        // execute brands
-        brands(null);
-        result.innerHTML = '';
-      }
-      else
-      {
-        checkErrInput(zipcode);
-        result.innerHTML = 'Invalid ZIP Code';
-      }
-      // console.log(zip);
-    });
-    // console.log(data.zipcodes[0]);
+      // execute brands
+      brands(null);
+      result.innerHTML = '';
+    }
+    else
+    {
+      checkErrInput(zipcode);
+      result.innerHTML = 'Invalid ZIP Code';
+    }
 
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
@@ -189,7 +206,6 @@ function ZIPCode()
 function brands(e)
 {
   let xvehicle = formdata.vehicles.current[0];
-  console.log(xvehicle);
   let number = 0;
   container.innerHTML = '<div class="step step-make">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -262,8 +278,6 @@ function brands(e)
 
 function checkBrands(e)
 {
-  // let brand = formdata.vehicles.current;
-  // console.log(brand[0]);
   //increase value for every action
   if(vehicleCounter == 0)
   {
@@ -335,10 +349,8 @@ function writeYears(e)
 
     if(vehicleCounter == 0 && e.value == 'back')
     {
-      increasePercent(-15);
+      increasePercent(-10);
     }
-
-    // console.log(e.firstElementChild.firstElementChild.src);
 
     // store brand to the object
     formdata.vehicles.current[0] = [brand, e.firstElementChild.firstElementChild.src];
@@ -349,12 +361,10 @@ function writeYears(e)
 
 function checkYears(e)
 {
-  // let brand = formdata.vehicles.current;
-  // console.log(brand[1]);
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(15);
+    increasePercent(10);
   }
   //call to the write years
   models(e);
@@ -423,7 +433,7 @@ fetch(jsonfile) // Path to your JSON file
   {
     // store year to the vehicle object
     formdata.vehicles.current[1] = year;
-    console.log(formdata.vehicles.current);
+    // console.log(formdata.vehicles.current);
   }
 
   if(vehicleCounter == 0 && e.value == 'back')
@@ -469,7 +479,7 @@ function owner(e)
   {
     // store model to the vehicle object
     formdata.vehicles.current[2] = e.name;
-    console.log(formdata.vehicles.current);
+    // console.log(formdata.vehicles.current);
   }
 
   if(vehicleCounter == 0 && e.value == 'back'){
@@ -512,7 +522,7 @@ function milage(e)
   {
     //store owner to the vehicle object
     formdata.vehicles.current[3] = e.innerHTML;
-    console.log(formdata.vehicles.current);
+    // console.log(formdata.vehicles.current);
   }
   if(vehicleCounter == 0 && e.value == 'back'){
     increasePercent(-10);
@@ -555,10 +565,10 @@ function coverage(e)
   {
     //store milage to the vehicle object
     formdata.vehicles.current[4] = e.innerHTML;
-    console.log(formdata.vehicles.current);
+    // console.log(formdata.vehicles.current);
   }
   if(vehicleCounter == 0 && e.value == 'back'){
-    increasePercent(-9);
+    increasePercent(-14);
   }
 }
 
@@ -567,46 +577,14 @@ function checkCoverage(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(9);
+    increasePercent(14);
   }
   anotherVehicle(e);
 }
 
 function anotherVehicle(e)
 {
-  let html = '';
-  // if(vehicles)
-  // {
-  //   html+='<table class="table">'+
-  //   '<tr>'+
-  //     '<th>SL NO.</th>'+
-  //     '<th>Year</th>'+
-  //     '<th>Make</th>'+
-  //     '<th>Model</th>'+
-  //     '<th>Finance</th>'+
-  //     '<th>Milage</th>'+
-  //   '</tr>';
-  //   vehicles.forEach((arr, n) => {
-  //     html+='<tr>'+
-  //     '<td>'+(n+1)+'</td>';
-
-  //     arr.forEach((v) => {
-  //       html+='<td>'+v+'</td>';
-  //     });
-  //     html+='</tr>';
-  //   });
-  //   html+='</table>';
-  // };
-
-  // html = '';
-
-  // console.log(html);
-
-  container.innerHTML = '<div class="step step-make">'+
-    // '<h3>Selected Vehicles</h3>'+
-      html+
-  '</div>'+
-  '<div class="step step-number step-content-basic yes-no-box">'+
+  container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Vehicle? (Save Additional 20%)</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
       '<button class="input" onclick="checkAnotherVehicle(this)" name="Yes">YES</button>'+
@@ -625,10 +603,11 @@ function anotherVehicle(e)
   {
     //increase value for every action
     // increasePercent(5);
+
     //store coverage to the vehicle object
     formdata.vehicles.current[5] = e.innerHTML;
     formdata.vehicles.list.push(formdata.vehicles.current);
-    console.log(formdata.vehicles.current);
+    // console.log(formdata.vehicles.current);
 
     //data restore to the localStorage
     if(localStorage.getItem('localdata'))
@@ -662,7 +641,7 @@ function insurance(e)
   if(localStorage.getItem('localdata')){
     insure = JSON.parse(localStorage.getItem('localdata')).owner.insurance;
   }
-  // console.log(insure);
+  
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Insurance Details</h2>'+
   '<form action="#" id="insuranceForm">'+
@@ -825,7 +804,7 @@ function driverMaritalStatus(e)
     //store gender to driver array
     formdata.drivers.current.general[0] = e.innerHTML;
   
-    console.log(formdata);
+    // console.log(formdata);
   }
 }
 
@@ -914,7 +893,7 @@ function birthDay(e)
     //birth day store to current.dob array
     formdata.drivers.current.dob[0] = e.innerHTML;
   
-    console.log(formdata.drivers.current.dob);
+    // console.log(formdata.drivers.current.dob);
   }
 }
 
@@ -958,14 +937,14 @@ function birthYear(e)
     //birth day push to birthDate array
     formdata.drivers.current.dob[1] = e.innerHTML;
   
-    console.log(formdata.drivers.current);
+    // console.log(formdata.drivers.current);
   }
 }
 // birthYear();
 
 function incident(e)
 {
-  let dob = formdata.drivers.current.dob;
+  // let dob = formdata.drivers.current.dob;
   let parts = formdata.drivers.current.incidents.part;
   
   container.innerHTML = '<div class="step step-number step-content-basic five-items">'+
@@ -1051,7 +1030,7 @@ function incident(e)
   
     //birth year push to birthDate array
     formdata.drivers.current.dob[2] = e.innerHTML;
-    console.log(formdata.drivers.current.dob);
+    // console.log(formdata.drivers.current.dob);
   }
 }
 
@@ -1105,8 +1084,8 @@ function checkIncident(e)
     }
   }
 
-  console.log('parts:', parts);
-  console.log('incident forward:', incidents.forward);
+  // console.log('parts:', parts);
+  // console.log('incident forward:', incidents.forward);
 }
 
 function accident(e)
@@ -1220,7 +1199,7 @@ function checkAccidentForm(e)
     {
       formdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
 
-      console.log(formdata.drivers.current.incidents.accident);
+      // console.log(formdata.drivers.current.incidents.accident);
 
       //push accident key to the backward object
       incidents.backward.push('accident');
@@ -1327,7 +1306,7 @@ function checkTicketForm(e)
     {
       formdata.drivers.current.incidents.ticket = [month.value, year.value, description.value];
 
-      console.log(formdata.drivers.current.incidents.ticket);
+      // console.log(formdata.drivers.current.incidents.ticket);
     
       incidents.backward.push('ticket');
 
@@ -1348,7 +1327,7 @@ function dui(e)
   // state array creation
   let statelist = '<option value="">State</option>\n';
   Object.entries(statedata).forEach(([k, s]) => {
-    statelist += '<option value="'+k+'" '+(state ? 'selected' : '')+'>'+s.name+'</option>\n';
+    statelist += '<option value="'+k+'" '+(state ? 'selected' : '')+'>'+s+'</option>\n';
   });
 
   let act = formdata.drivers.current.incidents.dui;
@@ -1432,7 +1411,7 @@ function checkDuiForm(e)
     {
       formdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
 
-      console.log(formdata.drivers.current.incidents.dui);
+      // console.log(formdata.drivers.current.incidents.dui);
 
       incidents.backward.push('dui');
 
@@ -1513,9 +1492,7 @@ function checkNameForm(e)
     {
       formdata.drivers.current.names = [first_name.value, last_name.value];
 
-      console.log(formdata.drivers.current.names);
-
-      // incidents.backward.push('sr-22');
+      // console.log(formdata.drivers.current.names);
 
       anotherDriver(e);
 
@@ -1559,7 +1536,7 @@ function nextIncident(e)
 function backIncident(e)
 {
   incidents.forward.push(e.value);
-  console.log(incidents.forward);
+  // console.log(incidents.forward);
 
   if(incidents.backward.includes('dui'))
   {
@@ -1581,7 +1558,7 @@ function backIncident(e)
     incident();
   }
 
-  console.log(`check incidents backward action: ${incidents.backward}`);
+  // console.log(`check incidents backward action: ${incidents.backward}`);
 }
 
 function anotherDriver(e)
@@ -1603,7 +1580,7 @@ function anotherDriver(e)
   if(e.value != 'back')
   {
     formdata.drivers.list.push(formdata.drivers.current);
-    console.log(formdata.drivers);
+    // console.log(formdata.drivers);
 
     if(localStorage.getItem('localdata')){
       let local = JSON.parse(localStorage.getItem('localdata'));
@@ -1654,7 +1631,7 @@ function checkAnotherDriver(e)
 /** ------------------ Owner Details -------------------- */
 function ownerAddress()
 {
-  let address = '', zip = '', state = '', city = '';
+  let address = '', zip = '', state = '', city = '', country = '';
   let addr = formdata.owner.address;
   if(localStorage.getItem('localdata')){
     addr = JSON.parse(localStorage.getItem('localdata')).owner.address;
@@ -1675,11 +1652,15 @@ function ownerAddress()
   {
     city = addr[3];
   }
+  if(addr[4])
+  {
+    country = addr[4];
+  }
 
   // state array creation
   let statelist = '<option value="">State</option>\n';
   Object.entries(statedata).forEach(([k, s]) => {
-    statelist += '<option value="'+k+'" '+(state ? 'selected' : '')+'>'+s.name+'</option>\n';
+    statelist += '<option value="'+k+'" '+(state ? 'selected' : '')+'>'+s+'</option>\n';
   });
 
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -1687,31 +1668,32 @@ function ownerAddress()
   '<form action="#" id="addressForm" novalidate>'+
   '<div class="inner-wrap column-wrap">'+
     '<div class="full-width">'+
-      // '<h4 style="text-align: left;">Street Address</h4>'+
       '<div class="input-field-wrap">'+
           '<input id="autocomplete" type="text" name="address" placeholder="Address" onkeyup="fillInAddress(event, this)" value="'+address+'" required>'+
           '<label for="">Address</label>'+
       '</div>'+
-      // '<input id="autocomplete" type="text" name="address" placeholder="Street Address" onkeyup="fillInAddress()" value="'+address+'">'+
     '</div>'+
     '<div class="half-width">'+
-        // '<h4 style="text-align: left;">Zip Code</h4>'+
         '<div class="input-field-wrap">'+
             '<input type="text" name="zip" placeholder="Zip" onkeyup="checkErrInput(this)" id="zip" value="'+zip+'" required>'+
             '<label for="">Zip</label>'+
         '</div>'+
     '</div>'+
     '<div class="half-width">'+
-        // '<h4 style="text-align: left;">State</h4>'+
         '<select name="state" id="address_state" class="select-box-address-state" onchange="checkErr(this);" required>'+
             statelist+
         '</select>'+
       '</div>'+
-      '<div class="full-width">'+
-          // '<h4 style="text-align: left;">City</h4>'+
+      '<div class="half-width">'+
           '<div class="input-field-wrap">'+
               '<input type="text" name="city" placeholder="City" onkeyup="checkErrInput(this)" id="city" value="'+city+'" required>'+
               '<label for="">City</label>'+
+          '</div>'+
+      '</div>'+
+      '<div class="half-width">'+
+          '<div class="input-field-wrap">'+
+              '<input type="text" name="country" placeholder="Country" onkeyup="checkErrInput(this)" id="country" value="'+country+'" required>'+
+              '<label for="">Country</label>'+
           '</div>'+
       '</div>'+
     '</div>'+
@@ -1730,6 +1712,10 @@ function ownerAddress()
     '</form>'+
   '</div>';
 
+  // if(e.value == 'back'){
+  //   increasePercent(-2);
+  // }
+
   styleLoad();
   initAutocomplete();
 }
@@ -1747,21 +1733,23 @@ function checkAddressForm(e)
     let zip = form.elements['zip'];
     let state = form.elements['state'];
     let city = form.elements['city'];
+    let country = form.elements['country'];
 
     let checkAddr = checkErrInput(address);
     let checkZip = checkErrInput(zip);
     let checkState = checkErr(state);
     let checkCity = checkErrInput(city);
+    let checkCountry = checkErrInput(country);
 
-    if(checkAddr && checkZip && checkState && checkCity)
+    if(checkAddr && checkZip && checkState && checkCity && checkCountry)
     {
-      formdata.owner.address = [address.value, zip.value, state.value, city.value];
+      formdata.owner.address = [address.value, zip.value, state.value, city.value, country.value];
 
-      console.log(formdata.owner.address);
+      // console.log(formdata.owner.address);
       if(localStorage.getItem('localdata'))
       {
         let local = JSON.parse(localStorage.getItem('localdata'));
-        local.owner.address = [address.value, zip.value, state.value, city.value];
+        local.owner.address = [address.value, zip.value, state.value, city.value, country.value];
         localStorage.setItem('localdata', JSON.stringify(local));
         checkLocalData();
       }
@@ -1817,14 +1805,10 @@ function emailAddress(e)
   '<h2>Email Address</h2>'+
     '<div class="inner-wrap column-wrap>'+
       '<div class="full-width">'+
-        // '<h4 style="text-align: left;">Email Address</h4>'+
         '<div class="input-field-wrap">'+
             '<input type="email" id="email" name="email" placeholder="Email" onkeyup="checkEmail(this)" value="'+email+'" required>'+
             '<label for="">Email Address</label>'+
         '</div>'+
-        // '<input type="email" id="email" placeholder="Email Address" onkeyup="checkEmail(this)" value="'+email+'" required>'+
-        // '<input type="email" placeholder="Email Address" class="error">'+
-        // '<span class="error-msg">Invalid Email Address</span>'+
       '</div>'+
     '<div class="back-to-prev">'+
         '<button class="back" onclick="ownership(this)" name="'+brand+'">'+
@@ -1843,7 +1827,7 @@ function emailAddress(e)
     if(e.value != 'back')
     {
       formdata.owner.contact[0] = e.innerHTML;
-      console.log(formdata.owner.contact);
+      // console.log(formdata.owner.contact);
 
       if(localStorage.getItem('localdata')){
         let local = JSON.parse(localStorage.getItem('localdata'));
@@ -1924,10 +1908,6 @@ function getQuote(e)
   '<div class="tcpa-wrap">'+
       '<p>We take your privacy seriously. By clicking the "Submit" button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href="#">Marketing Partners</a>, agents, affiliates or third parties acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href="#">Privacy Policy</a> and <a href="#">Terms and Conditions</a>.</p>'+
   '</div>';
-
-  // check local data
-  // console.log(localStorage.getItem('localdata'));
-  // document.getElementById('result').textContent = localStorage.getItem('localdata');
 }
 
 // getQuote(5);
@@ -2043,6 +2023,7 @@ function sendToServer()
     zip: local.owner.address[1],
     state: local.owner.address[2],
     city: local.owner.address[3],
+    country: local.owner.address[4],
     CurrentInsuranceCarier: local.owner.insurance[0],
     ContinuousCoverage: local.owner.insurance[1],
     owner: local.owner.contact[0],
@@ -2057,7 +2038,7 @@ function sendToServer()
   let driverObj = Object.assign({}, formData.drivers);
   formData.drivers = driverObj;
 
-  console.log(formData);
+  // console.log(formData);
 
   let serialized = JSON.stringify(formData);
 
@@ -2086,7 +2067,6 @@ function checkLocalData()
 {
   let vehicleList = '', driverList = '';
   let localdata = localStorage.getItem('localdata');
-  // console.log(JSON.parse(localdata).vehicles.list);
   if(localdata){
     let parseData = JSON.parse(localdata);
     if(parseData.vehicles.list)
@@ -2099,8 +2079,7 @@ function checkLocalData()
         '</p>';
       });
     }
-
-    // console.log(parseData.owner);
+    
     if(parseData.drivers.list){
       parseData.drivers.list.forEach((d, n) => {
         driverList += '<p>'+
@@ -2179,7 +2158,7 @@ function checkLocalData()
                 '</div>'+
                 '<div class="data-column item-details">'+
                     '<div class="item-details-content">'+
-                        '<p>'+parseData.owner.address[0]+' <br> '+parseData.owner.address[1]+'<br>'+parseData.owner.address[2]+'<br>'+parseData.owner.address[3]+'</p>'+
+                        '<p>'+parseData.owner.address[0]+' <br> '+parseData.owner.address[1]+'<br>'+parseData.owner.address[2]+'<br>'+parseData.owner.address[3]+'<br>'+parseData.owner.address[4]+'</p>'+
                     '</div>'+
                     '<div class="item-details-action">'+
                         '<button class="edit" onclick="ownerAddress(this)">Change</button>'+
@@ -2219,7 +2198,7 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>'+parseData.owner.contact[2]+'</p>'+
+                  '<p>+1'+parseData.owner.contact[2]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="getQuote()">Change</button>'+
@@ -2250,6 +2229,7 @@ checkLocalData();
 function removeLocal(e)
 {
   document.getElementById('localClearBtn').style.display = 'none';
+  increasePercent(-75);
   localStorage.removeItem('localdata');
   createZIPCodePanel();
 }
@@ -2258,13 +2238,11 @@ function removeLocal(e)
 function removeVehicle(e)
 {
   let local = JSON.parse(localStorage.getItem('localdata'));
-  // console.log(local.vehicles.list.length);
   if(local.vehicles.list.length > 1)
   {
     local.vehicles.list.splice(e.id, 1);
     localStorage.setItem('localdata', JSON.stringify(local));
     e.parentNode.style.display = 'none';
-    // console.log();
   }
   else
   {
@@ -2281,7 +2259,6 @@ function removeDriver(e)
     local.drivers.list.splice(e.id, 1);
     localStorage.setItem('localdata', JSON.stringify(local));
     e.parentNode.style.display = 'none';
-    // console.log();
   }
   else
   {

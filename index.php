@@ -37,6 +37,7 @@
         function fillInAddress() {
             const place = autocomplete.getPlace();
 
+            let country = '';
             let city = '';
             let state = '';
             let stateKey = '';
@@ -58,13 +59,16 @@
                     if (types.includes('locality')) {
                         city = component.long_name;
                     }
+                    if (types.includes('country')) {
+                        country = component.long_name;
+                    }
                 });
 
                 document.getElementById('city').value = city;
-                // document.getElementById('state').value = state;
+                document.getElementById('country').value = country;
                 document.getElementById('zip').value = zip;
 
-                let address_state = document.getElementById('address_state');               
+                let address_state = document.getElementById('address_state');
 
                 let create = document.createElement('option');
                 create.value = stateKey;
@@ -296,10 +300,20 @@
       <?php if($_SERVER["HTTP_HOST"] == 'localhost:8888' || $_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
       <link rel="stylesheet" href="styles.css?v=0.114">
       <script>
-        const zipcodefile = 'zipcode.json?v=1.10';
+        const zipcodefile = 'zipcode.json?v=1.11';
         const jsonfile = 'merged_make_year_model.json';
         const imgfile = 'img.json';
         const statefile = 'states.min.json';
+
+        let zipcodes = [];
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch(zipcodefile)
+            .then(response => response.json())
+            .then(data => {
+                zipcodes = data;
+            })
+            .catch(error => console.error('Error Loading JSON:', error));
+        });
 
         let imgdata = [];
         document.addEventListener('DOMContentLoaded', () => {
