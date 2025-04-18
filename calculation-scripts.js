@@ -2047,7 +2047,7 @@ function sendToServer()
     ContinuousCoverage: local.owner.insurance[1],
     owner: local.owner.contact[0],
     email: local.owner.contact[1],
-    phone: local.owner.contact[2],
+    phone: '+1'+local.owner.contact[2],
   };
 
   //array to object conversion
