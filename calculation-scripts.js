@@ -31,7 +31,7 @@ let incidents = {
 
 let year = '', brand = '', model = '';
 let vehicleCounter = 0, driverCounter = 0;
-let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th'];
+let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th'];
 
 
 let container = document.getElementById('container');
@@ -136,6 +136,14 @@ function createZIPCodePanel(e)
       '</div>';
       }
     html += '</div>'+
+    '<div class="agent-wrap">'+
+      '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
+      '<p>'+
+        '<span>Call an expert &nbsp; </span>'+
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="agent-checkbox"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm90.7 96.7c9.7-2.6 19.9 2.3 23.7 11.6l20 48c3.4 8.2 1 17.6-5.8 23.2L168 231.7c16.6 35.2 45.1 63.7 80.3 80.3l20.2-24.7c5.6-6.8 15-9.2 23.2-5.8l48 20c9.3 3.9 14.2 14 11.6 23.7l-12 44C336.9 378 329 384 320 384C196.3 384 96 283.7 96 160c0-9 6-16.9 14.7-19.3l44-12z"/></svg>'+
+        '<a href="tel:(888) 745-8398">(888) 745-8398</a>'+
+      '</p>'+
+    '</div>'+
   '</div>';
 
   container.innerHTML = html;
@@ -156,26 +164,6 @@ function ZIPCode()
 {
  let zipcode = document.getElementById('zipcode');
  let result = document.getElementById('result');
-//  const zipSet = new Set(zipcodes);
-
-//  zipcodes.forEach((zip) => {
-  // if(zipSet.has(parseInt(zipcode.value)))
-  // {
-  //   if(vehicleCounter == 0) {
-  //     //increase value for every action
-  //     increasePercent(10);
-  //   }
-
-  //   // execute brands
-  //   brands(null);
-  //   result.innerHTML = '';
-  // }
-  // else
-  // {
-  //   checkErrInput(zipcode);
-  //   result.innerHTML = 'Invalid ZIP Code';
-  // }
-// });
 
   fetch(zipcodefile) // Path to your JSON file
   .then(response => response.json()) // Parse JSON response
@@ -438,7 +426,7 @@ fetch(jsonfile) // Path to your JSON file
 
   if(vehicleCounter == 0 && e.value == 'back')
   {
-    increasePercent(-10);
+    increasePercent(-5);
   }
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
@@ -449,7 +437,7 @@ function checkModel(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(10);
+    increasePercent(5);
   }
   owner(e);
 }
@@ -483,7 +471,7 @@ function owner(e)
   }
 
   if(vehicleCounter == 0 && e.value == 'back'){
-    increasePercent(-10);
+    increasePercent(-5);
   }
 }
 
@@ -492,7 +480,7 @@ function checkOwner(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(10);
+    increasePercent(5);
   }
   milage(e);
 }
@@ -525,7 +513,7 @@ function milage(e)
     // console.log(formdata.vehicles.current);
   }
   if(vehicleCounter == 0 && e.value == 'back'){
-    increasePercent(-10);
+    increasePercent(-5);
   }
 }
 
@@ -534,7 +522,7 @@ function checkMilage(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(10);
+    increasePercent(5);
   }
   coverage(e);
 }
@@ -568,7 +556,7 @@ function coverage(e)
     // console.log(formdata.vehicles.current);
   }
   if(vehicleCounter == 0 && e.value == 'back'){
-    increasePercent(-14);
+    increasePercent(-5);
   }
 }
 
@@ -577,7 +565,7 @@ function checkCoverage(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(14);
+    increasePercent(5);
   }
   anotherVehicle(e);
 }
@@ -709,6 +697,14 @@ function insurance(e)
     '</form>'+
   '</div>';
 
+  if(e.value == 'back'){
+    increasePercent(-5);
+    if(driverCounter > 0){
+      driverCounter--;
+      anotherDriver();
+    }
+  }
+
   styleLoad();
 }
 
@@ -740,6 +736,8 @@ function checkInsuranceForm(e)
           }
           else
           {
+            // increase percentage
+            increasePercent(5);
             addDriver();
           }
         }
@@ -748,7 +746,7 @@ function checkInsuranceForm(e)
 }
 
 /** ------------------ Add Driver Section --------------- */
-function addDriver()
+function addDriver(e)
 {
   let driver = formdata.drivers.current.general;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -760,12 +758,24 @@ function addDriver()
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="insurance(this)" name="'+brand+'">'+
+      '<button class="back" onclick="insurance(this)" name="back" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
   '</div>';
+
+  if(e != null && e.value != 'back'){
+    if(driverCounter == 0){
+      increasePercent(2);
+    }
+  }
+
+  if(e.value == 'back'){
+    if(driverCounter == 0){
+      increasePercent(-2);
+    }
+  }
 }
 
 // addDriver();
@@ -786,7 +796,7 @@ function driverMaritalStatus(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="addDriver(this)" name="back">'+
+      '<button class="back" onclick="addDriver(this)" name="back" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -798,13 +808,17 @@ function driverMaritalStatus(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      // increasePercent(5);
+      increasePercent(2);
     }
   
     //store gender to driver array
     formdata.drivers.current.general[0] = e.innerHTML;
-  
-    // console.log(formdata);
+  }
+
+  if(e.value == 'back'){
+    if(driverCounter == 0){
+      increasePercent(-2);
+    }
   }
 }
 
@@ -830,7 +844,7 @@ function birthMonth(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="driverMaritalStatus(this)" name="back">'+
+      '<button class="back" onclick="driverMaritalStatus(this)" name="back" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -842,13 +856,17 @@ function birthMonth(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      // increasePercent(5);
+      increasePercent(2);
     }
   
     //store marital status to the drivers general array
     formdata.drivers.current.general[1] = e.innerHTML;
-  
-    console.log(formdata.drivers.current.general);
+  }
+
+  if(e.value == 'back'){
+    if(driverCounter == 0){
+      increasePercent(-2);
+    }
   }
 }
 
@@ -887,13 +905,16 @@ function birthDay(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      // increasePercent(3);
+      increasePercent(2);
     }
   
     //birth day store to current.dob array
     formdata.drivers.current.dob[0] = e.innerHTML;
-  
-    // console.log(formdata.drivers.current.dob);
+  }
+  if(e.value == 'back'){
+    if(driverCounter == 0){
+      increasePercent(-2);
+    }
   }
 }
 
@@ -931,13 +952,18 @@ function birthYear(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      // increasePercent(2);
+      increasePercent(2);
     }
   
     //birth day push to birthDate array
     formdata.drivers.current.dob[1] = e.innerHTML;
-  
-    // console.log(formdata.drivers.current);
+  }
+
+  if(e.value == 'back'){
+    if(driverCounter == 0)
+    {
+      increasePercent(-2);
+    }
   }
 }
 // birthYear();
@@ -1025,12 +1051,18 @@ function incident(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      // increasePercent(5);
+      increasePercent(2);
     }
   
     //birth year push to birthDate array
     formdata.drivers.current.dob[2] = e.innerHTML;
-    // console.log(formdata.drivers.current.dob);
+  }
+
+  if(e.value == 'back'){
+    if(driverCounter == 0)
+    {
+      increasePercent(-1);
+    }
   }
 }
 
@@ -1083,9 +1115,6 @@ function checkIncident(e)
       }
     }
   }
-
-  // console.log('parts:', parts);
-  // console.log('incident forward:', incidents.forward);
 }
 
 function accident(e)
@@ -1421,7 +1450,7 @@ function checkDuiForm(e)
   });
 }
 
-function driverName()
+function driverName(e)
 {
   let first_name = '', last_name = '';
   let names = formdata.drivers.current.names;
@@ -1458,7 +1487,7 @@ function driverName()
         '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
-      '<button type="button" class="back" onclick="backIncident(this)" name="back" value="sr-22">'+
+      '<button type="button" class="back" onclick="backIncident(this)" name="back" value="back">'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -1471,6 +1500,18 @@ function driverName()
       '</div>'+
     '</form>'+
   '</div>';
+
+  if(e.value != 'back'){
+    if(driverCounter == 0){
+      increasePercent(1);
+    }
+  }
+
+  if(e.value == 'back'){
+    if(driverCounter == 0){
+      increasePercent(-1);
+    }
+  }
 }
 
 // driverName();
@@ -1492,14 +1533,12 @@ function checkNameForm(e)
     {
       formdata.drivers.current.names = [first_name.value, last_name.value];
 
-      // console.log(formdata.drivers.current.names);
-
       anotherDriver(e);
 
       //increase value for every action
       if(driverCounter == 0)
       {
-        increasePercent(0);
+        increasePercent(1);
       }
     }
 
@@ -1526,17 +1565,15 @@ function nextIncident(e)
   }
   else
   {
-    driverName();
+    increasePercent(1);
+    driverName(e);
   }
-  
-  console.log(`incident forward action: ${incidents.forward}`);
 }
 
 /** ------------------- back incident ------------ */
 function backIncident(e)
 {
   incidents.forward.push(e.value);
-  // console.log(incidents.forward);
 
   if(incidents.backward.includes('dui'))
   {
@@ -1555,10 +1592,15 @@ function backIncident(e)
   }
   else
   {
-    incident();
-  }
 
-  // console.log(`check incidents backward action: ${incidents.backward}`);
+    if(e.value == 'back'){
+      if(driverCounter == 0){
+        increasePercent(-1);
+      }
+    }
+    incident(e);
+  }
+  
 }
 
 function anotherDriver(e)
@@ -1571,7 +1613,7 @@ function anotherDriver(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="backIncident(this)" name="back">'+
+      '<button class="back" onclick="backIncident(this)" name="back" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -1580,7 +1622,6 @@ function anotherDriver(e)
   if(e.value != 'back')
   {
     formdata.drivers.list.push(formdata.drivers.current);
-    // console.log(formdata.drivers);
 
     if(localStorage.getItem('localdata')){
       let local = JSON.parse(localStorage.getItem('localdata'));
@@ -1629,7 +1670,7 @@ function checkAnotherDriver(e)
 }
 
 /** ------------------ Owner Details -------------------- */
-function ownerAddress()
+function ownerAddress(e)
 {
   let address = '', zip = '', state = '', city = '', country = '';
   let addr = formdata.owner.address;
@@ -1698,7 +1739,7 @@ function ownerAddress()
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
-      '<button class="back" onclick="anotherDriver(this)" name="'+brand+'">'+
+      '<button class="back" onclick="anotherDriver(this)" name="back" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -1712,9 +1753,9 @@ function ownerAddress()
     '</form>'+
   '</div>';
 
-  // if(e.value == 'back'){
-  //   increasePercent(-2);
-  // }
+  if(e.value == 'back'){
+    increasePercent(-2);
+  }
 
   styleLoad();
   initAutocomplete();
@@ -1743,9 +1784,11 @@ function checkAddressForm(e)
 
     if(checkAddr && checkZip && checkState && checkCity && checkCountry)
     {
-      formdata.owner.address = [address.value, zip.value, state.value, city.value, country.value];
+      //increase value for every action
+      increasePercent(2);
 
-      // console.log(formdata.owner.address);
+      formdata.owner.address = [address.value, zip.value, state.value, city.value, country.value];
+      
       if(localStorage.getItem('localdata'))
       {
         let local = JSON.parse(localStorage.getItem('localdata'));
@@ -1755,17 +1798,14 @@ function checkAddressForm(e)
       }
       else
       {
-        ownership();
-      }      
-
-      //increase value for every action
-      increasePercent(0);
+        ownership(e);
+      }
     }
 
   });
 }
 
-function ownership()
+function ownership(e)
 {
   let contact = formdata.owner.contact;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -1777,12 +1817,21 @@ function ownership()
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="ownerAddress(this)" name="'+brand+'">'+
+      '<button class="back" onclick="ownerAddress(this)" name="back" value="back">'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
       '</button>'+
   '</div>';
+  
+  if(e.value != 'back'){
+    // increasePercent(2);
+  }
+
+  if(e.value == 'back'){
+    increasePercent(-2);
+  }
+  
 }
 
 // ownership();
@@ -1811,7 +1860,7 @@ function emailAddress(e)
         '</div>'+
       '</div>'+
     '<div class="back-to-prev">'+
-        '<button class="back" onclick="ownership(this)" name="'+brand+'">'+
+        '<button class="back" onclick="ownership(this)" name="back" value="back">'+
             '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
                 '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
             '</svg> Back '+
@@ -1826,8 +1875,8 @@ function emailAddress(e)
 
     if(e.value != 'back')
     {
+      increasePercent(1);
       formdata.owner.contact[0] = e.innerHTML;
-      // console.log(formdata.owner.contact);
 
       if(localStorage.getItem('localdata')){
         let local = JSON.parse(localStorage.getItem('localdata'));
@@ -1835,6 +1884,9 @@ function emailAddress(e)
         localStorage.setItem('localdata', JSON.stringify(local));
         checkLocalData();
       }
+    }
+    if(e.value == 'back'){
+      increasePercent(-1);
     }
 }
 // emailAddress();
@@ -1858,7 +1910,7 @@ function emailForm(e)
     }
     
     //increase value for every action
-    increasePercent(0);
+    increasePercent(1);
   }
 }
 
@@ -1908,6 +1960,9 @@ function getQuote(e)
   '<div class="tcpa-wrap">'+
       '<p>We take your privacy seriously. By clicking the "Submit" button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href="#">Marketing Partners</a>, agents, affiliates or third parties acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href="#">Privacy Policy</a> and <a href="#">Terms and Conditions</a>.</p>'+
   '</div>';
+  if(e.value == 'back'){
+    increasePercent(-1);
+  }
 }
 
 // getQuote(5);
@@ -1954,6 +2009,14 @@ function thankYou()
     '</div>'+
     '<hr class="thanks-separator">'+
     '<button class="action-btn btn continue" onclick="checkLocalData()">Continue...</button>'+
+    '<div class="agent-wrap">'+
+      '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
+      '<p>'+
+        '<span>Call an expert &nbsp; </span>'+
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="agent-checkbox"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M64 32C28.7 32 0 60.7 0 96L0 416c0 35.3 28.7 64 64 64l320 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64L64 32zm90.7 96.7c9.7-2.6 19.9 2.3 23.7 11.6l20 48c3.4 8.2 1 17.6-5.8 23.2L168 231.7c16.6 35.2 45.1 63.7 80.3 80.3l20.2-24.7c5.6-6.8 15-9.2 23.2-5.8l48 20c9.3 3.9 14.2 14 11.6 23.7l-12 44C336.9 378 329 384 320 384C196.3 384 96 283.7 96 160c0-9 6-16.9 14.7-19.3l44-12z"/></svg>'+
+        '<a href="tel:(888) 745-8398">(888) 745-8398</a>'+
+      '</p>'+
+    '</div>'+
   '</div>';
 }
 
