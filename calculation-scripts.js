@@ -108,6 +108,14 @@ function checkPhone(e)
   }
 }
 
+//check local storage data
+function checkLocalStorage(){
+  if(localStorage.getItem('localdata')){
+    return true;
+  }
+  return false;
+}
+
 function createZIPCodePanel(e)
 {
   let html = '<div class="step step-1">'+
@@ -150,7 +158,7 @@ function createZIPCodePanel(e)
 
   if(vehicleCounter == 0 && e.value == 'back')
   {
-    increasePercent(-10);
+    increasePercent(-6);
   }
 
   if(vehicleCounter > 0 && e.value == 'back')
@@ -173,7 +181,7 @@ function ZIPCode()
     {
       if(vehicleCounter == 0){
         //increase value for every action
-        increasePercent(10);
+        increasePercent(6);
       }
 
       // execute brands
@@ -245,7 +253,7 @@ function brands(e)
     //create back button
     let back = document.createElement('div');
     back.setAttribute('class', 'back-to-prev');
-    back.innerHTML = '<button class="back" value="back" onclick="createZIPCodePanel(this)">'+
+    back.innerHTML = '<button class="back" value="back" onclick="'+(checkLocalStorage() ? 'checkLocalData()' : 'createZIPCodePanel(this)')+'">'+
     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
     '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
     '</svg> Back </button>';
@@ -253,14 +261,19 @@ function brands(e)
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
 
-  if(vehicleCounter == 0 && e.value == 'next')
+  if(e.value == 'next')
   {
-    increasePercent(10);
+    if(vehicleCounter == 0){
+      increasePercent(6);
+    }
+    // vehicleCounter++;
   }
 
-  if(vehicleCounter == 0 && e.value == 'back')
+  if(e.value == 'back')
   {
-    increasePercent(-10);
+    if(vehicleCounter == 0){
+      increasePercent(-6);
+    }
   }
 }
 
@@ -269,7 +282,7 @@ function checkBrands(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(10);
+    increasePercent(6);
   }
   //call to the write years
   writeYears(e);
@@ -337,7 +350,7 @@ function writeYears(e)
 
     if(vehicleCounter == 0 && e.value == 'back')
     {
-      increasePercent(-10);
+      increasePercent(-6);
     }
 
     // store brand to the object
@@ -352,7 +365,7 @@ function checkYears(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(10);
+    increasePercent(6);
   }
   //call to the write years
   models(e);
@@ -426,7 +439,7 @@ fetch(jsonfile) // Path to your JSON file
 
   if(vehicleCounter == 0 && e.value == 'back')
   {
-    increasePercent(-5);
+    increasePercent(-6);
   }
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
@@ -437,7 +450,7 @@ function checkModel(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(5);
+    increasePercent(6);
   }
   owner(e);
 }
@@ -471,7 +484,7 @@ function owner(e)
   }
 
   if(vehicleCounter == 0 && e.value == 'back'){
-    increasePercent(-5);
+    increasePercent(-6);
   }
 }
 
@@ -480,7 +493,7 @@ function checkOwner(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(5);
+    increasePercent(6);
   }
   milage(e);
 }
@@ -513,7 +526,7 @@ function milage(e)
     // console.log(formdata.vehicles.current);
   }
   if(vehicleCounter == 0 && e.value == 'back'){
-    increasePercent(-5);
+    increasePercent(-6);
   }
 }
 
@@ -522,7 +535,7 @@ function checkMilage(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(5);
+    increasePercent(6);
   }
   coverage(e);
 }
@@ -556,7 +569,7 @@ function coverage(e)
     // console.log(formdata.vehicles.current);
   }
   if(vehicleCounter == 0 && e.value == 'back'){
-    increasePercent(-5);
+    increasePercent(-6);
   }
 }
 
@@ -565,7 +578,7 @@ function checkCoverage(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(5);
+    increasePercent(6);
   }
   anotherVehicle(e);
 }
@@ -589,9 +602,6 @@ function anotherVehicle(e)
   
   if(e.value != 'back')
   {
-    //increase value for every action
-    // increasePercent(5);
-
     //store coverage to the vehicle object
     formdata.vehicles.current[5] = e.innerHTML;
     formdata.vehicles.list.push(formdata.vehicles.current);
@@ -683,7 +693,7 @@ function insurance(e)
       '<p class="error" id="coverage_err"></p>'+
     '</div>'+
     '<div class="back-to-prev">'+
-      '<button class="back" onclick="anotherVehicle(this)" name="" value="back">'+
+      '<button class="back" onclick="'+(checkLocalStorage() ? 'checkLocalData()' : 'anotherVehicle(this)')+'" name="" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -697,7 +707,7 @@ function insurance(e)
     '</form>'+
   '</div>';
 
-  if(e.value == 'back'){
+  if(e.value == 'back') {
     increasePercent(-5);
     if(driverCounter > 0){
       driverCounter--;
@@ -758,7 +768,7 @@ function addDriver(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="insurance(this)" name="back" value="back">'+
+      '<button class="back" onclick="'+(checkLocalStorage() ? 'checkLocalData()' : 'insurance(this)')+'" name="back" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -767,13 +777,13 @@ function addDriver(e)
 
   if(e != null && e.value != 'back'){
     if(driverCounter == 0){
-      increasePercent(2);
+      increasePercent(5);
     }
   }
 
   if(e.value == 'back'){
     if(driverCounter == 0){
-      increasePercent(-2);
+      increasePercent(-5);
     }
   }
 }
@@ -808,7 +818,7 @@ function driverMaritalStatus(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(2);
+      increasePercent(5);
     }
   
     //store gender to driver array
@@ -817,7 +827,7 @@ function driverMaritalStatus(e)
 
   if(e.value == 'back'){
     if(driverCounter == 0){
-      increasePercent(-2);
+      increasePercent(-5);
     }
   }
 }
@@ -856,7 +866,7 @@ function birthMonth(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(2);
+      increasePercent(5);
     }
   
     //store marital status to the drivers general array
@@ -865,7 +875,7 @@ function birthMonth(e)
 
   if(e.value == 'back'){
     if(driverCounter == 0){
-      increasePercent(-2);
+      increasePercent(-5);
     }
   }
 }
@@ -905,7 +915,7 @@ function birthDay(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(2);
+      increasePercent(5);
     }
   
     //birth day store to current.dob array
@@ -913,7 +923,7 @@ function birthDay(e)
   }
   if(e.value == 'back'){
     if(driverCounter == 0){
-      increasePercent(-2);
+      increasePercent(-5);
     }
   }
 }
@@ -952,7 +962,7 @@ function birthYear(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(2);
+      increasePercent(5);
     }
   
     //birth day push to birthDate array
@@ -962,7 +972,7 @@ function birthYear(e)
   if(e.value == 'back'){
     if(driverCounter == 0)
     {
-      increasePercent(-2);
+      // increasePercent(-5);
     }
   }
 }
@@ -1051,7 +1061,7 @@ function incident(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(2);
+      // increasePercent(5);
     }
   
     //birth year push to birthDate array
@@ -1061,7 +1071,7 @@ function incident(e)
   if(e.value == 'back'){
     if(driverCounter == 0)
     {
-      increasePercent(-1);
+      // increasePercent(-5);
     }
   }
 }
@@ -1503,13 +1513,13 @@ function driverName(e)
 
   if(e.value != 'back'){
     if(driverCounter == 0){
-      increasePercent(1);
+      // increasePercent(5);
     }
   }
 
   if(e.value == 'back'){
     if(driverCounter == 0){
-      increasePercent(-1);
+      // increasePercent(-5);
     }
   }
 }
@@ -1565,7 +1575,7 @@ function nextIncident(e)
   }
   else
   {
-    increasePercent(1);
+    // increasePercent(5);
     driverName(e);
   }
 }
@@ -1595,7 +1605,7 @@ function backIncident(e)
 
     if(e.value == 'back'){
       if(driverCounter == 0){
-        increasePercent(-1);
+        // increasePercent(-5);
       }
     }
     incident(e);
@@ -1739,7 +1749,7 @@ function ownerAddress(e)
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
-      '<button class="back" onclick="anotherDriver(this)" name="back" value="back">'+
+      '<button class="back" onclick="'+(checkLocalStorage() ? 'checkLocalData()' : 'anotherDriver(this)')+'" name="back" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -1817,7 +1827,7 @@ function ownership(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="ownerAddress(this)" name="back" value="back">'+
+      '<button class="back" onclick="'+(checkLocalStorage()? 'checkLocalData()': 'ownerAddress(this)')+'" name="back" value="back">'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -1860,7 +1870,7 @@ function emailAddress(e)
         '</div>'+
       '</div>'+
     '<div class="back-to-prev">'+
-        '<button class="back" onclick="ownership(this)" name="back" value="back">'+
+        '<button class="back" onclick="'+(checkLocalStorage() ? 'checkLocalData()' : 'ownership(this)')+'" name="back" value="back">'+
             '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
                 '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
             '</svg> Back '+
@@ -1875,7 +1885,7 @@ function emailAddress(e)
 
     if(e.value != 'back')
     {
-      increasePercent(1);
+      increasePercent(2);
       formdata.owner.contact[0] = e.innerHTML;
 
       if(localStorage.getItem('localdata')){
@@ -1886,7 +1896,7 @@ function emailAddress(e)
       }
     }
     if(e.value == 'back'){
-      increasePercent(-1);
+      increasePercent(-2);
     }
 }
 // emailAddress();
@@ -1910,7 +1920,7 @@ function emailForm(e)
     }
     
     //increase value for every action
-    increasePercent(1);
+    increasePercent(2);
   }
 }
 
@@ -1961,7 +1971,7 @@ function getQuote(e)
       '<p>We take your privacy seriously. By clicking the "Submit" button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href="#">Marketing Partners</a>, agents, affiliates or third parties acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href="#">Privacy Policy</a> and <a href="#">Terms and Conditions</a>.</p>'+
   '</div>';
   if(e.value == 'back'){
-    increasePercent(-1);
+    increasePercent(-2);
   }
 }
 
@@ -1989,7 +1999,7 @@ function checkQuote(e)
     }
 
     //increase value for every action
-    increasePercent(5);
+    increasePercent(2);
   }
 }
 
@@ -2176,7 +2186,7 @@ function checkLocalData()
                     vehicleList+
                     '</div>'+
                     '<br>'+
-                    '<a href="#" class="toogle-btn-text" onclick="brands()">'+
+                    '<a href="#" class="toogle-btn-text" onclick="editAddVehicle(this)">'+
                         '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
                             '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>'+
                         '</svg>'+
@@ -2193,7 +2203,7 @@ function checkLocalData()
                         driverList+
                     '</div>'+
                     '<br>'+
-                    '<a href="#" class="toogle-btn-text" onclick="addDriver()">'+
+                    '<a href="#" class="toogle-btn-text" onclick="addDriver()" value="add-more">'+
                       '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
                         '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>'+
                         '</svg>'+
@@ -2282,12 +2292,24 @@ function checkLocalData()
 
     document.getElementById('localClearBtn').style.display = 'block';
     
-    increasePercent(74);
+    increasePercent(75);
     styleLoad();
   }
 }
 
 checkLocalData();
+
+// user query data edit section
+function editAddVehicle(e)
+{
+  let local = JSON.parse(localStorage.getItem('localdata'));
+  // console.log(local.vehicles.list.length);
+  if(local.vehicles.list){
+    vehicleCounter = 1 + local.vehicles.list.length;
+  }
+  brands(e);
+}
+
 
 function removeLocal(e)
 {
