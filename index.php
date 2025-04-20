@@ -344,7 +344,7 @@
         });
         
       </script>
-      <script src="calculation-scripts.js?v=0.215"></script>
+      <script src="calculation-scripts.js?v=0.216"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">

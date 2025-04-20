@@ -1536,10 +1536,10 @@ function checkNameForm(e)
       anotherDriver(e);
 
       //increase value for every action
-      if(driverCounter == 0)
-      {
-        increasePercent(1);
-      }
+      // if(driverCounter == 0)
+      // {
+      //   // increasePercent(1);
+      // }
     }
 
   });
@@ -1613,11 +1613,11 @@ function anotherDriver(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="backIncident(this)" name="back" value="back">'+
-          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-              '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
-          '</svg> Back '+
-      '</button>'+
+    '<button class="back" onclick="backIncident(this)" name="back" value="back">'+
+      '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+        '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+      '</svg> Back '+
+    '</button>'+
   '</div>';
   if(e.value != 'back')
   {
@@ -1989,7 +1989,7 @@ function checkQuote(e)
     }
 
     //increase value for every action
-    increasePercent(1);
+    increasePercent(5);
   }
 }
 
