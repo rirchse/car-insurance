@@ -2151,10 +2151,10 @@ function sendToServer()
   .then(data => {
     console.log('Success:', data);
     localStorage.setItem('submitted', true);
-    
+
     document.getElementById('getMyQuote').style.display = 'none';
   
-    thankYou();
+    // thankYou();
     // alert('We have received your query. Our team will meet you soon. Thank you');
   })
   .catch(error => {
