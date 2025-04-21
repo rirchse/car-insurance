@@ -593,11 +593,11 @@ function anotherVehicle(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="coverage(this)" value="back">'+
-          '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-              '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
-          '</svg> Back '+
-      '</button>'+
+    '<button class="back" onclick="coverage(this)" value="back">'+
+      '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+        '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+      '</svg> Back '+
+    '</button>'+
   '</div>';
   
   if(e.value != 'back')
@@ -623,8 +623,8 @@ function checkAnotherVehicle(e)
   {
     let vlist = formdata.vehicles.list.length;
     vehicleCounter = vlist++;
-    brands(e);
     formdata.vehicles.current = [];
+    brands(e);
   }
 }
 
@@ -784,7 +784,7 @@ function addDriver(e)
     }
   }
 
-  if(e.value == 'back'){
+  if(e != null && e.value == 'back'){
     if(driverCounter == 0){
       increasePercent(-5);
     }
@@ -1037,7 +1037,7 @@ function incident(e)
               '<span class="checkmark"></span>'+
           '</label>'+
           '<label class="radio-wrap">No'+
-              '<input type="radio" name="sr-22" onchange="checkIncident(this)" value="No" '+(parts == '' || parts.includes('No')? 'checked':'')+'>'+
+              '<input type="radio" name="sr-22" onchange="checkIncident(this)" value="No" '+(!parts.includes('Yes') || parts.includes('No')? 'checked':'')+'>'+
               '<span class="checkmark"></span>'+
           '</label>'+
         '</p>'+
@@ -1128,6 +1128,8 @@ function checkIncident(e)
       }
     }
   }
+
+  console.log(parts);
 }
 
 function accident(e)
@@ -2027,19 +2029,19 @@ function checkQuote(e)
 function thankYou()
 {
   container.innerHTML = '<div class="step step-1 step-content-basic">'+
-    '<h2>🎉 Thank You!</h2>'+
-    '<h3 class="thanks-subtitle">Your Free Car Insurance Quote is on Its Way</+h3>'+
-    '<p class="thanks-body">Thank you for taking the time to complete your car +insurance quote request. Our team is reviewing your details, and you’ll receive your personalized quote shortly.</p>'+
-    '<hr class="thanks-separator">'+
-    '<h3>Check out our other services</h3>'+
-    '<div class="thanks-links">'+
-      '<a href="#">Home Insurance</a>'+
-      '<a href="#">Life Insurance</a>'+
-      '<a href="#">Health Insurance</a>'+
-      '<a href="#">Business Insurance</a>'+
-    '</div>'+
-    '<hr class="thanks-separator">'+
-    '<button class="action-btn btn continue" onclick="checkLocalData()">Continue...</button>'+
+    // '<h2>🎉 Thank You!</h2>'+
+    // '<h3 class="thanks-subtitle">Your Free Car Insurance Quote is on Its Way</+h3>'+
+    // '<p class="thanks-body">Thank you for taking the time to complete your car +insurance quote request. Our team is reviewing your details, and you’ll receive your personalized quote shortly.</p>'+
+    // '<hr class="thanks-separator">'+
+    // '<h3>Check out our other services</h3>'+
+    // '<div class="thanks-links">'+
+    //   '<a href="#">Home Insurance</a>'+
+    //   '<a href="#">Life Insurance</a>'+
+    //   '<a href="#">Health Insurance</a>'+
+    //   '<a href="#">Business Insurance</a>'+
+    // '</div>'+
+    // '<hr class="thanks-separator">'+
+    // '<button class="action-btn btn continue" onclick="checkLocalData()">Continue...</button>'+
     '<div class="agent-wrap">'+
       '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
       '<p>'+
@@ -2125,7 +2127,7 @@ function sendToServer()
     ContinuousCoverage: local.owner.insurance[1],
     owner: local.owner.contact[0],
     email: local.owner.contact[1],
-    phone: '+1'+local.owner.contact[2],
+    phone: local.owner.contact[2],
   };
 
   //array to object conversion
@@ -2137,32 +2139,34 @@ function sendToServer()
 
   let serialized = JSON.stringify(formData);
 
-  // fetch('https://services.leadconnectorhq.com/hooks/BiDDLrh6kezD2kEObkPo/webhook-trigger/c3d3342e-d75d-47cc-bffc-c6d642f5fbf4', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
-  //   },
-  //   body: serialized
-  // })
-  // .then(response => response.json())
-  // .then(data => {
-  //   console.log('Success:', data);
-  //   localStorage.setItem('submitted', true);
-  // 
-  //   thankYou();
-  //   // alert('We have received your query. Our team will meet you soon. Thank you');
-  // })
-  // .catch(error => {
-  //   console.error('Error:', error);
-  // });
+  fetch('https://services.leadconnectorhq.com/hooks/BiDDLrh6kezD2kEObkPo/webhook-trigger/c3d3342e-d75d-47cc-bffc-c6d642f5fbf4', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
+    },
+    body: serialized
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('Success:', data);
+    localStorage.setItem('submitted', true);
+    
+    document.getElementById('getMyQuote').style.display = 'none';
+  
+    thankYou();
+    // alert('We have received your query. Our team will meet you soon. Thank you');
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
   
 }
 
 // check local data exist
 function checkLocalData()
 {
-  console.log(localStorage.getItem('submitted'));
+  // console.log(localStorage.getItem('submitted'));
   let vehicleList = '', driverList = '';
   let localdata = localStorage.getItem('localdata');
   if(localdata){
@@ -2206,75 +2210,75 @@ function checkLocalData()
               '<div class="data-column item-title">'+
                 '<p>Your Vehicles </p>'+
               '</div>'+
-                '<div class="data-column item-details">'+
-                    '<div class="item-details-content">'+
-                    vehicleList+
-                    '</div>'+
-                    '<br>'+
-                    '<a href="#" class="toogle-btn-text" onclick="editAddVehicle(this)">'+
-                        '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-                            '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>'+
-                        '</svg>'+
-                        'Add another vehicle'+
-                    '</a>'+
+              '<div class="data-column item-details">'+
+                '<div class="item-details-content">'+
+                vehicleList+
                 '</div>'+
+                '<br>'+
+                '<a href="#" class="toogle-btn-text" onclick="editAddVehicle(this)">'+
+                  '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+                      '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>'+
+                  '</svg>'+
+                  'Add another vehicle'+
+                '</a>'+
+              '</div>'+
             '</div>'+
             '<div class="data-item">'+
-                '<div class="data-column item-title">'+
-                    '<p>Listed Drivers</p>'+
+              '<div class="data-column item-title">'+
+                  '<p>Listed Drivers</p>'+
+              '</div>'+
+              '<div class="data-column item-details">'+
+                '<div class="item-details-content">'+
+                  driverList+
                 '</div>'+
-                '<div class="data-column item-details">'+
-                    '<div class="item-details-content">'+
-                        driverList+
-                    '</div>'+
-                    '<br>'+
-                    '<a href="#" class="toogle-btn-text" onclick="addDriver()" value="add-more">'+
-                      '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-                        '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>'+
-                        '</svg>'+
-                        'Add another driver'+
-                    '</a>'+
-                '</div>'+
+                '<br>'+
+                '<a href="#" class="toogle-btn-text" onclick="editAddDriver(this)" value="add-more">'+
+                  '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+                    '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></path>'+
+                  '</svg>'+
+                  'Add another driver'+
+                '</a>'+
+              '</div>'+
             '</div>'+
             '<div class="data-item">'+
-                '<div class="data-column item-title">'+
-                    '<p>Insured</p>'+
+              '<div class="data-column item-title">'+
+                '<p>Insured</p>'+
+              '</div>'+
+              '<div class="data-column item-details">'+
+                '<div class="item-details-content">'+
+                  '<p>'+parseData.owner.insurance[0]+'</p>'+
+                  '<p>'+parseData.owner.insurance[1]+'</p>'+
                 '</div>'+
-                '<div class="data-column item-details">'+
-                    '<div class="item-details-content">'+
-                        '<p>'+parseData.owner.insurance[0]+'</p>'+
-                        '<p>'+parseData.owner.insurance[1]+'</p>'+
-                    '</div>'+
-                    '<div class="item-details-action">'+
-                        '<button class="edit" onclick="insurance(this)">Change</button>'+
-                    '</div>'+
+                '<div class="item-details-action">'+
+                  '<button class="edit" onclick="insurance(this)">Change</button>'+
                 '</div>'+
+              '</div>'+
             '</div>'+
             '<div class="data-item">'+
-                '<div class="data-column item-title">'+
-                    '<p>Address</p>'+
+              '<div class="data-column item-title">'+
+                '<p>Address</p>'+
+              '</div>'+
+              '<div class="data-column item-details">'+
+                '<div class="item-details-content">'+
+                  '<p>'+parseData.owner.address[0]+' <br> '+parseData.owner.address[1]+'<br>'+parseData.owner.address[2]+'<br>'+parseData.owner.address[3]+'<br>'+parseData.owner.address[4]+'</p>'+
                 '</div>'+
-                '<div class="data-column item-details">'+
-                    '<div class="item-details-content">'+
-                        '<p>'+parseData.owner.address[0]+' <br> '+parseData.owner.address[1]+'<br>'+parseData.owner.address[2]+'<br>'+parseData.owner.address[3]+'<br>'+parseData.owner.address[4]+'</p>'+
-                    '</div>'+
-                    '<div class="item-details-action">'+
-                        '<button class="edit" onclick="ownerAddress(this)">Change</button>'+
-                    '</div>'+
+                '<div class="item-details-action">'+
+                  '<button class="edit" onclick="ownerAddress(this)">Change</button>'+
                 '</div>'+
+              '</div>'+
             '</div>'+
             '<div class="data-item">'+
-                '<div class="data-column item-title">'+
-                    '<p>Home Ownership</p>'+
+              '<div class="data-column item-title">'+
+                '<p>Home Ownership</p>'+
+              '</div>'+
+              '<div class="data-column item-details">'+
+                '<div class="item-details-content">'+
+                  '<p>'+parseData.owner.contact[0]+'</p>'+
                 '</div>'+
-                '<div class="data-column item-details">'+
-                    '<div class="item-details-content">'+
-                        '<p>'+parseData.owner.contact[0]+'</p>'+
-                    '</div>'+
-                    '<div class="item-details-action">'+
-                        '<button class="edit" onclick="ownership(this)">Change</button>'+
-                    '</div>'+
+                '<div class="item-details-action">'+
+                  '<button class="edit" onclick="ownership(this)">Change</button>'+
                 '</div>'+
+              '</div>'+
             '</div>'+
             '<div class="data-item">'+
               '<div class="data-column item-title">'+
@@ -2296,7 +2300,7 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>+1'+parseData.owner.contact[2]+'</p>'+
+                  '<p>'+parseData.owner.contact[2]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="getQuote()">Change</button>'+
@@ -2338,10 +2342,31 @@ function editAddVehicle(e)
   let local = JSON.parse(localStorage.getItem('localdata'));
   // console.log(local.vehicles.list.length);
   if(local.vehicles.list){
-    vehicleCounter = 1 + local.vehicles.list.length;
+    vehicleCounter = local.vehicles.list.length;
   }
   formdata.vehicles.current = [];
   brands(e);
+}
+
+// user driver query data edit section
+function editAddDriver(e){
+  let local = JSON.parse(localStorage.getItem('localdata'));
+  console.log(local.drivers.list.length);
+  if(local.drivers.list){
+    driverCounter = local.drivers.list.length;
+  }
+  formdata.drivers.current = {
+    names: [],
+    general: [],
+    dob: [],
+    incidents : {
+      part: [],
+      accident: [],
+      ticket: [],
+      dui: []
+    }
+  };
+  addDriver(e);
 }
 
 
@@ -2390,6 +2415,6 @@ function showHide(e)
 {
   let panel = e.parentNode.nextElementSibling;
   panel.classList.toggle('hide');
-  console.log(panel.style.display);
+  // console.log(panel.style.display);
   
 }

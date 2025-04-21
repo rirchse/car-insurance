@@ -155,6 +155,10 @@
                     <a href="tel:(888) 745-8398">(888) 745-8398</a>
                 </p> -->
                 </div>
+                <div id="loading" style="position:fixed; top:0; left:0; text-align:center; width:100%;height:100%;background:#fff">
+                    <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
+                </div>
+                
             </div>
         </div>
 
@@ -170,6 +174,11 @@
     <!-- <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script> -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <script>
+        setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+            
+        }, 500);
+
         let localClearBtn = document.getElementById('localClearBtn');
         if(localStorage.getItem('localdata')){
             localClearBtn.style.display = 'block';
@@ -344,7 +353,7 @@
         });
         
       </script>
-      <script src="calculation-scripts.js?v=0.217"></script>
+      <script src="calculation-scripts.js?v=1.227"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
