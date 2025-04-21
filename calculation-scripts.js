@@ -145,12 +145,12 @@ function createZIPCodePanel(e)
       }
     html += '</div>'+
     '<div class="agent-wrap">'+
-      '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
-      '<p>'+
-        '<span>Call an expert &nbsp; </span>'+
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="agent-checkbox"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clip-rule="evenodd" /> </svg>'+
-        '<a href="tel:(888) 745-8398">(888) 745-8398</a>'+
-      '</p>'+
+      // '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
+      // '<p>'+
+      //   '<span>Call an expert &nbsp; </span>'+
+      //   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="agent-checkbox"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clip-rule="evenodd" /> </svg>'+
+      //   '<a href="tel:(888) 745-8398">(888) 745-8398</a>'+
+      // '</p>'+
     '</div>'+
   '</div>';
 
@@ -632,6 +632,7 @@ function insurance(e)
 {
   if(localStorage.getItem('localdata'))
   {
+    localStorage.removeItem('submitted');
     checkLocalData();
   }
 
@@ -1652,6 +1653,8 @@ function anotherDriver(e)
         }
       };
 
+      //remove submitted counter
+      localStorage.removeItem('submitted');
       checkLocalData();
     }
   }
@@ -1806,6 +1809,9 @@ function checkAddressForm(e)
         let local = JSON.parse(localStorage.getItem('localdata'));
         local.owner.address = [address.value, zip.value, state.value, city.value, country.value];
         localStorage.setItem('localdata', JSON.stringify(local));
+
+        // remove submit count from local data
+        localStorage.removeItem('submitted');
         
         checkLocalData();
       }
@@ -1895,6 +1901,10 @@ function emailAddress(e)
         let local = JSON.parse(localStorage.getItem('localdata'));
         local.owner.contact[0] = e.innerHTML;
         localStorage.setItem('localdata', JSON.stringify(local));
+
+        // remove submit count from local data
+        localStorage.removeItem('submitted');
+
         checkLocalData();
       }
     }
@@ -1915,6 +1925,10 @@ function emailForm(e)
       let local = JSON.parse(localStorage.getItem('localdata'));
       local.owner.contact[1] = email.value;
       localStorage.setItem('localdata', JSON.stringify(local));
+
+      // remove submit count from local data
+      localStorage.removeItem('submitted');
+
       checkLocalData();
     }
     else
@@ -1992,6 +2006,10 @@ function checkQuote(e)
       let local = JSON.parse(localStorage.getItem('localdata'));
       local.owner.contact[2] = phone.value;
       localStorage.setItem('localdata', JSON.stringify(local));
+
+      // remove submit count from local data
+      localStorage.removeItem('submitted');
+
       checkLocalData();
     }
     else
@@ -2038,6 +2056,7 @@ function thankYou()
 function sendToServer()
 {
   localStorage.setItem('submitted', true);
+  document.getElementById('getMyQuote').style.display = 'none';
 
   let formData = {
     vehicles:[],
@@ -2130,6 +2149,7 @@ function sendToServer()
   // .then(data => {
   //   console.log('Success:', data);
   //   localStorage.setItem('submitted', true);
+  // 
   //   thankYou();
   //   // alert('We have received your query. Our team will meet you soon. Thank you');
   // })
@@ -2320,6 +2340,7 @@ function editAddVehicle(e)
   if(local.vehicles.list){
     vehicleCounter = 1 + local.vehicles.list.length;
   }
+  formdata.vehicles.current = [];
   brands(e);
 }
 
