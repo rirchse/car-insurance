@@ -501,6 +501,7 @@ a.toogle-btn-text {
   justify-content: center;
   align-items: center;
   color: #000000;
+  margin-top: 25px;
 }
 .welcome-back-wrap svg.agent-checkbox {
   margin-left: 15px;

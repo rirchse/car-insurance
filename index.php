@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet">
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB1fXk1aYT3j2QqnUVlNvKDCV1Zf4qDHHQ&libraries=places"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBWy_-MFB31rLeyEJzApqSZhEjmuEHrtg&libraries=places"
         async
         defer>
     </script>

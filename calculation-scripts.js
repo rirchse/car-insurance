@@ -742,6 +742,8 @@ function checkInsuranceForm(e)
             local.owner.insurance = [career.value, coverage.value];
             localStorage.setItem('localdata', JSON.stringify(local));
 
+            localStorage.removeItem('submitted');
+
             checkLocalData();
           }
           else
@@ -1804,6 +1806,7 @@ function checkAddressForm(e)
         let local = JSON.parse(localStorage.getItem('localdata'));
         local.owner.address = [address.value, zip.value, state.value, city.value, country.value];
         localStorage.setItem('localdata', JSON.stringify(local));
+        
         checkLocalData();
       }
       else
@@ -2034,6 +2037,8 @@ function thankYou()
 
 function sendToServer()
 {
+  localStorage.setItem('submitted', true);
+
   let formData = {
     vehicles:[],
     drivers:[],
@@ -2111,33 +2116,33 @@ function sendToServer()
   let driverObj = Object.assign({}, formData.drivers);
   formData.drivers = driverObj;
 
-  // console.log(formData);
-
   let serialized = JSON.stringify(formData);
 
-  fetch('https://services.leadconnectorhq.com/hooks/BiDDLrh6kezD2kEObkPo/webhook-trigger/c3d3342e-d75d-47cc-bffc-c6d642f5fbf4', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
-    },
-    body: serialized
-  })
-  .then(response => response.json())
-  .then(data => {
-    console.log('Success:', data);
-    thankYou();
-    // alert('We have received your query. Our team will meet you soon. Thank you');
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+  // fetch('https://services.leadconnectorhq.com/hooks/BiDDLrh6kezD2kEObkPo/webhook-trigger/c3d3342e-d75d-47cc-bffc-c6d642f5fbf4', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
+  //   },
+  //   body: serialized
+  // })
+  // .then(response => response.json())
+  // .then(data => {
+  //   console.log('Success:', data);
+  //   localStorage.setItem('submitted', true);
+  //   thankYou();
+  //   // alert('We have received your query. Our team will meet you soon. Thank you');
+  // })
+  // .catch(error => {
+  //   console.error('Error:', error);
+  // });
   
 }
 
 // check local data exist
 function checkLocalData()
 {
+  console.log(localStorage.getItem('submitted'));
   let vehicleList = '', driverList = '';
   let localdata = localStorage.getItem('localdata');
   if(localdata){
@@ -2164,11 +2169,11 @@ function checkLocalData()
       });
     }
 
-    container.innerHTML = '<div class="welcome-back-wrap">'+
+    let html = '<div class="welcome-back-wrap">'+
         '<h5 style="color: #0070e9; text-transform: uppercase;">Welcome Back <strong>'+parseData.drivers.list[0].names[0]+'</strong>!</h5>'+
         '<h2 style="text-transform: uppercase;">Your Auto Quotes Are Almost Ready For You!</h2>'+
         '<div class="continue-btn">'+
-          '<button class="action-btn btn get-my-quote" onclick="sendToServer(this)" value="">Get my Quote<span class="notifiy">1</span></button>'+
+          '<button class="action-btn btn get-my-quote" onclick="sendToServer(this)" value="" id="getMyQuote">Get my Quote<span class="notifiy">1</span></button>'+
         '</div>'+
         '<div class="toogle-btn-wrap">'+
           '<a href="#" class="toogle-btn-text" onclick="showHide(this)">'+
@@ -2290,11 +2295,19 @@ function checkLocalData()
         '</div>'+
     '</div>';
 
+    container.innerHTML = html;
+
     document.getElementById('localClearBtn').style.display = 'block';
     
     increasePercent(75);
     styleLoad();
   }
+
+  setTimeout(function(){
+    if(localStorage.getItem('submitted')){
+      document.getElementById('getMyQuote').style.display = 'none';
+    }
+  }, 0);
 }
 
 checkLocalData();
