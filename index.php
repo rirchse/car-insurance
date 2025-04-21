@@ -10,6 +10,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="">
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
     <title>Get Your Free Insurance Quote Now | Erase Your Bills</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -159,7 +163,7 @@
                 <div id="loading" style="position:fixed; top:0; left:0; text-align:center; width:100%;height:100%;background:#fff">
                     <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
                 </div>
-                
+
             </div>
         </div>
 
