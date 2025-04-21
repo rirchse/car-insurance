@@ -1062,14 +1062,16 @@ function incident(e)
   if(e != null && e.value != 'back')
   {
     //increase value for every action
-    if(driverCounter == 0)
-    {
-      // increasePercent(5);
-    }
+    // if(driverCounter == 0)
+    // {
+    //   // increasePercent(5);
+    // }
   
     //birth year push to birthDate array
     formdata.drivers.current.dob[2] = e.innerHTML;
   }
+
+  console.log(formdata.drivers.current);
 
   if(e.value == 'back'){
     if(driverCounter == 0)
@@ -1129,7 +1131,7 @@ function checkIncident(e)
     }
   }
 
-  console.log(parts);
+  // console.log(parts);
 }
 
 function accident(e)
@@ -2078,6 +2080,7 @@ function sendToServer()
   });
 
   local.drivers.list.forEach((d, n) => {
+
     formData.drivers.push({
       FirstName: d.names[0],
       LastName: d.names[1],
@@ -2088,33 +2091,21 @@ function sendToServer()
       IncidentTicket: d.incidents.part.includes('ticket') ? 'Yes': 'No',
       IncidentDui: d.incidents.part.includes('dui') ? 'Yes': 'No',
       IncidentSr22: d.incidents.part.includes('Yes') ? 'Yes': 'No',
+
+      AccidentMonth: d.incidents.accident[0],
+      AccidentYear: d.incidents.accident[1],
+      AccidentDescription: d.incidents.accident[2],
+      AccidentFault: d.incidents.accident[3],
+      AccidentDamaged: d.incidents.accident[4],
+
+      TicketMonth: d.incidents.ticket[0],
+      TicketYear: d.incidents.ticket[1],
+      TicketDescription: d.incidents.ticket[2],
+
+      DuiMonth: d.incidents.dui[0],
+      DuiYear: d.incidents.dui[1],
+      DuiState: d.incidents.dui[2],
     });
-
-    if(d.incidents.part.includes('accident')) {
-      formData.drivers.push({
-        AccidentMonth: d.incidents.accident[0],
-        AccidentYear: d.incidents.accident[1],
-        AccidentDescription: d.incidents.accident[2],
-        AccidentFault: d.incidents.accident[3],
-        AccidentDamaged: d.incidents.accident[4],
-      });
-    }
-
-    if(d.incidents.part.includes('ticket')) {
-      formData.drivers.push({
-        TicketMonth: d.incidents.ticket[0],
-        TicketYear: d.incidents.ticket[1],
-        TicketDescription: d.incidents.ticket[2],
-      });
-    }
-
-    if(d.incidents.part.includes('dui')) {
-      formData.drivers.push({
-        DuiMonth: d.incidents.dui[0],
-        DuiYear: d.incidents.dui[1],
-        DuiState: d.incidents.dui[2],
-      });
-    }
   });
 
   formData.owner = {
@@ -2136,6 +2127,8 @@ function sendToServer()
 
   let driverObj = Object.assign({}, formData.drivers);
   formData.drivers = driverObj;
+
+  console.log(formData);
 
   let serialized = JSON.stringify(formData);
 
