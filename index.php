@@ -179,6 +179,7 @@
     <!-- <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script> -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <script>
+
         setTimeout(() => {
             document.getElementById('loading').style.display = 'none';            
         }, 500);

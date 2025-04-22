@@ -95,6 +95,14 @@ function checkEmail(e)
 // check valid email address
 function checkPhone(e)
 {
+  var numbers = e.value.replace(/\D/g, ''),
+  char = {0:'(', 3:') ', 6:'-'};
+  e.value = '';
+  for(var i = 0; i < numbers.length; i++)
+  {
+    e.value += (char[i]||'') + numbers[i];
+  }
+
   const regex = /^(?:\+1\s?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$/;
   if(e.value == '' || !regex.test(e.value)){
     e.style.borderColor = 'red';
@@ -1991,7 +1999,7 @@ function getQuote(e)
   '<div class="tcpa-wrap">'+
       '<p>We take your privacy seriously. By clicking the "Submit" button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href="#">Marketing Partners</a>, agents, affiliates or third parties acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href="#">Privacy Policy</a> and <a href="#">Terms and Conditions</a>.</p>'+
   '</div>';
-  if(e.value == 'back'){
+  if(e != null && e.value == 'back'){
     increasePercent(-2);
   }
 }
@@ -2159,7 +2167,7 @@ function sendToServer()
 // check local data exist
 function checkLocalData()
 {
-  // console.log(localStorage.getItem('submitted'));
+  console.log(JSON.parse(localStorage.getItem('localdata')));
   let vehicleList = '', driverList = '';
   let localdata = localStorage.getItem('localdata');
   if(localdata){
@@ -2407,7 +2415,5 @@ function removeDriver(e)
 function showHide(e)
 {
   let panel = e.parentNode.nextElementSibling;
-  panel.classList.toggle('hide');
-  // console.log(panel.style.display);
-  
+  panel.classList.toggle('hide');  
 }
