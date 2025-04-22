@@ -327,16 +327,6 @@
         const imgfile = 'img.json?v=0.121';
         const statefile = 'states.min.json';
 
-        // let zipcodes = [];
-        // document.addEventListener('DOMContentLoaded', () => {
-        //     fetch(zipcodefile)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         zipcodes = data;
-        //     })
-        //     .catch(error => console.error('Error Loading JSON:', error));
-        // });
-
         let imgdata = [];
         document.addEventListener('DOMContentLoaded', () => {
             fetch(imgfile)
@@ -358,7 +348,7 @@
         });
         
       </script>
-      <script src="calculation-scripts.js?v=1.227"></script>
+      <script src="calculation-scripts.js?v=1.3.27"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
