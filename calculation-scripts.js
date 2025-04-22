@@ -2280,14 +2280,14 @@ function checkLocalData()
     
     increasePercent(75);
     styleLoad();
-  }
 
-  // on reload the page and call to the checkLocalData() then check the data submitted.
-  setTimeout(function(){
-    if(localStorage.getItem('submitted')){
-      document.getElementById('getMyQuote').style.display = 'none';
-    }
-  }, 0);
+    // on reload the page and call to the checkLocalData() then check the data submitted.
+    setTimeout(function(){
+      if(localStorage.getItem('submitted')){
+        document.getElementById('getMyQuote').style.display = 'none';
+      }
+    }, 5000);
+  }
 }
 
 checkLocalData();
