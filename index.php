@@ -160,7 +160,7 @@
                 </p> -->
                 </div>
 
-                <div id="loading" style="position:fixed; top:0; left:0; text-align:center; width:100%;height:100%;background:#fff">
+                <div id="loading" class="loading">
                     <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
                 </div>
 
@@ -320,7 +320,7 @@
     <!-- <?php echo $_SERVER["HTTP_HOST"]; ?> -->
     
       <?php if($_SERVER["HTTP_HOST"] == 'localhost:8888' || $_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
-      <link rel="stylesheet" href="styles.css?v=0.114">
+      <link rel="stylesheet" href="styles.css?v=1.2.14">
       <script>
         const zipcodefile = 'zipcode.json?v=1.120';
         const jsonfile = 'merged_make_year_model.json?v=0.122';
@@ -348,7 +348,7 @@
         });
         
       </script>
-      <script src="calculation-scripts.js?v=1.3.27"></script>
+      <script src="calculation-scripts.js?v=1.3.37"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">

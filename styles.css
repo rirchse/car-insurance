@@ -1,6 +1,3 @@
-.logo-img {
-  max-width: 200px;
-}
 * {
   box-sizing: border-box;
   margin: 0;
@@ -13,6 +10,9 @@ select,
 .ss-single-selected,
 .ss-list {
   font-size: 16px;
+}
+.logo-img {
+  max-width: 200px;
 }
 .container{
   max-width: 1200px;
@@ -490,8 +490,6 @@ svg.agent-checkbox {
   justify-content: end;
 }
 
-
-
 /*welcome back*/
 .welcome-back-wrap{
   text-align: center;
@@ -621,3 +619,12 @@ a.toogle-btn-text {
   position: relative;
 }
 .hide{display: none;}
+.loading{
+  position:fixed; 
+  top:0; 
+  left:0; 
+  text-align:center; 
+  width:100%;
+  height:100%;
+  background:#fff;
+}

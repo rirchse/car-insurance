@@ -37,6 +37,7 @@ let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '
 let container = document.getElementById('container');
 let percent_line = document.getElementById('percent-line');
 let percent_number = document.getElementById('percent-number');
+let loading = document.getElementById('loading');
 
 function increasePercent(increase)
 {   
@@ -274,7 +275,6 @@ function brands(e)
     if(vehicleCounter == 0){
       increasePercent(6);
     }
-    // vehicleCounter++;
   }
 
   if(e.value == 'back')
@@ -363,7 +363,6 @@ function writeYears(e)
 
     // store brand to the object
     formdata.vehicles.current[0] = [brand, e.firstElementChild.firstElementChild.src];
-    console.log(formdata.vehicles);
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
 }
@@ -442,7 +441,6 @@ fetch(jsonfile) // Path to your JSON file
   {
     // store year to the vehicle object
     formdata.vehicles.current[1] = year;
-    // console.log(formdata.vehicles.current);
   }
 
   if(vehicleCounter == 0 && e.value == 'back')
@@ -488,7 +486,6 @@ function owner(e)
   {
     // store model to the vehicle object
     formdata.vehicles.current[2] = e.name;
-    // console.log(formdata.vehicles.current);
   }
 
   if(vehicleCounter == 0 && e.value == 'back'){
@@ -531,7 +528,6 @@ function milage(e)
   {
     //store owner to the vehicle object
     formdata.vehicles.current[3] = e.innerHTML;
-    // console.log(formdata.vehicles.current);
   }
   if(vehicleCounter == 0 && e.value == 'back'){
     increasePercent(-6);
@@ -574,7 +570,6 @@ function coverage(e)
   {
     //store milage to the vehicle object
     formdata.vehicles.current[4] = e.innerHTML;
-    // console.log(formdata.vehicles.current);
   }
   if(vehicleCounter == 0 && e.value == 'back'){
     increasePercent(-6);
@@ -613,7 +608,6 @@ function anotherVehicle(e)
     //store coverage to the vehicle object
     formdata.vehicles.current[5] = e.innerHTML;
     formdata.vehicles.list.push(formdata.vehicles.current);
-    // console.log(formdata.vehicles.current);
 
     //data restore to the localStorage
     if(localStorage.getItem('localdata'))
@@ -727,8 +721,6 @@ function insurance(e)
   styleLoad();
 }
 
-// insurance('e');
-
 function checkInsuranceForm(e)
 {
   let form = document.querySelector('#insuranceForm');
@@ -798,8 +790,6 @@ function addDriver(e)
     }
   }
 }
-
-// addDriver();
 
 function driverMaritalStatus(e)
 {
@@ -987,11 +977,9 @@ function birthYear(e)
     }
   }
 }
-// birthYear();
 
 function incident(e)
 {
-  // let dob = formdata.drivers.current.dob;
   let parts = formdata.drivers.current.incidents.part;
   
   container.innerHTML = '<div class="step step-number step-content-basic five-items">'+
@@ -1079,8 +1067,6 @@ function incident(e)
     formdata.drivers.current.dob[2] = e.innerHTML;
   }
 
-  console.log(formdata.drivers.current);
-
   if(e.value == 'back'){
     if(driverCounter == 0)
     {
@@ -1088,9 +1074,6 @@ function incident(e)
     }
   }
 }
-
-// incident();
-
 
 /** selects incidents parts  */
 function checkIncident(e)
@@ -1138,8 +1121,6 @@ function checkIncident(e)
       }
     }
   }
-
-  // console.log(parts);
 }
 
 function accident(e)
@@ -1227,8 +1208,6 @@ function accident(e)
   styleLoad();
 }
 
-// accident();
-
 /** -------------------- check accident form ------------ */
 function checkAccidentForm(e)
 {
@@ -1252,8 +1231,6 @@ function checkAccidentForm(e)
     if(checkMonth && checkYear && checkDesc && checkFault && checkDamage)
     {
       formdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
-
-      // console.log(formdata.drivers.current.incidents.accident);
 
       //push accident key to the backward object
       incidents.backward.push('accident');
@@ -1340,7 +1317,6 @@ function ticket(e)
   styleLoad();
 }
 
-// ticket();
 /** -------------------- check accident form ------------ */
 function checkTicketForm(e)
 {
@@ -1359,8 +1335,6 @@ function checkTicketForm(e)
     if(checkMonth && checkYear && checkDesc)
     {
       formdata.drivers.current.incidents.ticket = [month.value, year.value, description.value];
-
-      // console.log(formdata.drivers.current.incidents.ticket);
     
       incidents.backward.push('ticket');
 
@@ -1443,8 +1417,6 @@ function dui(e)
   styleLoad();
 }
 
-// dui();
-
 /** -------------------- check accident form ------------ */
 function checkDuiForm(e)
 {
@@ -1464,8 +1436,6 @@ function checkDuiForm(e)
     if(checkMonth && checkYear && checkState)
     {
       formdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
-
-      // console.log(formdata.drivers.current.incidents.dui);
 
       incidents.backward.push('dui');
 
@@ -1538,8 +1508,6 @@ function driverName(e)
     }
   }
 }
-
-// driverName();
 
 /** -------------------- check accident form ------------ */
 function checkNameForm(e)
@@ -1673,8 +1641,6 @@ function anotherDriver(e)
 
 }
 
-// anotherDriver();
-
 function checkAnotherDriver(e)
 {
   if(e.value == 'YES')
@@ -1788,8 +1754,6 @@ function ownerAddress(e)
   initAutocomplete();
 }
 
-// ownerAddress('e');
-
 /** -------------------- check accident form ------------ */
 function checkAddressForm(e)
 {
@@ -1865,8 +1829,6 @@ function ownership(e)
   
 }
 
-// ownership();
-
 function emailAddress(e)
 {
   let email = '';
@@ -1924,7 +1886,6 @@ function emailAddress(e)
       increasePercent(-2);
     }
 }
-// emailAddress();
 
 function emailForm(e)
 {
@@ -2004,8 +1965,6 @@ function getQuote(e)
   }
 }
 
-// getQuote(5);
-
 function checkQuote(e)
 {
   let phone = document.getElementById('phone');
@@ -2063,13 +2022,8 @@ function thankYou()
   '</div>';
 }
 
-// thankYou();
-
 function sendToServer()
 {
-  localStorage.setItem('submitted', true);
-  document.getElementById('getMyQuote').style.display = 'none';
-
   let formData = {
     vehicles:[],
     drivers:[],
@@ -2135,8 +2089,8 @@ function sendToServer()
 
   let driverObj = Object.assign({}, formData.drivers);
   formData.drivers = driverObj;
-
-  console.log(formData);
+  
+  loading.style.display = 'block';
 
   let serialized = JSON.stringify(formData);
 
@@ -2151,12 +2105,12 @@ function sendToServer()
   .then(response => response.json())
   .then(data => {
     console.log('Success:', data);
-    localStorage.setItem('submitted', true);
-
-    document.getElementById('getMyQuote').style.display = 'none';
-  
-    // thankYou();
-    // alert('We have received your query. Our team will meet you soon. Thank you');
+    if(data.id){
+      localStorage.setItem('submitted', true);
+      document.getElementById('getMyQuote').style.display = 'none';
+      loading.style.display = 'none';
+      document.getElementById('ThankYouMsg').style.display = 'block';
+    }
   })
   .catch(error => {
     console.error('Error:', error);
@@ -2167,7 +2121,6 @@ function sendToServer()
 // check local data exist
 function checkLocalData()
 {
-  console.log(JSON.parse(localStorage.getItem('localdata')));
   let vehicleList = '', driverList = '';
   let localdata = localStorage.getItem('localdata');
   if(localdata){
@@ -2200,6 +2153,7 @@ function checkLocalData()
         '<div class="continue-btn">'+
           '<button class="action-btn btn get-my-quote" onclick="sendToServer(this)" value="" id="getMyQuote">Get my Quote<span class="notifiy">1</span></button>'+
         '</div>'+
+        '<p id="ThankYouMsg" style="margin-top:15px; color:green; display:none">Thank You</p>'+
         '<div class="toogle-btn-wrap">'+
           '<a href="#" class="toogle-btn-text" onclick="showHide(this)">'+
             'See your information'+
@@ -2328,6 +2282,7 @@ function checkLocalData()
     styleLoad();
   }
 
+  // on reload the page and call to the checkLocalData() then check the data submitted.
   setTimeout(function(){
     if(localStorage.getItem('submitted')){
       document.getElementById('getMyQuote').style.display = 'none';
@@ -2341,7 +2296,6 @@ checkLocalData();
 function editAddVehicle(e)
 {
   let local = JSON.parse(localStorage.getItem('localdata'));
-  // console.log(local.vehicles.list.length);
   if(local.vehicles.list){
     vehicleCounter = local.vehicles.list.length;
   }
@@ -2352,7 +2306,6 @@ function editAddVehicle(e)
 // user driver query data edit section
 function editAddDriver(e){
   let local = JSON.parse(localStorage.getItem('localdata'));
-  console.log(local.drivers.list.length);
   if(local.drivers.list){
     driverCounter = local.drivers.list.length;
   }
@@ -2388,6 +2341,7 @@ function removeVehicle(e)
     local.vehicles.list.splice(e.id, 1);
     localStorage.setItem('localdata', JSON.stringify(local));
     e.parentNode.style.display = 'none';
+    document.getElementById('getMyQuote').style.display = 'block';
   }
   else
   {
@@ -2404,6 +2358,7 @@ function removeDriver(e)
     local.drivers.list.splice(e.id, 1);
     localStorage.setItem('localdata', JSON.stringify(local));
     e.parentNode.style.display = 'none';
+    document.getElementById('getMyQuote').style.display = 'block';
   }
   else
   {
