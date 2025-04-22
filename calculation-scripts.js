@@ -2286,7 +2286,7 @@ function checkLocalData()
       if(localStorage.getItem('submitted')){
         document.getElementById('getMyQuote').style.display = 'none';
       }
-    }, 5000);
+    }, 0);
   }
 }
 
@@ -2323,12 +2323,12 @@ function editAddDriver(e){
   addDriver(e);
 }
 
-
 function removeLocal(e)
 {
   document.getElementById('localClearBtn').style.display = 'none';
   increasePercent(-75);
   localStorage.removeItem('localdata');
+  localStorage.removeItem('submitted');
   createZIPCodePanel();
 }
 
