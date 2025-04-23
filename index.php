@@ -38,20 +38,15 @@
             autocomplete.addListener('place_changed', fillInAddress);
         }
 
-        function fillInAddress() {
+        function fillInAddress(e) {
             const place = autocomplete.getPlace();
 
-            let country = '';
-            let city = '';
-            let state = '';
-            let stateKey = '';
-            let zip = '';
+            let city = '', state = '', stateKey = '', zip = '', country = '';
 
             if (place.address_components) {
                 place.address_components.forEach(component => {
                     const types = component.types;
                     types.includes('postal_code') === true;
-                    console.log(types.includes('postal_code') === true);
                     
                     if (types.includes('postal_code')) {
                         zip = component.long_name;
@@ -68,9 +63,9 @@
                     }
                 });
 
+                document.getElementById('zip').value = zip;
                 document.getElementById('city').value = city;
                 document.getElementById('country').value = country;
-                document.getElementById('zip').value = zip;
 
                 let address_state = document.getElementById('address_state');
 
@@ -84,6 +79,12 @@
                     slim.setSelected('1'); // Select the newly added top option
                 }, 100);
             }
+
+            // remove country, state, city from address
+            let addressId = document.getElementById('autocomplete');
+            let longAddress = addressId.value;
+            let streetAddr = longAddress.split(',')[0].trim();
+            addressId.value = streetAddr;
         }
 
         // This function just helps force place_changed on keyup (optional)

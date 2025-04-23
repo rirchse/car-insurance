@@ -1000,7 +1000,7 @@ function incident(e)
         '</p>'+
     '</div>'+
     '<div class="incident-item">'+
-        '<p>Received a ticket</p>'+
+        '<p>Tickets or Claims in the Last 3 Years?</p>'+
         '<p>'+
             '<label class="radio-wrap">Yes'+
                 '<input type="radio" name="ticket" onchange="checkIncident(this)" value="Yes" '+(parts.includes('ticket')? 'checked':'')+'>'+
@@ -1074,6 +1074,8 @@ function incident(e)
     }
   }
 }
+
+// incident(null);
 
 /** selects incidents parts  */
 function checkIncident(e)
@@ -1546,11 +1548,11 @@ function nextIncident(e)
     accident(e);
     incidents.forward.splice(incidents.forward.indexOf('accident'), 1);
   }
-  else if(incidents.forward.includes('ticket'))
-  {
-    ticket(e);
-    incidents.forward.splice(incidents.forward.indexOf('ticket'), 1);
-  }
+  // else if(incidents.forward.includes('ticket'))
+  // {
+  //   ticket(e);
+  //   incidents.forward.splice(incidents.forward.indexOf('ticket'), 1);
+  // }
   else if(incidents.forward.includes('dui'))
   {
     dui(e);
@@ -1573,11 +1575,11 @@ function backIncident(e)
     dui(e);
     incidents.backward.splice(incidents.backward.indexOf('dui'), 1);
   }
-  else if(incidents.backward.includes('ticket'))
-  {
-    ticket(e);
-    incidents.backward.splice(incidents.backward.indexOf('ticket'), 1);
-  }
+  // else if(incidents.backward.includes('ticket'))
+  // {
+  //   ticket(e);
+  //   incidents.backward.splice(incidents.backward.indexOf('ticket'), 1);
+  // }
   else if(incidents.backward.includes('accident'))
   {
     accident(e);
@@ -1612,7 +1614,7 @@ function anotherDriver(e)
       '</svg> Back '+
     '</button>'+
   '</div>';
-  if(e.value != 'back')
+  if(e != null && e.value != 'back')
   {
     formdata.drivers.list.push(formdata.drivers.current);
 
@@ -1640,6 +1642,8 @@ function anotherDriver(e)
   }
 
 }
+
+// anotherDriver(null);
 
 function checkAnotherDriver(e)
 {
@@ -1703,7 +1707,7 @@ function ownerAddress(e)
   '<div class="inner-wrap column-wrap">'+
     '<div class="full-width">'+
       '<div class="input-field-wrap">'+
-          '<input id="autocomplete" type="text" name="address" placeholder="Address" onkeyup="fillInAddress(event, this)" value="'+address+'" required>'+
+          '<input type="text" name="address" maxlength="30" id="autocomplete" placeholder="Address" onkeyup="fillInAddress(event, this)" value="'+address+'" required>'+
           '<label for="">Address</label>'+
       '</div>'+
     '</div>'+
@@ -1929,9 +1933,9 @@ function getQuote(e)
   }
 
   container.innerHTML = '<div class="step step-number step-content-basic">'+
-      '<h5 style="color: #0070e9; text-transform: uppercase;">Last Step: Phone Number</h5>'+
-      '<h2 style="text-transform: uppercase;">Contact Number</h2>'+
-      '<div class="inner-wrap column-wrap">'+
+    '<h5 style="color: #0070e9; text-transform: uppercase;">Last Step: Phone Number</h5>'+
+    '<h2 style="text-transform: uppercase;">Contact Number</h2>'+
+    '<div class="inner-wrap column-wrap">'+
           '<div class="full-width">'+
               '<div class="input-field-wrap">'+
                   '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" value="'+phone+'" required>'+
@@ -2060,15 +2064,15 @@ function sendToServer()
       AccidentFault: d.incidents.accident[3],
       AccidentDamaged: d.incidents.accident[4],
 
-      TicketMonth: d.incidents.ticket[0],
-      TicketYear: d.incidents.ticket[1],
-      TicketDescription: d.incidents.ticket[2],
-
       DuiMonth: d.incidents.dui[0],
       DuiYear: d.incidents.dui[1],
       DuiState: d.incidents.dui[2],
     });
   });
+
+  // TicketMonth: d.incidents.ticket[0],
+  // TicketYear: d.incidents.ticket[1],
+  // TicketDescription: d.incidents.ticket[2],
 
   formData.owner = {
     address: local.owner.address[0],
