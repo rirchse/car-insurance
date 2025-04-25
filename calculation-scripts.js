@@ -1938,7 +1938,7 @@ function getQuote(e)
     '<div class="inner-wrap column-wrap">'+
           '<div class="full-width">'+
               '<div class="input-field-wrap">'+
-                  '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" value="'+phone+'" required>'+
+                  '<input type="text" id="phone" name="phone" placeholder="555-555-5555" onkeyup="checkPhone(this)" value="'+phone+'" required maxlength="14">'+
                   '<label for="">Phone number</label>'+
               '</div>'+
               '<span class="error-msg"></span>'+
