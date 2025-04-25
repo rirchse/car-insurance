@@ -359,7 +359,7 @@
           const zipcodefile = '<?php echo get_template_directory_uri(); ?>/jsonfile/zipcode.json';
           const jsonfile = '<?php echo get_template_directory_uri(); ?>/jsonfile/merged_make_year_model.json';
         </script>
-        <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js"></script>
+        <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js?v=1.1.1"></script>
       <?php } ?>
 <!-- TrustedForm -->
 <script type="text/javascript">
