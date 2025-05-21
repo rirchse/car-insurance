@@ -589,7 +589,7 @@ function checkCoverage(e)
 function anotherVehicle(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
-  '<h2>Add Another Vehicle? (Save Additional 20%)</h2>'+
+  '<h2>Add Another Vehicle?</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
       '<button class="input" onclick="checkAnotherVehicle(this)" name="Yes">YES</button>'+
       '<button class="input" onclick="insurance(this)">NO</button>'+
