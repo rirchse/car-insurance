@@ -2028,7 +2028,9 @@ function thankYou()
 
 function sendToServer()
 {
+  let leadid_token = document.getElementById('leadid_token');
   let formData = {
+    LeadiD: leadid_token.value,
     vehicles:[],
     drivers:[],
     owner:[]
@@ -2069,10 +2071,6 @@ function sendToServer()
       DuiState: d.incidents.dui[2],
     });
   });
-
-  // TicketMonth: d.incidents.ticket[0],
-  // TicketYear: d.incidents.ticket[1],
-  // TicketDescription: d.incidents.ticket[2],
 
   formData.owner = {
     address: local.owner.address[0],

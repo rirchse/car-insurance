@@ -111,9 +111,7 @@
     </script>
 </head>
 <body onload="initAutocomplete()">
-<?php
-  // echo get_template_directory_uri(); 
-?>
+
 <!-- /dataset.json -->
     <div class="wrap">
         <header class="container">
@@ -180,6 +178,13 @@
             <br><p style="font-weight: 300;">This website is operated by "ADDRESS HERE"</p>
         </footer>
     </div>
+
+    <!-- uniq token generated form -->
+    <form>
+      <input id="leadid_token" name="universal_leadid" type="hidden" value=""/>
+    </form>
+    
+    <!-- script for slim select form butify library -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <script>
 
@@ -361,21 +366,35 @@
         </script>
         <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js?v=1.1.1"></script>
       <?php } ?>
-<!-- TrustedForm -->
-<script type="text/javascript">
-  (function() {
-    var tf = document.createElement('script');
-    tf.type = 'text/javascript';
-    tf.async = true;
-    tf.src = ("https:" == document.location.protocol ? 'https' : 'http') +
-      '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&l=' +
-      new Date().getTime() + Math.random();
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
-  })();
-</script>
-<noscript>
-  <img src='https://api.trustedform.com/ns.gif' />
-</noscript>
-<!-- End TrustedForm -->
+
+      <!-- TrustedForm -->
+      <script type="text/javascript">
+        (function() {
+          var tf = document.createElement('script');
+          tf.type = 'text/javascript';
+          tf.async = true;
+          tf.src = ("https:" == document.location.protocol ? 'https' : 'http') +
+            '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&l=' +
+            new Date().getTime() + Math.random();
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
+        })();
+      </script>
+      <noscript>
+        <img src='https://api.trustedform.com/ns.gif' />
+      </noscript>
+      <!-- End TrustedForm -->
+    
+      <script id="LeadiDscript" type="text/javascript">
+        (function() {
+        var s = document.createElement('script');
+        s.id = 'LeadiDscript_campaign';
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = '//create.lidstatic.com/campaign/47944071-f203-65fd-c512-57ea50ad928b.js?snippet_version=2';
+        var LeadiDscript = document.getElementById('LeadiDscript');
+        LeadiDscript.parentNode.insertBefore(s, LeadiDscript);
+      })();
+      </script>
+      <noscript><img src='//create.leadid.com/noscript.gif?lac=F6E70FD1-7E87-2E6D-DC76-545BC9524F88&lck=47944071-f203-65fd-c512-57ea50ad928b&snippet_version=2' /></noscript>
 </body>
 </html>
