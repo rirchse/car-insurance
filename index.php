@@ -109,6 +109,73 @@
         //     }
         // }
     </script>
+    <style>
+        .features-wrap {
+            text-align: center;
+        }
+        .feature-box-wrap {
+            display: flex;
+            gap: 15px;
+        }
+        .feature-box {
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            padding: 25px 20px;
+            margin-top: 30px;
+            transition: .2s;
+        }
+        .feature-box:hover {
+            border-color:  #0070e9;
+        }
+        .feature-box .icon {
+            border: 1px solid;
+            width: 50px;
+            height: 50px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .feature-box .icon svg {
+            max-height: 24px;
+            max-width: 24px;
+        }
+        .feature-box h3 {
+            margin: 15px 0;
+        }
+        .how-it-works-wrap {
+            background-image: url(bg-how-works.svg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: top center;
+            padding: 100px 0 65px;
+            color: #fff;
+            margin-top: 100px;
+        }
+        .how-inner {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .how-text {
+            flex: 0 0 50%;
+            max-width: 50%;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .how-image {
+            flex: 0 0 30%;
+            max-width: 30%;
+        }
+        .how-image img {
+            max-width: 100%;
+            margin-bottom: -70px;
+        }
+    </style>
 </head>
 <body onload="initAutocomplete()">
 
@@ -176,6 +243,35 @@
                     </div>
                     <h3>A Little Information</h3>
                     <p>Provide some basic information about yourself and your vehicle (This will allow us to generate customized personalized results).</p>
+                </div>
+                <div class="feature-box">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="#163300" fill-rule="evenodd" d="m11.1 5.894l-.412.903l.671.732l1.356 1.48l-1.994-.227l-.986-.113l-.49.864l-.987 1.747l-.4-1.967l-.198-.972l-.973-.198l-1.966-.4l1.746-.989l.864-.489l-.112-.986l-.227-1.994L8.47 4.641l.732.67l.903-.411l1.826-.832zM7.02 1.276l2.465 2.26l3.043-1.387c.842-.384 1.708.483 1.325 1.324l-1.387 3.043l2.259 2.465c.625.682.069 1.774-.85 1.67l-3.323-.38l-1.646 2.911c-.456.805-1.666.613-1.85-.293l-.667-3.277l-3.277-.666c-.906-.185-1.098-1.395-.293-1.85l2.91-1.647l-.378-3.322c-.105-.92.987-1.476 1.669-.85M5.53 11.53a.75.75 0 1 0-1.06-1.06l-3.5 3.5a.75.75 0 1 0 1.06 1.06z" clip-rule="evenodd"></path></svg>
+                    </div>
+                    <h3>A Bit Of Magic</h3>
+                    <p>Our Smart matching engine will sift through thousands of possible insurance policies and only present you with relevant and valid options.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16"><path fill="#163300" d="M7.954 1.372a1 1 0 0 1 1.414-.15l3.262 2.664a1 1 0 0 1 .25 1.245A3 3 0 0 0 12 5h-.3l.298-.34l-1.718-1.403l-1.417 1.744H7.574l1.931-2.376l-.77-.629L6.337 5h-1.28zM10.5 10a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zM3 5.5a.5.5 0 0 1 .5-.5h.558l.795-1H3.5A1.5 1.5 0 0 0 2 5.5v6A2.5 2.5 0 0 0 4.5 14H12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H3.5a.5.5 0 0 1-.5-.5m0 6V6.915q.236.084.5.085H12a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4.5A1.5 1.5 0 0 1 3 11.5"></path></svg>
+                    </div>
+                    <h3>A Lot Of Savings</h3>
+                    <p>You have the freedom to choose the specific policy you feel suits you the most from a list of matching policies we provide.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="how-it-works-wrap">
+        <div class="container">
+            <div class="how-inner">
+                <div class="how-text">
+                    <h2>How Does CheapAutoCover.com Work?</h2>
+                    <p>We take all the information you provide regarding yourself and your vehicle and compare it in real time to our live database connected to dozens of top insurance carriers. This results in a list of policies that are specific to your personal circumstances and are from carriers that are willing to insure you.</p>
+                    <p>Why is it so important to have personalized results? Because many of us spend countless hours filling endless documentation just to find out there is no relevant policy or getting declined for insurance. The DriveSecureQuotes.com platform makes sure you are presented with the top options in one place.</p>
+                    <p>The service is free and you are never obligated to buy the presented policy.</p>
+                </div>
+                <div class="how-image">
+                    <img src="https://cheapautocover.com/images/ui/phone.png" alt="Phone">
                 </div>
             </div>
         </div>
