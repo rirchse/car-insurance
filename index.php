@@ -327,7 +327,7 @@
 
     <!-- <?php echo $_SERVER["HTTP_HOST"]; ?> -->
     
-      <?php if($_SERVER["HTTP_HOST"] == 'localhost:8888' || $_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'onenazmul.dev'){ ?>
+      <?php if($_SERVER["HTTP_HOST"] == 'localhost:8888' || $_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'qodebuzz.com'){ ?>
       <link rel="stylesheet" href="styles.css?v=1.2.14">
       <script>
         const zipcodefile = 'zipcode.json?v=1.120';
