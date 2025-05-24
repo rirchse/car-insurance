@@ -213,6 +213,12 @@
             background-color: #0070e9;
             border: 1px solid #fff;
         }
+        .agent-wrap p svg {
+            fill: #0070e9;
+        }
+        .agent-wrap p {
+            gap: 6px;
+        }
 
         @media only screen and (max-width: 767px){
             .feature-box, .how-text, .how-image {
@@ -297,13 +303,40 @@
             <div class="agent-wrap">
                  <img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">
                 <p>
-                    <span>Call an expert &nbsp; </span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="agent-checkbox"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clip-rule="evenodd" /> </svg>
-                    <a href="tel:(888) 745-8398">(888) 745-8398</a>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+                    <span>Tell us what car you drive and we’ll look for the best rates</span>
                 </p>
             </div>
         </div>
     </div>
+    <!-- name field -->
+    <div class="common-agents-wrap">
+        <div class="container">
+            <div class="agent-wrap">
+                 <img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+                    <span>Your information is safe and secure</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <!-- address field -->
+    <div class="common-agents-wrap">
+        <div class="container">
+            <div class="agent-wrap">
+                 <img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+                    <span>Companies require this in order to provide an accurate quote</span>
+                </p>
+            </div>
+        </div>
+    </div>
+    
+
+    
+
     <div class="features-wrap">
         <div class="container">
             <h2>How To Start Saving On Your Car Insurance?</h2>
@@ -312,22 +345,22 @@
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="#163300" fill-rule="evenodd" d="M6.169 6.331a3 3 0 0 0-.833 1.6l-.338 1.912a1 1 0 0 0 1.159 1.159l1.912-.338a3 3 0 0 0 1.6-.833l3.07-3.07l2-2A.9.9 0 0 0 15 4.13A3.13 3.13 0 0 0 11.87 1a.9.9 0 0 0-.632.262l-2 2zm3.936-1.814L7.229 7.392a1.5 1.5 0 0 0-.416.8L6.6 9.4l1.208-.213l.057-.01a1.5 1.5 0 0 0 .743-.406l2.875-2.876a1.63 1.63 0 0 0-1.378-1.378m2.558.199a3.14 3.14 0 0 0-1.379-1.38l.82-.82a1.63 1.63 0 0 1 1.38 1.38zM8 2.25a.75.75 0 0 0-.75-.75H4.5a3 3 0 0 0-3 3v7a3 3 0 0 0 3 3h7a3 3 0 0 0 3-3V8.75a.75.75 0 0 0-1.5 0v2.75a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 3 11.5v-7A1.5 1.5 0 0 1 4.5 3h2.75A.75.75 0 0 0 8 2.25" clip-rule="evenodd"></path></svg>
                     </div>
-                    <h3>A Little Information</h3>
-                    <p>Provide some basic information about yourself and your vehicle (This will allow us to generate customized personalized results).</p>
+                    <h3>Just a Few Basics</h3>
+                    <p>Share a few simple details about you and your vehicle to help us tailor the best results to your needs.</p>
                 </div>
                 <div class="feature-box">
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 16 16"><path fill="#163300" fill-rule="evenodd" d="m11.1 5.894l-.412.903l.671.732l1.356 1.48l-1.994-.227l-.986-.113l-.49.864l-.987 1.747l-.4-1.967l-.198-.972l-.973-.198l-1.966-.4l1.746-.989l.864-.489l-.112-.986l-.227-1.994L8.47 4.641l.732.67l.903-.411l1.826-.832zM7.02 1.276l2.465 2.26l3.043-1.387c.842-.384 1.708.483 1.325 1.324l-1.387 3.043l2.259 2.465c.625.682.069 1.774-.85 1.67l-3.323-.38l-1.646 2.911c-.456.805-1.666.613-1.85-.293l-.667-3.277l-3.277-.666c-.906-.185-1.098-1.395-.293-1.85l2.91-1.647l-.378-3.322c-.105-.92.987-1.476 1.669-.85M5.53 11.53a.75.75 0 1 0-1.06-1.06l-3.5 3.5a.75.75 0 1 0 1.06 1.06z" clip-rule="evenodd"></path></svg>
                     </div>
-                    <h3>A Bit Of Magic</h3>
-                    <p>Our Smart matching engine will sift through thousands of possible insurance policies and only present you with relevant and valid options.</p>
+                    <h3>A Touch of Smart Tech</h3>
+                    <p>Our intelligent matching system reviews thousands of insurance options and shows you only the most relevant and valid choices for your need.</p>
                 </div>
                 <div class="feature-box">
                     <div class="icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16"><path fill="#163300" d="M7.954 1.372a1 1 0 0 1 1.414-.15l3.262 2.664a1 1 0 0 1 .25 1.245A3 3 0 0 0 12 5h-.3l.298-.34l-1.718-1.403l-1.417 1.744H7.574l1.931-2.376l-.77-.629L6.337 5h-1.28zM10.5 10a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1zM3 5.5a.5.5 0 0 1 .5-.5h.558l.795-1H3.5A1.5 1.5 0 0 0 2 5.5v6A2.5 2.5 0 0 0 4.5 14H12a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2H3.5a.5.5 0 0 1-.5-.5m0 6V6.915q.236.084.5.085H12a1 1 0 0 1 1 1v4a1 1 0 0 1-1 1H4.5A1.5 1.5 0 0 1 3 11.5"></path></svg>
                     </div>
-                    <h3>A Lot Of Savings</h3>
-                    <p>You have the freedom to choose the specific policy you feel suits you the most from a list of matching policies we provide.</p>
+                    <h3>Big Savings, Your Way</h3>
+                    <p>Pick the policy that fits you best from a personalized list of options tailored to your needs.</p>
                 </div>
             </div>
         </div>
@@ -336,10 +369,10 @@
         <div class="container">
             <div class="how-inner">
                 <div class="how-text">
-                    <h2>How Does CheapAutoCover.com Work?</h2>
-                    <p>We take all the information you provide regarding yourself and your vehicle and compare it in real time to our live database connected to dozens of top insurance carriers. This results in a list of policies that are specific to your personal circumstances and are from carriers that are willing to insure you.</p>
-                    <p>Why is it so important to have personalized results? Because many of us spend countless hours filling endless documentation just to find out there is no relevant policy or getting declined for insurance. The DriveSecureQuotes.com platform makes sure you are presented with the top options in one place.</p>
-                    <p>The service is free and you are never obligated to buy the presented policy.</p>
+                    <h2>How Does EraseYourBills.com Work?</h2>
+                    <p>We use the information you provide about yourself and your vehicle to instantly compare options from a live database connected to dozens of top insurance providers. This allows us to deliver a personalized list of policies tailored specifically to your situation—only from carriers who are ready to insure you.</p>
+                    <p>Why are personalized results so important? <br>Because too often, people waste hours filling out forms only to be rejected or shown irrelevant policies. With EraseYourBills.com, you get matched with real, relevant options all in one place—saving you time and frustration.</p>
+                    <p>Best of all, our service is completely free, and there's never any obligation to purchase a policy.</p>
                     <hr>
                     <h4>Compare Between Top Carriers And Start Saving:</h4>
                     <div class="quick-get-start-wrap">
