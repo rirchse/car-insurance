@@ -116,6 +116,7 @@
         .feature-box-wrap {
             display: flex;
             gap: 15px;
+            justify-content: center;
         }
         .feature-box {
             border: 1px solid #e5e7eb;
@@ -123,6 +124,8 @@
             padding: 25px 20px;
             margin-top: 30px;
             transition: .2s;
+            flex: 0 0 33.33%;
+            max-width: 33.33%;
         }
         .feature-box:hover {
             border-color:  #0070e9;
@@ -175,6 +178,72 @@
             max-width: 100%;
             margin-bottom: -70px;
         }
+        .common-agents-wrap {
+            border-top: 1px solid #f5f5f5;
+            border-bottom: 1px solid #f5f5f5;
+            padding: 20px 10px;
+            margin: 60px auto;
+        }
+        .quick-get-start-wrap {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .quick-get-start-wrap .input-field-wrap label {
+            color: #000;
+            top: 17px;
+        }
+        .quick-get-start-wrap .input-field-wrap input:focus + label, 
+        .quick-get-start-wrap .input-field-wrap input:not(:focus):valid ~ label {
+            background: transparent;
+            top: -17px;
+            color: #fff;
+        }
+        .quick-get-start-wrap input {
+            padding-top: 18px;
+            padding-bottom: 18px;
+            margin: 0;
+        }
+        .quick-get-start-wrap .action-btn {
+            margin: 10px 0px;
+            background-color: #000;
+            border: 1px solid #000;
+        }
+        .quick-get-start-wrap .action-btn:hover {
+            background-color: #0070e9;
+            border: 1px solid #fff;
+        }
+
+        @media only screen and (max-width: 767px){
+            .feature-box, .how-text, .how-image {
+                max-width: 100%;
+                flex: 0 0 100%;
+            }
+            .feature-box-wrap, .how-inner {
+                flex-wrap: wrap;
+            }
+            .how-image img {
+                margin: 0;
+            }
+            .how-it-works-wrap {
+                padding: 45px 0 45px;
+                margin-top: 60px;
+                background-position: center center;
+            }
+            .quick-get-start-wrap .field-wrap {
+                flex: 0 0 48%;
+                max-width: 48%;
+            }
+            .quick-get-start-wrap {
+                gap: 10px;
+                align-items: start;
+            }
+            .quick-get-start-wrap .action-btn {
+                font-size: 18px;
+                margin: 0;
+                padding: 17px 12px;
+            }
+        }
     </style>
 </head>
 <body onload="initAutocomplete()">
@@ -202,34 +271,36 @@
         </div>
         <div class="container">
             <div class="form-wrap" id="container">
-              <div class="step step-1 step-content-basic">
-                  <h2>Enter Your Zip Code</h2>
-                  <div class="inner-wrap inner-wrap-input">
-                      <div class="field-wrap">
-                            <div class="input-field-wrap">
-                                <input type="text" id="zipcode" required>
-                                <label for="">Zip code</label>
-                            </div>
-                            <span class="error-msg" id="result"></span>
-                      </div>
-                      <div class="field-wrap">
-                        <button class="action-btn btn" onclick="ZIPCode()">Get Started</button>
-                      </div>
-                  </div>
-              </div>
-                <!--<div class="agent-wrap">
-                 <img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">
+                <div class="step step-1 step-content-basic">
+                    <h2>Enter Your Zip Code</h2>
+                    <div class="inner-wrap inner-wrap-input">
+                        <div class="field-wrap">
+                                <div class="input-field-wrap">
+                                    <input type="text" id="zipcode" required>
+                                    <label for="">Zip code</label>
+                                </div>
+                                <span class="error-msg" id="result"></span>
+                        </div>
+                        <div class="field-wrap">
+                            <button class="action-btn btn" onclick="ZIPCode()">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="loading" class="loading">
+                    <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="common-agents-wrap">
+        <div class="container">
+            <div class="agent-wrap">
+                 <img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">
                 <p>
                     <span>Call an expert &nbsp; </span>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="agent-checkbox"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clip-rule="evenodd" /> </svg>
                     <a href="tel:(888) 745-8398">(888) 745-8398</a>
-                </p> -->
-                </div>
-
-                <div id="loading" class="loading">
-                    <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
-                </div>
-
+                </p>
             </div>
         </div>
     </div>
@@ -269,9 +340,23 @@
                     <p>We take all the information you provide regarding yourself and your vehicle and compare it in real time to our live database connected to dozens of top insurance carriers. This results in a list of policies that are specific to your personal circumstances and are from carriers that are willing to insure you.</p>
                     <p>Why is it so important to have personalized results? Because many of us spend countless hours filling endless documentation just to find out there is no relevant policy or getting declined for insurance. The DriveSecureQuotes.com platform makes sure you are presented with the top options in one place.</p>
                     <p>The service is free and you are never obligated to buy the presented policy.</p>
+                    <hr>
+                    <h4>Compare Between Top Carriers And Start Saving:</h4>
+                    <div class="quick-get-start-wrap">
+                        <div class="field-wrap">
+                            <div class="input-field-wrap">
+                                <input type="text" id="zipcode" required>
+                                <label for="">Zip code</label>
+                            </div>
+                            <span class="error-msg" id="result"></span>
+                        </div>
+                        <div class="field-wrap">
+                            <button class="action-btn btn" onclick="ZIPCode()">Get Started</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="how-image">
-                    <img src="https://cheapautocover.com/images/ui/phone.png" alt="Phone">
+                    <img src="https://eraseyourbills.com/wp-content/uploads/2025/05/screenshot.png" alt="Phone">
                 </div>
             </div>
         </div>
