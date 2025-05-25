@@ -159,6 +159,7 @@ function createZIPCodePanel(e)
 
     // show home information text
     homeInfo('Yes');
+    commonAgent('No');
     // reset footer form
     let footerform = document.getElementById('footerZipForm');
     footerform.zipcode.value = '';
@@ -250,6 +251,8 @@ function brands(e)
 {
   // hide home page information
   homeInfo('No');
+
+  commonAgent('Yes');
 
   let xvehicle = formdata.vehicles.current[0];
   let number = 0;
