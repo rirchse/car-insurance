@@ -221,34 +221,34 @@
         }
 
         @media only screen and (max-width: 767px){
-            .feature-box, .how-text, .how-image {
-                max-width: 100%;
-                flex: 0 0 100%;
-            }
-            .feature-box-wrap, .how-inner {
-                flex-wrap: wrap;
-            }
-            .how-image img {
-                margin: 0;
-            }
-            .how-it-works-wrap {
-                padding: 45px 0 45px;
-                margin-top: 60px;
-                background-position: center center;
-            }
-            .quick-get-start-wrap .field-wrap {
-                flex: 0 0 48%;
-                max-width: 48%;
-            }
-            .quick-get-start-wrap {
-                gap: 10px;
-                align-items: start;
-            }
-            .quick-get-start-wrap .action-btn {
-                font-size: 18px;
-                margin: 0;
-                padding: 17px 12px;
-            }
+          .feature-box, .how-text, .how-image {
+              max-width: 100%;
+              flex: 0 0 100%;
+          }
+          .feature-box-wrap, .how-inner {
+              flex-wrap: wrap;
+          }
+          .how-image img {
+              margin: 0;
+          }
+          .how-it-works-wrap {
+              padding: 45px 0 45px;
+              margin-top: 60px;
+              background-position: center center;
+          }
+          .quick-get-start-wrap .field-wrap {
+              flex: 0 0 48%;
+              max-width: 48%;
+          }
+          .quick-get-start-wrap {
+              gap: 10px;
+              align-items: start;
+          }
+          .quick-get-start-wrap .action-btn {
+              font-size: 18px;
+              margin: 0;
+              padding: 17px 12px;
+          }
         }
     </style>
 </head>
@@ -277,25 +277,27 @@
         </div>
         <div class="container">
             <div class="form-wrap" id="container">
-                <div class="step step-1 step-content-basic">
-                    <h2>Enter Your Zip Code</h2>
-                    <div class="inner-wrap inner-wrap-input">
-                        <div class="field-wrap">
-                                <div class="input-field-wrap">
-                                    <input type="text" id="zipcode" required>
-                                    <label for="">Zip code</label>
-                                </div>
-                                <span class="error-msg" id="result"></span>
-                        </div>
-                        <div class="field-wrap">
-                            <button class="action-btn btn" onclick="ZIPCode()">Get Started</button>
-                        </div>
-                    </div>
+              <form action="#" name="zipForm" onsubmit="event.preventDefault()">
+                  <div class="step step-1 step-content-basic">
+                      <h2>Enter Your Zip Code</h2>
+                      <div class="inner-wrap inner-wrap-input">
+                          <div class="field-wrap">
+                            <div class="input-field-wrap">
+                                <input type="text" id="zipcode" required>
+                                <label for="">Zip code</label>
+                            </div>
+                            <span class="error-msg" id="result"></span>
+                          </div>
+                          <div class="field-wrap">
+                              <button class="action-btn btn" onclick="ZIPCode(this)">Get Started</button>
+                          </div>
+                      </div>
+                  </div>
+                  <div id="loading" class="loading">
+                      <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
+                  </div>
                 </div>
-                <div id="loading" class="loading">
-                    <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
-                </div>
-            </div>
+              </form>
         </div>
     </div>
     <div class="common-agents-wrap">
@@ -333,9 +335,6 @@
             </div>
         </div>
     </div>
-    
-
-    
 
     <div class="features-wrap">
         <div class="container">
@@ -365,6 +364,7 @@
             </div>
         </div>
     </div>
+
     <div class="how-it-works-wrap">
         <div class="container">
             <div class="how-inner">
@@ -375,18 +375,20 @@
                     <p>Best of all, our service is completely free, and there's never any obligation to purchase a policy.</p>
                     <hr>
                     <h4>Compare Between Top Carriers And Start Saving:</h4>
-                    <div class="quick-get-start-wrap">
-                        <div class="field-wrap">
-                            <div class="input-field-wrap">
-                                <input type="text" id="zipcode" required>
-                                <label for="">Zip code</label>
-                            </div>
-                            <span class="error-msg" id="result"></span>
-                        </div>
-                        <div class="field-wrap">
-                            <button class="action-btn btn" onclick="ZIPCode()">Get Started</button>
-                        </div>
-                    </div>
+                    <form action="#" name="zipForm" onsubmit="event.preventDefault()">
+                      <div class="quick-get-start-wrap">
+                          <div class="field-wrap">
+                              <div class="input-field-wrap">
+                                  <input type="text" id="zipcode" name="zipcode" required>
+                                  <label for="">Zip code</label>
+                              </div>
+                              <span class="error-msg" id="result" name="result"></span>
+                          </div>
+                          <div class="field-wrap">
+                              <button class="action-btn btn" onclick="ZIPCode(this)">Get Started</button>
+                          </div>
+                      </div>
+                    </form>
                 </div>
                 <div class="how-image">
                     <img src="https://eraseyourbills.com/wp-content/uploads/2025/05/screenshot.png" alt="Phone">
@@ -394,6 +396,7 @@
             </div>
         </div>
     </div>
+
     <div class="footer-wrap">
         <div class="footer-bar"></div>
         <footer class="container footer-wrap">
@@ -585,7 +588,7 @@
         });
         
       </script>
-      <script src="calculation-scripts.js?v=1.4.38"></script>
+      <script src="calculation-scripts.js?v=1.5.38"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">

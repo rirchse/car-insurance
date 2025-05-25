@@ -174,11 +174,44 @@ function createZIPCodePanel(e)
   }
 }
 
-// check zip code
-function ZIPCode()
+// Homepage more information section
+function homeInfo(view)
 {
- let zipcode = document.getElementById('zipcode');
- let result = document.getElementById('result');
+  let featureText = document.querySelector('.features-wrap');
+  let featureText2 = document.querySelector('.how-it-works-wrap');
+  if(view == 'Yes')
+  {
+    featureText.style.display = 'block';
+    featureText2.style.display = 'block';
+  }
+  else if(view == 'No')
+  {
+    featureText.style.display = 'none';
+    featureText2.style.display = 'none';
+  }
+}
+
+function commonAgent(view)
+{
+  let text = document.querySelectorAll('.common-agents-wrap');
+  text.forEach((v) => {
+    if(view == 'Yes')
+    {
+      v.style.display = 'block';
+    }
+    else if(view == 'No')
+    {
+      v.style.display = 'none';
+    }
+  });
+  
+}
+
+// check zip code
+function ZIPCode(e)
+{
+  let zipcode = e.form.elements.zipcode;
+  let result = zipcode.parentNode.nextElementSibling;
 
   fetch(zipcodefile) // Path to your JSON file
   .then(response => response.json()) // Parse JSON response
@@ -192,8 +225,12 @@ function ZIPCode()
       }
 
       // execute brands
-      brands(null);
+      brands(e);
       result.innerHTML = '';
+      homeInfo('No');
+      document.body.scrollTop = 0; // For Safari
+      document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      commonAgent('Yes');
     }
     else
     {
@@ -630,6 +667,9 @@ function checkAnotherVehicle(e)
 
 function insurance(e)
 {
+  // common agent text hide this section
+  commonAgent('No');
+
   if(localStorage.getItem('localdata'))
   {
     localStorage.removeItem('submitted');
