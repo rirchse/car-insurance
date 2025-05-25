@@ -159,6 +159,10 @@ function createZIPCodePanel(e)
 
     // show home information text
     homeInfo('Yes');
+    // reset footer form
+    let footerform = document.getElementById('footerZipForm');
+    footerform.zipcode.value = '';
+
 
   container.innerHTML = html;
 
@@ -244,6 +248,9 @@ function ZIPCode(e)
 //write brand
 function brands(e)
 {
+  // hide home page information
+  homeInfo('No');
+
   let xvehicle = formdata.vehicles.current[0];
   let number = 0;
   container.innerHTML = '<div class="step step-make">'+
