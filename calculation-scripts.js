@@ -128,19 +128,21 @@ function checkLocalStorage(){
 function createZIPCodePanel(e)
 {
   let html = '<div class="step step-1">'+
-    '<h2>Zip</h2>'+
+    '<h2>Enter Your Zip Code</h2>'+
+    '<form action="#" name="zipForm" onsubmit="event.preventDefault()">'+
     '<div class="step step-1 step-content-basic">'+
     
       '<div class="field-wrap">'+
-          '<div class="input-field-wrap">'+
-              '<input type="text" id="zipcode" required>'+
-              '<label for="">Zip code</label>'+
-          '</div>'+
-          '<span class="error-msg" id="result"></span>'+
+        '<div class="input-field-wrap">'+
+          '<input type="text" id="zipcode" required>'+
+          '<label for="">Zip code</label>'+
+        '</div>'+
+        '<span class="error-msg" id="result"></span>'+
       '</div>'+
       '<div class="field-wrap">'+
-        '<button class="action-btn btn" onclick="ZIPCode()">Get Started Now</button>'+
+        '<button class="action-btn btn" onclick="ZIPCode(this)">Get Started</button>'+
       '</div>';
+
       if(e != null && e.value == 'back')
       {
       html += '<div class="more-options inner-wrap-btn">'+
@@ -152,14 +154,11 @@ function createZIPCodePanel(e)
         '</button>'+
       '</div>';
       }
-    html += '</div>'+
-    '<div class="agent-wrap">'+
-        // '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
-        // '<p>'+
-        //     '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>'+
-        //     '<span>&nbsp; Tell us what car you drive and we\'ll look for the best rates</span>'+
-        // '</p>'+
-  '</div>';
+    html += '</form>'+
+    '</div>';
+
+    // show home information text
+    homeInfo('Yes');
 
   container.innerHTML = html;
 
@@ -1534,7 +1533,21 @@ function driverName(e)
       '</button>'+
       '</div>'+
     '</form>'+
-  '</div>';
+  '</div>'+
+  '</div>'+
+  '<div class="common-agents-wrap">'+
+      '<div class="container">'+
+        '<div class="agent-wrap">'+
+          '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
+          '<p>'+
+            '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">'+
+              '<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>'+
+            '</svg>'+
+            '<span>Your information is safe and secure</span>'+
+          '</p>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
 
   if(e.value != 'back'){
     if(driverCounter == 0){
@@ -1567,12 +1580,6 @@ function checkNameForm(e)
       formdata.drivers.current.names = [first_name.value, last_name.value];
 
       anotherDriver(e);
-
-      //increase value for every action
-      // if(driverCounter == 0)
-      // {
-      //   // increasePercent(1);
-      // }
     }
 
   });
@@ -1586,11 +1593,6 @@ function nextIncident(e)
     accident(e);
     incidents.forward.splice(incidents.forward.indexOf('accident'), 1);
   }
-  // else if(incidents.forward.includes('ticket'))
-  // {
-  //   ticket(e);
-  //   incidents.forward.splice(incidents.forward.indexOf('ticket'), 1);
-  // }
   else if(incidents.forward.includes('dui'))
   {
     dui(e);
@@ -1598,7 +1600,6 @@ function nextIncident(e)
   }
   else
   {
-    // increasePercent(5);
     driverName(e);
   }
 }
@@ -1613,11 +1614,6 @@ function backIncident(e)
     dui(e);
     incidents.backward.splice(incidents.backward.indexOf('dui'), 1);
   }
-  // else if(incidents.backward.includes('ticket'))
-  // {
-  //   ticket(e);
-  //   incidents.backward.splice(incidents.backward.indexOf('ticket'), 1);
-  // }
   else if(incidents.backward.includes('accident'))
   {
     accident(e);
@@ -1625,12 +1621,6 @@ function backIncident(e)
   }
   else
   {
-
-    if(e.value == 'back'){
-      if(driverCounter == 0){
-        // increasePercent(-5);
-      }
-    }
     incident(e);
   }
   
@@ -1652,6 +1642,7 @@ function anotherDriver(e)
       '</svg> Back '+
     '</button>'+
   '</div>';
+
   if(e != null && e.value != 'back')
   {
     formdata.drivers.list.push(formdata.drivers.current);
@@ -1786,7 +1777,20 @@ function ownerAddress(e)
       '</button>'+
     '</div>'+
     '</form>'+
-  '</div>';
+  '</div>'+
+  '<div class="common-agents-wrap">'+
+      '<div class="container">'+
+        '<div class="agent-wrap">'+
+          '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
+          '<p>'+
+            '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">'+
+              '<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>'+
+            '</svg>'+
+            '<span>Companies require this in order to provide an accurate quote</span>'+
+          '</p>'+
+        '</div>'+
+      '</div>'+
+    '</div>';
 
   if(e.value == 'back'){
     increasePercent(-2);
