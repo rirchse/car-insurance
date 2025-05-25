@@ -636,6 +636,8 @@ function anotherVehicle(e)
       '</svg> Back '+
     '</button>'+
   '</div>';
+
+  commonAgent('Yes');
   
   if(e.value != 'back')
   {

@@ -300,7 +300,7 @@
               </form>
         </div>
     </div>
-    <div class="common-agents-wrap">
+    <div class="common-agents-wrap" style="display: none">
       <div class="container">
         <div class="agent-wrap">
           <img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">
