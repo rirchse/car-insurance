@@ -1548,16 +1548,14 @@ function driverName(e)
   '</div>'+
   '</div>'+
   '<div class="common-agents-wrap">'+
-      '<div class="container">'+
-        '<div class="agent-wrap">'+
-          '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
-          '<p>'+
-            '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">'+
-              '<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>'+
-            '</svg>'+
-            '<span>Your information is safe and secure</span>'+
-          '</p>'+
-        '</div>'+
+      '<div class="agent-wrap">'+
+        '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
+        '<p>'+
+          '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">'+
+            '<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>'+
+          '</svg>'+
+          '<span>Your information is safe and secure</span>'+
+        '</p>'+
       '</div>'+
     '</div>';
 
@@ -1641,7 +1639,7 @@ function backIncident(e)
 function anotherDriver(e)
 {
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
-  '<h2>Add Another Driver? (Save Additional 20%)</h2>'+
+  '<h2>Add Another Driver?</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="moreDriver">'+
       '<button class="input" onclick="checkAnotherDriver(this)" value="YES">YES</button>'+
       '<button class="input" onclick="ownerAddress(this)" value="NO">NO</button>'+
@@ -1791,17 +1789,15 @@ function ownerAddress(e)
     '</form>'+
   '</div>'+
   '<div class="common-agents-wrap">'+
-      '<div class="container">'+
-        '<div class="agent-wrap">'+
-          '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
-          '<p>'+
-            '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">'+
-              '<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>'+
-            '</svg>'+
-            '<span>Companies require this in order to provide an accurate quote</span>'+
-          '</p>'+
-        '</div>'+
-      '</div>'+
+    '<div class="agent-wrap">'+
+      '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
+      '<p>'+
+        '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">'+
+          '<path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>'+
+        '</svg>'+
+        '<span>Companies require this in order to provide an accurate quote</span>'+
+      '</p>'+
+    '</div>'+
     '</div>';
 
   if(e.value == 'back'){
@@ -1999,15 +1995,16 @@ function getQuote(e)
           '</div>'+
       '</div>'+
       '<div class="field-wrap">'+
-          '<button class="action-btn btn get-my-quote" onclick="checkQuote(this)">Save & Continue '+
-          '</button>'+
+          '<button class="action-btn btn get-my-quote" onclick="checkQuote(this)">Submit</button>'+
       '</div>'+
-      '<div class="agent-wrap">'+
-          '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
-          '<p>'+
-              '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>'+
-              '<span>Your car insurance quotes are ready</span>'+
-          '</p>'+          
+      '<div class="common-agents-wrap" style="margin: 0 auto;">'+
+        '<div class="agent-wrap">'+
+            '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
+            '<p>'+
+                '<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>'+
+                '<span>Your car insurance quotes are ready</span>'+
+            '</p>'+          
+        '</div>'+
       '</div>'+
   '</div>'+
   '<div class="container">'+
@@ -2016,7 +2013,7 @@ function getQuote(e)
     '</h4>'+
   '</div>'+
   '<div class="tcpa-wrap">'+
-      '<p>We take your privacy seriously. By clicking the "Submit" button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href="#">Marketing Partners</a>, agents, affiliates or third parties acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href="#">Privacy Policy</a> and <a href="#">Terms and Conditions</a>.</p>'+
+      '<p><label><input type="hidden" id="leadid_tcpa_disclosure"/> We take your privacy seriously. By clicking the "Submit" button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href="#">Marketing Partners</a>, agents, affiliates or third parties acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href="#">Privacy Policy</a> and <a href="#">Terms and Conditions</a>.</label></p>'+
   '</div>';
   if(e != null && e.value == 'back'){
     increasePercent(-2);
@@ -2070,7 +2067,7 @@ function thankYou()
     // '<hr class="thanks-separator">'+
     // '<button class="action-btn btn continue" onclick="checkLocalData()">Continue...</button>'+
     '<div class="agent-wrap">'+
-      '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
+      '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
       '<p>'+
         '<span>Call an expert &nbsp; </span>'+
         '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="agent-checkbox"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clip-rule="evenodd" /> </svg>'+
@@ -2321,7 +2318,7 @@ function checkLocalData()
             '</div>'+
         '</div>'+
         '<div class="agent-wrap">'+
-          '<img src="https://coverageprofessor.com/images/forms/lady.png" alt="Agent">'+
+          '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
           '<p>'+
             '<span>Call an expert</span>'+
             '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="agent-checkbox"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.372c.86 0 1.61.586 1.819 1.42l1.105 4.423a1.875 1.875 0 0 1-.694 1.955l-1.293.97c-.135.101-.164.249-.126.352a11.285 11.285 0 0 0 6.697 6.697c.103.038.25.009.352-.126l.97-1.293a1.875 1.875 0 0 1 1.955-.694l4.423 1.105c.834.209 1.42.959 1.42 1.82V19.5a3 3 0 0 1-3 3h-2.25C8.552 22.5 1.5 15.448 1.5 6.75V4.5Z" clip-rule="evenodd" /> </svg>'+

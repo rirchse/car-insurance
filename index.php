@@ -219,6 +219,12 @@
         .agent-wrap p {
             gap: 6px;
         }
+        .wrap {
+            min-height: 100vh;
+        }
+        .progess-bar {
+            margin: 50px 15% 90px;
+        }
 
         @media only screen and (max-width: 767px){
           .feature-box, .how-text, .how-image {
@@ -249,6 +255,9 @@
               margin: 0;
               padding: 17px 12px;
           }
+          .agent-wrap p svg {
+                width: 30px;
+            }
         }
     </style>
 </head>
@@ -299,21 +308,20 @@
                 </div>
               </form>
         </div>
-    </div>
-    <div class="common-agents-wrap" style="display: none">
-      <div class="container">
-        <div class="agent-wrap">
-          <img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">
-          <p>
-            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">
-              <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
-            </svg>
-            <span>Tell us what car you drive and we’ll look for the best rates</span>
-          </p>
+        <div class="common-agents-wrap" style="display: none">
+            <div class="container">
+                <div class="agent-wrap">
+                    <img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 512 512">
+                        <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/>
+                        </svg>
+                        <span>Tell us what car you drive and we’ll look for the best rates</span>
+                    </p>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-
     <div class="features-wrap">
         <div class="container">
             <h2>How To Start Saving On Your Car Insurance?</h2>
