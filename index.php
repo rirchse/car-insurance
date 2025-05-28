@@ -633,7 +633,7 @@
         });
         
       </script>
-      <script src="calculation-scripts.js?v=1.5.49"></script>
+      <script src="calculation-scripts.js?v=1.5.50"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">

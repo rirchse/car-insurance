@@ -181,17 +181,20 @@ function createZIPCodePanel(e)
 // Homepage more information section
 function homeInfo(view)
 {
+  let heroWrap = document.querySelector('.hero-wrap');
   let featureText = document.querySelector('.features-wrap');
   let featureText2 = document.querySelector('.how-it-works-wrap');
   if(view == 'Yes')
   {
     featureText.style.display = 'block';
     featureText2.style.display = 'block';
+    heroWrap.style.display = 'block';
   }
   else if(view == 'No')
   {
     featureText.style.display = 'none';
     featureText2.style.display = 'none';
+    heroWrap.style.display = 'none';
   }
 }
 
