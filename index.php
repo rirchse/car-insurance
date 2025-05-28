@@ -233,7 +233,10 @@
             margin-top: -20px;
             margin-bottom: 30px;
         }
-        .hero-wrap img {max-width: 500px;}
+        .hero-wrap img {
+            width: 500px;
+            max-width: 100%;
+        }
         .hero-wrap {
             text-align: center;
             position: relative;
@@ -306,6 +309,11 @@
           }
           .agent-wrap p svg {
                 width: 30px;
+            }
+            p.secure-banner {
+                gap: 2px;
+                font-size: 11px;
+                font-weight: 300;
             }
         }
     </style>
