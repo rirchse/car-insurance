@@ -356,7 +356,7 @@
                         We keep all your information 100% secure & confidential, always.
                     </p>
                   <div id="loading" class="loading">
-                      <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
+                    <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
                   </div>
                 </div>
               </form>
