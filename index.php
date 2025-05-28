@@ -225,6 +225,55 @@
         .progess-bar {
             margin: 50px 15% 90px;
         }
+        p.secure-banner {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            justify-content: center;
+            margin-top: -20px;
+            margin-bottom: 30px;
+        }
+        .hero-wrap img {max-width: 500px;}
+        .hero-wrap {
+            text-align: center;
+            position: relative;
+        }
+        /* .hero-wrap::before {
+            content: "";
+            position: absolute;
+            background: #d1cdc9;
+            left: -30%;
+            width: 200%;
+            height: 120px;
+            bottom: -59px;
+            z-index: -1;
+            transform: rotate(-3.2deg);
+        }
+        .hero-wrap::after {
+            content: "";
+            position: absolute;
+            background: #d1cdc9;
+            left: -30%;
+            width: 200%;
+            height: 120px;
+            bottom: -135px;
+            z-index: -1;
+        } */
+        /*white border*/
+        .hero-wrap::before {
+            content: "";
+            position: absolute;
+            background: #b4b5b6;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            bottom: 43px;
+            z-index: -1;
+            transform: rotate(-3.4deg);
+            opacity: .9;
+            box-shadow: 0 5px 12px 0px #9ca5a8;
+        }
+
 
         @media only screen and (max-width: 767px){
           .feature-box, .how-text, .how-image {
@@ -302,11 +351,18 @@
                           </div>
                       </div>
                   </div>
+                    <p class="secure-banner">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z"/></svg>
+                        We keep all your information 100% secure & confidential, always.
+                    </p>
                   <div id="loading" class="loading">
                       <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
                   </div>
                 </div>
               </form>
+        </div>
+        <div class="hero-wrap">
+            <img src="https://eraseyourbills.com/wp-content/uploads/2025/05/auto-page-banner-v2.png" alt="Hero">
         </div>
         <div class="common-agents-wrap" style="display: none">
             <div class="container">
@@ -392,6 +448,7 @@
                 <a href="https://eraseyourbills.com/privacy-policy/" target="_blank">Privacy Policy</a>
                 <a href="https://eraseyourbills.com/advertising-disclosure/" target="_blank">Advertising Disclosure</a>
                 <a href="https://eraseyourbills.com/ccpa/" target="_blank">CCPA</a>
+                <a href="https://eraseyourbills.com/sms/" target="_blank">SMS Terms</a>
             </p>
             <br>
             <p style="font-weight: 300;">Disclaimer The operator of this website is not an insurance broker or an insurance company is not a representative or an agent to any broker or insurance company does not endorse any particular broker or insurance provider and does not make any insurance decisions. We will submit the information you provide to a broker and or an insurance company. This website does not constitute an offer or solicitation for automobile or other insurance. Providing your information on this site does not guarantee that you will be approved for automobile or other insurance. Not all insurance providers can or will insure your vehicle. The quotes rates or savings advertised by on this website are not necessarily available from all providers or advertisers. Your actual quotes rates or savings will vary based on many different factors like: Coverage Limits, Deductibles, Driving History, Education, Occupation Type, Vehicle Location and more. For questions regarding your insurance policy please contact your broker or insurance company directly. Residents of some states may not be eligible for insurance or may be subject to large premiums. You are under no obligation to use our website or service to initiate contact nor apply for insurance or any product with any broker or insurance compan. We receive compensation in the form of referral fees from the insurance carriers aggregators or other offers that we direct you to. Therefore the amount of compensation provided along with other factors may impact which policy or offer you are presented. The offer you receive may be coming from the company that bid the most for your information. This website does not always provide you with an offer with the best rates or terms. Our website does not include all companies or all available offers. We encourage you to research all available insurance policy options relative to your situation. All trademarks and copyrights are the property of their respective owners.</p>
