@@ -33,11 +33,16 @@ let year = '', brand = '', model = '';
 let vehicleCounter = 0, driverCounter = 0;
 let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th'];
 
+let trustFormCert = '';
+setTimeout(() => {
+  let trustForm = document.querySelector('[name="xxTrustedFormCertUrl"]');
+  trustFormCert = trustForm.value;
+}, 3000);
 
 let container = document.getElementById('container');
 let percent_line = document.getElementById('percent-line');
 let percent_number = document.getElementById('percent-number');
-let loading = document.getElementById('loading');
+let loading = document.getElementById('loading2');
 
 function increasePercent(increase)
 {   
@@ -52,20 +57,20 @@ function increasePercent(increase)
 }
 
 // generate ip address
+let ipaddress = '';
 function generateIP(){
   fetch('https://api.ipify.org?format=json')
   .then(response => response.json())
   .then(data => {
-    console.log('Your IP address is:', data.ip);
-    return data.ip;
+    // console.log('Your IP address is:', data.ip);
+    ipaddress = data.ip;
   })
   .catch(error => {
     console.error('Error fetching IP:', error);
-    return '';
   });
 
 }
-const ipaddress = generateIP();
+generateIP();
 
 // check all error and set the border color
 function checkErr(e)
@@ -2132,12 +2137,12 @@ function sendToLeadProsper(form)
     "user_agent": navigator.userAgent,
     "landing_page_url": "https://eraseyourbills.com/auto/",
     "jornaya_leadid": form.LeadiD,
-    "trustedform_cert_url": form.certUrl,
+    "trustedform_cert_url": trustFormCert,
     "tcpa_text": "We take your privacy seriously. By clicking the 'Submit' button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href='https://www.px.com/offer-guidelines/top-auto-insurance-companies-in-us/'>Marketing Partners, agents, affiliates or third parties</a> acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href='https://eraseyourbills.com/privacy-policy/' target='_blank'>Privacy Policy</a> and <a href='https://eraseyourbills.com/terms-of-use/' target='_blank'>Terms and Conditions</a>."
   };
 
   let serialized = JSON.stringify(formData);
-  // console.log(formData);
+  console.log(formData);
 
   fetch('https://api.leadprosper.io/direct_post', {
     method: 'POST',
@@ -2172,9 +2177,7 @@ function sendToLeadProsper(form)
 function sendToServer()
 {
   let leadid_token = document.getElementById('leadid_token');
-  // let cert_url = document.getElementById('xxTrustedFormCertUrl_2');
   let formData = {
-    // certUrl: cert_url.value,
     LeadiD: leadid_token.value,
     vehicles:[],
     drivers:[],
@@ -2237,7 +2240,7 @@ function sendToServer()
   let driverObj = Object.assign({}, formData.drivers);
   formData.drivers = driverObj;
   
-  document.getElementById('loading').style.display = 'block';
+  loading.style.display = 'block';
 
   let serialized = JSON.stringify(formData);
 

@@ -358,6 +358,9 @@
         <div id="loading" class="loading">
           <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
         </div>
+        <div id="loading2" class="loading" style="display:none">
+          <img style="margin-top:20%" src="loading.gif" alt="" width=250>
+        </div>
 
         <div class="hero-wrap">
             <img src="https://eraseyourbills.com/wp-content/uploads/2025/05/auto-page-banner-v2.png" alt="Hero">
@@ -601,6 +604,24 @@
             
     </script>
 
+
+      <!-- TrustedForm -->
+      <script type="text/javascript">
+        (function() {
+          var tf = document.createElement('script');
+          tf.type = 'text/javascript';
+          tf.async = true;
+          tf.src = ("https:" == document.location.protocol ? 'https' : 'http') +
+            '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&l=' +
+            new Date().getTime() + Math.random();
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
+        })();
+      </script>
+      <noscript>
+        <img src='https://api.trustedform.com/ns.gif' />
+      </noscript>
+      <!-- End TrustedForm -->
+
     <!-- <?php echo $_SERVER["HTTP_HOST"]; ?> -->
     
       <?php if($_SERVER["HTTP_HOST"] == 'localhost:8888' || $_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'qodebuzz.com'){ ?>
@@ -632,7 +653,7 @@
         });
         
       </script>
-      <script src="calculation-scripts.js?v=1.7.51"></script>
+      <script src="calculation-scripts.js?v=1.7.52"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
@@ -642,23 +663,6 @@
         </script>
         <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js?v=1.1.1"></script>
       <?php } ?>
-
-      <!-- TrustedForm -->
-      <script type="text/javascript">
-        (function() {
-          var tf = document.createElement('script');
-          tf.type = 'text/javascript';
-          tf.async = true;
-          tf.src = ("https:" == document.location.protocol ? 'https' : 'http') +
-            '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&l=' +
-            new Date().getTime() + Math.random();
-          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
-        })();
-      </script>
-      <noscript>
-        <img src='https://api.trustedform.com/ns.gif' />
-      </noscript>
-      <!-- End TrustedForm -->
     
       <script id="LeadiDscript" type="text/javascript">
         (function() {
