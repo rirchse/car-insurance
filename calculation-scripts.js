@@ -2108,6 +2108,7 @@ function dateFormat(input)
 
 }
 
+
 function sendToLeadProsper(form)
 {
   let formData = {
@@ -2148,6 +2149,11 @@ function sendToLeadProsper(form)
   })
   .then(response => response.json())
   .then(data => {
+
+    setTimeout(() => {
+      loading.style.display = 'none';
+    }, 2000);
+
     console.log('lp result:', data);
 
     // if(data.id){
@@ -2231,7 +2237,7 @@ function sendToServer()
   let driverObj = Object.assign({}, formData.drivers);
   formData.drivers = driverObj;
   
-  loading.style.display = 'block';
+  document.getElementById('loading').style.display = 'block';
 
   let serialized = JSON.stringify(formData);
 
@@ -2249,7 +2255,6 @@ function sendToServer()
     if(data.id){
       localStorage.setItem('submitted', true);
       document.getElementById('getMyQuote').style.display = 'none';
-      loading.style.display = 'none';
       document.getElementById('ThankYouMsg').style.display = 'block';
     }
   })

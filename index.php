@@ -96,18 +96,6 @@
         }
 
         window.initAutocomplete = initAutocomplete;
-
-        // function checkWord(event, e)
-        // {
-        //     if(event.key === " " || event.keyCode === 32){
-        //         const text = e.value.trim();
-        //         const words = text === ''? 0 : text.split(/\s+/).length;
-        //         console.log(words);
-        //         if(words){
-        //             initAutocomplete();
-        //         }
-        //     }
-        // }
     </script>
     <style>
         .features-wrap {
@@ -363,12 +351,14 @@
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z"/></svg>
                         We keep all your information 100% secure & confidential, always.
                     </p>
-                  <div id="loading" class="loading">
-                    <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
-                  </div>
                 </div>
               </form>
         </div>
+
+        <div id="loading" class="loading">
+          <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
+        </div>
+
         <div class="hero-wrap">
             <img src="https://eraseyourbills.com/wp-content/uploads/2025/05/auto-page-banner-v2.png" alt="Hero">
         </div>
@@ -474,7 +464,7 @@
     <script>
 
         setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';            
+            document.getElementById('loading').style.display = 'none';
         }, 500);
 
         let localClearBtn = document.getElementById('localClearBtn');
@@ -483,7 +473,8 @@
         }
         function resetForm()
         {
-            let addressForm = document.querySelector('#addressForm');addressForm.reset()
+            let addressForm = document.querySelector('#addressForm');
+            addressForm.reset();
         }
 
         function styleLoad()
@@ -641,7 +632,7 @@
         });
         
       </script>
-      <script src="calculation-scripts.js?v=1.6.51"></script>
+      <script src="calculation-scripts.js?v=1.7.51"></script>
       
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
