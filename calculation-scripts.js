@@ -51,6 +51,22 @@ function increasePercent(increase)
   percent_number.setAttribute('number', number);
 }
 
+// generate ip address
+function generateIP(){
+  fetch('https://api.ipify.org?format=json')
+  .then(response => response.json())
+  .then(data => {
+    console.log('Your IP address is:', data.ip);
+    return data.ip;
+  })
+  .catch(error => {
+    console.error('Error fetching IP:', error);
+    return '';
+  });
+
+}
+const ipaddress = generateIP();
+
 // check all error and set the border color
 function checkErr(e)
 {
@@ -2040,12 +2056,15 @@ function checkQuote(e)
       localStorage.removeItem('submitted');
 
       checkLocalData();
+      // sendToServer();
     }
     else
     {
       //store data to the local storage
       localStorage.setItem('localdata', JSON.stringify(formdata));
       checkLocalData();
+      loading.style.display = 'block';
+      sendToServer();
     }
 
     //increase value for every action
@@ -2080,10 +2099,78 @@ function thankYou()
   '</div>';
 }
 
+function dateFormat(input)
+{
+  const date = new Date(input);
+
+  // Pad month and day with leading zero if needed
+  const formatted = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
+  return formatted;
+
+}
+
+function sendToLeadProsper(form)
+{
+  let formData = {
+    "lp_campaign_id": "27824",
+    "lp_supplier_id": "81192",
+    "lp_key": "y7kmilnvgc632w",
+    "lp_action": "test",
+    "lp_subid1": "",
+    "lp_subid2": "",
+    "first_name": form.drivers[0].FirstName,
+    "last_name": form.drivers[0].LastName,
+    "email": form.owner.email,
+    "phone": form.owner.phone.replace(/\D/g, ''),
+    "date_of_birth": dateFormat(form.drivers[0].BirthDate),
+    "gender": form.drivers[0].Gender,
+    "address": form.owner.address,
+    "city": form.owner.city,
+    "state": form.owner.state,
+    "zip_code": form.owner.zip,
+    "ip_address": ipaddress,
+    "user_agent": navigator.userAgent,
+    "landing_page_url": "https://eraseyourbills.com/auto/",
+    "jornaya_leadid": form.LeadiD,
+    "trustedform_cert_url": form.certUrl,
+    "tcpa_text": "Disclaimer The operator of this website is not an insurance broker or an insurance company is not a representative or an agent to any broker or insurance company does not endorse any particular broker or insurance provider and does not make any insurance decisions. We will submit the information you provide to a broker and or an insurance company. This website does not constitute an offer or solicitation for automobile or other insurance. Providing your information on this site does not guarantee that you will be approved for automobile or other insurance. Not all insurance providers can or will insure your vehicle. The quotes rates or savings advertised by on this website are not necessarily available from all providers or advertisers. Your actual quotes rates or savings will vary based on many different factors like: Coverage Limits, Deductibles, Driving History, Education, Occupation Type, Vehicle Location and more. For questions regarding your insurance policy please contact your broker or insurance company directly. Residents of some states may not be eligible for insurance or may be subject to large premiums. You are under no obligation to use our website or service to initiate contact nor apply for insurance or any product with any broker or insurance compan. We receive compensation in the form of referral fees from the insurance carriers aggregators or other offers that we direct you to. Therefore the amount of compensation provided along with other factors may impact which policy or offer you are presented. The offer you receive may be coming from the company that bid the most for your information. This website does not always provide you with an offer with the best rates or terms. Our website does not include all companies or all available offers. We encourage you to research all available insurance policy options relative to your situation. All trademarks and copyrights are the property of their respective owners."
+  };
+
+  let serialized = JSON.stringify(formData);
+  // console.log(formData);
+
+  fetch('https://api.leadprosper.io/direct_post', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
+    },
+    body: serialized
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log('lp result:', data);
+
+    // if(data.id){
+    //   localStorage.setItem('submitted', true);
+    //   document.getElementById('getMyQuote').style.display = 'none';
+    //   loading.style.display = 'none';
+    //   document.getElementById('ThankYouMsg').style.display = 'block';
+    // }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+
+// send data to the go heigh level
 function sendToServer()
 {
   let leadid_token = document.getElementById('leadid_token');
+  // let cert_url = document.getElementById('xxTrustedFormCertUrl_2');
   let formData = {
+    // certUrl: cert_url.value,
     LeadiD: leadid_token.value,
     vehicles:[],
     drivers:[],
@@ -2171,6 +2258,10 @@ function sendToServer()
   .catch(error => {
     console.error('Error:', error);
   });
+
+  // send to the another server
+  const leadProsper = sendToLeadProsper(formData);
+  // console.log(leadProsper);
   
 }
 
@@ -2346,6 +2437,7 @@ function checkLocalData()
   }
 }
 
+// check if user already stored all data to the localstorage
 checkLocalData();
 
 // user query data edit section
