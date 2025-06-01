@@ -3,7 +3,6 @@
  *  Template Name: The CAR Form 
  */ 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,12 +12,15 @@
     <meta http-equiv="Cache-Control" content="no-store" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-
+    <!-- <title><?php //the_title(); ?> | <?php //bloginfo( 'name' ); ?></title> -->
     <title>Get Your Free Insurance Quote Now | Erase Your Bills</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/slim-select@latest/dist/slimselect.css" rel="stylesheet">
+    <!-- wp 
+    <link rel="stylesheet" href="<?php //echo plugin_dir_url(__FILE__) . 'assets/css/styles.css?v=1.0.3'; ?>">
+    -->
     <script
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCBWy_-MFB31rLeyEJzApqSZhEjmuEHrtg&libraries=places"
         async
@@ -26,23 +28,18 @@
     </script>
     <script>
         let autocomplete;
-
         function initAutocomplete() {
             const input = document.getElementById('autocomplete');
             autocomplete = new google.maps.places.Autocomplete(input, {
                 types: ['geocode'],
                 componentRestrictions: { country: 'us' } // Change to your country if needed
             });
-
             // This listener will trigger when a place is selected (not on every keyup)
             autocomplete.addListener('place_changed', fillInAddress);
         }
-
         function fillInAddress(e) {
             const place = autocomplete.getPlace();
-
             let city = '', state = '', stateKey = '', zip = '', country = '';
-
             if (place.address_components) {
                 place.address_components.forEach(component => {
                     const types = component.types;
@@ -62,31 +59,25 @@
                         country = component.long_name;
                     }
                 });
-
                 document.getElementById('zip').value = zip;
                 document.getElementById('city').value = city;
                 document.getElementById('country').value = country;
-
                 let address_state = document.getElementById('address_state');
-
                 let create = document.createElement('option');
                 create.value = stateKey;
                 create.innerHTML = state;
                 address_state.prepend(create);
-
                 const slim = new SlimSelect({ select: '#address_state' });
                 setTimeout(() => {
                     slim.setSelected('1'); // Select the newly added top option
                 }, 100);
             }
-
             // remove country, state, city from address
             let addressId = document.getElementById('autocomplete');
             let longAddress = addressId.value;
             let streetAddr = longAddress.split(',')[0].trim();
             addressId.value = streetAddr;
         }
-
         // This function just helps force place_changed on keyup (optional)
         function triggerAutocomplete() {
             // Manually trigger place_changed by simulating 'Enter' key
@@ -94,224 +85,36 @@
             const e = new KeyboardEvent('keydown', { keyCode: 13 });
             input.dispatchEvent(e);
         }
-
         window.initAutocomplete = initAutocomplete;
     </script>
-    <style>
-        .features-wrap {
-            text-align: center;
-        }
-        .feature-box-wrap {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-        .feature-box {
-            border: 1px solid #e5e7eb;
-            border-radius: 4px;
-            padding: 25px 20px;
-            margin-top: 30px;
-            transition: .2s;
-            flex: 0 0 33.33%;
-            max-width: 33.33%;
-        }
-        .feature-box:hover {
-            border-color:  #0070e9;
-        }
-        .feature-box .icon {
-            border: 1px solid;
-            width: 50px;
-            height: 50px;
-            margin-left: auto;
-            margin-right: auto;
-            border-radius: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .feature-box .icon svg {
-            max-height: 24px;
-            max-width: 24px;
-        }
-        .feature-box h3 {
-            margin: 15px 0;
-        }
-        .how-it-works-wrap {
-            background-image: url(bg-how-works.svg);
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: top center;
-            padding: 100px 0 65px;
-            color: #fff;
-            margin-top: 100px;
-        }
-        .how-inner {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .how-text {
-            flex: 0 0 50%;
-            max-width: 50%;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .how-image {
-            flex: 0 0 30%;
-            max-width: 30%;
-        }
-        .how-image img {
-            max-width: 100%;
-            margin-bottom: -70px;
-        }
-        .common-agents-wrap {
-            border-top: 1px solid #f5f5f5;
-            border-bottom: 1px solid #f5f5f5;
-            padding: 20px 10px;
-            margin: 60px auto;
-        }
-        .quick-get-start-wrap {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-        .quick-get-start-wrap .input-field-wrap label {
-            color: #000;
-            top: 17px;
-        }
-        .quick-get-start-wrap .input-field-wrap input:focus + label, 
-        .quick-get-start-wrap .input-field-wrap input:not(:focus):valid ~ label {
-            background: transparent;
-            top: -17px;
-            color: #fff;
-        }
-        .quick-get-start-wrap input {
-            padding-top: 18px;
-            padding-bottom: 18px;
-            margin: 0;
-        }
-        .quick-get-start-wrap .action-btn {
-            margin: 10px 0px;
-            background-color: #000;
-            border: 1px solid #000;
-        }
-        .quick-get-start-wrap .action-btn:hover {
-            background-color: #0070e9;
-            border: 1px solid #fff;
-        }
-        .agent-wrap p svg {
-            fill: #0070e9;
-        }
-        .agent-wrap p {
-            gap: 6px;
-        }
-        .wrap {
-            min-height: 100vh;
-        }
-        .progess-bar {
-            margin: 50px 15% 90px;
-        }
-        p.secure-banner {
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            justify-content: center;
-            margin-top: -20px;
-            margin-bottom: 30px;
-        }
-        .hero-wrap img {
-            width: 500px;
-            max-width: 100%;
-        }
-        .hero-wrap {
-            text-align: center;
-            position: relative;
-        }
-        /* .hero-wrap::before {
-            content: "";
-            position: absolute;
-            background: #d1cdc9;
-            left: -30%;
-            width: 200%;
-            height: 120px;
-            bottom: -59px;
-            z-index: -1;
-            transform: rotate(-3.2deg);
-        }
-        .hero-wrap::after {
-            content: "";
-            position: absolute;
-            background: #d1cdc9;
-            left: -30%;
-            width: 200%;
-            height: 120px;
-            bottom: -135px;
-            z-index: -1;
-        } */
-        /*white border*/
-        .hero-wrap::before {
-            content: "";
-            position: absolute;
-            background: #b4b5b6;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            bottom: 43px;
-            z-index: -1;
-            transform: rotate(-3.4deg);
-            opacity: .9;
-            box-shadow: 0 5px 12px 0px #9ca5a8;
-        }
+    <script type="text/javascript">
+		(function(c,l,a,r,i,t,y){
+			c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+			t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+			y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+		})(window, document, "clarity", "script", "rike4nvy5u");
+	</script>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-VGVYWDXZ1Q"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
 
-
-        @media only screen and (max-width: 767px){
-          .feature-box, .how-text, .how-image {
-              max-width: 100%;
-              flex: 0 0 100%;
-          }
-          .feature-box-wrap, .how-inner {
-              flex-wrap: wrap;
-          }
-          .how-image img {
-              margin: 0;
-          }
-          .how-it-works-wrap {
-              padding: 45px 0 45px;
-              margin-top: 60px;
-              background-position: center center;
-          }
-          .quick-get-start-wrap .field-wrap {
-              flex: 0 0 48%;
-              max-width: 48%;
-          }
-          .quick-get-start-wrap {
-              gap: 10px;
-              align-items: start;
-          }
-          .quick-get-start-wrap .action-btn {
-              font-size: 18px;
-              margin: 0;
-              padding: 17px 12px;
-          }
-          .agent-wrap p svg {
-                width: 30px;
-            }
-            p.secure-banner {
-                gap: 2px;
-                font-size: 11px;
-                font-weight: 300;
-            }
-        }
-    </style>
+	  gtag('config', 'G-VGVYWDXZ1Q');
+	</script>
+	<script>
+		!function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init bs ws ge fs capture De calculateEventProperties $s register register_once register_for_session unregister unregister_for_session Is getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSurveysLoaded onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey canRenderSurveyAsync identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty xs Ss createPersonProfile Es gs opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing ys debug ks getPageViewId captureTraceFeedback captureTraceMetric".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+		posthog.init('phc_KghddFOt9EPidIvWD34tHvUm5W423Zaauou0P8acuE3', {
+			api_host: 'https://us.i.posthog.com',
+			person_profiles: 'identified_only', // or 'always' to create profiles for anonymous users as well
+		})
+	</script>
 </head>
 <body onload="initAutocomplete()">
-
-<!-- /dataset.json -->
     <div class="wrap">
         <header class="container">
-            <img src="logo-erase-your-bill.png" alt="logo" class="logo-img">
+            <img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/logo-erase-your-bill.png" alt="logo" class="logo-img">
         </header>
         <div class="container">
             <div class="progess-bar">
@@ -354,14 +157,12 @@
                 </div>
               </form>
         </div>
-
         <div id="loading" class="loading">
-          <img style="margin-top:20%" src="loading-waiting.gif" alt="" width=50>
+          <img style="margin-top:20%" src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/loading-waiting.gif" alt="" width=50>
         </div>
         <div id="loading2" class="loading" style="display:none">
-          <img style="margin-top:20%" src="loading.gif" alt="" width=250>
+          <img style="margin-top:20%" src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/loading.gif" alt="" width=250>
         </div>
-
         <div class="hero-wrap">
             <img src="https://eraseyourbills.com/wp-content/uploads/2025/05/auto-page-banner-v2.png" alt="Hero">
         </div>
@@ -407,7 +208,6 @@
             </div>
         </div>
     </div>
-
     <div class="how-it-works-wrap">
         <div class="container">
             <div class="how-inner">
@@ -440,7 +240,6 @@
             </div>
         </div>
     </div>
-
     <div class="footer-wrap">
         <div class="footer-bar"></div>
         <footer class="container footer-wrap">
@@ -456,20 +255,16 @@
             <br><p style="font-weight: 300;">This website is operated by "ADDRESS HERE"</p>
         </footer>
     </div>
-
     <!-- uniq token generated form -->
     <form>
       <input id="leadid_token" name="universal_leadid" type="hidden" value=""/>
     </form>
-    
     <!-- script for slim select form butify library -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <script>
-
         setTimeout(() => {
             document.getElementById('loading').style.display = 'none';
         }, 500);
-
         let localClearBtn = document.getElementById('localClearBtn');
         if(localStorage.getItem('localdata')){
             localClearBtn.style.display = 'block';
@@ -479,7 +274,6 @@
             let addressForm = document.querySelector('#addressForm');
             addressForm.reset();
         }
-
         function styleLoad()
         {
             let insurance_carrier = new SlimSelect({
@@ -490,7 +284,6 @@
                     focusSearch: false, 
                 }
             });
-            
             let insurance_coverage = new SlimSelect({
                 select: '#insurance_coverage',
                 settings: {
@@ -499,7 +292,6 @@
                     focusSearch: false, 
                 }
             });
-
             let accident_month = new SlimSelect({
                 select: '#accident_month',
                 settings: {
@@ -508,7 +300,6 @@
                     focusSearch: false, 
                 }
             });
-
             let accident_year = new SlimSelect({
                 select: '#accident_year',
                 settings: {
@@ -517,7 +308,6 @@
                     focusSearch: false, 
                 }
             });
-
             let accident_desc = new SlimSelect({
                 select: '#accident_desc',
                 settings: {
@@ -599,14 +389,10 @@
                 }
             });
         }
-
         styleLoad();
-            
     </script>
-
-
-      <!-- TrustedForm -->
-      <script type="text/javascript">
+    <!-- TrustedForm -->
+    <script type="text/javascript">
         (function() {
           var tf = document.createElement('script');
           tf.type = 'text/javascript';
@@ -616,22 +402,19 @@
             new Date().getTime() + Math.random();
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
         })();
-      </script>
-      <noscript>
+    </script>
+    <noscript>
         <img src='https://api.trustedform.com/ns.gif' />
-      </noscript>
-      <!-- End TrustedForm -->
-
+    </noscript>
+    <!-- End TrustedForm -->
     <!-- <?php echo $_SERVER["HTTP_HOST"]; ?> -->
-    
-      <?php if($_SERVER["HTTP_HOST"] == 'localhost:8888' || $_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'qodebuzz.com'){ ?>
-      <link rel="stylesheet" href="styles.css?v=1.2.14">
+    <?php if($_SERVER["HTTP_HOST"] == 'localhost:8888' || $_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'qodebuzz.com'){ ?>
+      <link rel="stylesheet" href="styles.css?v=1.2.15">
       <script>
         const zipcodefile = 'zipcode.json?v=1.120';
         const jsonfile = 'merged_make_year_model.json?v=0.122';
         const imgfile = 'img.json?v=0.121';
         const statefile = 'states.min.json';
-
         let imgdata = [];
         document.addEventListener('DOMContentLoaded', () => {
             fetch(imgfile)
@@ -641,7 +424,6 @@
             })
             .catch(error => console.error('Error Loading JSON:', error));
         });
-        
         let statedata = [];
         document.addEventListener('DOMContentLoaded', () => {
             fetch(statefile)
@@ -651,10 +433,8 @@
             })
             .catch(error => console.error('Error Loading JSON:', error));
         });
-        
       </script>
       <script src="calculation-scripts.js?v=1.7.52"></script>
-      
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
         <script>
@@ -662,9 +442,35 @@
           const jsonfile = '<?php echo get_template_directory_uri(); ?>/jsonfile/merged_make_year_model.json';
         </script>
         <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js?v=1.1.1"></script>
-      <?php } ?>
-    
-      <script id="LeadiDscript" type="text/javascript">
+    <?php } ?>
+      <!-- wp
+          <script>
+        const zipcodefile = '<?php //echo plugin_dir_url(__FILE__); ?>assets/zipcode.json';
+        const jsonfile = '<?php //echo plugin_dir_url(__FILE__); ?>assets/merged_make_year_model.json';
+        const imgfile = '<?php //echo plugin_dir_url(__FILE__); ?>assets/img.json';
+        const statefile = '<?php //echo plugin_dir_url(__FILE__); ?>assets/states.min.json';
+        let imgdata = [];
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch(imgfile)
+            .then(response => response.json())
+            .then(data => {
+                imgdata = data;
+            })
+            .catch(error => console.error('Error Loading JSON:', error));
+        });
+        let statedata = [];
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch(statefile)
+            .then(response => response.json())
+            .then(data => {
+                statedata = data;
+            })
+            .catch(error => console.error('Error Loading JSON:', error));
+        });
+    </script>
+    <script src="<?php //echo plugin_dir_url(__FILE__); ?>assets/calculation-scripts.js?v=1.2.10"></script>
+      -->
+    <script id="LeadiDscript" type="text/javascript">
         (function() {
         var s = document.createElement('script');
         s.id = 'LeadiDscript_campaign';
@@ -674,7 +480,7 @@
         var LeadiDscript = document.getElementById('LeadiDscript');
         LeadiDscript.parentNode.insertBefore(s, LeadiDscript);
       })();
-      </script>
-      <noscript><img src='//create.leadid.com/noscript.gif?lac=F6E70FD1-7E87-2E6D-DC76-545BC9524F88&lck=47944071-f203-65fd-c512-57ea50ad928b&snippet_version=2' /></noscript>
+    </script>
+    <noscript><img src='//create.leadid.com/noscript.gif?lac=F6E70FD1-7E87-2E6D-DC76-545BC9524F88&lck=47944071-f203-65fd-c512-57ea50ad928b&snippet_version=2' /></noscript>
 </body>
 </html>
