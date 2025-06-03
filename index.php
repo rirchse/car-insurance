@@ -434,14 +434,14 @@
             .catch(error => console.error('Error Loading JSON:', error));
         });
       </script>
-      <script src="calculation-scripts.js?v=1.7.52"></script>
+      <script src="calculation-scripts.js?v=1.7.53"></script>
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
         <script>
           const zipcodefile = '<?php echo get_template_directory_uri(); ?>/jsonfile/zipcode.json';
           const jsonfile = '<?php echo get_template_directory_uri(); ?>/jsonfile/merged_make_year_model.json';
         </script>
-        <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js?v=1.1.1"></script>
+        <script src="<?php echo get_template_directory_uri(); ?>/calculation_scripts.js?v=1.1.10"></script>
     <?php } ?>
       <!-- wp
           <script>
