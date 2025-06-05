@@ -2124,68 +2124,10 @@ function formatObjectWithLineBreaks(data) {
 }
 
 
-function sendToLeadProsper(form)
-{
-  let formData = {
-    "lp_campaign_id": "27824",
-    "lp_supplier_id": "81192",
-    "lp_key": "y7kmilnvgc632w",
-    "lp_action": "test",
-    "lp_subid1": "",
-    "lp_subid2": "",
-    "first_name": form.drivers[0].FirstName,
-    "last_name": form.drivers[0].LastName,
-    "email": form.owner.email,
-    "phone": form.owner.phone.replace(/\D/g, ''),
-    "date_of_birth": dateFormat(form.drivers[0].BirthDate),
-    "gender": form.drivers[0].Gender,
-    "address": form.owner.address,
-    "city": form.owner.city,
-    "state": form.owner.state,
-    "zip_code": form.owner.zip,
-    "ip_address": ipaddress,
-    "user_agent": navigator.userAgent,
-    "landing_page_url": "https://eraseyourbills.com/auto/",
-    "jornaya_leadid": form.LeadiD,
-    "trustedform_cert_url": trustFormCert,
-    "tcpa_text": "We take your privacy seriously. By clicking the 'Submit' button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href='https://www.px.com/offer-guidelines/top-auto-insurance-companies-in-us/'>Marketing Partners, agents, affiliates or third parties</a> acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href='https://eraseyourbills.com/privacy-policy/' target='_blank'>Privacy Policy</a> and <a href='https://eraseyourbills.com/terms-of-use/' target='_blank'>Terms and Conditions</a>.",
-    "current_insurance_carier": form.owner.CurrentInsuranceCarier,
-    "continuous_coverage": form.owner.ContinuousCoverage,
-    "vehicles": form.vehicles,
-    "drivers": form.drivers
-  };
-
-  let serialized = JSON.stringify(formData);
-  console.log(formData);
-
-  fetch('https://api.leadprosper.io/direct_post', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
-    },
-    body: serialized
-  })
-  .then(response => response.json())
-  .then(data => {
-
-    setTimeout(() => {
-      loading.style.display = 'none';
-    }, 2000);
-
-    console.log('lp result:', data);
-
-    // if(data.id){
-    //   localStorage.setItem('submitted', true);
-    //   document.getElementById('getMyQuote').style.display = 'none';
-    //   loading.style.display = 'none';
-    //   document.getElementById('ThankYouMsg').style.display = 'block';
-    // }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
-}
+// function sendToLeadProsper(form)
+// {
+  
+// }
 
 // send data to the go heigh level
 function sendToServer()
@@ -2256,9 +2198,156 @@ function sendToServer()
   
   loading.style.display = 'block';
 
-  let serialized = JSON.stringify(formData);
+  // let serialized = JSON.stringify(formData);
 
-  fetch('https://services.leadconnectorhq.com/hooks/BiDDLrh6kezD2kEObkPo/webhook-trigger/c3d3342e-d75d-47cc-bffc-c6d642f5fbf4', {
+  // fetch('https://services.leadconnectorhq.com/hooks/BiDDLrh6kezD2kEObkPo/webhook-trigger/c3d3342e-d75d-47cc-bffc-c6d642f5fbf4', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
+  //   },
+  //   body: serialized
+  // })
+  // .then(response => response.json())
+  // .then(data => {
+  //   console.log('Success:', data);
+  //   if(data.id){
+  //     localStorage.setItem('submitted', true);
+  //     document.getElementById('getMyQuote').style.display = 'none';
+  //     document.getElementById('ThankYouMsg').style.display = 'block';
+  //   }
+  // })
+  // .catch(error => {
+  //   console.error('Error:', error);
+  // });
+
+  let form = formData;
+
+  // send data to lead prosper
+  let lpdata = {
+    "lp_campaign_id": "27824",
+    "lp_supplier_id": "81192",
+    "lp_key": "y7kmilnvgc632w",
+    "lp_action": "test",
+    "lp_subid1": "",
+    "lp_subid2": "",
+    "first_name": form.drivers[0].FirstName,
+    "last_name": form.drivers[0].LastName,
+    "email": form.owner.email,
+    "phone": form.owner.phone.replace(/\D/g, ''),
+    "date_of_birth": dateFormat(form.drivers[0].BirthDate),
+    "gender": form.drivers[0].Gender,
+    "address": form.owner.address,
+    "city": form.owner.city,
+    "state": form.owner.state,
+    "zip_code": form.owner.zip,
+    "ip_address": ipaddress,
+    "user_agent": navigator.userAgent,
+    "landing_page_url": "https://eraseyourbills.com/auto/",
+    "jornaya_leadid": form.LeadiD,
+    "trustedform_cert_url": trustFormCert,
+    "tcpa_text": "We take your privacy seriously. By clicking the 'Submit' button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href='https://www.px.com/offer-guidelines/top-auto-insurance-companies-in-us/'>Marketing Partners, agents, affiliates or third parties</a> acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href='https://eraseyourbills.com/privacy-policy/' target='_blank'>Privacy Policy</a> and <a href='https://eraseyourbills.com/terms-of-use/' target='_blank'>Terms and Conditions</a>.",
+    "v_click_id": "", //month
+    "credit_rating": "", //Unsure
+    "currently_insured": "", //Yes/No
+    "current_insurance": form.owner.CurrentInsuranceCarier,
+    "current_coverage_start": "", //1998-06-02
+    "current_coverage_expiry": "", //1954-05-29
+    "current_coverage_type": "", //Premium
+    "continuously_insured": form.owner.ContinuousCoverage,
+    "requested_coverage_type": "", //Not Insured
+    "requested_bodily_injury": "", //50/100
+    "requested_property_damage": "", //139
+    "multiple_drivers": form.drivers.length > 1 ? "Yes" : "No",
+    "multiple_vehicles": form.vehicles.length > 1 ? "Yes" : "No",
+    "home_owner": "", //Yes/No
+    "married": "", //Yes/No
+    "active_military": "", //Yes/No
+    "vehicle_1_year": form.vehicles[0].VehicleYear,
+    "vehicle_1_make": form.vehicles[0].VehicleMake,
+    "vehicle_1_model": form.vehicles[0].VehicleModel,
+    "vehicle_1_trim": "", //Tuesday
+    "vehicle_1_vin": "", //Sunday
+    "vehicle_1_ownership": form.vehicles[0].VehicleOwnership,
+    "vehicle_1_abs": "", //Yes/No
+    "vehicle_1_alarm": "", //Yes/No
+    "vehicle_1_useage": "", //Commute Work
+    "vehicle_1_annual_miles": form.vehicles[0].AnnualMileage,
+    "vehicle_1_weekly_days": "", //156
+    "vehicle_1_collision": "", //$500
+    "vehicle_1_comprehensive": "", //$100
+    "driver_1_first_name": form.drivers[0].FirstName,
+    "driver_1_last_name": form.drivers[0].LastName,
+    "driver_1_dob": form.drivers[0].BirthDate,
+    "driver_1_relationship": "", //Spouse
+    "driver_1_license_status": "", //International
+    "driver_1_license_state": "", //FL
+    "driver_1_licensed_age": "", //192
+    "driver_1_occupation": "", //Teacher
+    "driver_1_education": "", //High School Diploma
+    "driver_1_marital_status": form.drivers[0].MaritalStatus,
+    "driver_1_employment_length": "", //122
+    "driver_1_residence": "", //Other
+    "driver_1_residence_length": "", //447
+    "vehicle_2_year": form.vehicles.length > 1 ? form.vehicles[1].VehicleYear : "",
+    "vehicle_2_make": form.vehicles.length > 1 ? form.vehicles[1].VehicleMake : "",
+    "vehicle_2_model": form.vehicles.length > 1 ? form.vehicles[1].VehicleModel : "",
+    "vehicle_2_trim": "", //gray
+    "vehicle_2_vin": "", //fuchsia
+    "vehicle_2_ownership": form.vehicles.length > 1 ? form.vehicles[1].VehicleOwnership : "",
+    "vehicle_2_abs": "", //Yes/No
+    "vehicle_2_alarm": "", //Yes/No
+    "vehicle_2_useage": "", //Commute School
+    "vehicle_2_annual_miles": form.vehicles.length > 1 ? form.vehicles[1].AnnualMileage : "",
+    "vehicle_2_weekly_days": "", //912
+    "vehicle_2_collision": "", //$2000
+    "vehicle_2_comprehensive": "", //$1500
+    "vehicle_3_year": form.vehicles.length > 2 ? form.vehicles[2].VehicleYear : "",
+    "vehicle_3_make": form.vehicles.length > 2 ? form.vehicles[2].VehicleMake : "",
+    "vehicle_3_model": form.vehicles.length > 2 ? form.vehicles[2].VehicleModel : "",
+    "vehicle_3_trim": "", //Friday
+    "vehicle_3_vin": "", //Thursday
+    "vehicle_3_ownership": form.vehicles.length > 2 ? form.vehicles[2].VehicleOwnership : "",
+    "vehicle_3_abs": "", //Yes/No
+    "vehicle_3_alarm": "", //Yes/No
+    "vehicle_3_useage": "", //Commute Work
+    "vehicle_3_annual_miles": form.vehicles.length > 2 ? form.vehicles[2].AnnualMileage : "",
+    "vehicle_3_weekly_days": "", //244
+    "vehicle_3_collision": "", //$250
+    "vehicle_3_comprehensive": "", //$1000
+    "driver_2_first_name": form.drivers.length > 1 ? form.drivers[1].FirstName : "",
+    "driver_2_last_name": form.drivers.length > 1 ? form.drivers[1].LastName : "",
+    "driver_2_dob": form.drivers.length > 1 ? form.drivers[1].BirthDate : "",
+    "driver_2_relationship": "", //Self
+    "driver_2_license_status": "", //Other
+    "driver_2_license_state": "", //FL
+    "driver_2_licensed_age": "", //676
+    "driver_2_occupation": "", //College Professor
+    "driver_2_education": "", //Masters Degree
+    "driver_2_marital_status": form.drivers.length > 1 ? form.drivers[1].MaritalStatus : "",
+    "driver_2_employment_length": "", //310
+    "driver_2_residence": "", //Other
+    "driver_2_residence_length": "", //669
+    "driver_3_first_name": form.drivers.length > 2 ? form.drivers[2].FirstName : "",
+    "driver_3_last_name": form.drivers.length > 2 ? form.drivers[2].LastName : "",
+    "driver_3_dob": form.drivers.length > 2 ? form.drivers[2].BirthDate : "",
+    "driver_3_relationship": "", //Self
+    "driver_3_license_status": "", //Suspended
+    "driver_3_license_state": "", //FL
+    "driver_3_licensed_age": "", //484
+    "driver_3_occupation": "", //Teacher
+    "driver_3_education": "", //Bachelors Degree
+    "driver_3_marital_status": form.drivers.length > 2 ? form.drivers[2].MaritalStatus : "",
+    "driver_3_employment_length": "", //286
+    "driver_3_residence": "", //Own
+    "driver_3_residence_length": "" //523
+  };  
+
+  console.log(lpdata);
+  let serialized = JSON.stringify(lpdata);
+  // console.log(serialized);
+
+  fetch('https://api.leadprosper.io/direct_post', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -2268,10 +2357,17 @@ function sendToServer()
   })
   .then(response => response.json())
   .then(data => {
-    console.log('Success:', data);
+
+    setTimeout(() => {
+      loading.style.display = 'none';
+    }, 2000);
+
+    console.log('lp result:', data);
+
     if(data.id){
       localStorage.setItem('submitted', true);
       document.getElementById('getMyQuote').style.display = 'none';
+      loading.style.display = 'none';
       document.getElementById('ThankYouMsg').style.display = 'block';
     }
   })
@@ -2280,7 +2376,7 @@ function sendToServer()
   });
 
   // send to the another server
-  const leadProsper = sendToLeadProsper(formData);
+  // const leadProsper = sendToLeadProsper(formData);
   // console.log(leadProsper);
   
 }
