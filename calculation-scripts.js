@@ -2263,6 +2263,7 @@ function sendToServer()
     "home_owner": "", //Yes/No
     "married": "", //Yes/No
     "active_military": "", //Yes/No
+    "status": "",
     "vehicle_1_year": form.vehicles[0].VehicleYear,
     "vehicle_1_make": form.vehicles[0].VehicleMake,
     "vehicle_1_model": form.vehicles[0].VehicleModel,
