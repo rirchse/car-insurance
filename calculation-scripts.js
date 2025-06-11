@@ -33,12 +33,6 @@ let year = '', brand = '', model = '';
 let vehicleCounter = 0, driverCounter = 0;
 let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th'];
 
-let trustFormCert = '';
-setTimeout(() => {
-  let trustForm = document.querySelector('[name="xxTrustedFormCertUrl"]');
-  trustFormCert = trustForm.value;
-}, 4000);
-
 let container = document.getElementById('container');
 let percent_line = document.getElementById('percent-line');
 let percent_number = document.getElementById('percent-number');
@@ -2123,10 +2117,12 @@ function formatObjectWithLineBreaks(data) {
   ).join('\n\n'); // separate multiple objects with extra line
 }
 
+// setTimeout(() => {
+//   console.log(`from calc: ${trustFormCert}`);
+// }, 5000);
 
-// function sendToLeadProsper(form)
-// {
-  
+// function checkCertUrl(){
+//   console.log(`from method: ${trustFormCert}`);
 // }
 
 // send data to the go heigh level
@@ -2258,8 +2254,8 @@ function sendToServer()
     "requested_coverage_type": "", //Not Insured
     "requested_bodily_injury": "", //50/100
     "requested_property_damage": "", //139
-    "multiple_drivers": form.drivers.length > 1 ? "Yes" : "No",
-    "multiple_vehicles": form.vehicles.length > 1 ? "Yes" : "No",
+    "multiple_drivers": Object.values(formData.drivers).length > 1 ? "Yes" : "No",
+    "multiple_vehicles": Object.values(form.vehicles).length > 1 ? "Yes" : "No",
     "home_owner": "", //Yes/No
     "married": "", //Yes/No
     "active_military": "", //Yes/No
@@ -2290,55 +2286,55 @@ function sendToServer()
     "driver_1_employment_length": "", //122
     "driver_1_residence": "", //Other
     "driver_1_residence_length": "", //447
-    "vehicle_2_year": form.vehicles.length > 1 ? form.vehicles[1].VehicleYear : "",
-    "vehicle_2_make": form.vehicles.length > 1 ? form.vehicles[1].VehicleMake : "",
-    "vehicle_2_model": form.vehicles.length > 1 ? form.vehicles[1].VehicleModel : "",
+    "vehicle_2_year": Object.values(form.vehicles).length > 1 ? form.vehicles[1].VehicleYear : "",
+    "vehicle_2_make": Object.values(form.vehicles).length > 1 ? form.vehicles[1].VehicleMake : "",
+    "vehicle_2_model": Object.values(form.vehicles).length > 1 ? form.vehicles[1].VehicleModel : "",
     "vehicle_2_trim": "", //gray
     "vehicle_2_vin": "", //fuchsia
-    "vehicle_2_ownership": form.vehicles.length > 1 ? form.vehicles[1].VehicleOwnership : "",
+    "vehicle_2_ownership": Object.values(form.vehicles).length > 1 ? form.vehicles[1].VehicleOwnership : "",
     "vehicle_2_abs": "", //Yes/No
     "vehicle_2_alarm": "", //Yes/No
     "vehicle_2_useage": "", //Commute School
-    "vehicle_2_annual_miles": form.vehicles.length > 1 ? form.vehicles[1].AnnualMileage : "",
+    "vehicle_2_annual_miles": Object.values(form.vehicles).length > 1 ? form.vehicles[1].AnnualMileage : "",
     "vehicle_2_weekly_days": "", //912
     "vehicle_2_collision": "", //$2000
     "vehicle_2_comprehensive": "", //$1500
-    "vehicle_3_year": form.vehicles.length > 2 ? form.vehicles[2].VehicleYear : "",
-    "vehicle_3_make": form.vehicles.length > 2 ? form.vehicles[2].VehicleMake : "",
-    "vehicle_3_model": form.vehicles.length > 2 ? form.vehicles[2].VehicleModel : "",
+    "vehicle_3_year": Object.values(form.vehicles).length > 2 ? form.vehicles[2].VehicleYear : "",
+    "vehicle_3_make": Object.values(form.vehicles).length > 2 ? form.vehicles[2].VehicleMake : "",
+    "vehicle_3_model": Object.values(form.vehicles).length > 2 ? form.vehicles[2].VehicleModel : "",
     "vehicle_3_trim": "", //Friday
     "vehicle_3_vin": "", //Thursday
-    "vehicle_3_ownership": form.vehicles.length > 2 ? form.vehicles[2].VehicleOwnership : "",
+    "vehicle_3_ownership": Object.values(form.vehicles).length > 2 ? form.vehicles[2].VehicleOwnership : "",
     "vehicle_3_abs": "", //Yes/No
     "vehicle_3_alarm": "", //Yes/No
     "vehicle_3_useage": "", //Commute Work
-    "vehicle_3_annual_miles": form.vehicles.length > 2 ? form.vehicles[2].AnnualMileage : "",
+    "vehicle_3_annual_miles": Object.values(form.vehicles).length > 2 ? form.vehicles[2].AnnualMileage : "",
     "vehicle_3_weekly_days": "", //244
     "vehicle_3_collision": "", //$250
     "vehicle_3_comprehensive": "", //$1000
-    "driver_2_first_name": form.drivers.length > 1 ? form.drivers[1].FirstName : "",
-    "driver_2_last_name": form.drivers.length > 1 ? form.drivers[1].LastName : "",
-    "driver_2_dob": form.drivers.length > 1 ? dateFormat(form.drivers[1].BirthDate) : "",
+    "driver_2_first_name": Object.values(form.drivers).length > 1 ? form.drivers[1].FirstName : "",
+    "driver_2_last_name": Object.values(form.drivers).length > 1 ? form.drivers[1].LastName : "",
+    "driver_2_dob": Object.values(form.drivers).length > 1 ? dateFormat(form.drivers[1].BirthDate) : "",
     "driver_2_relationship": "", //Self
     "driver_2_license_status": "", //Other
     "driver_2_license_state": "", //FL
     "driver_2_licensed_age": "", //676
     "driver_2_occupation": "", //College Professor
     "driver_2_education": "", //Masters Degree
-    "driver_2_marital_status": form.drivers.length > 1 ? form.drivers[1].MaritalStatus : "",
+    "driver_2_marital_status": Object.values(form.drivers).length > 1 ? form.drivers[1].MaritalStatus : "",
     "driver_2_employment_length": "", //310
     "driver_2_residence": "", //Other
     "driver_2_residence_length": "", //669
-    "driver_3_first_name": form.drivers.length > 2 ? form.drivers[2].FirstName : "",
-    "driver_3_last_name": form.drivers.length > 2 ? form.drivers[2].LastName : "",
-    "driver_3_dob": form.drivers.length > 2 ? dateFormat(form.drivers[2].BirthDate) : "",
+    "driver_3_first_name": Object.values(form.drivers).length > 2 ? form.drivers[2].FirstName : "",
+    "driver_3_last_name": Object.values(form.drivers).length > 2 ? form.drivers[2].LastName : "",
+    "driver_3_dob": Object.values(form.drivers).length > 2 ? dateFormat(form.drivers[2].BirthDate) : "",
     "driver_3_relationship": "", //Self
     "driver_3_license_status": "", //Suspended
     "driver_3_license_state": "", //FL
     "driver_3_licensed_age": "", //484
     "driver_3_occupation": "", //Teacher
     "driver_3_education": "", //Bachelors Degree
-    "driver_3_marital_status": form.drivers.length > 2 ? form.drivers[2].MaritalStatus : "",
+    "driver_3_marital_status": Object.values(form.drivers).length > 2 ? form.drivers[2].MaritalStatus : "",
     "driver_3_employment_length": "", //286
     "driver_3_residence": "", //Own
     "driver_3_residence_length": "" //523
@@ -2375,10 +2371,6 @@ function sendToServer()
   .catch(error => {
     console.error('Error:', error);
   });
-
-  // send to the another server
-  // const leadProsper = sendToLeadProsper(formData);
-  // console.log(leadProsper);
   
 }
 

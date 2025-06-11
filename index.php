@@ -262,9 +262,12 @@
     <!-- script for slim select form butify library -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <script>
+      let trustFormCert;
+
         setTimeout(() => {
             document.getElementById('loading').style.display = 'none';
         }, 500);
+
         let localClearBtn = document.getElementById('localClearBtn');
         if(localStorage.getItem('localdata')){
             localClearBtn.style.display = 'block';
@@ -401,7 +404,14 @@
             '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&l=' +
             new Date().getTime() + Math.random();
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
+
+          setTimeout(() => {
+            let trustForm = document.querySelector('[name="xxTrustedFormCertUrl"]');
+            trustFormCert = trustForm.value;
+            console.log(trustFormCert);
+          }, 4000);
         })();
+        console.log(trustFormCert);
     </script>
     <noscript>
         <img src='https://api.trustedform.com/ns.gif' />
@@ -434,7 +444,7 @@
             .catch(error => console.error('Error Loading JSON:', error));
         });
       </script>
-      <script src="calculation-scripts.js?v=1.7.69"></script>
+      <script src="calculation-scripts.js?v=1.7.70"></script>
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
         <script>
