@@ -536,10 +536,10 @@ function owner(e)
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Vehicle Ownership</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(own[3] == 'Finance' ? 'active': '')+'" onclick="checkOwner(this)">Finance</button>'+
-      '<button class="input '+(own[3] == 'Lease' ? 'active': '')+'" onclick="checkOwner(this)">Lease</button>'+
-      '<button class="input '+(own[3] == 'Own' ? 'active': '')+'" onclick="checkOwner(this)">Own</button>'+
-      '<button class="input '+(own[3] == 'Other' ? 'active': '')+'" onclick="checkOwner(this)">Other</button>'+
+      '<button class="input '+(own[3] == 'Own Paid Off' ? 'active': '')+'" onclick="checkOwner(this)">Own Paid Off</button>'+
+      '<button class="input '+(own[3] == 'Own Financed' ? 'active': '')+'" onclick="checkOwner(this)">Own Financed</button>'+
+      '<button class="input '+(own[3] == 'Leased' ? 'active': '')+'" onclick="checkOwner(this)">Leased</button>'+
+      // '<button class="input '+(own[3] == 'Other' ? 'active': '')+'" onclick="checkOwner(this)">Other</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -578,10 +578,10 @@ function milage(e)
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Annual Mileage</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(mile[4] == 'Under 5,000' ? 'active': '')+'" onclick="checkMilage(this)">Under 5,000</button>'+
-      '<button class="input '+(mile[4] == '5,001-10,000' ? 'active': '')+'" onclick="checkMilage(this)">5,001-10,000</button>'+
-      '<button class="input '+(mile[4] == '10,001-15,000' ? 'active': '')+'" onclick="checkMilage(this)">10,001-15,000</button>'+
-      '<button class="input '+(mile[4] == '15,000+' ? 'active': '')+'" onclick="checkMilage(this)">15,000+</button>'+
+      '<button class="input '+(mile[4] == '123' ? 'active': '')+'" onclick="checkMilage(this)">123</button>'+
+      '<button class="input '+(mile[4] == '100' ? 'active': '')+'" onclick="checkMilage(this)">100</button>'+
+      '<button class="input '+(mile[4] == '50' ? 'active': '')+'" onclick="checkMilage(this)">50</button>'+
+      '<button class="input '+(mile[4] == '12.34' ? 'active': '')+'" onclick="checkMilage(this)">12.34</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -724,33 +724,33 @@ function insurance(e)
       '<select name="career" id="insurance_carrier" class="select-box-carrier carier" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
           '<option value="Other"'+(insure[0] == 'Other'? 'selected':'')+'>Other</option>'+
-          '<option value="Not Currently Insured"'+(insure[0] == 'Not Currently Insured'? 'selected':'')+'>Not Currently Insured</option>'+
+          '<option value="Not Currently Listed"'+(insure[0] == 'Not Currently Listed'? 'selected':'')+'>Not Currently Listed</option>'+
           '<option value="21st Century"'+(insure[0] == '21st Century'? 'selected':'')+'>21st Century</option>'+
           '<option value="AAA"'+(insure[0] == 'AAA'? 'selected':'')+'>AAA</option>'+
-          '<option value="Allstate"'+(insure[0] == 'Allstate'? 'selected':'')+'>Allstate</option>'+
+          // '<option value="Allstate"'+(insure[0] == 'Allstate'? 'selected':'')+'>Allstate</option>'+
           '<option value="American Family"'+(insure[0] == 'American Family'? 'selected':'')+'>American Family</option>'+
-          '<option value="Bristol West"'+(insure[0] == 'Bristol West'? 'selected':'')+'>Bristol West</option>'+
-          '<option value="Dairyland Insurance"'+(insure[0] == 'Dairyland Insurance'? 'selected':'')+'>Dairyland Insurance</option>'+
-          '<option value="Direct General"'+(insure[0] == 'Direct General'? 'selected':'')+'>Direct General</option>'+
-          '<option value="Elephant"'+(insure[0] == 'Elephant'? 'selected':'')+'>Elephant</option>'+
-          '<option value="Erie Insurance"'+(insure[0] == 'Erie Insurance'? 'selected':'')+'>Erie Insurance</option>'+
+          // '<option value="Bristol West"'+(insure[0] == 'Bristol West'? 'selected':'')+'>Bristol West</option>'+
+          '<option value="Dairyland"'+(insure[0] == 'Dairyland'? 'selected':'')+'>Dairyland</option>'+
+          '<option value="Direct Auto"'+(insure[0] == 'Direct Auto'? 'selected':'')+'>Direct Auto</option>'+
+          // '<option value="Elephant"'+(insure[0] == 'Elephant'? 'selected':'')+'>Elephant</option>'+
+          '<option value="Erie"'+(insure[0] == 'Erie'? 'selected':'')+'>Erie</option>'+
           '<option value="Esurance"'+(insure[0] == 'Esurance'? 'selected':'')+'>Esurance</option>'+
-          '<option value="Farm Bureau/Farm Family/Rural"'+(insure[0] == 'Farm Bureau/Farm Family/Rural'? 'selected':'')+'>Farm Bureau/Farm Family/Rural</option>'+
+          '<option value="Farm Bureau"'+(insure[0] == 'Farm Bureau'? 'selected':'')+'>Farm Bureau</option>'+
           '<option value="Farmers"'+(insure[0] == 'Farmers'? 'selected':'')+'>Farmers</option>'+
-          '<option value="Farmers Insurance"'+(insure[0] == 'Farmers Insurance'? 'selected':'')+'>Farmers Insurance</option>'+
+          '<option value="Foremost"'+(insure[0] == 'Foremost'? 'selected':'')+'>Foremost</option>'+
           '<option value="Gainsco"'+(insure[0] == 'Gainsco'? 'selected':'')+'>Gainsco</option>'+
-          '<option value="Geico"'+(insure[0] == 'Geico'? 'selected':'')+'>Geico</option>'+
+          '<option value="GEICO Good2go"'+(insure[0] == 'GEICO Good2go'? 'selected':'')+'>GEICO Good2go</option>'+
           '<option value="Liberty Mutual"'+(insure[0] == 'Liberty Mutual'? 'selected':'')+'>Liberty Mutual</option>'+
           '<option value="Mercury"'+(insure[0] == 'Mercury'? 'selected':'')+'>Mercury</option>'+
           '<option value="Nationwide"'+(insure[0] == 'Nationwide'? 'selected':'')+'>Nationwide</option>'+
           '<option value="Plymouth Rock"'+(insure[0] == 'Plymouth Rock'? 'selected':'')+'>Plymouth Rock</option>'+
           '<option value="Progressive"'+(insure[0] == 'Progressive'? 'selected':'')+'>Progressive</option>'+
-          '<option value="Prudential"'+(insure[0] == 'Prudential'? 'selected':'')+'>Prudential</option>'+
-          '<option value="SafeAuto"'+(insure[0] == 'SafeAuto'? 'selected':'')+'>SafeAuto</option>'+
+          // '<option value="Prudential"'+(insure[0] == 'Prudential'? 'selected':'')+'>Prudential</option>'+
+          // '<option value="SafeAuto"'+(insure[0] == 'SafeAuto'? 'selected':'')+'>SafeAuto</option>'+
           '<option value="Safeco"'+(insure[0] == 'Safeco'? 'selected':'')+'>Safeco</option>'+
           '<option value="State Farm"'+(insure[0] == 'State Farm'? 'selected':'')+'>State Farm</option>'+
           '<option value="The General"'+(insure[0] == 'The General'? 'selected':'')+'>The General</option>'+
-          '<option value="The Hartford"'+(insure[0] == 'The Hartford'? 'selected':'')+'>The Hartford</option>'+
+          // '<option value="The Hartford"'+(insure[0] == 'The Hartford'? 'selected':'')+'>The Hartford</option>'+
           '<option value="Travelers"'+(insure[0] == 'Travelers'? 'selected':'')+'>Travelers</option>'+
           '<option value="USAA"'+(insure[0] == 'USAA'? 'selected':'')+'>USAA</option>'+
       '</select>'+
@@ -758,13 +758,13 @@ function insurance(e)
       '<h4 style="text-align: left;">Continuous Coverage</h4>'+
       '<select name="coverage" id="insurance_coverage" class="select-box-coverage coverage" onchange="checkErr(this)">'+
           '<option data-placeholder="true"></option>'+
-          '<option value="Less Than 6 Months" '+(insure[1] == 'Less Than 6 Months'? 'selected':'')+'>Less Than 6 Months</option>'+
-          '<option value="6 Months" '+(insure[1] == '6 Months'? 'selected':'')+'>6 Months</option>'+
-          '<option value="1 Year" '+(insure[1] == '1 Year'? 'selected':'')+'>1 Year</option>'+
-          '<option value="2 Years" '+(insure[1] == '2 Years'? 'selected':'')+'>2 Years</option>'+
-          '<option value="3 Years" '+(insure[1] == '3 Years'? 'selected':'')+'>3 Years</option>'+
-          '<option value="3 to 5 Years" '+(insure[1] == '3 to 5 Years'? 'selected':'')+'>3 to 5 Years</option>'+
-          '<option value="More Than 5 Years" '+(insure[1] == 'More Than 5 Years'? 'selected':'')+'>More Than 5 Years</option>'+
+          '<option value="0" '+(insure[1] == '0'? 'selected':'')+'>0</option>'+
+          '<option value="6 months" '+(insure[1] == '6 months'? 'selected':'')+'>6 months</option>'+
+          '<option value="1 year" '+(insure[1] == '1 year'? 'selected':'')+'>1 year</option>'+
+          '<option value="1-3 years" '+(insure[1] == '1-3 years'? 'selected':'')+'>1-3 years</option>'+
+          '<option value="3-5 years" '+(insure[1] == '3-5 years'? 'selected':'')+'>3-5 years</option>'+
+          // '<option value="3 to 5 Years" '+(insure[1] == '3 to 5 Years'? 'selected':'')+'>3 to 5 Years</option>'+
+          '<option value="5+ years" '+(insure[1] == '5+ years'? 'selected':'')+'>5+ years</option>'+
       '</select>'+
       '<p class="error" id="coverage_err"></p>'+
     '</div>'+
@@ -2279,7 +2279,7 @@ function sendToServer()
     "vehicle_1_comprehensive": "", //$100
     "driver_1_first_name": form.drivers[0].FirstName,
     "driver_1_last_name": form.drivers[0].LastName,
-    "driver_1_dob": form.drivers[0].BirthDate,
+    "driver_1_dob": dateFormat(form.drivers[0].BirthDate),
     "driver_1_relationship": "", //Spouse
     "driver_1_license_status": "", //International
     "driver_1_license_state": "", //FL
@@ -2318,7 +2318,7 @@ function sendToServer()
     "vehicle_3_comprehensive": "", //$1000
     "driver_2_first_name": form.drivers.length > 1 ? form.drivers[1].FirstName : "",
     "driver_2_last_name": form.drivers.length > 1 ? form.drivers[1].LastName : "",
-    "driver_2_dob": form.drivers.length > 1 ? form.drivers[1].BirthDate : "",
+    "driver_2_dob": form.drivers.length > 1 ? dateFormat(form.drivers[1].BirthDate) : "",
     "driver_2_relationship": "", //Self
     "driver_2_license_status": "", //Other
     "driver_2_license_state": "", //FL
@@ -2331,7 +2331,7 @@ function sendToServer()
     "driver_2_residence_length": "", //669
     "driver_3_first_name": form.drivers.length > 2 ? form.drivers[2].FirstName : "",
     "driver_3_last_name": form.drivers.length > 2 ? form.drivers[2].LastName : "",
-    "driver_3_dob": form.drivers.length > 2 ? form.drivers[2].BirthDate : "",
+    "driver_3_dob": form.drivers.length > 2 ? dateFormat(form.drivers[2].BirthDate) : "",
     "driver_3_relationship": "", //Self
     "driver_3_license_status": "", //Suspended
     "driver_3_license_state": "", //FL
