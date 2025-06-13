@@ -572,10 +572,11 @@ function milage(e)
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Annual Mileage</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(mile[4] == '123' ? 'active': '')+'" onclick="checkMilage(this)">123</button>'+
-      '<button class="input '+(mile[4] == '100' ? 'active': '')+'" onclick="checkMilage(this)">100</button>'+
-      '<button class="input '+(mile[4] == '50' ? 'active': '')+'" onclick="checkMilage(this)">50</button>'+
-      '<button class="input '+(mile[4] == '12.34' ? 'active': '')+'" onclick="checkMilage(this)">12.34</button>'+
+      '<button class="input '+(mile[4] == '2000' ? 'active': '')+'" onclick="checkMilage(this)">2000</button>'+
+      '<button class="input '+(mile[4] == '5000' ? 'active': '')+'" onclick="checkMilage(this)">5000</button>'+
+      '<button class="input '+(mile[4] == '10000' ? 'active': '')+'" onclick="checkMilage(this)">10000</button>'+
+      '<button class="input '+(mile[4] == '15000' ? 'active': '')+'" onclick="checkMilage(this)">15000</button>'+
+      '<button class="input '+(mile[4] == '20000' ? 'active': '')+'" onclick="checkMilage(this)">20000</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
