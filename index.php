@@ -263,6 +263,7 @@
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
     <script>
       let trustFormCert;
+      let v_click_id;
 
         setTimeout(() => {
             document.getElementById('loading').style.display = 'none';
@@ -394,6 +395,16 @@
         }
         styleLoad();
     </script>
+
+    <!-- v_click_id -->
+    <script>
+      (() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        v_click_id = urlParams.get('s1');
+        console.log(v_click_id);
+      })();
+    </script>
+
     <!-- TrustedForm -->
     <script type="text/javascript">
         (function() {
@@ -408,10 +419,10 @@
           setTimeout(() => {
             let trustForm = document.querySelector('[name="xxTrustedFormCertUrl"]');
             trustFormCert = trustForm.value;
-            console.log(trustFormCert);
+            // console.log(trustFormCert);
           }, 4000);
         })();
-        console.log(trustFormCert);
+        // console.log(trustFormCert);
     </script>
     <noscript>
         <img src='https://api.trustedform.com/ns.gif' />
@@ -444,7 +455,7 @@
             .catch(error => console.error('Error Loading JSON:', error));
         });
       </script>
-      <script src="calculation-scripts.js?v=1.7.70"></script>
+      <script src="calculation-scripts.js?v=1.7.71"></script>
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
         <script>

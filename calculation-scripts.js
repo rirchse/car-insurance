@@ -2224,7 +2224,7 @@ function sendToServer()
     "lp_campaign_id": "27824",
     "lp_supplier_id": "81192",
     "lp_key": "y7kmilnvgc632w",
-    "lp_action": "test",
+    // "lp_action": "test",
     "lp_subid1": "",
     "lp_subid2": "",
     "first_name": form.drivers[0].FirstName,
@@ -2243,9 +2243,9 @@ function sendToServer()
     "jornaya_leadid": form.LeadiD,
     "trustedform_cert_url": trustFormCert,
     "tcpa_text": "We take your privacy seriously. By clicking the 'Submit' button above, I give my express written consent by electronic signature to [Publisher Name] and its <a href='https://www.px.com/offer-guidelines/top-auto-insurance-companies-in-us/'>Marketing Partners, agents, affiliates or third parties</a> acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href='https://eraseyourbills.com/privacy-policy/' target='_blank'>Privacy Policy</a> and <a href='https://eraseyourbills.com/terms-of-use/' target='_blank'>Terms and Conditions</a>.",
-    "v_click_id": "", //month
+    "v_click_id": v_click_id, //month
     "credit_rating": "", //Unsure
-    "currently_insured": "", //Yes/No
+    "currently_insured": form.owner.CurrentInsuranceCarier == 'Not Currently Listed' ? 'No': 'Yes', //Yes/No
     "current_insurance": form.owner.CurrentInsuranceCarier,
     "current_coverage_start": "", //1998-06-02
     "current_coverage_expiry": "", //1954-05-29
