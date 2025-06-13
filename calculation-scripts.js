@@ -2404,7 +2404,7 @@ function checkLocalData()
     }
 
     let html = '<div class="welcome-back-wrap">'+
-        '<h5 style="color: #0070e9; text-transform: uppercase;">Welcome Back <strong>'+parseData.drivers.list[0].names[0]+'</strong>!</h5>'+
+        '<h5 style="color: #0070e9; text-transform: uppercase;">Hey <strong>'+parseData.drivers.list[0].names[0]+'</strong>!</h5>'+
         '<h2 style="text-transform: uppercase;">Your Auto Quotes Are Almost Ready For You!</h2>'+
         '<div class="continue-btn">'+
           '<button class="action-btn btn get-my-quote" onclick="sendToServer(this)" value="" id="getMyQuote">Get my Quote<span class="notifiy">1</span></button>'+
@@ -2523,7 +2523,7 @@ function checkLocalData()
         '<div class="agent-wrap">'+
           '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
           '<p>'+
-            '<span>Thanks for the information! An agent will contact you shortly.</span>'+
+            '<span>An agent will contact you shortly.</span>'+
           '</p>'+            
         '</div>'+
     '</div>';
