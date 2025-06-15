@@ -471,7 +471,7 @@ svg.agent-checkbox {
   margin-bottom: 30px;
 }
 
-.start-scratch-wrap {text-align: right;}
+.start-scratch-wrap {text-align: right; margin-bottom: 20px;}
 .size-small{
   width: 20px;
   height: 20px;
@@ -742,7 +742,7 @@ a.toogle-btn-text {
     min-height: 100vh;
 }
 .progess-bar {
-    margin: 50px 15% 90px;
+    margin: 50px 15%;
 }
 p.secure-banner {
     display: flex;
@@ -800,6 +800,7 @@ p.secure-banner {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-top: 10px;
 }
 .related-topics-inner > a {
     flex: 0 0 33%;
