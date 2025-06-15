@@ -2384,6 +2384,8 @@ function sendToServer()
 // check local data exist
 function checkLocalData()
 {
+  homeInfo('No');
+
   let vehicleList = '', driverList = '';
   let localdata = localStorage.getItem('localdata');
   if(localdata){
