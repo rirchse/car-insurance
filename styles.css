@@ -795,6 +795,31 @@ p.secure-banner {
     opacity: .9;
     box-shadow: 0 5px 12px 0px #9ca5a8;
 }
+
+.related-topics-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.related-topics-inner > a {
+    flex: 0 0 33%;
+    max-width: 33%;
+}
+.related-topics-inner > a img {
+    max-width: 100%;
+}
+a.related-read-more {
+    background: #0070e9;
+    color: #fff;
+    padding: 17px 30px;
+    border-radius: 5px;
+    margin: 20px 0;
+    display: inline-block;
+    text-transform: uppercase;
+}
+a.related-read-more:hover {
+    background: #000;
+}
 @media only screen and (max-width: 767px){
   .feature-box, .how-text, .how-image {
       max-width: 100%;
@@ -825,11 +850,15 @@ p.secure-banner {
       padding: 17px 12px;
   }
   .agent-wrap p svg {
-        width: 30px;
-    }
-    p.secure-banner {
-        gap: 2px;
-        font-size: 11px;
-        font-weight: 300;
-    }
+      width: 30px;
+  }
+  p.secure-banner {
+      gap: 2px;
+      font-size: 11px;
+      font-weight: 300;
+  }
+  .related-topics-inner > a {
+      flex: 0 0 50%;
+      max-width: 50%;
+  }
 }
