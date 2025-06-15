@@ -2345,33 +2345,39 @@ function sendToServer()
   let serialized = JSON.stringify(lpdata);
   // console.log(serialized);
 
-  fetch('https://api.leadprosper.io/direct_post', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
-    },
-    body: serialized
-  })
-  .then(response => response.json())
-  .then(data => {
+  // fetch('https://api.leadprosper.io/direct_post', {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
+  //   },
+  //   body: serialized
+  // })
+  // .then(response => response.json())
+  // .then(data => {
 
-    setTimeout(() => {
-      loading.style.display = 'none';
-    }, 2000);
+  //   setTimeout(() => {
+  //     loading.style.display = 'none';
+  //   }, 2000);
 
-    console.log('lp result:', data);
+  //   console.log('lp result:', data);
 
-    if(data.id){
-      localStorage.setItem('submitted', true);
-      document.getElementById('getMyQuote').style.display = 'none';
-      loading.style.display = 'none';
-      document.getElementById('ThankYouMsg').style.display = 'block';
-    }
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+  //   if(data.id){
+  //     localStorage.setItem('submitted', true);
+  //     document.getElementById('getMyQuote').style.display = 'none';
+  //     loading.style.display = 'none';
+  //     document.getElementById('ThankYouMsg').style.display = 'block';
+  //   }
+  // })
+  // .catch(error => {
+  //   console.error('Error:', error);
+  // });
+
+  // just for test
+    localStorage.setItem('submitted', true);
+    document.getElementById('getMyQuote').style.display = 'none';
+    loading.style.display = 'none';
+    document.getElementById('ThankYouMsg').style.display = 'block';
   
 }
 
@@ -2410,7 +2416,8 @@ function checkLocalData()
         '<div class="continue-btn">'+
           '<button class="action-btn btn get-my-quote" onclick="sendToServer(this)" value="" id="getMyQuote">Get my Quote<span class="notifiy">1</span></button>'+
         '</div>'+
-        '<div class="welcome-back-wrap">'+
+        '<div id="ThankYouMsg" class="welcome-back-wrap" style="display:none">'+
+        '<p style="margin-top:15px; color:green;">Thank You</p><br>'+
           '<div class="related-topics-wrap">'+
             '<h4>Related Topics</h4>'+
             '<div class="related-topics-inner">'+
@@ -2424,9 +2431,8 @@ function checkLocalData()
             '<a href="https://answersconfidential.com/finance/ways-to-cut-your-auto-insurance-costs-in-2025-en-us/?segment=rsoc.qa.answersconfidential.001&headline=Smart+Ways+to+Lower+Auto+Insurance+in+2025&forceKeyA=Save+Money+on+Car+Insurance+This+Year&forceKeyB=Tips+to+Cut+Auto+Premiums+Fast&forceKeyC=Lower+Your+Auto+Insurance+Bill+Today&forceKeyD=Affordable+Car+Insurance+Plans&forceKeyE=Compare+Auto+Insurance+Quotes+Easily" class="related-read-more">Read more</a>'+
           '</div>'+
         '</div>'+
-        '<p id="ThankYouMsg" style="margin-top:15px; color:green; display:none">Thank You</p>'+
         '<div class="toogle-btn-wrap">'+
-          '<a href="#" class="toogle-btn-text" onclick="showHide(this)">'+
+          '<a class="toogle-btn-text" onclick="showHide(this)">'+
             'See your information'+
             '<svg class="" width="24" height="24" viewBox="0 0 24 24" fill="none" style="transform: rotate(0deg);"><path d="M7 10L12 15L17 10" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>'+
           '</a>'+
