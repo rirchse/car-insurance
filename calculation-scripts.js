@@ -2384,11 +2384,12 @@ function sendToServer()
 // check local data exist
 function checkLocalData()
 {
-  homeInfo('No');
-
   let vehicleList = '', driverList = '';
   let localdata = localStorage.getItem('localdata');
   if(localdata){
+    // hide homepage addtional information
+    homeInfo('No');
+
     let parseData = JSON.parse(localdata);
     if(parseData.vehicles.list)
     {
@@ -2562,6 +2563,12 @@ function checkLocalData()
     setTimeout(function(){
       if(localStorage.getItem('submitted')){
         document.getElementById('getMyQuote').style.display = 'none';
+      }
+
+      if(document.getElementById('getMyQuote').style.display == 'none')
+      {
+        // how thank you page
+        document.getElementById('ThankYouMsg').style.display = 'block';
       }
     }, 0);
   }
