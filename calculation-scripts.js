@@ -29,6 +29,15 @@ let incidents = {
   backward : []
 };
 
+let currentData = {
+  zipcode: "",
+  vehicle: {
+    make: "",
+    year: "",
+    model: "",
+  },
+};
+
 let year = '', brand = '', model = '';
 let vehicleCounter = 0, driverCounter = 0;
 let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th'];
@@ -140,6 +149,137 @@ function checkLocalStorage(){
   return false;
 }
 
+function setCurrentData()
+{
+  localStorage.setItem('currentData', currentData);
+}
+
+function setPageUrl(page)
+{
+  const url = new URL(window.location.href);
+  url.searchParams.set('page', page);
+
+  // Update URL without reload
+  window.history.pushState({}, '', url);
+}
+
+function setCurrentPage(page)
+{
+  localStorage.setItem('currentPage', page);
+}
+
+function checkCurrentPage()
+{
+
+  setTimeout(() => {
+    const local = localStorage.getItem('currentData');
+    console.log(local);
+
+  }, 0);
+
+  // const currentPage = localStorage.getItem('currentPage');
+  const newUrl = new URL(window.location.href);
+  const currentPage = newUrl.searchParams.get('page');
+
+  // console.log(url);
+
+  if(currentPage == 'zip-code')
+  {
+    createZIPCodePanel('e');
+  }
+  else if(currentPage == 'vehicle-make')
+  {
+    brands('e');
+  }
+  else if(currentPage == 'vehicle-year')
+  {
+    writeYears('e');
+  }
+  else if(currentPage == 'vehicle-model')
+  {
+    models('e');
+  }
+  else if(currentPage == 'vehicle-owner')
+  {
+    owner('e');
+  }
+  else if(currentPage == 'vehicle-milage')
+  {
+    milage('e');
+  }
+  else if(currentPage == 'vehicle-coverage')
+  {
+    coverage('e');
+  }
+  else if(currentPage == 'vehicle-another')
+  {
+    anotherVehicle('e');
+  }
+  else if(currentPage == 'insurance')
+  {
+    insurance('e');
+  }
+  else if(currentPage == 'driver-add')
+  {
+    addDriver('e');
+  }
+  else if(currentPage == 'driver-marital-status')
+  {
+    driverMaritalStatus('e');
+  }
+  else if(currentPage == 'driver-birth-month')
+  {
+    birthMonth('e');
+  }
+  else if(currentPage == 'driver-birth-year')
+  {
+    birthYear('e');
+  }
+  else if(currentPage == 'driver-incident')
+  {
+    incident('e');
+  }
+  else if(currentPage == 'driver-accident')
+  {
+    accident('e');
+  }
+  else if(currentPage == 'driver-ticket')
+  {
+    ticket('e');
+  }
+  else if(currentPage == 'driver-dui')
+  {
+    dui('e');
+  }
+  else if(currentPage == 'driver-name')
+  {
+    driverName('e');
+  }
+  else if(currentPage == 'driver-another')
+  {
+    anotherDriver('e');
+  }
+  else if(currentPage == 'owner-address')
+  {
+    ownerAddress('e');
+  }
+  else if(currentPage == 'owner-ownership')
+  {
+    ownership('e');
+  }
+  else if(currentPage == 'owner-email-address')
+  {
+    emailAddress('e');
+  }
+  else if(currentPage == 'owner-contact')
+  {
+    getQuote('e');
+  }
+
+}
+
+checkCurrentPage();
+
 function createZIPCodePanel(e)
 {
   let html = '<div class="step step-1">'+
@@ -246,6 +386,9 @@ function ZIPCode(e)
         increasePercent(6);
       }
 
+      currentData.zipcode = zipcode;
+      setCurrentData();
+
       // execute brands
       brands(e);
       result.innerHTML = '';
@@ -267,6 +410,9 @@ function ZIPCode(e)
 //write brand
 function brands(e)
 {
+  setPageUrl('vehicle-make');
+  setCurrentPage('vehicle-make');
+  
   // hide home page information
   homeInfo('No');
 
@@ -354,6 +500,8 @@ function checkBrands(e)
   {
     increasePercent(6);
   }
+
+  currentData.vehicle.make = e;
   //call to the write years
   writeYears(e);
 
@@ -362,6 +510,9 @@ function checkBrands(e)
 // read years
 function writeYears(e)
 {
+  setPageUrl('vehicle-year');
+  setCurrentPage('vehicle-year');
+
   let number = 0;
   container.innerHTML = '<div class="step step-2" id="">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -444,6 +595,9 @@ function checkYears(e)
 //write model
 function models(e)
 {
+  setPageUrl('vehicle-model');
+  setCurrentPage('vehicle-model');
+
   let number = 0;
   container.innerHTML = '<div class="step step-make">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -525,6 +679,9 @@ function checkModel(e)
 
 function owner(e)
 {
+  setPageUrl('vehicle-owner');
+  setCurrentPage('vehicle-owner');
+
   let own = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -567,6 +724,8 @@ function checkOwner(e)
 
 function milage(e)
 {
+  setPageUrl('vehicle-milage');
+  setCurrentPage('vehicle-milage');
   let mile = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -609,6 +768,9 @@ function checkMilage(e)
 
 function coverage(e)
 {
+  setPageUrl('vehicle-coverage');
+  setCurrentPage('vehicle-coverage');
+
   let cover = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -651,6 +813,9 @@ function checkCoverage(e)
 
 function anotherVehicle(e)
 {
+  setPageUrl('vehicle-another');
+  setCurrentPage('vehicle-another');
+
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Vehicle?</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
@@ -697,6 +862,9 @@ function checkAnotherVehicle(e)
 
 function insurance(e)
 {
+  setPageUrl('insurance');
+  setCurrentPage('insurance');
+
   // common agent text hide this section
   commonAgent('No');
 
@@ -829,6 +997,9 @@ function checkInsuranceForm(e)
 /** ------------------ Add Driver Section --------------- */
 function addDriver(e)
 {
+  setPageUrl('driver-add');
+  setCurrentPage('driver-add');
+
   let driver = formdata.drivers.current.general;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -861,6 +1032,9 @@ function addDriver(e)
 
 function driverMaritalStatus(e)
 {
+  setPageUrl('driver-marital-status');
+  setCurrentPage('driver-marital-status');
+
   let driver = formdata.drivers.current.general;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -903,6 +1077,9 @@ function driverMaritalStatus(e)
 
 function birthMonth(e)
 {
+  setPageUrl('driver-birth-month');
+  setCurrentPage('driver-birth-month');
+
   let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -951,6 +1128,9 @@ function birthMonth(e)
 
 function birthDay(e)
 {
+  setPageUrl('driver-birth-day');
+  setCurrentPage('driver-birth-day');
+
   let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -999,6 +1179,9 @@ function birthDay(e)
 
 function birthYear(e)
 {
+  setPageUrl('driver-birth-year');
+  setCurrentPage('driver-birth-year');
+
   let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
     '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1048,6 +1231,9 @@ function birthYear(e)
 
 function incident(e)
 {
+  setPageUrl('driver-incident');
+  setCurrentPage('driver-incident');
+
   let parts = formdata.drivers.current.incidents.part;
   
   container.innerHTML = '<div class="step step-number step-content-basic five-items">'+
@@ -1195,6 +1381,9 @@ function checkIncident(e)
 
 function accident(e)
 {
+  setPageUrl('driver-accident');
+  setCurrentPage('driver-accident');
+
   let act = formdata.drivers.current.incidents.accident;
   container.innerHTML ='<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1313,6 +1502,9 @@ function checkAccidentForm(e)
 
 function ticket(e)
 {
+  setPageUrl('driver-ticket');
+  setCurrentPage('driver-ticket');
+
   let act = formdata.drivers.current.incidents.ticket;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1416,6 +1608,9 @@ function checkTicketForm(e)
 
 function dui(e)
 {
+  setPageUrl('driver-dui');
+  setCurrentPage('driver-dui');
+
   let state = '';
   let addr = formdata.drivers.current.incidents.dui;
   if(addr[2])
@@ -1517,6 +1712,9 @@ function checkDuiForm(e)
 
 function driverName(e)
 {
+  setPageUrl('driver-name');
+  setCurrentPage('driver-name');
+
   let first_name = '', last_name = '';
   let names = formdata.drivers.current.names;
   if(names[0])
@@ -1657,6 +1855,9 @@ function backIncident(e)
 
 function anotherDriver(e)
 {
+  setPageUrl('driver-another');
+  setCurrentPage('driver-another');
+
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Driver?</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="moreDriver">'+
@@ -1727,6 +1928,9 @@ function checkAnotherDriver(e)
 /** ------------------ Owner Details -------------------- */
 function ownerAddress(e)
 {
+  setPageUrl('owner-address');
+  setCurrentPage('owner-address');
+
   let address = '', zip = '', state = '', city = '', country = '';
   let addr = formdata.owner.address;
   if(localStorage.getItem('localdata')){
@@ -1875,6 +2079,9 @@ function checkAddressForm(e)
 
 function ownership(e)
 {
+  setPageUrl('owner-ownership');
+  setCurrentPage('owner-ownership');
+
   let contact = formdata.owner.contact;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Home Ownership</h2>'+
@@ -1904,6 +2111,9 @@ function ownership(e)
 
 function emailAddress(e)
 {
+  setPageUrl('owner-email-address');
+  setCurrentPage('owner-email-address');
+
   let email = '';
   let contact = formdata.owner.contact;
 
@@ -1989,6 +2199,9 @@ function emailForm(e)
 
 function getQuote(e)
 {
+  setPageUrl('owner-contact');
+  setCurrentPage('owner-contact');
+
   let phone = '';
   let contact = formdata.owner.contact;
 
