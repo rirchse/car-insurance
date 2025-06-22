@@ -29,15 +29,6 @@ let incidents = {
   backward : []
 };
 
-let currentData = {
-  zipcode: "",
-  vehicle: {
-    make: "",
-    year: "",
-    model: "",
-  },
-};
-
 let year = '', brand = '', model = '';
 let vehicleCounter = 0, driverCounter = 0;
 let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th'];
@@ -149,10 +140,29 @@ function checkLocalStorage(){
   return false;
 }
 
-function setCurrentData()
+let currentData = {
+  zip: {
+    code: [],
+  },
+  vehicle: {
+    make: [],
+    year: [],
+    model: [],
+  },
+};
+
+function setCurrentData(data)
 {
-  localStorage.setItem('currentData', currentData);
+  localStorage.setItem('currentData', JSON.stringify(data));
 }
+
+(()=>{
+  if(localStorage.getItem('currentData') != null)
+  {
+    currentData = JSON.parse(localStorage.getItem('currentData'));
+  }
+}
+)();
 
 function setPageUrl(page)
 {
@@ -168,120 +178,157 @@ function setCurrentPage(page)
   localStorage.setItem('currentPage', page);
 }
 
+
 function checkCurrentPage()
 {
+  const local = JSON.parse(localStorage.getItem('currentData'));
 
-  setTimeout(() => {
-    const local = localStorage.getItem('currentData');
-    console.log(local);
+  // setTimeout(() => {
+  //   const local = localStorage.getItem('currentData');
 
-  }, 0);
+  // }, 0);
 
-  // const currentPage = localStorage.getItem('currentPage');
-  const newUrl = new URL(window.location.href);
-  const currentPage = newUrl.searchParams.get('page');
+  console.log(local);
+
+  const currentPage = localStorage.getItem('currentPage');
+  // const newUrl = new URL(window.location.href);
+  // const currentPage = newUrl.searchParams.get('page');
 
   // console.log(url);
 
   if(currentPage == 'zip-code')
   {
     createZIPCodePanel('e');
+    homeInfo('Yes');
   }
   else if(currentPage == 'vehicle-make')
   {
-    brands('e');
+    homeInfo('No');
+    brands(null);
   }
   else if(currentPage == 'vehicle-year')
   {
-    writeYears('e');
+    homeInfo('No');
+    let e = document.createElement('button');
+    e.setAttribute('name', local.vehicle.make);
+    writeYears(e);
   }
   else if(currentPage == 'vehicle-model')
   {
-    models('e');
+    homeInfo('No');
+    brand = local.vehicle.make;
+    year = local.vehicle.year;
+    let e = document.createElement('button');
+    e.setAttribute('name', local.vehicle.year);
+    models(e);
   }
-  else if(currentPage == 'vehicle-owner')
+  else if(currentPage == 'vehicle-ownership')
   {
+    homeInfo('No');
     owner('e');
   }
-  else if(currentPage == 'vehicle-milage')
+  else if(currentPage == 'annual-mileage')
   {
+    homeInfo('No');
     milage('e');
   }
-  else if(currentPage == 'vehicle-coverage')
+  else if(currentPage == 'desired-coverage-level')
   {
+    homeInfo('No');
     coverage('e');
   }
-  else if(currentPage == 'vehicle-another')
+  else if(currentPage == 'add-another-vehicle')
   {
+    homeInfo('No');
     anotherVehicle('e');
   }
-  else if(currentPage == 'insurance')
+  else if(currentPage == 'insurance-details')
   {
+    homeInfo('No');
     insurance('e');
   }
-  else if(currentPage == 'driver-add')
+  else if(currentPage == 'gender')
   {
+    homeInfo('No');
     addDriver('e');
   }
-  else if(currentPage == 'driver-marital-status')
+  else if(currentPage == 'marital-status')
   {
+    homeInfo('No');
     driverMaritalStatus('e');
   }
-  else if(currentPage == 'driver-birth-month')
+  else if(currentPage == 'birth-month')
   {
+    homeInfo('No');
     birthMonth('e');
   }
-  else if(currentPage == 'driver-birth-year')
+  else if(currentPage == 'birth-day')
   {
+    homeInfo('No');
+    birthDay('e');
+  }
+  else if(currentPage == 'birth-year')
+  {
+    homeInfo('No');
     birthYear('e');
   }
-  else if(currentPage == 'driver-incident')
+  else if(currentPage == 'incidents-in-the-past-3-years')
   {
+    homeInfo('No');
     incident('e');
   }
-  else if(currentPage == 'driver-accident')
-  {
-    accident('e');
-  }
-  else if(currentPage == 'driver-ticket')
-  {
-    ticket('e');
-  }
-  else if(currentPage == 'driver-dui')
-  {
-    dui('e');
-  }
+  // else if(currentPage == 'accident-details')
+  // {
+  //   homeInfo('No');
+  //   accident('e');
+  // }
+  // else if(currentPage == 'driver-ticket')
+  // {
+  //   homeInfo('No');
+  //   ticket('e');
+  // }
+  // else if(currentPage == 'dui-details')
+  // {
+  //   homeInfo('No');
+  //   dui('e');
+  // }
   else if(currentPage == 'driver-name')
   {
+    homeInfo('No');
     driverName('e');
   }
-  else if(currentPage == 'driver-another')
+  else if(currentPage == 'add-another-driver')
   {
+    homeInfo('No');
     anotherDriver('e');
   }
-  else if(currentPage == 'owner-address')
+  else if(currentPage == 'current-address')
   {
+    homeInfo('No');
     ownerAddress('e');
   }
-  else if(currentPage == 'owner-ownership')
+  else if(currentPage == 'home-ownership')
   {
+    homeInfo('No');
     ownership('e');
   }
-  else if(currentPage == 'owner-email-address')
+  else if(currentPage == 'email-address')
   {
+    homeInfo('No');
     emailAddress('e');
   }
-  else if(currentPage == 'owner-contact')
+  else if(currentPage == 'contact-number')
   {
+    homeInfo('No');
     getQuote('e');
   }
 
 }
 
-checkCurrentPage();
-
 function createZIPCodePanel(e)
 {
+  setPageUrl('home-page');
+
   let html = '<div class="step step-1">'+
     '<h2>Enter Your Zip Code</h2>'+
     '<form action="#" name="zipForm" onsubmit="event.preventDefault()">'+
@@ -386,8 +433,8 @@ function ZIPCode(e)
         increasePercent(6);
       }
 
-      currentData.zipcode = zipcode;
-      setCurrentData();
+      currentData.zip.code = zipcode.value;
+      setCurrentData(currentData);
 
       // execute brands
       brands(e);
@@ -495,13 +542,16 @@ function brands(e)
 
 function checkBrands(e)
 {
+  // console.log(e.name);
   //increase value for every action
   if(vehicleCounter == 0)
   {
     increasePercent(6);
   }
 
-  currentData.vehicle.make = e;
+  currentData.vehicle.make = e.name;
+  setCurrentData(currentData);
+
   //call to the write years
   writeYears(e);
 
@@ -587,6 +637,10 @@ function checkYears(e)
   {
     increasePercent(6);
   }
+  
+  currentData.vehicle.year = e.name;
+  setCurrentData(currentData);
+
   //call to the write years
   models(e);
 
@@ -674,13 +728,17 @@ function checkModel(e)
   {
     increasePercent(6);
   }
+  
+  currentData.vehicle.model = e.name;
+  setCurrentData(currentData);
+
   owner(e);
 }
 
 function owner(e)
 {
-  setPageUrl('vehicle-owner');
-  setCurrentPage('vehicle-owner');
+  setPageUrl('vehicle-ownership');
+  setCurrentPage('vehicle-ownership');
 
   let own = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -724,8 +782,8 @@ function checkOwner(e)
 
 function milage(e)
 {
-  setPageUrl('vehicle-milage');
-  setCurrentPage('vehicle-milage');
+  setPageUrl('annual-mileage');
+  setCurrentPage('annual-mileage');
   let mile = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -768,8 +826,8 @@ function checkMilage(e)
 
 function coverage(e)
 {
-  setPageUrl('vehicle-coverage');
-  setCurrentPage('vehicle-coverage');
+  setPageUrl('desired-coverage-level');
+  setCurrentPage('desired-coverage-level');
 
   let cover = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -813,8 +871,8 @@ function checkCoverage(e)
 
 function anotherVehicle(e)
 {
-  setPageUrl('vehicle-another');
-  setCurrentPage('vehicle-another');
+  setPageUrl('add-another-vehicle');
+  setCurrentPage('add-another-vehicle');
 
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Vehicle?</h2>'+
@@ -862,8 +920,8 @@ function checkAnotherVehicle(e)
 
 function insurance(e)
 {
-  setPageUrl('insurance');
-  setCurrentPage('insurance');
+  setPageUrl('insurance-details');
+  setCurrentPage('insurance-details');
 
   // common agent text hide this section
   commonAgent('No');
@@ -890,12 +948,9 @@ function insurance(e)
           '<option value="Not Currently Listed"'+(insure[0] == 'Not Currently Listed'? 'selected':'')+'>Not Currently Listed</option>'+
           '<option value="21st Century"'+(insure[0] == '21st Century'? 'selected':'')+'>21st Century</option>'+
           '<option value="AAA"'+(insure[0] == 'AAA'? 'selected':'')+'>AAA</option>'+
-          // '<option value="Allstate"'+(insure[0] == 'Allstate'? 'selected':'')+'>Allstate</option>'+
           '<option value="American Family"'+(insure[0] == 'American Family'? 'selected':'')+'>American Family</option>'+
-          // '<option value="Bristol West"'+(insure[0] == 'Bristol West'? 'selected':'')+'>Bristol West</option>'+
           '<option value="Dairyland"'+(insure[0] == 'Dairyland'? 'selected':'')+'>Dairyland</option>'+
           '<option value="Direct Auto"'+(insure[0] == 'Direct Auto'? 'selected':'')+'>Direct Auto</option>'+
-          // '<option value="Elephant"'+(insure[0] == 'Elephant'? 'selected':'')+'>Elephant</option>'+
           '<option value="Erie"'+(insure[0] == 'Erie'? 'selected':'')+'>Erie</option>'+
           '<option value="Esurance"'+(insure[0] == 'Esurance'? 'selected':'')+'>Esurance</option>'+
           '<option value="Farm Bureau"'+(insure[0] == 'Farm Bureau'? 'selected':'')+'>Farm Bureau</option>'+
@@ -908,12 +963,9 @@ function insurance(e)
           '<option value="Nationwide"'+(insure[0] == 'Nationwide'? 'selected':'')+'>Nationwide</option>'+
           '<option value="Plymouth Rock"'+(insure[0] == 'Plymouth Rock'? 'selected':'')+'>Plymouth Rock</option>'+
           '<option value="Progressive"'+(insure[0] == 'Progressive'? 'selected':'')+'>Progressive</option>'+
-          // '<option value="Prudential"'+(insure[0] == 'Prudential'? 'selected':'')+'>Prudential</option>'+
-          // '<option value="SafeAuto"'+(insure[0] == 'SafeAuto'? 'selected':'')+'>SafeAuto</option>'+
           '<option value="Safeco"'+(insure[0] == 'Safeco'? 'selected':'')+'>Safeco</option>'+
           '<option value="State Farm"'+(insure[0] == 'State Farm'? 'selected':'')+'>State Farm</option>'+
           '<option value="The General"'+(insure[0] == 'The General'? 'selected':'')+'>The General</option>'+
-          // '<option value="The Hartford"'+(insure[0] == 'The Hartford'? 'selected':'')+'>The Hartford</option>'+
           '<option value="Travelers"'+(insure[0] == 'Travelers'? 'selected':'')+'>Travelers</option>'+
           '<option value="USAA"'+(insure[0] == 'USAA'? 'selected':'')+'>USAA</option>'+
       '</select>'+
@@ -926,7 +978,6 @@ function insurance(e)
           '<option value="1 year" '+(insure[1] == '1 year'? 'selected':'')+'>1 year</option>'+
           '<option value="1-3 years" '+(insure[1] == '1-3 years'? 'selected':'')+'>1-3 years</option>'+
           '<option value="3-5 years" '+(insure[1] == '3-5 years'? 'selected':'')+'>3-5 years</option>'+
-          // '<option value="3 to 5 Years" '+(insure[1] == '3 to 5 Years'? 'selected':'')+'>3 to 5 Years</option>'+
           '<option value="5+ years" '+(insure[1] == '5+ years'? 'selected':'')+'>5+ years</option>'+
       '</select>'+
       '<p class="error" id="coverage_err"></p>'+
@@ -997,8 +1048,8 @@ function checkInsuranceForm(e)
 /** ------------------ Add Driver Section --------------- */
 function addDriver(e)
 {
-  setPageUrl('driver-add');
-  setCurrentPage('driver-add');
+  setPageUrl('gender');
+  setCurrentPage('gender');
 
   let driver = formdata.drivers.current.general;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -1032,8 +1083,8 @@ function addDriver(e)
 
 function driverMaritalStatus(e)
 {
-  setPageUrl('driver-marital-status');
-  setCurrentPage('driver-marital-status');
+  setPageUrl('marital-status');
+  setCurrentPage('marital-status');
 
   let driver = formdata.drivers.current.general;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
@@ -1077,8 +1128,8 @@ function driverMaritalStatus(e)
 
 function birthMonth(e)
 {
-  setPageUrl('driver-birth-month');
-  setCurrentPage('driver-birth-month');
+  setPageUrl('birth-month');
+  setCurrentPage('birth-month');
 
   let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
@@ -1128,8 +1179,8 @@ function birthMonth(e)
 
 function birthDay(e)
 {
-  setPageUrl('driver-birth-day');
-  setCurrentPage('driver-birth-day');
+  setPageUrl('birth-day');
+  setCurrentPage('birth-day');
 
   let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
@@ -1179,8 +1230,8 @@ function birthDay(e)
 
 function birthYear(e)
 {
-  setPageUrl('driver-birth-year');
-  setCurrentPage('driver-birth-year');
+  setPageUrl('birth-year');
+  setCurrentPage('birth-year');
 
   let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
@@ -1231,8 +1282,8 @@ function birthYear(e)
 
 function incident(e)
 {
-  setPageUrl('driver-incident');
-  setCurrentPage('driver-incident');
+  setPageUrl('incidents-in-the-past-3-years');
+  setCurrentPage('incidents-in-the-past-3-years');
 
   let parts = formdata.drivers.current.incidents.part;
   
@@ -1381,8 +1432,8 @@ function checkIncident(e)
 
 function accident(e)
 {
-  setPageUrl('driver-accident');
-  setCurrentPage('driver-accident');
+  setPageUrl('accident-details');
+  setCurrentPage('accident-details');
 
   let act = formdata.drivers.current.incidents.accident;
   container.innerHTML ='<div class="step step-number step-content-basic three-items">'+
@@ -1608,8 +1659,8 @@ function checkTicketForm(e)
 
 function dui(e)
 {
-  setPageUrl('driver-dui');
-  setCurrentPage('driver-dui');
+  setPageUrl('dui-detail');
+  setCurrentPage('dui-detail');
 
   let state = '';
   let addr = formdata.drivers.current.incidents.dui;
@@ -1855,8 +1906,8 @@ function backIncident(e)
 
 function anotherDriver(e)
 {
-  setPageUrl('driver-another');
-  setCurrentPage('driver-another');
+  setPageUrl('add-another-driver');
+  setCurrentPage('add-another-driver');
 
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Driver?</h2>'+
@@ -1928,8 +1979,8 @@ function checkAnotherDriver(e)
 /** ------------------ Owner Details -------------------- */
 function ownerAddress(e)
 {
-  setPageUrl('owner-address');
-  setCurrentPage('owner-address');
+  setPageUrl('current-address');
+  setCurrentPage('current-address');
 
   let address = '', zip = '', state = '', city = '', country = '';
   let addr = formdata.owner.address;
@@ -2079,8 +2130,8 @@ function checkAddressForm(e)
 
 function ownership(e)
 {
-  setPageUrl('owner-ownership');
-  setCurrentPage('owner-ownership');
+  setPageUrl('home-ownership');
+  setCurrentPage('home-ownership');
 
   let contact = formdata.owner.contact;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -2111,8 +2162,8 @@ function ownership(e)
 
 function emailAddress(e)
 {
-  setPageUrl('owner-email-address');
-  setCurrentPage('owner-email-address');
+  setPageUrl('email-address');
+  setCurrentPage('email-address');
 
   let email = '';
   let contact = formdata.owner.contact;
@@ -2199,8 +2250,8 @@ function emailForm(e)
 
 function getQuote(e)
 {
-  setPageUrl('owner-contact');
-  setCurrentPage('owner-contact');
+  setPageUrl('contact-number');
+  setCurrentPage('contact-number');
 
   let phone = '';
   let contact = formdata.owner.contact;
@@ -2823,10 +2874,14 @@ function editAddDriver(e){
 
 function removeLocal(e)
 {
-  document.getElementById('localClearBtn').style.display = 'none';
-  increasePercent(-75);
+  // increasePercent(25);
   localStorage.removeItem('localdata');
   localStorage.removeItem('submitted');
+  localStorage.removeItem('currentData');
+  localStorage.removeItem('currentPage');
+
+  document.getElementById('localClearBtn').style.display = 'none';
+
   createZIPCodePanel();
 }
 
@@ -2870,3 +2925,12 @@ function showHide(e)
   let panel = e.parentNode.nextElementSibling;
   panel.classList.toggle('hide');  
 }
+
+
+(() => {
+  setTimeout(()=>{
+
+    checkCurrentPage();
+  }, 100)
+}
+)();
