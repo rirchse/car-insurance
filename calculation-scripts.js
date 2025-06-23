@@ -52,7 +52,7 @@ function increasePercent(increase)
 
 // generate ip address
 let ipaddress = '';
-function generateIP(){
+(function generateIP(){
   fetch('https://api.ipify.org?format=json')
   .then(response => response.json())
   .then(data => {
@@ -63,8 +63,7 @@ function generateIP(){
     console.error('Error fetching IP:', error);
   });
 
-}
-generateIP();
+})();
 
 // check all error and set the border color
 function checkErr(e)
@@ -132,6 +131,22 @@ function checkPhone(e)
   }
 }
 
+// store formdata to localstorage
+function formDataStore(data)
+{
+  localStorage.setItem('localdata', JSON.stringify(data));
+  console.log(formdata);
+}
+
+// onload keep updated formdata object from localstorage localdata
+(()=>{
+  if(localStorage.getItem('localdata') != null)
+  {
+    formdata = JSON.parse(localStorage.getItem('localdata'));
+  }
+  
+})();
+
 //check local storage data
 function checkLocalStorage(){
   if(localStorage.getItem('localdata')){
@@ -142,7 +157,7 @@ function checkLocalStorage(){
 
 let currentData = {
   zip: {
-    code: [],
+    code: '',
   },
   vehicle: {
     make: [],
@@ -151,11 +166,13 @@ let currentData = {
   },
 };
 
+// current data store to the localstorage
 function setCurrentData(data)
 {
   localStorage.setItem('currentData', JSON.stringify(data));
 }
 
+// onload set current data to the currentData object
 (()=>{
   if(localStorage.getItem('currentData') != null)
   {
@@ -164,6 +181,7 @@ function setCurrentData(data)
 }
 )();
 
+//change very page url
 function setPageUrl(page)
 {
   const url = new URL(window.location.href);
@@ -173,37 +191,31 @@ function setPageUrl(page)
   window.history.pushState({}, '', url);
 }
 
+// current page store to localstorage
 function setCurrentPage(page)
 {
   localStorage.setItem('currentPage', page);
 }
 
-
+// styleLoad();
+// onload check current page
 function checkCurrentPage()
 {
   const local = JSON.parse(localStorage.getItem('currentData'));
 
-  // setTimeout(() => {
-  //   const local = localStorage.getItem('currentData');
-
-  // }, 0);
-
   console.log(local);
 
   const currentPage = localStorage.getItem('currentPage');
-  // const newUrl = new URL(window.location.href);
-  // const currentPage = newUrl.searchParams.get('page');
-
-  // console.log(url);
 
   if(currentPage == 'zip-code')
   {
-    createZIPCodePanel('e');
+    createZIPCodePanel(null);
     homeInfo('Yes');
   }
   else if(currentPage == 'vehicle-make')
   {
     homeInfo('No');
+    increasePercent(6); //25+6=31%
     brands(null);
   }
   else if(currentPage == 'vehicle-year')
@@ -211,6 +223,7 @@ function checkCurrentPage()
     homeInfo('No');
     let e = document.createElement('button');
     e.setAttribute('name', local.vehicle.make);
+    increasePercent(12); //25+12=37
     writeYears(e);
   }
   else if(currentPage == 'vehicle-model')
@@ -220,107 +233,145 @@ function checkCurrentPage()
     year = local.vehicle.year;
     let e = document.createElement('button');
     e.setAttribute('name', local.vehicle.year);
+    increasePercent(18); //25+18=43
     models(e);
   }
   else if(currentPage == 'vehicle-ownership')
   {
     homeInfo('No');
-    owner('e');
+    increasePercent(24); //25+24=49
+    owner(null);
   }
   else if(currentPage == 'annual-mileage')
   {
     homeInfo('No');
-    milage('e');
+    increasePercent(30); //25+30=55
+    milage(null);
   }
   else if(currentPage == 'desired-coverage-level')
   {
     homeInfo('No');
-    coverage('e');
+    increasePercent(36); //25+36=61
+    coverage(null);
   }
   else if(currentPage == 'add-another-vehicle')
   {
     homeInfo('No');
-    anotherVehicle('e');
+
+    increasePercent(42); //25+42=67
+    anotherVehicle(null);
   }
   else if(currentPage == 'insurance-details')
   {
     homeInfo('No');
-    insurance('e');
+
+    increasePercent(42); //25+42=67
+    insurance(null);
   }
   else if(currentPage == 'gender')
   {
     homeInfo('No');
-    addDriver('e');
+
+    increasePercent(47); //25+47=72
+    addDriver(null);
   }
   else if(currentPage == 'marital-status')
   {
     homeInfo('No');
-    driverMaritalStatus('e');
+
+    increasePercent(52); //25+52=77
+    driverMaritalStatus(null);
   }
   else if(currentPage == 'birth-month')
   {
     homeInfo('No');
-    birthMonth('e');
+
+    increasePercent(57); //25+57=82
+    birthMonth(null);
   }
   else if(currentPage == 'birth-day')
   {
     homeInfo('No');
-    birthDay('e');
+
+    increasePercent(62); //25+62=87
+    birthDay(null);
   }
   else if(currentPage == 'birth-year')
   {
     homeInfo('No');
-    birthYear('e');
+
+    increasePercent(67); //25+67=92
+    birthYear(null);
   }
   else if(currentPage == 'incidents-in-the-past-3-years')
   {
     homeInfo('No');
-    incident('e');
+
+    increasePercent(67); //25+67=92
+    incident(null);
   }
-  // else if(currentPage == 'accident-details')
-  // {
-  //   homeInfo('No');
-  //   accident('e');
-  // }
+  else if(currentPage == 'accident-details')
+  {
+    homeInfo('No');
+
+    increasePercent(67); //25+67=92
+    accident(null);
+  }
   // else if(currentPage == 'driver-ticket')
   // {
   //   homeInfo('No');
-  //   ticket('e');
+
+  //   increasePercent(67); //25+67=92
+  //   ticket(null);
   // }
-  // else if(currentPage == 'dui-details')
-  // {
-  //   homeInfo('No');
-  //   dui('e');
-  // }
+  else if(currentPage == 'dui-details')
+  {
+    homeInfo('No');
+
+    increasePercent(67); //25+67=92
+    dui(null);
+  }
   else if(currentPage == 'driver-name')
   {
     homeInfo('No');
-    driverName('e');
+
+    increasePercent(67); //25+67=92
+    driverName(null);
   }
   else if(currentPage == 'add-another-driver')
   {
     homeInfo('No');
-    anotherDriver('e');
+
+    increasePercent(67); //25+67=92
+    anotherDriver(null);
   }
   else if(currentPage == 'current-address')
   {
     homeInfo('No');
-    ownerAddress('e');
+
+    increasePercent(67); //25+67=92
+    ownerAddress(null);
   }
   else if(currentPage == 'home-ownership')
   {
     homeInfo('No');
-    ownership('e');
+
+    increasePercent(69); //25+69=94
+    ownership(null);
   }
   else if(currentPage == 'email-address')
   {
     homeInfo('No');
-    emailAddress('e');
+
+    increasePercent(71); //25+71=96
+    emailAddress(null);
   }
   else if(currentPage == 'contact-number')
   {
     homeInfo('No');
-    getQuote('e');
+
+    increasePercent(73); //25+73=98
+    getQuote(null);
   }
 
 }
@@ -626,6 +677,7 @@ function writeYears(e)
 
     // store brand to the object
     formdata.vehicles.current[0] = [brand, e.firstElementChild.firstElementChild.src];
+    // formDataStore(formdata);
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
 }
@@ -732,6 +784,8 @@ function checkModel(e)
   currentData.vehicle.model = e.name;
   setCurrentData(currentData);
 
+  // formDataStore(formdata);
+
   owner(e);
 }
 
@@ -777,6 +831,8 @@ function checkOwner(e)
   {
     increasePercent(6);
   }
+
+  // formDataStore(formdata);
   milage(e);
 }
 
@@ -821,6 +877,8 @@ function checkMilage(e)
   {
     increasePercent(6);
   }
+
+  // formDataStore(formdata);
   coverage(e);
 }
 
@@ -866,6 +924,8 @@ function checkCoverage(e)
   {
     increasePercent(6);
   }
+
+  // formDataStore(formdata);
   anotherVehicle(e);
 }
 
@@ -914,8 +974,12 @@ function checkAnotherVehicle(e)
     let vlist = formdata.vehicles.list.length;
     vehicleCounter = vlist++;
     formdata.vehicles.current = [];
+
+    // formDataStore(formdata);
     brands(e);
   }
+
+  // formDataStore(formdata);
 }
 
 function insurance(e)
@@ -997,7 +1061,7 @@ function insurance(e)
     '</form>'+
   '</div>';
 
-  if(e.value == 'back') {
+  if(e != null && e.value == 'back') {
     increasePercent(-5);
     if(driverCounter > 0){
       driverCounter--;
@@ -1079,6 +1143,8 @@ function addDriver(e)
       increasePercent(-5);
     }
   }
+
+  // formDataStore(formdata);
 }
 
 function driverMaritalStatus(e)
@@ -1124,6 +1190,8 @@ function driverMaritalStatus(e)
       increasePercent(-5);
     }
   }
+
+  // formDataStore(formdata);
 }
 
 function birthMonth(e)
@@ -1175,6 +1243,9 @@ function birthMonth(e)
       increasePercent(-5);
     }
   }
+
+
+  // formDataStore(formdata);
 }
 
 function birthDay(e)
@@ -1226,6 +1297,8 @@ function birthDay(e)
       increasePercent(-5);
     }
   }
+
+  // formDataStore(formdata);
 }
 
 function birthYear(e)
@@ -1278,6 +1351,8 @@ function birthYear(e)
       // increasePercent(-5);
     }
   }
+
+  // formDataStore(formdata);
 }
 
 function incident(e)
@@ -1428,6 +1503,9 @@ function checkIncident(e)
       }
     }
   }
+
+
+  // formDataStore(formdata);
 }
 
 function accident(e)
@@ -1549,6 +1627,8 @@ function checkAccidentForm(e)
     }
 
   });
+
+  // formDataStore(formdata);
 }
 
 function ticket(e)
@@ -1655,6 +1735,8 @@ function checkTicketForm(e)
     }
 
   });
+
+  // formDataStore(formdata);
 }
 
 function dui(e)
@@ -1759,6 +1841,8 @@ function checkDuiForm(e)
     }
 
   });
+
+  // formDataStore(formdata);
 }
 
 function driverName(e)
@@ -1861,6 +1945,8 @@ function checkNameForm(e)
     }
 
   });
+
+  // formDataStore(formdata);
 }
 
 /** ------------------- next incident ------------ */
@@ -1880,6 +1966,8 @@ function nextIncident(e)
   {
     driverName(e);
   }
+
+  // formDataStore(formdata);
 }
 
 /** ------------------- back incident ------------ */
@@ -1901,6 +1989,8 @@ function backIncident(e)
   {
     incident(e);
   }
+
+  // formDataStore(formdata);
   
 }
 
@@ -1973,6 +2063,8 @@ function checkAnotherDriver(e)
       }
     };
     addDriver();
+
+    // formDataStore(formdata);
   }
 }
 
@@ -2074,7 +2166,7 @@ function ownerAddress(e)
     '</div>'+
     '</div>';
 
-  if(e.value == 'back'){
+  if(e != null && e.value == 'back'){
     increasePercent(-2);
   }
 
@@ -2123,6 +2215,8 @@ function checkAddressForm(e)
       {
         ownership(e);
       }
+
+      // formDataStore(formdata);
     }
 
   });
@@ -2157,6 +2251,8 @@ function ownership(e)
   if(e.value == 'back'){
     increasePercent(-2);
   }
+
+  // formDataStore(formdata);
   
 }
 
@@ -2245,6 +2341,8 @@ function emailForm(e)
     
     //increase value for every action
     increasePercent(2);
+
+    // formDataStore(formdata);
   }
 }
 
@@ -2316,9 +2414,10 @@ function checkQuote(e)
       local.owner.contact[2] = phone.value;
       localStorage.setItem('localdata', JSON.stringify(local));
 
-      // remove submit count from local data
+      // remove submit counter from local data
       localStorage.removeItem('submitted');
 
+      // check formdata stored to the localstoage
       checkLocalData();
       // sendToServer();
     }
@@ -2329,6 +2428,8 @@ function checkQuote(e)
       checkLocalData();
       loading.style.display = 'block';
       sendToServer();
+      localStorage.removeItem('currentData');
+      localStorage.removeItem('currentPage');
     }
 
     //increase value for every action
@@ -2875,6 +2976,11 @@ function editAddDriver(e){
 function removeLocal(e)
 {
   // increasePercent(25);
+  percent_line.style.width = '25%';
+  percent_number.style.left = '25%';
+  percent_number.innerHTML = '25%';
+  percent_number.number = '25%';
+
   localStorage.removeItem('localdata');
   localStorage.removeItem('submitted');
   localStorage.removeItem('currentData');

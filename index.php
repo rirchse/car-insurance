@@ -298,13 +298,14 @@
     </form>
     <!-- script for slim select form butify library -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
+
     <script>
       let trustFormCert;
       let v_click_id;
 
-        setTimeout(() => {
-            document.getElementById('loading').style.display = 'none';
-        }, 500);
+        // setTimeout(() => {
+        //     document.getElementById('loading').style.display = 'none';
+        // }, 500);
 
         let localClearBtn = document.getElementById('localClearBtn');
         if(localStorage.getItem('localdata') || localStorage.getItem('currentData') || localStorage.getItem('currentPage')){
@@ -315,6 +316,7 @@
             let addressForm = document.querySelector('#addressForm');
             addressForm.reset();
         }
+
         function styleLoad()
         {
             let insurance_carrier = new SlimSelect({
@@ -452,14 +454,29 @@
             '://api.trustedform.com/trustedform.js?field=xxTrustedFormCertUrl&l=' +
             new Date().getTime() + Math.random();
           var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(tf, s);
+          let trustForm = document.querySelector('[name="xxTrustedFormCertUrl"]');
 
-          setTimeout(() => {
-            let trustForm = document.querySelector('[name="xxTrustedFormCertUrl"]');
-            trustFormCert = trustForm.value;
-            // console.log(trustFormCert);
-          }, 4000);
+          function getCertUrl(){
+            const trustForm = document.querySelector('[name="xxTrustedFormCertUrl"]');
+            if(trustForm)
+            {
+              trustFormCert = trustForm.value;
+              document.getElementById('loading').style.display = 'none';
+            }
+            else
+            {
+              checkCertUrl();
+            }
+          }
+
+          function checkCertUrl(){
+            setTimeout(() => {
+              getCertUrl();
+              console.log(`second: ${trustFormCert}`);
+            }, 500);
+          }
+          getCertUrl();
         })();
-        // console.log(trustFormCert);
     </script>
     <noscript>
         <img src='https://api.trustedform.com/ns.gif' />
