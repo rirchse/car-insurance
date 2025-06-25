@@ -29,7 +29,7 @@ let incidents = {
   backward : []
 };
 
-let year = '', brand = '', model = '';
+let year = '', brand = '', model = '', editmode = '';
 let vehicleCounter = 0, driverCounter = 0;
 let countArr = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th', '10th', '11th', '12th', '13th', '14th', '15th', '16th', '17th', '18th', '19th', '20th'];
 
@@ -134,18 +134,23 @@ function checkPhone(e)
 // store formdata to localstorage
 function formDataStore(data)
 {
-  localStorage.setItem('localdata', JSON.stringify(data));
-  console.log(formdata);
+  window.addEventListener('DOMContentLoaded', () => {
+    localStorage.setItem('localdata', JSON.stringify(data));
+    console.log(formdata);
+  });
 }
 
 // onload keep updated formdata object from localstorage localdata
-(()=>{
-  if(localStorage.getItem('localdata') != null)
-  {
-    formdata = JSON.parse(localStorage.getItem('localdata'));
-  }
+// (()=>{
+  window.addEventListener('DOMContentLoaded', () => {
+    if(localStorage.getItem('localdata') != null)
+    {
+      formdata = JSON.parse(localStorage.getItem('localdata'));
+      console.log(formdata);
+    }
+  });
   
-})();
+// })();
 
 //check local storage data
 function checkLocalStorage(){
@@ -167,19 +172,38 @@ let currentData = {
 };
 
 // current data store to the localstorage
+function getLocaData()
+{
+  window.addEventListener('DOMContentLoaded', () => {
+    if(localStorage.getItem('localdata'))
+    {
+      let localdata = JSON.parse(localStorage.getItem('localdata'));
+      return localdata; 
+    }
+  
+    return null;
+  });
+}
+
+function setLocalData(data)
+{
+  localStorage.setItem('localdata', JSON.stringify(data));
+}
+
 function setCurrentData(data)
 {
   localStorage.setItem('currentData', JSON.stringify(data));
 }
 
 // onload set current data to the currentData object
-(()=>{
-  if(localStorage.getItem('currentData') != null)
-  {
-    currentData = JSON.parse(localStorage.getItem('currentData'));
-  }
-}
-)();
+// (()=>{
+  window.addEventListener('DOMContentLoaded', () => {
+    if(localStorage.getItem('currentData') != null)
+    {
+      currentData = JSON.parse(localStorage.getItem('currentData'));
+    }
+  });
+// })();
 
 //change very page url
 function setPageUrl(page)
@@ -201,178 +225,191 @@ function setCurrentPage(page)
 // onload check current page
 function checkCurrentPage()
 {
-  const local = JSON.parse(localStorage.getItem('currentData'));
+  // window.addEventListener('DOMContentLoaded', () => {
+    const local = JSON.parse(localStorage.getItem('currentData'));
 
-  console.log(local);
+    console.log(local);
 
-  const currentPage = localStorage.getItem('currentPage');
+    const currentPage = localStorage.getItem('currentPage');
 
-  if(currentPage == 'zip-code')
-  {
-    createZIPCodePanel(null);
-    homeInfo('Yes');
-  }
-  else if(currentPage == 'vehicle-make')
-  {
-    homeInfo('No');
-    increasePercent(6); //25+6=31%
-    brands(null);
-  }
-  else if(currentPage == 'vehicle-year')
-  {
-    homeInfo('No');
-    let e = document.createElement('button');
-    e.setAttribute('name', local.vehicle.make);
-    increasePercent(12); //25+12=37
-    writeYears(e);
-  }
-  else if(currentPage == 'vehicle-model')
-  {
-    homeInfo('No');
-    brand = local.vehicle.make;
-    year = local.vehicle.year;
-    let e = document.createElement('button');
-    e.setAttribute('name', local.vehicle.year);
-    increasePercent(18); //25+18=43
-    models(e);
-  }
-  else if(currentPage == 'vehicle-ownership')
-  {
-    homeInfo('No');
-    increasePercent(24); //25+24=49
-    owner(null);
-  }
-  else if(currentPage == 'annual-mileage')
-  {
-    homeInfo('No');
-    increasePercent(30); //25+30=55
-    milage(null);
-  }
-  else if(currentPage == 'desired-coverage-level')
-  {
-    homeInfo('No');
-    increasePercent(36); //25+36=61
-    coverage(null);
-  }
-  else if(currentPage == 'add-another-vehicle')
-  {
-    homeInfo('No');
+    if(currentPage == 'zip-code')
+    {
+      createZIPCodePanel(null);
+      homeInfo('Yes');
+    }
+    else if(currentPage == 'vehicle-make')
+    {
+      homeInfo('No');
+      increasePercent(6); //25+6=31%
+      brands(null);
+    }
+    else if(currentPage == 'vehicle-year')
+    {
+      homeInfo('No');
+      let e = document.createElement('button');
+      e.setAttribute('name', local.vehicle.make);
+      increasePercent(12); //25+12=37
+      writeYears(e);
+    }
+    else if(currentPage == 'vehicle-model')
+    {
+      homeInfo('No');
+      brand = local.vehicle.make;
+      year = local.vehicle.year;
+      let e = document.createElement('button');
+      e.setAttribute('name', local.vehicle.year);
+      increasePercent(18); //25+18=43
+      models(e);
+    }
+    else if(currentPage == 'vehicle-ownership')
+    {
+      homeInfo('No');
+      increasePercent(24); //25+24=49
+      owner(null);
+    }
+    else if(currentPage == 'annual-mileage')
+    {
+      homeInfo('No');
+      increasePercent(30); //25+30=55
+      milage(null);
+    }
+    else if(currentPage == 'desired-coverage-level')
+    {
+      homeInfo('No');
+      increasePercent(36); //25+36=61
+      coverage(null);
+    }
+    else if(currentPage == 'add-another-vehicle')
+    {
+      homeInfo('No');
 
-    increasePercent(42); //25+42=67
-    anotherVehicle(null);
-  }
-  else if(currentPage == 'insurance-details')
-  {
-    homeInfo('No');
+      increasePercent(42); //25+42=67
+      anotherVehicle(null);
+    }
+    else if(currentPage == 'insurance-details')
+    {
+      homeInfo('No');
 
-    increasePercent(42); //25+42=67
-    insurance(null);
-  }
-  else if(currentPage == 'gender')
-  {
-    homeInfo('No');
+      increasePercent(42); //25+42=67
+      insurance(null);
+    }
+    else if(currentPage == 'gender')
+    {
+      homeInfo('No');
 
-    increasePercent(47); //25+47=72
-    addDriver(null);
-  }
-  else if(currentPage == 'marital-status')
-  {
-    homeInfo('No');
+      increasePercent(47); //25+47=72
+      addDriver(null);
+    }
+    else if(currentPage == 'marital-status')
+    {
+      homeInfo('No');
 
-    increasePercent(52); //25+52=77
-    driverMaritalStatus(null);
-  }
-  else if(currentPage == 'birth-month')
-  {
-    homeInfo('No');
+      increasePercent(52); //25+52=77
+      driverMaritalStatus(null);
+    }
+    else if(currentPage == 'birth-month')
+    {
+      homeInfo('No');
 
-    increasePercent(57); //25+57=82
-    birthMonth(null);
-  }
-  else if(currentPage == 'birth-day')
-  {
-    homeInfo('No');
+      increasePercent(57); //25+57=82
+      birthMonth(null);
+    }
+    else if(currentPage == 'birth-day')
+    {
+      homeInfo('No');
 
-    increasePercent(62); //25+62=87
-    birthDay(null);
-  }
-  else if(currentPage == 'birth-year')
-  {
-    homeInfo('No');
+      increasePercent(62); //25+62=87
+      birthDay(null);
+    }
+    else if(currentPage == 'birth-year')
+    {
+      homeInfo('No');
 
-    increasePercent(67); //25+67=92
-    birthYear(null);
-  }
-  else if(currentPage == 'incidents-in-the-past-3-years')
-  {
-    homeInfo('No');
+      increasePercent(67); //25+67=92
+      birthYear(null);
+    }
+    else if(currentPage == 'incidents-in-the-past-3-years')
+    {
+      homeInfo('No');
 
-    increasePercent(67); //25+67=92
-    incident(null);
-  }
-  else if(currentPage == 'accident-details')
-  {
-    homeInfo('No');
+      increasePercent(67); //25+67=92
+      incident(null);
+    }
+    else if(currentPage == 'accident-details')
+    {
+      homeInfo('No');
 
-    increasePercent(67); //25+67=92
-    accident(null);
-  }
-  // else if(currentPage == 'driver-ticket')
-  // {
-  //   homeInfo('No');
+      increasePercent(67); //25+67=92
+      accident(null);
+    }
+    // else if(currentPage == 'driver-ticket')
+    // {
+    //   homeInfo('No');
 
-  //   increasePercent(67); //25+67=92
-  //   ticket(null);
-  // }
-  else if(currentPage == 'dui-details')
-  {
-    homeInfo('No');
+    //   increasePercent(67); //25+67=92
+    //   ticket(null);
+    // }
+    else if(currentPage == 'dui-details')
+    {
+      homeInfo('No');
 
-    increasePercent(67); //25+67=92
-    dui(null);
-  }
-  else if(currentPage == 'driver-name')
-  {
-    homeInfo('No');
+      increasePercent(67); //25+67=92
+      dui(null);
+    }
+    else if(currentPage == 'driver-name')
+    {
+      homeInfo('No');
 
-    increasePercent(67); //25+67=92
-    driverName(null);
-  }
-  else if(currentPage == 'add-another-driver')
-  {
-    homeInfo('No');
+      increasePercent(67); //25+67=92
+      driverName(null);
+    }
+    else if(currentPage == 'add-another-driver')
+    {
+      homeInfo('No');
 
-    increasePercent(67); //25+67=92
-    anotherDriver(null);
-  }
-  else if(currentPage == 'current-address')
-  {
-    homeInfo('No');
+      increasePercent(67); //25+67=92
+      anotherDriver(null);
+    }
+    else if(currentPage == 'current-address')
+    {
+      homeInfo('No');
 
-    increasePercent(67); //25+67=92
-    ownerAddress(null);
-  }
-  else if(currentPage == 'home-ownership')
-  {
-    homeInfo('No');
+      increasePercent(67); //25+67=92
+      ownerAddress(null);
+    }
+    else if(currentPage == 'home-ownership')
+    {
+      homeInfo('No');
 
-    increasePercent(69); //25+69=94
-    ownership(null);
-  }
-  else if(currentPage == 'email-address')
-  {
-    homeInfo('No');
+      increasePercent(69); //25+69=94
+      ownership(null);
+    }
+    else if(currentPage == 'email-address')
+    {
+      homeInfo('No');
 
-    increasePercent(71); //25+71=96
-    emailAddress(null);
-  }
-  else if(currentPage == 'contact-number')
-  {
-    homeInfo('No');
+      increasePercent(71); //25+71=96
+      emailAddress(null);
+    }
+    else if(currentPage == 'contact-number')
+    {
+      homeInfo('No');
 
-    increasePercent(73); //25+73=98
-    getQuote(null);
-  }
+      increasePercent(73); //25+73=98
+      getQuote(null);
+    }
+    else if(currentPage == 'thank-you')
+    {
+      homeInfo('No');
+      checkLocalData();
+    }
+    else
+    {
+      createZIPCodePanel(null);
+      homeInfo('Yes');
+    }
+    //
+  // });
 
 }
 
@@ -420,12 +457,12 @@ function createZIPCodePanel(e)
 
   container.innerHTML = html;
 
-  if(vehicleCounter == 0 && e.value == 'back')
+  if(vehicleCounter == 0 && e != null && e.value == 'back')
   {
     increasePercent(-6);
   }
 
-  if(vehicleCounter > 0 && e.value == 'back')
+  if(vehicleCounter > 0 && e != null && e.value == 'back')
   {
     anotherVehicle();
   }
@@ -603,6 +640,16 @@ function checkBrands(e)
   currentData.vehicle.make = e.name;
   setCurrentData(currentData);
 
+  let localdata = getLocaData();
+
+  if(localdata){
+    localdata.vehicles.current[0] = e.name;
+    setLocalData(localdata);
+  }else{
+    formdata.vehicles.current[0] = e.name;
+    setLocalData(formdata);
+  }
+
   //call to the write years
   writeYears(e);
 
@@ -692,6 +739,16 @@ function checkYears(e)
   
   currentData.vehicle.year = e.name;
   setCurrentData(currentData);
+
+  let localdata = getLocaData();
+
+  if(localdata){
+    localdata.vehicles.current[1] = e.name;
+    setLocalData(localdata);
+  }else{
+    formdata.vehicles.current[1] = e.name;
+    setLocalData(formdata);
+  }
 
   //call to the write years
   models(e);
@@ -783,8 +840,16 @@ function checkModel(e)
   
   currentData.vehicle.model = e.name;
   setCurrentData(currentData);
-
-  // formDataStore(formdata);
+  
+  // store data to localstorage
+  let localdata = getLocaData();
+  if(localdata){
+    localdata.vehicles.current[2] = e.name;
+    setLocalData(localdata);
+  }else{
+    formdata.vehicles.current[2] = e.name;
+    setLocalData(formdata);
+  }
 
   owner(e);
 }
@@ -831,8 +896,17 @@ function checkOwner(e)
   {
     increasePercent(6);
   }
-
-  // formDataStore(formdata);
+  
+  // store data to localstorage
+  let localdata = getLocaData();
+  if(localdata){
+    localdata.vehicles.current[3] = e.name;
+    setLocalData(localdata);
+  }else{
+    formdata.vehicles.current[3] = e.name;
+    setLocalData(formdata);
+  }
+  
   milage(e);
 }
 
@@ -877,8 +951,17 @@ function checkMilage(e)
   {
     increasePercent(6);
   }
+  
+  // store data to localstorage
+  let localdata = getLocaData();
+  if(localdata){
+    localdata.vehicles.current[4] = e.name;
+    setLocalData(localdata);
+  }else{
+    formdata.vehicles.current[4] = e.name;
+    setLocalData(formdata);
+  }
 
-  // formDataStore(formdata);
   coverage(e);
 }
 
@@ -924,8 +1007,17 @@ function checkCoverage(e)
   {
     increasePercent(6);
   }
+  
+  // store data to localstorage
+  let localdata = getLocaData();
+  if(localdata){
+    localdata.vehicles.current[5] = e.name;
+    setLocalData(localdata);
+  }else{
+    formdata.vehicles.current[5] = e.name;
+    setLocalData(formdata);
+  }
 
-  // formDataStore(formdata);
   anotherVehicle(e);
 }
 
@@ -938,7 +1030,7 @@ function anotherVehicle(e)
   '<h2>Add Another Vehicle?</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
       '<button class="input" onclick="checkAnotherVehicle(this)" name="Yes">YES</button>'+
-      '<button class="input" onclick="insurance(this)">NO</button>'+
+      '<button class="input" onclick="checkAnotherVehicle(this)" name="No">NO</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -975,11 +1067,12 @@ function checkAnotherVehicle(e)
     vehicleCounter = vlist++;
     formdata.vehicles.current = [];
 
-    // formDataStore(formdata);
     brands(e);
   }
-
-  // formDataStore(formdata);
+  else if(e.name == 'No')
+  {
+    insurance(e);
+  }
 }
 
 function insurance(e)
@@ -993,7 +1086,7 @@ function insurance(e)
   if(localStorage.getItem('localdata'))
   {
     localStorage.removeItem('submitted');
-    checkLocalData();
+    // checkLocalData();
   }
 
   let insure = formdata.owner.insurance;
@@ -1088,13 +1181,15 @@ function checkInsuranceForm(e)
         {
           formdata.owner.insurance = [career.value, coverage.value];
 
-          if(localStorage.getItem('localdata'))
+          if(localStorage.getItem('localdata') && editmode == 'Yes')
           {
             let local = JSON.parse(localStorage.getItem('localdata'));
             local.owner.insurance = [career.value, coverage.value];
             localStorage.setItem('localdata', JSON.stringify(local));
 
             localStorage.removeItem('submitted');
+
+            editmode = '';
 
             checkLocalData();
           }
@@ -1143,8 +1238,6 @@ function addDriver(e)
       increasePercent(-5);
     }
   }
-
-  // formDataStore(formdata);
 }
 
 function driverMaritalStatus(e)
@@ -1183,6 +1276,16 @@ function driverMaritalStatus(e)
   
     //store gender to driver array
     formdata.drivers.current.general[0] = e.innerHTML;
+  
+    // store data to localstorage
+    let localdata = getLocaData();
+    if(localdata){
+      localdata.drivers.current.general[0] = e.innerHTML;
+      setLocalData(localdata);
+    }else{
+      formdata.drivers.current.general[0] = e.innerHTML;
+      setLocalData(formdata);
+    }
   }
 
   if(e.value == 'back'){
@@ -1190,8 +1293,6 @@ function driverMaritalStatus(e)
       increasePercent(-5);
     }
   }
-
-  // formDataStore(formdata);
 }
 
 function birthMonth(e)
@@ -1236,6 +1337,16 @@ function birthMonth(e)
   
     //store marital status to the drivers general array
     formdata.drivers.current.general[1] = e.innerHTML;
+  
+    // store data to localstorage
+    let localdata = getLocaData();
+    if(localdata){
+      localdata.drivers.current.general[1] = e.innerHTML;
+      setLocalData(localdata);
+    }else{
+      formdata.drivers.current.general[1] = e.innerHTML;
+      setLocalData(formdata);
+    }
   }
 
   if(e.value == 'back'){
@@ -1243,9 +1354,6 @@ function birthMonth(e)
       increasePercent(-5);
     }
   }
-
-
-  // formDataStore(formdata);
 }
 
 function birthDay(e)
@@ -1291,14 +1399,22 @@ function birthDay(e)
   
     //birth day store to current.dob array
     formdata.drivers.current.dob[0] = e.innerHTML;
+  
+    // store data to localstorage
+    let localdata = getLocaData();
+    if(localdata){
+      localdata.drivers.current.dob[0] = e.innerHTML;
+      setLocalData(localdata);
+    }else{
+      formdata.drivers.current.dob[0] = e.innerHTML;
+      setLocalData(formdata);
+    }
   }
   if(e.value == 'back'){
     if(driverCounter == 0){
       increasePercent(-5);
     }
   }
-
-  // formDataStore(formdata);
 }
 
 function birthYear(e)
@@ -1343,6 +1459,16 @@ function birthYear(e)
   
     //birth day push to birthDate array
     formdata.drivers.current.dob[1] = e.innerHTML;
+  
+    // store data to localstorage
+    let localdata = getLocaData();
+    if(localdata){
+      localdata.drivers.current.dob[1] = e.innerHTML;
+      setLocalData(localdata);
+    }else{
+      formdata.drivers.current.dob[1] = e.innerHTML;
+      setLocalData(formdata);
+    }
   }
 
   if(e.value == 'back'){
@@ -1351,8 +1477,6 @@ function birthYear(e)
       // increasePercent(-5);
     }
   }
-
-  // formDataStore(formdata);
 }
 
 function incident(e)
@@ -1445,6 +1569,16 @@ function incident(e)
   
     //birth year push to birthDate array
     formdata.drivers.current.dob[2] = e.innerHTML;
+  
+    // store data to localstorage
+    let localdata = getLocaData();
+    if(localdata){
+      localdata.drivers.current.dob[2] = e.innerHTML;
+      setLocalData(localdata);
+    }else{
+      formdata.drivers.current.dob[2] = e.innerHTML;
+      setLocalData(formdata);
+    }
   }
 
   if(e.value == 'back'){
@@ -1503,9 +1637,6 @@ function checkIncident(e)
       }
     }
   }
-
-
-  // formDataStore(formdata);
 }
 
 function accident(e)
@@ -1619,6 +1750,16 @@ function checkAccidentForm(e)
     if(checkMonth && checkYear && checkDesc && checkFault && checkDamage)
     {
       formdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
+  
+      // store data to localstorage
+      let localdata = getLocaData();
+      if(localdata){
+        localdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
+        setLocalData(localdata);
+      }else{
+        formdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
+        setLocalData(formdata);
+      }
 
       //push accident key to the backward object
       incidents.backward.push('accident');
@@ -1834,6 +1975,16 @@ function checkDuiForm(e)
     if(checkMonth && checkYear && checkState)
     {
       formdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
+  
+      // store data to localstorage
+      let localdata = getLocaData();
+      if(localdata){
+        localdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
+        setLocalData(localdata);
+      }else{
+        formdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
+        setLocalData(formdata);
+      }
 
       incidents.backward.push('dui');
 
@@ -1841,8 +1992,6 @@ function checkDuiForm(e)
     }
 
   });
-
-  // formDataStore(formdata);
 }
 
 function driverName(e)
@@ -1940,13 +2089,21 @@ function checkNameForm(e)
     if(checkFirst && checkLast)
     {
       formdata.drivers.current.names = [first_name.value, last_name.value];
+  
+      // store data to localstorage
+      let localdata = getLocaData();
+      if(localdata){
+        localdata.drivers.current.names = [first_name.value, last_name.value];
+        setLocalData(localdata);
+      }else{
+        formdata.drivers.current.names = [first_name.value, last_name.value];
+        setLocalData(formdata);
+      }
 
       anotherDriver(e);
     }
 
   });
-
-  // formDataStore(formdata);
 }
 
 /** ------------------- next incident ------------ */
@@ -2018,7 +2175,7 @@ function anotherDriver(e)
   {
     formdata.drivers.list.push(formdata.drivers.current);
 
-    if(localStorage.getItem('localdata')){
+    if(localStorage.getItem('localdata') && editmode == 'Yes'){
       let local = JSON.parse(localStorage.getItem('localdata'));
       local.drivers.list.push(formdata.drivers.current);
       localStorage.setItem('localdata', JSON.stringify(local));
@@ -2037,6 +2194,7 @@ function anotherDriver(e)
 
       //remove submitted counter
       localStorage.removeItem('submitted');
+      editmode = '';
       checkLocalData();
     }
   }
@@ -2063,8 +2221,6 @@ function checkAnotherDriver(e)
       }
     };
     addDriver();
-
-    // formDataStore(formdata);
   }
 }
 
@@ -2200,7 +2356,7 @@ function checkAddressForm(e)
 
       formdata.owner.address = [address.value, zip.value, state.value, city.value, country.value];
       
-      if(localStorage.getItem('localdata'))
+      if(localStorage.getItem('localdata') && editmode == 'Yes')
       {
         let local = JSON.parse(localStorage.getItem('localdata'));
         local.owner.address = [address.value, zip.value, state.value, city.value, country.value];
@@ -2208,15 +2364,13 @@ function checkAddressForm(e)
 
         // remove submit count from local data
         localStorage.removeItem('submitted');
-        
+        editmode = '';
         checkLocalData();
       }
       else
       {
         ownership(e);
       }
-
-      // formDataStore(formdata);
     }
 
   });
@@ -2251,8 +2405,6 @@ function ownership(e)
   if(e.value == 'back'){
     increasePercent(-2);
   }
-
-  // formDataStore(formdata);
   
 }
 
@@ -2301,14 +2453,14 @@ function emailAddress(e)
       increasePercent(2);
       formdata.owner.contact[0] = e.innerHTML;
 
-      if(localStorage.getItem('localdata')){
+      if(localStorage.getItem('localdata') && editmode == 'Yes'){
         let local = JSON.parse(localStorage.getItem('localdata'));
         local.owner.contact[0] = e.innerHTML;
         localStorage.setItem('localdata', JSON.stringify(local));
 
         // remove submit count from local data
         localStorage.removeItem('submitted');
-
+        editmode = '';
         checkLocalData();
       }
     }
@@ -2324,14 +2476,14 @@ function emailForm(e)
   if(checkEmail(email))
   {
     formdata.owner.contact[1] = email.value;
-    if(localStorage.getItem('localdata')){
+    if(localStorage.getItem('localdata') && editmode == 'Yes'){
       let local = JSON.parse(localStorage.getItem('localdata'));
       local.owner.contact[1] = email.value;
       localStorage.setItem('localdata', JSON.stringify(local));
 
       // remove submit count from local data
       localStorage.removeItem('submitted');
-
+      editmode = '';
       checkLocalData();
     }
     else
@@ -2341,8 +2493,6 @@ function emailForm(e)
     
     //increase value for every action
     increasePercent(2);
-
-    // formDataStore(formdata);
   }
 }
 
@@ -2409,13 +2559,14 @@ function checkQuote(e)
   {
     formdata.owner.contact[2] = phone.value;
 
-    if(localStorage.getItem('localdata')){
+    if(localStorage.getItem('localdata') && editmode == 'Yes'){
       let local = JSON.parse(localStorage.getItem('localdata'));
       local.owner.contact[2] = phone.value;
       localStorage.setItem('localdata', JSON.stringify(local));
 
       // remove submit counter from local data
       localStorage.removeItem('submitted');
+      editmode = '';
 
       // check formdata stored to the localstoage
       checkLocalData();
@@ -2440,19 +2591,6 @@ function checkQuote(e)
 function thankYou()
 {
   container.innerHTML = '<div class="step step-1 step-content-basic">'+
-    // '<h2>🎉 Thank You!</h2>'+
-    // '<h3 class="thanks-subtitle">Your Free Car Insurance Quote is on Its Way</+h3>'+
-    // '<p class="thanks-body">Thank you for taking the time to complete your car +insurance quote request. Our team is reviewing your details, and you’ll receive your personalized quote shortly.</p>'+
-    // '<hr class="thanks-separator">'+
-    // '<h3>Check out our other services</h3>'+
-    // '<div class="thanks-links">'+
-    //   '<a href="#">Home Insurance</a>'+
-    //   '<a href="#">Life Insurance</a>'+
-    //   '<a href="#">Health Insurance</a>'+
-    //   '<a href="#">Business Insurance</a>'+
-    // '</div>'+
-    // '<hr class="thanks-separator">'+
-    // '<button class="action-btn btn continue" onclick="checkLocalData()">Continue...</button>'+
     '<div class="agent-wrap">'+
       '<img src="https://eraseyourbills.com/wp-content/plugins/insurance-quotes/assets/img/lady.jpg" alt="Agent">'+
       '<p>'+
@@ -2482,14 +2620,6 @@ function formatObjectWithLineBreaks(data) {
       .join('\n') // new line after every key-value pair
   ).join('\n\n'); // separate multiple objects with extra line
 }
-
-// setTimeout(() => {
-//   console.log(`from calc: ${trustFormCert}`);
-// }, 5000);
-
-// function checkCertUrl(){
-//   console.log(`from method: ${trustFormCert}`);
-// }
 
 // send data to the go heigh level
 function sendToServer()
@@ -2749,6 +2879,8 @@ function sendToServer()
 // check local data exist
 function checkLocalData()
 {
+  setPageUrl('thank-you');
+
   let vehicleList = '', driverList = '';
   let localdata = localStorage.getItem('localdata');
   if(localdata){
@@ -2940,7 +3072,7 @@ function checkLocalData()
 }
 
 // check if user already stored all data to the localstorage
-checkLocalData();
+// checkLocalData();
 
 // user query data edit section
 function editAddVehicle(e)
@@ -3033,10 +3165,7 @@ function showHide(e)
 }
 
 
-(() => {
-  setTimeout(()=>{
-
-    checkCurrentPage();
-  }, 100)
-}
-)();
+// onload check current page
+window.addEventListener('DOMContentLoaded', () => {
+  checkCurrentPage();
+});
