@@ -1,4 +1,5 @@
 let formdata = {
+  zipcode: "",
   vehicles: {
     list: [],
     current: []
@@ -131,17 +132,7 @@ function checkPhone(e)
   }
 }
 
-// store formdata to localstorage
-function formDataStore(data)
-{
-  window.addEventListener('DOMContentLoaded', () => {
-    localStorage.setItem('localdata', JSON.stringify(data));
-    console.log(formdata);
-  });
-}
-
 // onload keep updated formdata object from localstorage localdata
-// (()=>{
   window.addEventListener('DOMContentLoaded', () => {
     if(localStorage.getItem('localdata') != null)
     {
@@ -149,8 +140,6 @@ function formDataStore(data)
       console.log(formdata);
     }
   });
-  
-// })();
 
 //check local storage data
 function checkLocalStorage(){
@@ -160,50 +149,33 @@ function checkLocalStorage(){
   return false;
 }
 
-let currentData = {
-  zip: {
-    code: '',
-  },
-  vehicle: {
-    make: [],
-    year: [],
-    model: [],
-  },
-};
+// let currentData = {
+//   zip: {
+//     code: '',
+//   },
+//   vehicle: {
+//     make: [],
+//     year: [],
+//     model: [],
+//   },
+// };
 
 // current data store to the localstorage
 function getLocaData()
 {
-  window.addEventListener('DOMContentLoaded', () => {
-    if(localStorage.getItem('localdata'))
-    {
-      let localdata = JSON.parse(localStorage.getItem('localdata'));
-      return localdata; 
-    }
-  
-    return null;
-  });
+  if(localStorage.getItem('localdata'))
+  {
+    let localdata = JSON.parse(localStorage.getItem('localdata'));
+    return localdata; 
+  }
+
+  return null;
 }
 
 function setLocalData(data)
 {
   localStorage.setItem('localdata', JSON.stringify(data));
 }
-
-function setCurrentData(data)
-{
-  localStorage.setItem('currentData', JSON.stringify(data));
-}
-
-// onload set current data to the currentData object
-// (()=>{
-  window.addEventListener('DOMContentLoaded', () => {
-    if(localStorage.getItem('currentData') != null)
-    {
-      currentData = JSON.parse(localStorage.getItem('currentData'));
-    }
-  });
-// })();
 
 //change very page url
 function setPageUrl(page)
@@ -221,201 +193,233 @@ function setCurrentPage(page)
   localStorage.setItem('currentPage', page);
 }
 
-// styleLoad();
 // onload check current page
 function checkCurrentPage()
 {
-  // window.addEventListener('DOMContentLoaded', () => {
-    const local = JSON.parse(localStorage.getItem('currentData'));
+  const local = JSON.parse(localStorage.getItem('localdata'));
 
-    console.log(local);
+  console.log(local);
 
-    const currentPage = localStorage.getItem('currentPage');
+  const currentPage = localStorage.getItem('currentPage');
 
-    if(currentPage == 'zip-code')
-    {
-      createZIPCodePanel(null);
-      homeInfo('Yes');
-    }
-    else if(currentPage == 'vehicle-make')
-    {
-      homeInfo('No');
-      increasePercent(6); //25+6=31%
-      brands(null);
-    }
-    else if(currentPage == 'vehicle-year')
-    {
-      homeInfo('No');
-      let e = document.createElement('button');
-      e.setAttribute('name', local.vehicle.make);
-      increasePercent(12); //25+12=37
-      writeYears(e);
-    }
-    else if(currentPage == 'vehicle-model')
-    {
-      homeInfo('No');
-      brand = local.vehicle.make;
-      year = local.vehicle.year;
-      let e = document.createElement('button');
-      e.setAttribute('name', local.vehicle.year);
-      increasePercent(18); //25+18=43
-      models(e);
-    }
-    else if(currentPage == 'vehicle-ownership')
-    {
-      homeInfo('No');
-      increasePercent(24); //25+24=49
-      owner(null);
-    }
-    else if(currentPage == 'annual-mileage')
-    {
-      homeInfo('No');
-      increasePercent(30); //25+30=55
-      milage(null);
-    }
-    else if(currentPage == 'desired-coverage-level')
-    {
-      homeInfo('No');
-      increasePercent(36); //25+36=61
-      coverage(null);
-    }
-    else if(currentPage == 'add-another-vehicle')
-    {
-      homeInfo('No');
+  if(currentPage == 'zip-code')
+  {
+    createZIPCodePanel(null);
+    homeInfo('Yes');
+  }
+  else if(currentPage == 'vehicle-make')
+  {
+    homeInfo('No');
+    increasePercent(6); //25+6=31%
+    brands(null);
+  }
+  else if(currentPage == 'vehicle-year')
+  {
+    homeInfo('No');
+    let e = document.createElement('button');
+    e.setAttribute('name', local.vehicles.current[0]);
+    increasePercent(12); //25+12=37
+    writeYears(e);
+  }
+  else if(currentPage == 'vehicle-model')
+  {
+    homeInfo('No');
+    brand = local.vehicles.current[0];
+    year = local.vehicles.current[1];
+    let e = document.createElement('button');
+    e.setAttribute('name', local.vehicles.current[1]);
+    increasePercent(18); //25+18=43
+    models(e);
+  }
+  else if(currentPage == 'vehicle-ownership')
+  {
+    homeInfo('No');
+    increasePercent(24); //25+24=49
+    owner(null);
+  }
+  else if(currentPage == 'annual-mileage')
+  {
+    homeInfo('No');
+    increasePercent(30); //25+30=55
+    milage(null);
+  }
+  else if(currentPage == 'desired-coverage-level')
+  {
+    homeInfo('No');
+    increasePercent(36); //25+36=61
+    coverage(null);
+  }
+  else if(currentPage == 'add-another-vehicle')
+  {
+    homeInfo('No');
 
-      increasePercent(42); //25+42=67
-      anotherVehicle(null);
-    }
-    else if(currentPage == 'insurance-details')
-    {
-      homeInfo('No');
+    increasePercent(42); //25+42=67
+    anotherVehicle(null);
+  }
+  else if(currentPage == 'insurance-details')
+  {
+    homeInfo('No');
 
-      increasePercent(42); //25+42=67
-      insurance(null);
-    }
-    else if(currentPage == 'gender')
-    {
-      homeInfo('No');
+    increasePercent(42); //25+42=67
+    insurance(null);
+  }
+  else if(currentPage == 'gender')
+  {
+    homeInfo('No');
 
-      increasePercent(47); //25+47=72
-      addDriver(null);
-    }
-    else if(currentPage == 'marital-status')
-    {
-      homeInfo('No');
+    increasePercent(47); //25+47=72
+    addDriver(null);
+  }
+  else if(currentPage == 'marital-status')
+  {
+    homeInfo('No');
 
-      increasePercent(52); //25+52=77
-      driverMaritalStatus(null);
-    }
-    else if(currentPage == 'birth-month')
-    {
-      homeInfo('No');
+    increasePercent(52); //25+52=77
+    driverMaritalStatus(null);
+  }
+  else if(currentPage == 'birth-month')
+  {
+    homeInfo('No');
 
-      increasePercent(57); //25+57=82
-      birthMonth(null);
-    }
-    else if(currentPage == 'birth-day')
-    {
-      homeInfo('No');
+    increasePercent(57); //25+57=82
+    birthMonth(null);
+  }
+  else if(currentPage == 'birth-day')
+  {
+    homeInfo('No');
 
-      increasePercent(62); //25+62=87
-      birthDay(null);
-    }
-    else if(currentPage == 'birth-year')
-    {
-      homeInfo('No');
+    increasePercent(62); //25+62=87
+    birthDay(null);
+  }
+  else if(currentPage == 'birth-year')
+  {
+    homeInfo('No');
 
-      increasePercent(67); //25+67=92
-      birthYear(null);
-    }
-    else if(currentPage == 'incidents-in-the-past-3-years')
-    {
-      homeInfo('No');
+    increasePercent(67); //25+67=92
+    birthYear(null);
+  }
+  else if(currentPage == 'incidents-in-the-past-3-years')
+  {
+    homeInfo('No');
 
-      increasePercent(67); //25+67=92
-      incident(null);
-    }
-    else if(currentPage == 'accident-details')
-    {
-      homeInfo('No');
+    increasePercent(67); //25+67=92
+    incident(null);
+  }
+  else if(currentPage == 'accident-details')
+  {
+    homeInfo('No');
 
-      increasePercent(67); //25+67=92
-      accident(null);
-    }
-    // else if(currentPage == 'driver-ticket')
-    // {
-    //   homeInfo('No');
+    increasePercent(67); //25+67=92
+    accident(null);
+  }
+  // else if(currentPage == 'driver-ticket')
+  // {
+  //   homeInfo('No');
 
-    //   increasePercent(67); //25+67=92
-    //   ticket(null);
-    // }
-    else if(currentPage == 'dui-details')
-    {
-      homeInfo('No');
+  //   increasePercent(67); //25+67=92
+  //   ticket(null);
+  // }
+  else if(currentPage == 'dui-details')
+  {
+    homeInfo('No');
 
-      increasePercent(67); //25+67=92
-      dui(null);
-    }
-    else if(currentPage == 'driver-name')
-    {
-      homeInfo('No');
+    increasePercent(67); //25+67=92
+    dui(null);
+  }
+  else if(currentPage == 'driver-name')
+  {
+    homeInfo('No');
 
-      increasePercent(67); //25+67=92
-      driverName(null);
-    }
-    else if(currentPage == 'add-another-driver')
-    {
-      homeInfo('No');
+    increasePercent(67); //25+67=92
+    driverName(null);
+  }
+  else if(currentPage == 'add-another-driver')
+  {
+    homeInfo('No');
 
-      increasePercent(67); //25+67=92
-      anotherDriver(null);
-    }
-    else if(currentPage == 'current-address')
-    {
-      homeInfo('No');
+    increasePercent(67); //25+67=92
+    anotherDriver(null);
+  }
+  else if(currentPage == 'current-address')
+  {
+    homeInfo('No');
 
-      increasePercent(67); //25+67=92
-      ownerAddress(null);
-    }
-    else if(currentPage == 'home-ownership')
-    {
-      homeInfo('No');
+    increasePercent(67); //25+67=92
+    ownerAddress(null);
+  }
+  else if(currentPage == 'home-ownership')
+  {
+    homeInfo('No');
 
-      increasePercent(69); //25+69=94
-      ownership(null);
-    }
-    else if(currentPage == 'email-address')
-    {
-      homeInfo('No');
+    increasePercent(69); //25+69=94
+    ownership(null);
+  }
+  else if(currentPage == 'email-address')
+  {
+    homeInfo('No');
 
-      increasePercent(71); //25+71=96
-      emailAddress(null);
-    }
-    else if(currentPage == 'contact-number')
-    {
-      homeInfo('No');
+    increasePercent(71); //25+71=96
+    emailAddress(null);
+  }
+  else if(currentPage == 'contact-number')
+  {
+    homeInfo('No');
 
-      increasePercent(73); //25+73=98
-      getQuote(null);
-    }
-    else if(currentPage == 'thank-you')
-    {
-      homeInfo('No');
-      checkLocalData();
-    }
-    else
-    {
-      createZIPCodePanel(null);
-      homeInfo('Yes');
-    }
-    //
-  // });
+    increasePercent(73); //25+73=98
+    getQuote(null);
+  }
+  else if(currentPage == 'thank-you')
+  {
+    homeInfo('No');
+    checkLocalData();
+  }
+  else
+  {
+    createZIPCodePanel(null);
+    homeInfo('Yes');
+  }
+}
 
+// Homepage more information section
+function homeInfo(view)
+{
+  let heroWrap = document.querySelector('.hero-wrap');
+  let featureText = document.querySelector('.features-wrap');
+  let featureText2 = document.querySelector('.how-it-works-wrap');
+  if(view == 'Yes')
+  {
+    featureText.style.display = 'block';
+    featureText2.style.display = 'block';
+    heroWrap.style.display = 'block';
+  }
+  else if(view == 'No')
+  {
+    featureText.style.display = 'none';
+    featureText2.style.display = 'none';
+    heroWrap.style.display = 'none';
+  }
+}
+
+function commonAgent(view)
+{
+  let text = document.querySelectorAll('.common-agents-wrap');
+  text.forEach((v) => {
+    if(view == 'Yes')
+    {
+      v.style.display = 'block';
+    }
+    else if(view == 'No')
+    {
+      v.style.display = 'none';
+    }
+  });
+  
 }
 
 function createZIPCodePanel(e)
 {
   setPageUrl('home-page');
+  setCurrentPage('home-page');
 
   let html = '<div class="step step-1">'+
     '<h2>Enter Your Zip Code</h2>'+
@@ -424,7 +428,7 @@ function createZIPCodePanel(e)
     
       '<div class="field-wrap">'+
         '<div class="input-field-wrap">'+
-          '<input type="text" id="zipcode" required>'+
+          '<input type="text" id="zipcode" required value="'+(formdata.zipcode ? formdata.zipcode:'')+'">'+
           '<label for="">Zip code</label>'+
         '</div>'+
         '<span class="error-msg" id="result"></span>'+
@@ -468,42 +472,6 @@ function createZIPCodePanel(e)
   }
 }
 
-// Homepage more information section
-function homeInfo(view)
-{
-  let heroWrap = document.querySelector('.hero-wrap');
-  let featureText = document.querySelector('.features-wrap');
-  let featureText2 = document.querySelector('.how-it-works-wrap');
-  if(view == 'Yes')
-  {
-    featureText.style.display = 'block';
-    featureText2.style.display = 'block';
-    heroWrap.style.display = 'block';
-  }
-  else if(view == 'No')
-  {
-    featureText.style.display = 'none';
-    featureText2.style.display = 'none';
-    heroWrap.style.display = 'none';
-  }
-}
-
-function commonAgent(view)
-{
-  let text = document.querySelectorAll('.common-agents-wrap');
-  text.forEach((v) => {
-    if(view == 'Yes')
-    {
-      v.style.display = 'block';
-    }
-    else if(view == 'No')
-    {
-      v.style.display = 'none';
-    }
-  });
-  
-}
-
 // check zip code
 function ZIPCode(e)
 {
@@ -521,8 +489,18 @@ function ZIPCode(e)
         increasePercent(6);
       }
 
-      currentData.zip.code = zipcode.value;
-      setCurrentData(currentData);
+      // currentData.zip.code = zipcode.value;
+      // setCurrentData(currentData);
+
+      let localdata = getLocaData();
+
+      if(localdata){
+        localdata.zipcode = zipcode.value;
+        setLocalData(localdata);
+      }else{
+        formdata.zipcode = zipcode.value;
+        setLocalData(formdata);
+      }
 
       // execute brands
       brands(e);
@@ -554,6 +532,11 @@ function brands(e)
   commonAgent('Yes');
 
   let xvehicle = formdata.vehicles.current[0];
+  
+  if( getLocaData() ){
+    vehicleCounter = getLocaData().vehicles.list.length;
+  }
+
   let number = 0;
   container.innerHTML = '<div class="step step-make">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -605,7 +588,7 @@ function brands(e)
     //create back button
     let back = document.createElement('div');
     back.setAttribute('class', 'back-to-prev');
-    back.innerHTML = '<button class="back" value="back" onclick="'+(checkLocalStorage() ? 'checkLocalData()' : 'createZIPCodePanel(this)')+'">'+
+    back.innerHTML = '<button class="back" value="back" onclick="createZIPCodePanel(this)">'+
     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
     '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
     '</svg> Back </button>';
@@ -613,14 +596,14 @@ function brands(e)
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
 
-  if(e.value == 'next')
+  if(e != null && e.value == 'next')
   {
     if(vehicleCounter == 0){
       increasePercent(6);
     }
   }
 
-  if(e.value == 'back')
+  if(e != null && e.value == 'back')
   {
     if(vehicleCounter == 0){
       increasePercent(-6);
@@ -636,9 +619,6 @@ function checkBrands(e)
   {
     increasePercent(6);
   }
-
-  currentData.vehicle.make = e.name;
-  setCurrentData(currentData);
 
   let localdata = getLocaData();
 
@@ -660,6 +640,10 @@ function writeYears(e)
 {
   setPageUrl('vehicle-year');
   setCurrentPage('vehicle-year');
+  
+  if( getLocaData() ){
+    vehicleCounter = getLocaData().vehicles.list.length;
+  }
 
   let number = 0;
   container.innerHTML = '<div class="step step-2" id="">'+
@@ -736,9 +720,6 @@ function checkYears(e)
   {
     increasePercent(6);
   }
-  
-  currentData.vehicle.year = e.name;
-  setCurrentData(currentData);
 
   let localdata = getLocaData();
 
@@ -760,6 +741,10 @@ function models(e)
 {
   setPageUrl('vehicle-model');
   setCurrentPage('vehicle-model');
+  
+  if( getLocaData() ){
+    vehicleCounter = getLocaData().vehicles.list.length;
+  }
 
   let number = 0;
   container.innerHTML = '<div class="step step-make">'+
@@ -838,9 +823,6 @@ function checkModel(e)
     increasePercent(6);
   }
   
-  currentData.vehicle.model = e.name;
-  setCurrentData(currentData);
-  
   // store data to localstorage
   let localdata = getLocaData();
   if(localdata){
@@ -858,6 +840,10 @@ function owner(e)
 {
   setPageUrl('vehicle-ownership');
   setCurrentPage('vehicle-ownership');
+  
+  if( getLocaData() ){
+    vehicleCounter = getLocaData().vehicles.list.length;
+  }
 
   let own = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -914,6 +900,11 @@ function milage(e)
 {
   setPageUrl('annual-mileage');
   setCurrentPage('annual-mileage');
+  
+  if( getLocaData() ){
+    vehicleCounter = getLocaData().vehicles.list.length;
+  }
+
   let mile = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -969,6 +960,10 @@ function coverage(e)
 {
   setPageUrl('desired-coverage-level');
   setCurrentPage('desired-coverage-level');
+  
+  if( getLocaData() ){
+    vehicleCounter = getLocaData().vehicles.list.length;
+  }
 
   let cover = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -1210,6 +1205,12 @@ function addDriver(e)
   setPageUrl('gender');
   setCurrentPage('gender');
 
+  if( getLocaData().drivers.list )
+  {
+    driverCounter = getLocaData().drivers.list.length;
+    console.log(getLocaData());
+  }
+
   let driver = formdata.drivers.current.general;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1244,6 +1245,11 @@ function driverMaritalStatus(e)
 {
   setPageUrl('marital-status');
   setCurrentPage('marital-status');
+
+  if( getLocaData().drivers.list )
+  {
+    driverCounter = getLocaData().drivers.list.length;
+  }
 
   let driver = formdata.drivers.current.general;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
@@ -1299,6 +1305,11 @@ function birthMonth(e)
 {
   setPageUrl('birth-month');
   setCurrentPage('birth-month');
+
+  if( getLocaData().drivers.list )
+  {
+    driverCounter = getLocaData().drivers.list.length;
+  }
 
   let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
@@ -1361,6 +1372,11 @@ function birthDay(e)
   setPageUrl('birth-day');
   setCurrentPage('birth-day');
 
+  if( getLocaData().drivers.list )
+  {
+    driverCounter = getLocaData().drivers.list.length;
+  }
+
   let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1421,6 +1437,11 @@ function birthYear(e)
 {
   setPageUrl('birth-year');
   setCurrentPage('birth-year');
+
+  if( getLocaData().drivers.list )
+  {
+    driverCounter = getLocaData().drivers.list.length;
+  }
 
   let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
@@ -1483,6 +1504,11 @@ function incident(e)
 {
   setPageUrl('incidents-in-the-past-3-years');
   setCurrentPage('incidents-in-the-past-3-years');
+
+  if( getLocaData().drivers.list )
+  {
+    driverCounter = getLocaData().drivers.list.length;
+  }
 
   let parts = formdata.drivers.current.incidents.part;
   
@@ -1643,6 +1669,11 @@ function accident(e)
 {
   setPageUrl('accident-details');
   setCurrentPage('accident-details');
+
+  if( getLocaData().drivers.list )
+  {
+    driverCounter = getLocaData().drivers.list.length;
+  }
 
   let act = formdata.drivers.current.incidents.accident;
   container.innerHTML ='<div class="step step-number step-content-basic three-items">'+
@@ -1885,6 +1916,11 @@ function dui(e)
   setPageUrl('dui-detail');
   setCurrentPage('dui-detail');
 
+  if( getLocaData().drivers.list )
+  {
+    driverCounter = getLocaData().drivers.list.length;
+  }
+
   let state = '';
   let addr = formdata.drivers.current.incidents.dui;
   if(addr[2])
@@ -1998,6 +2034,11 @@ function driverName(e)
 {
   setPageUrl('driver-name');
   setCurrentPage('driver-name');
+
+  if( getLocaData().drivers.list )
+  {
+    driverCounter = getLocaData().drivers.list.length;
+  }
 
   let first_name = '', last_name = '';
   let names = formdata.drivers.current.names;
@@ -2175,7 +2216,7 @@ function anotherDriver(e)
   {
     formdata.drivers.list.push(formdata.drivers.current);
 
-    if(localStorage.getItem('localdata') && editmode == 'Yes'){
+    if(localStorage.getItem('localdata')){
       let local = JSON.parse(localStorage.getItem('localdata'));
       local.drivers.list.push(formdata.drivers.current);
       localStorage.setItem('localdata', JSON.stringify(local));
@@ -2192,22 +2233,24 @@ function anotherDriver(e)
         }
       };
 
-      //remove submitted counter
-      localStorage.removeItem('submitted');
-      editmode = '';
-      checkLocalData();
+      if(editmode == 'Yes')
+      {
+        //remove submitted counter
+        localStorage.removeItem('submitted');
+        editmode = '';
+        checkLocalData();
+      }      
     }
   }
 
 }
 
-// anotherDriver(null);
-
 function checkAnotherDriver(e)
 {
   if(e.value == 'YES')
   {
-    driverCounter++;
+    let local = getLocaData();
+    driverCounter = local.drivers.list.length + 1;
 
     formdata.drivers.current = {
       names: [],
@@ -2220,6 +2263,7 @@ function checkAnotherDriver(e)
         dui: []
       }
     };
+
     addDriver();
   }
 }
@@ -3129,8 +3173,16 @@ function removeLocal(e)
 
   localStorage.removeItem('localdata');
   localStorage.removeItem('submitted');
-  localStorage.removeItem('currentData');
   localStorage.removeItem('currentPage');
+  formdata = {
+    zipcode: "",
+    vehicles: { list: [], current: [] },
+    drivers: { list: [],
+      current: { names: [], general: [], dob: [], 
+        incidents: { part:[], accident: [], ticket: [], dui: [] }
+      }},
+    owner: { insurance: [], address: [], contact: [] }
+  };
 
   document.getElementById('localClearBtn').style.display = 'none';
 

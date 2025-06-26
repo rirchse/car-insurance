@@ -509,7 +509,7 @@
             .catch(error => console.error('Error Loading JSON:', error));
         });
       </script>
-      <script src="calculation-scripts.js?v=1.7.75"></script>
+      <script src="calculation-scripts.js?v=1.7.85"></script>
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
         <script>
