@@ -1,9 +1,4 @@
 let formdata = {
-  zipcode: "",
-  vehicles: {
-    list: [],
-    current: []
-  },
   drivers: {
     list: [],
     current: {
@@ -22,7 +17,16 @@ let formdata = {
     insurance: [],
     address: [],
     contact: []
-  }
+  },
+  vehicles: {
+    list: [],
+    current: []
+  },
+  incidents:{
+    backward: [],
+    forward: []
+  },
+  zipcode: ""
 };
 
 let incidents = {
@@ -133,13 +137,14 @@ function checkPhone(e)
 }
 
 // onload keep updated formdata object from localstorage localdata
-  window.addEventListener('DOMContentLoaded', () => {
-    if(localStorage.getItem('localdata') != null)
-    {
-      formdata = JSON.parse(localStorage.getItem('localdata'));
-      console.log(formdata);
-    }
-  });
+window.addEventListener('DOMContentLoaded', () => {
+  const localData = localStorage.getItem('localdata');
+  if(localData != null && localData.zipcode)
+  {
+    formdata = JSON.parse(localData);
+    // console.log(formdata);
+  }
+});
 
 //check local storage data
 function checkLocalStorage(){
@@ -149,32 +154,22 @@ function checkLocalStorage(){
   return false;
 }
 
-// let currentData = {
-//   zip: {
-//     code: '',
-//   },
-//   vehicle: {
-//     make: [],
-//     year: [],
-//     model: [],
-//   },
-// };
+function setLocalData(data)
+{
+  localStorage.setItem('localdata', JSON.stringify(data));
+}
 
 // current data store to the localstorage
-function getLocaData()
+function getLocalData()
 {
-  if(localStorage.getItem('localdata'))
+  const localData = localStorage.getItem('localdata');
+  if(localData)
   {
-    let localdata = JSON.parse(localStorage.getItem('localdata'));
+    let localdata = JSON.parse(localData);
     return localdata; 
   }
 
   return null;
-}
-
-function setLocalData(data)
-{
-  localStorage.setItem('localdata', JSON.stringify(data));
 }
 
 //change very page url
@@ -196,9 +191,17 @@ function setCurrentPage(page)
 // onload check current page
 function checkCurrentPage()
 {
-  const local = JSON.parse(localStorage.getItem('localdata'));
+  // set editmode current condition
+  editmode = localStorage.getItem('editmode');
+  const local = getLocalData();
+  if(local){
+    if(local.vehicles.current){
+      brand = local.vehicles.current[0];
+      year = local.vehicles.current[1];
+    }
+  }
 
-  console.log(local);
+  console.log('from current page:', local);
 
   const currentPage = localStorage.getItem('currentPage');
 
@@ -418,9 +421,6 @@ function commonAgent(view)
 
 function createZIPCodePanel(e)
 {
-  setPageUrl('home-page');
-  setCurrentPage('home-page');
-
   let html = '<div class="step step-1">'+
     '<h2>Enter Your Zip Code</h2>'+
     '<form action="#" name="zipForm" onsubmit="event.preventDefault()">'+
@@ -428,7 +428,7 @@ function createZIPCodePanel(e)
     
       '<div class="field-wrap">'+
         '<div class="input-field-wrap">'+
-          '<input type="text" id="zipcode" required value="'+(formdata.zipcode ? formdata.zipcode:'')+'">'+
+          '<input type="text" id="zipcode" required value="'+(getLocalData() ? getLocalData().zipcode:'')+'">'+
           '<label for="">Zip code</label>'+
         '</div>'+
         '<span class="error-msg" id="result"></span>'+
@@ -437,10 +437,10 @@ function createZIPCodePanel(e)
         '<button class="action-btn btn" onclick="ZIPCode(this)">Get Started</button>'+
       '</div>';
 
-      if(e != null && e.value == 'back')
+      if(e != null && e.value == 'back' || getLocalData())
       {
       html += '<div class="more-options inner-wrap-btn">'+
-        '<button class="show-more" onclick="brands(this)" value="next">'+
+        '<button class="show-more" onclick="checkCurrentPage()" value="next">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
           '</svg>'+
@@ -466,15 +466,18 @@ function createZIPCodePanel(e)
     increasePercent(-6);
   }
 
-  if(vehicleCounter > 0 && e != null && e.value == 'back')
-  {
-    anotherVehicle();
-  }
+  // if(vehicleCounter > 0 && e != null && e.value == 'back')
+  // {
+  //   anotherVehicle();
+  // }
 }
 
 // check zip code
 function ZIPCode(e)
 {
+  setPageUrl('home-page');
+  setCurrentPage('home-page');
+
   let zipcode = e.form.elements.zipcode;
   let result = zipcode.parentNode.nextElementSibling;
 
@@ -492,7 +495,7 @@ function ZIPCode(e)
       // currentData.zip.code = zipcode.value;
       // setCurrentData(currentData);
 
-      let localdata = getLocaData();
+      let localdata = getLocalData();
 
       if(localdata){
         localdata.zipcode = zipcode.value;
@@ -523,9 +526,6 @@ function ZIPCode(e)
 //write brand
 function brands(e)
 {
-  setPageUrl('vehicle-make');
-  setCurrentPage('vehicle-make');
-  
   // hide home page information
   homeInfo('No');
 
@@ -533,8 +533,8 @@ function brands(e)
 
   let xvehicle = formdata.vehicles.current[0];
   
-  if( getLocaData() ){
-    vehicleCounter = getLocaData().vehicles.list.length;
+  if( getLocalData() ){
+    vehicleCounter = getLocalData().vehicles.list.length;
   }
 
   let number = 0;
@@ -553,7 +553,7 @@ function brands(e)
       number += n;
       let btn = document.createElement('button');
       btn.setAttribute('class', 'input');
-      if(xvehicle && xvehicle[0] == b){
+      if(xvehicle && xvehicle[0] == b || brand == b){
         btn.setAttribute('class', 'input active');
       }
       btn.setAttribute('onclick', 'checkBrands(this)');
@@ -588,7 +588,7 @@ function brands(e)
     //create back button
     let back = document.createElement('div');
     back.setAttribute('class', 'back-to-prev');
-    back.innerHTML = '<button class="back" value="back" onclick="createZIPCodePanel(this)">'+
+    back.innerHTML = '<button type="button" class="back" value="back" onclick="createZIPCodePanel(this)">'+
     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
     '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
     '</svg> Back </button>';
@@ -613,14 +613,16 @@ function brands(e)
 
 function checkBrands(e)
 {
-  // console.log(e.name);
+  setPageUrl('vehicle-make');
+  setCurrentPage('vehicle-make');
+  
   //increase value for every action
   if(vehicleCounter == 0)
   {
     increasePercent(6);
   }
 
-  let localdata = getLocaData();
+  let localdata = getLocalData();
 
   if(localdata){
     localdata.vehicles.current[0] = e.name;
@@ -637,12 +639,9 @@ function checkBrands(e)
 
 // read years
 function writeYears(e)
-{
-  setPageUrl('vehicle-year');
-  setCurrentPage('vehicle-year');
-  
-  if( getLocaData() ){
-    vehicleCounter = getLocaData().vehicles.list.length;
+{  
+  if( getLocalData() ){
+    vehicleCounter = getLocalData().vehicles.list.length;
   }
 
   let number = 0;
@@ -663,7 +662,7 @@ function writeYears(e)
       number += n;
       let btn = document.createElement('button');
       btn.setAttribute('class', 'input');
-      if(formdata.vehicles.current[1] == b){
+      if(formdata.vehicles.current[1] == b || year == b){
         btn.setAttribute('class', 'input active');
       }
       btn.setAttribute('onclick', 'checkYears(this)');
@@ -715,13 +714,16 @@ function writeYears(e)
 
 function checkYears(e)
 {
+  setPageUrl('vehicle-year');
+  setCurrentPage('vehicle-year');
+
   //increase value for every action
   if(vehicleCounter == 0)
   {
     increasePercent(6);
   }
 
-  let localdata = getLocaData();
+  let localdata = getLocalData();
 
   if(localdata){
     localdata.vehicles.current[1] = e.name;
@@ -739,11 +741,12 @@ function checkYears(e)
 //write model
 function models(e)
 {
-  setPageUrl('vehicle-model');
-  setCurrentPage('vehicle-model');
+  let model = '';
   
-  if( getLocaData() ){
-    vehicleCounter = getLocaData().vehicles.list.length;
+  if( getLocalData() ){
+    const local = getLocalData();
+    vehicleCounter = local.vehicles.list.length;
+    model = local.vehicles.current[2];
   }
 
   let number = 0;
@@ -763,7 +766,7 @@ fetch(jsonfile) // Path to your JSON file
     number += n;
     let btn = document.createElement('button');
     btn.setAttribute('class', 'input');
-    if(formdata.vehicles.current[2] == b){
+    if(formdata.vehicles.current[2] == b || model == b){
       btn.setAttribute('class', 'input active');
     }
     btn.setAttribute('name', b);
@@ -817,6 +820,9 @@ fetch(jsonfile) // Path to your JSON file
 
 function checkModel(e)
 {
+  setPageUrl('vehicle-model');
+  setCurrentPage('vehicle-model');
+
   //increase value for every action
   if(vehicleCounter == 0)
   {
@@ -824,7 +830,7 @@ function checkModel(e)
   }
   
   // store data to localstorage
-  let localdata = getLocaData();
+  let localdata = getLocalData();
   if(localdata){
     localdata.vehicles.current[2] = e.name;
     setLocalData(localdata);
@@ -838,22 +844,20 @@ function checkModel(e)
 
 function owner(e)
 {
-  setPageUrl('vehicle-ownership');
-  setCurrentPage('vehicle-ownership');
-  
-  if( getLocaData() ){
-    vehicleCounter = getLocaData().vehicles.list.length;
+  let own = formdata.vehicles.current;
+  if( getLocalData() ){
+    const local = getLocalData();
+    vehicleCounter = local.vehicles.list.length;
+    own = local.vehicles.current;
   }
 
-  let own = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Vehicle Ownership</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(own[3] == 'Own Paid Off' ? 'active': '')+'" onclick="checkOwner(this)">Own Paid Off</button>'+
-      '<button class="input '+(own[3] == 'Own Financed' ? 'active': '')+'" onclick="checkOwner(this)">Own Financed</button>'+
-      '<button class="input '+(own[3] == 'Leased' ? 'active': '')+'" onclick="checkOwner(this)">Leased</button>'+
-      // '<button class="input '+(own[3] == 'Other' ? 'active': '')+'" onclick="checkOwner(this)">Other</button>'+
+      '<button class="input '+(own[3] == 'Own Paid Off' ? 'active': '')+'" onclick="checkOwner(this)" value="Own Paid Off">Own Paid Off</button>'+
+      '<button class="input '+(own[3] == 'Own Financed' ? 'active': '')+'" onclick="checkOwner(this)" value="Own Financed">Own Financed</button>'+
+      '<button class="input '+(own[3] == 'Leased' ? 'active': '')+'" onclick="checkOwner(this)" value="Leased">Leased</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -867,7 +871,7 @@ function owner(e)
   if(e.value != 'back')
   {
     // store model to the vehicle object
-    formdata.vehicles.current[2] = e.name;
+    // formdata.vehicles.current[2] = e.name;
   }
 
   if(vehicleCounter == 0 && e.value == 'back'){
@@ -877,6 +881,9 @@ function owner(e)
 
 function checkOwner(e)
 {
+  setPageUrl('vehicle-ownership');
+  setCurrentPage('vehicle-ownership');
+  
   //increase value for every action
   if(vehicleCounter == 0)
   {
@@ -884,12 +891,12 @@ function checkOwner(e)
   }
   
   // store data to localstorage
-  let localdata = getLocaData();
+  let localdata = getLocalData();
   if(localdata){
-    localdata.vehicles.current[3] = e.name;
+    localdata.vehicles.current[3] = e.value;
     setLocalData(localdata);
   }else{
-    formdata.vehicles.current[3] = e.name;
+    formdata.vehicles.current[3] = e.value;
     setLocalData(formdata);
   }
   
@@ -898,23 +905,22 @@ function checkOwner(e)
 
 function milage(e)
 {
-  setPageUrl('annual-mileage');
-  setCurrentPage('annual-mileage');
-  
-  if( getLocaData() ){
-    vehicleCounter = getLocaData().vehicles.list.length;
+  let mile = formdata.vehicles.current;
+  if( getLocalData() ){
+    const local = getLocalData();
+    vehicleCounter = local.vehicles.list.length;
+    mile = local.vehicles.current;
   }
 
-  let mile = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Annual Mileage</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(mile[4] == '2000' ? 'active': '')+'" onclick="checkMilage(this)">2000</button>'+
-      '<button class="input '+(mile[4] == '5000' ? 'active': '')+'" onclick="checkMilage(this)">5000</button>'+
-      '<button class="input '+(mile[4] == '10000' ? 'active': '')+'" onclick="checkMilage(this)">10000</button>'+
-      '<button class="input '+(mile[4] == '15000' ? 'active': '')+'" onclick="checkMilage(this)">15000</button>'+
-      '<button class="input '+(mile[4] == '20000' ? 'active': '')+'" onclick="checkMilage(this)">20000</button>'+
+      '<button class="input '+(mile[4] == '2000' ? 'active': '')+'" onclick="checkMilage(this)" value="2000">2000</button>'+
+      '<button class="input '+(mile[4] == '5000' ? 'active': '')+'" onclick="checkMilage(this)" value="5000">5000</button>'+
+      '<button class="input '+(mile[4] == '10000' ? 'active': '')+'" onclick="checkMilage(this)" value="10000">10000</button>'+
+      '<button class="input '+(mile[4] == '15000' ? 'active': '')+'" onclick="checkMilage(this)" value="15000">15000</button>'+
+      '<button class="input '+(mile[4] == '20000' ? 'active': '')+'" onclick="checkMilage(this)" value="20000">20000</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -928,7 +934,7 @@ function milage(e)
   if(e.value != 'back')
   {
     //store owner to the vehicle object
-    formdata.vehicles.current[3] = e.innerHTML;
+    // formdata.vehicles.current[3] = e.innerHTML;
   }
   if(vehicleCounter == 0 && e.value == 'back'){
     increasePercent(-6);
@@ -937,6 +943,9 @@ function milage(e)
 
 function checkMilage(e)
 {
+  setPageUrl('annual-mileage');
+  setCurrentPage('annual-mileage');
+  
   //increase value for every action
   if(vehicleCounter == 0)
   {
@@ -944,12 +953,12 @@ function checkMilage(e)
   }
   
   // store data to localstorage
-  let localdata = getLocaData();
+  let localdata = getLocalData();
   if(localdata){
-    localdata.vehicles.current[4] = e.name;
+    localdata.vehicles.current[4] = e.value;
     setLocalData(localdata);
   }else{
-    formdata.vehicles.current[4] = e.name;
+    formdata.vehicles.current[4] = e.value;
     setLocalData(formdata);
   }
 
@@ -958,23 +967,23 @@ function checkMilage(e)
 
 function coverage(e)
 {
-  setPageUrl('desired-coverage-level');
-  setCurrentPage('desired-coverage-level');
-  
-  if( getLocaData() ){
-    vehicleCounter = getLocaData().vehicles.list.length;
+  let cover = formdata.vehicles.current;
+
+  if( getLocalData() ){
+    const local = getLocalData();
+    vehicleCounter = local.vehicles.list.length;
+    cover = local.vehicles.current;
   }
 
-  let cover = formdata.vehicles.current;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
   '<h2>Desired Coverage Level</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(cover[5] == 'Superior' ? 'active': '')+'" onclick="checkCoverage(this)">Superior</button>'+
-      '<button class="input '+(cover[5] == 'Standard' ? 'active': '')+'" onclick="checkCoverage(this)">Standard</button>'+
-      '<button class="input '+(cover[5] == 'Basic' ? 'active': '')+'" onclick="checkCoverage(this)">Basic</button>'+
-      '<button class="input '+(cover[5] == 'State' ? 'active': '')+'" onclick="checkCoverage(this)">State</button>'+
-      '<button class="input '+(cover[5] == 'Minimum' ? 'active': '')+'" onclick="checkCoverage(this)">Minimum</button>'+
+      '<button class="input '+(cover[5] == 'Superior' ? 'active': '')+'" onclick="checkCoverage(this)" value="Superior">Superior</button>'+
+      '<button class="input '+(cover[5] == 'Standard' ? 'active': '')+'" onclick="checkCoverage(this)" value="Standard">Standard</button>'+
+      '<button class="input '+(cover[5] == 'Basic' ? 'active': '')+'" onclick="checkCoverage(this)" value="Basic">Basic</button>'+
+      '<button class="input '+(cover[5] == 'State' ? 'active': '')+'" onclick="checkCoverage(this)" value="State">State</button>'+
+      '<button class="input '+(cover[5] == 'Minimum' ? 'active': '')+'" onclick="checkCoverage(this)" value="Minimum">Minimum</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -988,7 +997,7 @@ function coverage(e)
   if(e.value != 'back')
   {
     //store milage to the vehicle object
-    formdata.vehicles.current[4] = e.innerHTML;
+    // formdata.vehicles.current[4] = e.innerHTML;
   }
   if(vehicleCounter == 0 && e.value == 'back'){
     increasePercent(-6);
@@ -997,6 +1006,9 @@ function coverage(e)
 
 function checkCoverage(e)
 {
+  setPageUrl('desired-coverage-level');
+  setCurrentPage('desired-coverage-level');
+  
   //increase value for every action
   if(vehicleCounter == 0)
   {
@@ -1004,12 +1016,12 @@ function checkCoverage(e)
   }
   
   // store data to localstorage
-  let localdata = getLocaData();
+  let localdata = getLocalData();
   if(localdata){
-    localdata.vehicles.current[5] = e.name;
+    localdata.vehicles.current[5] = e.value;
     setLocalData(localdata);
   }else{
-    formdata.vehicles.current[5] = e.name;
+    formdata.vehicles.current[5] = e.value;
     setLocalData(formdata);
   }
 
@@ -1018,9 +1030,6 @@ function checkCoverage(e)
 
 function anotherVehicle(e)
 {
-  setPageUrl('add-another-vehicle');
-  setCurrentPage('add-another-vehicle');
-
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Vehicle?</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
@@ -1038,55 +1047,67 @@ function anotherVehicle(e)
 
   commonAgent('Yes');
   
-  if(e.value != 'back')
-  {
-    //store coverage to the vehicle object
-    formdata.vehicles.current[5] = e.innerHTML;
-    formdata.vehicles.list.push(formdata.vehicles.current);
-
-    //data restore to the localStorage
-    if(localStorage.getItem('localdata'))
-    {
-      let localdata = JSON.parse(localStorage.getItem('localdata'));
-      localdata.vehicles.list.push(formdata.vehicles.current);
-      localStorage.setItem('localdata', JSON.stringify(localdata));
-    }
-  }
+  // if(e.value != 'back')
+  // {
+  // }
 }
 
 function checkAnotherVehicle(e)
 {
+  //store coverage to the vehicle object
+  formdata.vehicles.current[5] = e.innerHTML;
+  formdata.vehicles.list.push(formdata.vehicles.current);
+
   if(e.name == 'Yes')
   {
-    let vlist = formdata.vehicles.list.length;
-    vehicleCounter = vlist++;
+    setPageUrl('vehicle-make');
+    setCurrentPage('vehicle-make');
+
+    //data restore to the localStorage
+    const local = getLocalData();
+    if(formdata.vehicles.current)
+    {
+      local.vehicles.list.push(formdata.vehicles.current);
+      setLocalData(local);
+    }
+
+    vehicleCounter = formdata.vehicles.list.length;
     formdata.vehicles.current = [];
 
     brands(e);
   }
   else if(e.name == 'No')
   {
-    insurance(e);
+    setPageUrl('insurance-details');
+    setCurrentPage('insurance-details');
+
+    if(editmode == 'Yes')
+    {
+      checkLocalData();
+    }
+    else
+    {
+      insurance(e);
+    }
+    
   }
 }
 
 function insurance(e)
 {
-  setPageUrl('insurance-details');
-  setCurrentPage('insurance-details');
-
+  let insure = formdata.owner.insurance;
   // common agent text hide this section
   commonAgent('No');
 
-  if(localStorage.getItem('localdata'))
-  {
-    localStorage.removeItem('submitted');
-    // checkLocalData();
-  }
-
-  let insure = formdata.owner.insurance;
-  if(localStorage.getItem('localdata')){
-    insure = JSON.parse(localStorage.getItem('localdata')).owner.insurance;
+  // if(editmode == 'Yes' && getLocalData())
+  // {
+  //   localStorage.removeItem('submitted');
+  //   checkLocalData();
+  // }
+  const local = getLocalData();
+  if(local){
+    insure = local.owner.insurance;
+    console.log(insure);
   }
   
   container.innerHTML = '<div class="step step-number step-content-basic">'+
@@ -1135,7 +1156,7 @@ function insurance(e)
       '<p class="error" id="coverage_err"></p>'+
     '</div>'+
     '<div class="back-to-prev">'+
-      '<button class="back" onclick="'+(checkLocalStorage() ? 'checkLocalData()' : 'anotherVehicle(this)')+'" name="" value="back">'+
+      '<button type="button" class="back" onclick="'+(editmode == 'Yes' ? 'checkLocalData()' : 'anotherVehicle(this)')+'" name="" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -1162,6 +1183,9 @@ function insurance(e)
 
 function checkInsuranceForm(e)
 {
+  setPageUrl('insurance-details');
+  setCurrentPage('insurance-details');
+
   let form = document.querySelector('#insuranceForm');
     form.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -1176,14 +1200,14 @@ function checkInsuranceForm(e)
         {
           formdata.owner.insurance = [career.value, coverage.value];
 
-          if(localStorage.getItem('localdata') && editmode == 'Yes')
+          let local = getLocalData();
+          local.owner.insurance = [career.value, coverage.value];
+          setLocalData(local);
+
+          if(editmode == 'Yes')
           {
-            let local = JSON.parse(localStorage.getItem('localdata'));
-            local.owner.insurance = [career.value, coverage.value];
-            localStorage.setItem('localdata', JSON.stringify(local));
-
             localStorage.removeItem('submitted');
-
+            localStorage.setItem('editmode', '');
             editmode = '';
 
             checkLocalData();
@@ -1202,16 +1226,15 @@ function checkInsuranceForm(e)
 /** ------------------ Add Driver Section --------------- */
 function addDriver(e)
 {
-  setPageUrl('gender');
-  setCurrentPage('gender');
+  let driver = formdata.drivers.current.general;
 
-  if( getLocaData().drivers.list )
+  const local = getLocalData();
+  if(local)
   {
-    driverCounter = getLocaData().drivers.list.length;
-    console.log(getLocaData());
+    driverCounter = local.drivers.list.length;
+    driver = local.drivers.current.general;
   }
 
-  let driver = formdata.drivers.current.general;
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Gender</h2>'+
@@ -1221,7 +1244,7 @@ function addDriver(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="'+(checkLocalStorage() ? 'checkLocalData()' : 'insurance(this)')+'" name="back" value="back">'+
+      '<button class="back" onclick="'+(editmode == 'Yes' ? 'checkLocalData()' : 'insurance(this)')+'" name="back" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -1243,15 +1266,15 @@ function addDriver(e)
 
 function driverMaritalStatus(e)
 {
-  setPageUrl('marital-status');
-  setCurrentPage('marital-status');
+  let driver = formdata.drivers.current.general;
 
-  if( getLocaData().drivers.list )
+  const local = getLocalData();
+  if( local.drivers.list )
   {
-    driverCounter = getLocaData().drivers.list.length;
+    driverCounter = local.drivers.list.length;
+    driver = local.drivers.current.general;
   }
 
-  let driver = formdata.drivers.current.general;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Marital Status</h2>'+
@@ -1274,6 +1297,9 @@ function driverMaritalStatus(e)
 
   if(e.value != 'back')
   {
+    setPageUrl('gender');
+    setCurrentPage('gender');
+  
     //increase value for every action
     if(driverCounter == 0)
     {
@@ -1284,7 +1310,7 @@ function driverMaritalStatus(e)
     formdata.drivers.current.general[0] = e.innerHTML;
   
     // store data to localstorage
-    let localdata = getLocaData();
+    let localdata = getLocalData();
     if(localdata){
       localdata.drivers.current.general[0] = e.innerHTML;
       setLocalData(localdata);
@@ -1303,15 +1329,14 @@ function driverMaritalStatus(e)
 
 function birthMonth(e)
 {
-  setPageUrl('birth-month');
-  setCurrentPage('birth-month');
-
-  if( getLocaData().drivers.list )
+  let dob = formdata.drivers.current.dob;
+  const local = getLocalData();
+  if( local.drivers.list )
   {
-    driverCounter = getLocaData().drivers.list.length;
+    driverCounter = local.drivers.list.length;
+    dob = local.drivers.current.dob;
   }
 
-  let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Birth Month</h2>'+
@@ -1340,6 +1365,9 @@ function birthMonth(e)
 
   if(e.value != 'back')
   {
+    setPageUrl('marital-status');
+    setCurrentPage('marital-status');
+  
     //increase value for every action
     if(driverCounter == 0)
     {
@@ -1350,7 +1378,7 @@ function birthMonth(e)
     formdata.drivers.current.general[1] = e.innerHTML;
   
     // store data to localstorage
-    let localdata = getLocaData();
+    let localdata = getLocalData();
     if(localdata){
       localdata.drivers.current.general[1] = e.innerHTML;
       setLocalData(localdata);
@@ -1369,15 +1397,14 @@ function birthMonth(e)
 
 function birthDay(e)
 {
-  setPageUrl('birth-day');
-  setCurrentPage('birth-day');
-
-  if( getLocaData().drivers.list )
+  let dob = formdata.drivers.current.dob;
+  const local = getLocalData();
+  if( local.drivers.list )
   {
-    driverCounter = getLocaData().drivers.list.length;
+    driverCounter = local.drivers.list.length;
+    dob = local.drivers.current.dob;
   }
 
-  let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Birth Day</h2>'+
@@ -1407,6 +1434,9 @@ function birthDay(e)
 
   if(e.value != 'back')
   {
+    setPageUrl('birth-month');
+    setCurrentPage('birth-month');
+  
     //increase value for every action
     if(driverCounter == 0)
     {
@@ -1417,7 +1447,7 @@ function birthDay(e)
     formdata.drivers.current.dob[0] = e.innerHTML;
   
     // store data to localstorage
-    let localdata = getLocaData();
+    let localdata = getLocalData();
     if(localdata){
       localdata.drivers.current.dob[0] = e.innerHTML;
       setLocalData(localdata);
@@ -1435,15 +1465,14 @@ function birthDay(e)
 
 function birthYear(e)
 {
-  setPageUrl('birth-year');
-  setCurrentPage('birth-year');
-
-  if( getLocaData().drivers.list )
+  let dob = formdata.drivers.current.dob;
+  const local = getLocalData();
+  if( local.drivers.list )
   {
-    driverCounter = getLocaData().drivers.list.length;
+    driverCounter = local.drivers.list.length;
+    dob = local.drivers.current.dob;
   }
 
-  let dob = formdata.drivers.current.dob;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
     '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
     '<h2>Birth Year</h2>'+
@@ -1472,6 +1501,9 @@ function birthYear(e)
 
   if(e.value != 'back')
   {
+    setPageUrl('birth-day');
+    setCurrentPage('birth-day');
+  
     //increase value for every action
     if(driverCounter == 0)
     {
@@ -1482,7 +1514,7 @@ function birthYear(e)
     formdata.drivers.current.dob[1] = e.innerHTML;
   
     // store data to localstorage
-    let localdata = getLocaData();
+    let localdata = getLocalData();
     if(localdata){
       localdata.drivers.current.dob[1] = e.innerHTML;
       setLocalData(localdata);
@@ -1502,15 +1534,13 @@ function birthYear(e)
 
 function incident(e)
 {
-  setPageUrl('incidents-in-the-past-3-years');
-  setCurrentPage('incidents-in-the-past-3-years');
-
-  if( getLocaData().drivers.list )
-  {
-    driverCounter = getLocaData().drivers.list.length;
-  }
-
   let parts = formdata.drivers.current.incidents.part;
+  const local = getLocalData();
+  if( local.drivers.list )
+  {
+    driverCounter = local.drivers.list.length;
+    parts = local.drivers.current.incidents.part;
+  }
   
   container.innerHTML = '<div class="step step-number step-content-basic five-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1587,6 +1617,9 @@ function incident(e)
 
   if(e != null && e.value != 'back')
   {
+    setPageUrl('birth-year');
+    setCurrentPage('birth-year');
+  
     //increase value for every action
     // if(driverCounter == 0)
     // {
@@ -1597,7 +1630,7 @@ function incident(e)
     formdata.drivers.current.dob[2] = e.innerHTML;
   
     // store data to localstorage
-    let localdata = getLocaData();
+    let localdata = getLocalData();
     if(localdata){
       localdata.drivers.current.dob[2] = e.innerHTML;
       setLocalData(localdata);
@@ -1607,7 +1640,7 @@ function incident(e)
     }
   }
 
-  if(e.value == 'back'){
+  if(e != null && e.value == 'back'){
     if(driverCounter == 0)
     {
       // increasePercent(-5);
@@ -1615,12 +1648,15 @@ function incident(e)
   }
 }
 
-// incident(null);
-
 /** selects incidents parts  */
 function checkIncident(e)
 {
+  setPageUrl('incidents-in-the-past-3-years');
+  setCurrentPage('incidents-in-the-past-3-years');
+
   let parts = formdata.drivers.current.incidents.part;
+  const local = getLocalData();
+
   if(e.value == 'Yes')
   {
     if(e.name == 'sr-22')
@@ -1663,19 +1699,21 @@ function checkIncident(e)
       }
     }
   }
+  local.incidents = incidents;
+  local.drivers.current.incidents.part = parts;
+  setLocalData(local);
 }
 
 function accident(e)
 {
-  setPageUrl('accident-details');
-  setCurrentPage('accident-details');
-
-  if( getLocaData().drivers.list )
+  let act = formdata.drivers.current.incidents.accident;
+  const local = getLocalData();
+  if( local.drivers.list )
   {
-    driverCounter = getLocaData().drivers.list.length;
+    driverCounter = local.drivers.list.length;
+    act = local.drivers.current.incidents.accident;
   }
 
-  let act = formdata.drivers.current.incidents.accident;
   container.innerHTML ='<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Accident Details</h2>'+
@@ -1761,6 +1799,9 @@ function accident(e)
 /** -------------------- check accident form ------------ */
 function checkAccidentForm(e)
 {
+  setPageUrl('accident-details');
+  setCurrentPage('accident-details');
+
   let form = document.querySelector('#accidentForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -1783,7 +1824,7 @@ function checkAccidentForm(e)
       formdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
   
       // store data to localstorage
-      let localdata = getLocaData();
+      let localdata = getLocalData();
       if(localdata){
         localdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
         setLocalData(localdata);
@@ -1805,9 +1846,6 @@ function checkAccidentForm(e)
 
 function ticket(e)
 {
-  setPageUrl('driver-ticket');
-  setCurrentPage('driver-ticket');
-
   let act = formdata.drivers.current.incidents.ticket;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1885,6 +1923,9 @@ function ticket(e)
 /** -------------------- check accident form ------------ */
 function checkTicketForm(e)
 {
+  setPageUrl('driver-ticket');
+  setCurrentPage('driver-ticket');
+
   let form = document.querySelector('#ticketForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -1913,16 +1954,17 @@ function checkTicketForm(e)
 
 function dui(e)
 {
-  setPageUrl('dui-detail');
-  setCurrentPage('dui-detail');
-
-  if( getLocaData().drivers.list )
-  {
-    driverCounter = getLocaData().drivers.list.length;
-  }
-
   let state = '';
   let addr = formdata.drivers.current.incidents.dui;
+  let act = formdata.drivers.current.incidents.dui;
+  const local = getLocalData();
+  if( local.drivers.list )
+  {
+    driverCounter = local.drivers.list.length;
+    act = local.drivers.current.incidents.dui;
+    addr = local.drivers.current.incidents.dui;
+  }
+
   if(addr[2])
   {
     state = addr[2];
@@ -1933,7 +1975,6 @@ function dui(e)
     statelist += '<option value="'+k+'" '+(state ? 'selected' : '')+'>'+s+'</option>\n';
   });
 
-  let act = formdata.drivers.current.incidents.dui;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>DUI Details</h2>'+
@@ -1995,6 +2036,9 @@ function dui(e)
 /** -------------------- check accident form ------------ */
 function checkDuiForm(e)
 {
+  setPageUrl('dui-detail');
+  setCurrentPage('dui-detail');
+
   let form = document.querySelector('#duiForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -2013,7 +2057,7 @@ function checkDuiForm(e)
       formdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
   
       // store data to localstorage
-      let localdata = getLocaData();
+      let localdata = getLocalData();
       if(localdata){
         localdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
         setLocalData(localdata);
@@ -2032,16 +2076,15 @@ function checkDuiForm(e)
 
 function driverName(e)
 {
-  setPageUrl('driver-name');
-  setCurrentPage('driver-name');
-
-  if( getLocaData().drivers.list )
-  {
-    driverCounter = getLocaData().drivers.list.length;
-  }
-
   let first_name = '', last_name = '';
   let names = formdata.drivers.current.names;
+  const local = getLocalData();
+  if( local.drivers.list )
+  {
+    driverCounter = local.drivers.list.length;
+    names = local.drivers.current.names;
+  }
+
   if(names[0])
   {
     first_name = names[0];
@@ -2117,6 +2160,9 @@ function driverName(e)
 /** -------------------- check accident form ------------ */
 function checkNameForm(e)
 {
+  setPageUrl('driver-name');
+  setCurrentPage('driver-name');
+
   let form = document.querySelector('#driverNameForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -2132,7 +2178,7 @@ function checkNameForm(e)
       formdata.drivers.current.names = [first_name.value, last_name.value];
   
       // store data to localstorage
-      let localdata = getLocaData();
+      let localdata = getLocalData();
       if(localdata){
         localdata.drivers.current.names = [first_name.value, last_name.value];
         setLocalData(localdata);
@@ -2150,6 +2196,8 @@ function checkNameForm(e)
 /** ------------------- next incident ------------ */
 function nextIncident(e)
 {
+  const local = getLocalData();
+
   if(incidents.forward.includes('accident'))
   {
     accident(e);
@@ -2165,7 +2213,6 @@ function nextIncident(e)
     driverName(e);
   }
 
-  // formDataStore(formdata);
 }
 
 /** ------------------- back incident ------------ */
@@ -2187,21 +2234,16 @@ function backIncident(e)
   {
     incident(e);
   }
-
-  // formDataStore(formdata);
   
 }
 
 function anotherDriver(e)
 {
-  setPageUrl('add-another-driver');
-  setCurrentPage('add-another-driver');
-
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Driver?</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="moreDriver">'+
       '<button class="input" onclick="checkAnotherDriver(this)" value="YES">YES</button>'+
-      '<button class="input" onclick="ownerAddress(this)" value="NO">NO</button>'+
+      '<button class="input" onclick="checkAnotherDriver(this)" value="NO">NO</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -2212,45 +2254,38 @@ function anotherDriver(e)
     '</button>'+
   '</div>';
 
-  if(e != null && e.value != 'back')
-  {
-    formdata.drivers.list.push(formdata.drivers.current);
-
-    if(localStorage.getItem('localdata')){
-      let local = JSON.parse(localStorage.getItem('localdata'));
-      local.drivers.list.push(formdata.drivers.current);
-      localStorage.setItem('localdata', JSON.stringify(local));
-
-      formdata.drivers.current = {
-        names: [],
-        general: [],
-        dob: [],
-        incidents : {
-          part: [],
-          accident: [],
-          ticket: [],
-          dui: []
-        }
-      };
-
-      if(editmode == 'Yes')
-      {
-        //remove submitted counter
-        localStorage.removeItem('submitted');
-        editmode = '';
-        checkLocalData();
-      }      
-    }
-  }
-
 }
 
 function checkAnotherDriver(e)
 {
+  setPageUrl('add-another-driver');
+  setCurrentPage('add-another-driver');
+
+    // if(localStorage.getItem('localdata')){
+    //   let local = JSON.parse(localStorage.getItem('localdata'));
+    //   local.drivers.list.push(formdata.drivers.current);
+    //   localStorage.setItem('localdata', JSON.stringify(local));
+
+    //   formdata.drivers.current = {
+    //     names: [],
+    //     general: [],
+    //     dob: [],
+    //     incidents : {
+    //       part: [],
+    //       accident: [],
+    //       ticket: [],
+    //       dui: []
+    //     }
+    //   };
+    // }
+
+  const local = getLocalData();
   if(e.value == 'YES')
   {
-    let local = getLocaData();
     driverCounter = local.drivers.list.length + 1;
+
+    local.drivers.list.push(formdata.drivers.current);
+    setLocalData(local);
 
     formdata.drivers.current = {
       names: [],
@@ -2266,19 +2301,32 @@ function checkAnotherDriver(e)
 
     addDriver();
   }
+  else if(e.value == 'NO')
+  {
+    if(editmode == 'Yes')
+    {
+      local.drivers.list.push(formdata.drivers.current);
+      setLocalData(local);
+      //remove submitted counter
+      localStorage.removeItem('submitted');
+      localStorage.setItem('editmode', '');
+      editmode = '';
+      checkLocalData();
+    }
+    ownerAddress(e);
+  }
 }
 
 /** ------------------ Owner Details -------------------- */
 function ownerAddress(e)
 {
-  setPageUrl('current-address');
-  setCurrentPage('current-address');
-
   let address = '', zip = '', state = '', city = '', country = '';
   let addr = formdata.owner.address;
-  if(localStorage.getItem('localdata')){
-    addr = JSON.parse(localStorage.getItem('localdata')).owner.address;
+  const local = getLocalData();
+  if(local){
+    addr = local.owner.address;
   }
+
   if(addr[0])
   {
     address = addr[0];
@@ -2324,6 +2372,7 @@ function ownerAddress(e)
     '</div>'+
     '<div class="half-width">'+
         '<select name="state" id="address_state" class="select-box-address-state" onchange="checkErr(this);" required>'+
+        '<option value="'+state+'">'+state+'</option>'+
             statelist+
         '</select>'+
       '</div>'+
@@ -2341,7 +2390,7 @@ function ownerAddress(e)
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
-      '<button class="back" onclick="'+(checkLocalStorage() ? 'checkLocalData()' : 'anotherDriver(this)')+'" name="back" value="back">'+
+      '<button class="back" onclick="'+(editmode == 'Yes' ? 'checkLocalData()' : 'anotherDriver(this)')+'" name="back" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -2377,6 +2426,9 @@ function ownerAddress(e)
 /** -------------------- check accident form ------------ */
 function checkAddressForm(e)
 {
+  setPageUrl('current-address');
+  setCurrentPage('current-address');
+
   let form = document.querySelector('#addressForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -2399,13 +2451,14 @@ function checkAddressForm(e)
       increasePercent(2);
 
       formdata.owner.address = [address.value, zip.value, state.value, city.value, country.value];
-      
-      if(localStorage.getItem('localdata') && editmode == 'Yes')
-      {
-        let local = JSON.parse(localStorage.getItem('localdata'));
-        local.owner.address = [address.value, zip.value, state.value, city.value, country.value];
-        localStorage.setItem('localdata', JSON.stringify(local));
 
+
+      let local = getLocalData();
+      local.owner.address = [address.value, zip.value, state.value, city.value, country.value];
+      setLocalData(local);
+      
+      if(local && editmode == 'Yes')
+      {
         // remove submit count from local data
         localStorage.removeItem('submitted');
         editmode = '';
@@ -2422,10 +2475,13 @@ function checkAddressForm(e)
 
 function ownership(e)
 {
-  setPageUrl('home-ownership');
-  setCurrentPage('home-ownership');
-
   let contact = formdata.owner.contact;
+  const local = getLocalData();
+  if(local)
+  {
+    contact = local.owner.contact;
+  }
+
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Home Ownership</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
@@ -2435,7 +2491,7 @@ function ownership(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="'+(checkLocalStorage()? 'checkLocalData()': 'ownerAddress(this)')+'" name="back" value="back">'+
+      '<button class="back" onclick="'+(editmode == 'Yes' ? 'checkLocalData()': 'ownerAddress(this)')+'" name="back" value="back">'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -2454,17 +2510,20 @@ function ownership(e)
 
 function checkOwnership(e)
 {
+  setPageUrl('home-ownership');
+  setCurrentPage('home-ownership');
+
   if(e != null)
   {
     increasePercent(2);
     formdata.owner.contact[0] = e.value;
 
-    if(localStorage.getItem('localdata') && editmode == 'Yes')
-    {
-      let local = JSON.parse(localStorage.getItem('localdata'));
-      local.owner.contact[0] = e.value;
-      localStorage.setItem('localdata', JSON.stringify(local));
+    const local = getLocalData();
+    local.owner.contact[0] = e.value;
+    setLocalData(local);
 
+    if(local && editmode == 'Yes')
+    {
       // remove submit count from local data
       localStorage.removeItem('submitted');
       editmode = '';
@@ -2480,14 +2539,11 @@ function checkOwnership(e)
 
 function emailAddress(e)
 {
-  setPageUrl('email-address');
-  setCurrentPage('email-address');
-
   let email = '';
   let contact = formdata.owner.contact;
-
-  if(localStorage.getItem('localdata')){
-    contact = JSON.parse(localStorage.getItem('localdata')).owner.contact;
+  const local = getLocalData();
+  if(local.owner.contact){
+    contact = local.owner.contact;
   }
 
   if(contact[1])
@@ -2505,7 +2561,7 @@ function emailAddress(e)
         '</div>'+
       '</div>'+
     '<div class="back-to-prev">'+
-        '<button class="back" onclick="'+(checkLocalStorage() ? 'checkLocalData()' : 'ownership(this)')+'" name="back" value="back">'+
+        '<button class="back" onclick="'+(editmode == 'Yes' ? 'checkLocalData()' : 'ownership(this)')+'" name="back" value="back">'+
             '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
                 '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
             '</svg> Back '+
@@ -2527,15 +2583,19 @@ function emailAddress(e)
 
 function emailForm(e)
 {
+  setPageUrl('email-address');
+  setCurrentPage('email-address');
+
   let email = document.getElementById('email');
 
   if(checkEmail(email))
   {
     formdata.owner.contact[1] = email.value;
-    if(localStorage.getItem('localdata') && editmode == 'Yes'){
-      let local = JSON.parse(localStorage.getItem('localdata'));
-      local.owner.contact[1] = email.value;
-      localStorage.setItem('localdata', JSON.stringify(local));
+    const local = getLocalData();
+    local.owner.contact[1] = email.value;
+    setLocalData(local);
+
+    if(editmode == 'Yes'){
 
       // remove submit count from local data
       localStorage.removeItem('submitted');
@@ -2554,14 +2614,11 @@ function emailForm(e)
 
 function getQuote(e)
 {
-  setPageUrl('contact-number');
-  setCurrentPage('contact-number');
-
   let phone = '';
   let contact = formdata.owner.contact;
-
-  if(localStorage.getItem('localdata')){
-    contact = JSON.parse(localStorage.getItem('localdata')).owner.contact;
+  const local = getLocalData();
+  if(local){
+    contact = local.owner.contact;
   }
 
   if(contact[2])
@@ -2609,6 +2666,9 @@ function getQuote(e)
 
 function checkQuote(e)
 {
+  setPageUrl('contact-number');
+  setCurrentPage('contact-number');
+
   let phone = document.getElementById('phone');
 
   if(checkPhone(phone))
@@ -2635,8 +2695,6 @@ function checkQuote(e)
       checkLocalData();
       loading.style.display = 'block';
       sendToServer();
-      localStorage.removeItem('currentData');
-      // localStorage.removeItem('currentPage');
     }
 
     //increase value for every action
@@ -2940,15 +2998,13 @@ function checkLocalData()
   setCurrentPage('thank-you');
 
   let vehicleList = '', driverList = '';
-  let localdata = localStorage.getItem('localdata');
-  if(localdata){
+  const local = getLocalData();
+  if(local){
     // hide homepage addtional information
     homeInfo('No');
-
-    let parseData = JSON.parse(localdata);
-    if(parseData.vehicles.list)
+    if(local.vehicles.list)
     {
-      parseData.vehicles.list.forEach((v, n) => {
+      local.vehicles.list.forEach((v, n) => {
         vehicleList += '<p>'+
           '<img src="'+v[0][1]+'" alt="" width="50">'+
           '<span>'+v[0][0]+'</span>'+
@@ -2957,8 +3013,8 @@ function checkLocalData()
       });
     }
     
-    if(parseData.drivers.list){
-      parseData.drivers.list.forEach((d, n) => {
+    if(local.drivers.list){
+      local.drivers.list.forEach((d, n) => {
         driverList += '<p>'+
           '<svg class="" width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="48" rx="24"></rect><g transform="translate(16 12)" stroke="#000" stroke-width="2"><circle cx="8.471" cy="5.647" r="5.647"></circle><path d="M16.941 24A8.47 8.47 0 0 0 0 24"></path></g></g></svg>'+
           '<span>'+d.names[0]+'</span>'+
@@ -2969,7 +3025,7 @@ function checkLocalData()
     }
 
     let html = '<div class="welcome-back-wrap">'+
-        '<h5 style="color: #0070e9; text-transform: uppercase;">Hey <strong>'+parseData.drivers.list[0].names[0]+'</strong>!</h5>'+
+        '<h5 style="color: #0070e9; text-transform: uppercase;">Hey <strong>'+local.drivers.list[0].names[0]+'</strong>!</h5>'+
         '<h2 style="text-transform: uppercase;">Your Auto Quotes Are Almost Ready For You!</h2>'+
         '<div class="continue-btn">'+
           '<button class="action-btn btn get-my-quote" onclick="sendToServer(this)" value="" id="getMyQuote">Get my Quote<span class="notifiy">1</span></button>'+
@@ -3036,8 +3092,8 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>'+parseData.owner.insurance[0]+'</p>'+
-                  '<p>'+parseData.owner.insurance[1]+'</p>'+
+                  '<p>'+local.owner.insurance[0]+'</p>'+
+                  '<p>'+local.owner.insurance[1]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="editData(this)" name="insurance">Change</button>'+
@@ -3050,7 +3106,7 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>'+parseData.owner.address[0]+' <br> '+parseData.owner.address[1]+'<br>'+parseData.owner.address[2]+'<br>'+parseData.owner.address[3]+'<br>'+parseData.owner.address[4]+'</p>'+
+                  '<p>'+local.owner.address[0]+' <br> '+local.owner.address[1]+'<br>'+local.owner.address[2]+'<br>'+local.owner.address[3]+'<br>'+local.owner.address[4]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="editData(this)" name="ownerAddress">Change</button>'+
@@ -3063,7 +3119,7 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>'+parseData.owner.contact[0]+'</p>'+
+                  '<p>'+local.owner.contact[0]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="editData(this)" name="ownerContact">Change</button>'+
@@ -3076,7 +3132,7 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>'+parseData.owner.contact[1]+'</p>'+
+                  '<p>'+local.owner.contact[1]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="editData(this)" name="email">Change</button>'+
@@ -3090,7 +3146,7 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>'+parseData.owner.contact[2]+'</p>'+
+                  '<p>'+local.owner.contact[2]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="editData(this)" name="contact">Change</button>'+
@@ -3135,17 +3191,18 @@ function checkLocalData()
 // user query data edit section
 function editAddVehicle(e)
 {
-  let local = JSON.parse(localStorage.getItem('localdata'));
+  const local = getLocalData();
   if(local.vehicles.list){
     vehicleCounter = local.vehicles.list.length;
   }
   formdata.vehicles.current = [];
+  
   brands(e);
 }
 
 // user driver query data edit section
 function editAddDriver(e){
-  let local = JSON.parse(localStorage.getItem('localdata'));
+  const local = getLocalData();
   if(local.drivers.list){
     driverCounter = local.drivers.list.length;
   }
@@ -3160,6 +3217,7 @@ function editAddDriver(e){
       dui: []
     }
   };
+  
   addDriver(e);
 }
 
@@ -3186,17 +3244,20 @@ function removeLocal(e)
 
   document.getElementById('localClearBtn').style.display = 'none';
 
+  setPageUrl('home-page');
+  setCurrentPage('home-page');
+
   createZIPCodePanel();
 }
 
 // remove vehicle
 function removeVehicle(e)
 {
-  let local = JSON.parse(localStorage.getItem('localdata'));
+  let local = getLocalData();
   if(local.vehicles.list.length > 1)
   {
     local.vehicles.list.splice(e.id, 1);
-    localStorage.setItem('localdata', JSON.stringify(local));
+    setLocalData(local);
     e.parentNode.style.display = 'none';
     document.getElementById('getMyQuote').style.display = 'block';
   }
@@ -3233,6 +3294,7 @@ function showHide(e)
 function editData(e)
 {
   editmode = 'Yes';
+  localStorage.setItem('editmode', editmode);
 
   if(e.name == 'insurance')
   {

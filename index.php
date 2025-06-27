@@ -140,7 +140,8 @@
     }(window, document, 'ttq');
     </script>
     <!-- TikTok Pixel Code End -->
-    <meta http-equiv="delegate-ch" content="sec-ch-ua https://clarlysindited.com; sec-ch-ua-mobile https://clarlysindited.com; sec-ch-ua-arch https://clarlysindited.com; sec-ch-ua-model https://clarlysindited.com; sec-ch-ua-platform https://clarlysindited.com; sec-ch-ua-platform-version https://clarlysindited.com; sec-ch-ua-bitness https://clarlysindited.com; sec-ch-ua-full-version-list https://clarlysindited.com; sec-ch-ua-full-version https://clarlysindited.com"><style>.dtpcnt{opacity: 0;}</style>
+    <meta http-equiv="delegate-ch" content="sec-ch-ua https://clarlysindited.com; sec-ch-ua-mobile https://clarlysindited.com; sec-ch-ua-arch https://clarlysindited.com; sec-ch-ua-model https://clarlysindited.com; sec-ch-ua-platform https://clarlysindited.com; sec-ch-ua-platform-version https://clarlysindited.com; sec-ch-ua-bitness https://clarlysindited.com; sec-ch-ua-full-version-list https://clarlysindited.com; sec-ch-ua-full-version https://clarlysindited.com">
+    <style>.dtpcnt{opacity: 0;}</style>
     <script>
         (function(c,d,f,h,t,b,n,u,k,l,m,e,p,v,q){function r(a){var c=d.cookie.match(new RegExp("(^| )"+a+"=([^;]+)"));return c?c.pop():f.getItem(a+"-expires")&&+f.getItem(a+"-expires")>(new Date).getTime()?f.getItem(a):null}q="https:"===c.location.protocol?"secure; ":"";c[b]||(c[b]=function(a){c[b].state.callbackQueue.push(a)},c[b].state={callbackQueue:[]},c[b].registerConversion=function(a){c[b].state.callbackQueue.push(a)},function(){(m=/[?&]cpid(=([^&#]*)|&|#|$)/.exec(c.location.href))&&m[2]&&(e=m[2],
     p=r("vl-"+e));var a=r("vl-cid"),b;"savedCid"!==u||!a||e&&"undefined"!==typeof e||(b=a);k=d.createElement("script");l=d.scripts[0];k.src=n+(-1===n.indexOf("?")?"?":"&")+"oref="+h(d.referrer)+"&ourl="+h(location[t])+"&opt="+h(d.title)+"&vtm="+(new Date).getTime()+(b?"&cid="+b:"")+(p?"&uw=no":"");l.parentNode.insertBefore(k,l);if(e){a="vl-"+e;b=q;var g=new Date;g.setTime(g.getTime()+864E5);d.cookie=a+"=1; "+b+"samesite=Strict; expires="+g.toGMTString()+"; path=/";f.setItem(a,"1");f.setItem(a+"-expires",
@@ -188,7 +189,7 @@
                       </div>
                   </div>
                     <p class="secure-banner">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 448 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z"/></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 448 512"><path d="M144 144l0 48 160 0 0-48c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192l0-48C80 64.5 144.5 0 224 0s144 64.5 144 144l0 48 16 0c35.3 0 64 28.7 64 64l0 192c0 35.3-28.7 64-64 64L64 512c-35.3 0-64-28.7-64-64L0 256c0-35.3 28.7-64 64-64l16 0z"/></svg>
                         We keep all your information 100% secure & confidential, always.
                     </p>
                 </div>
@@ -308,9 +309,10 @@
         // }, 500);
 
         let localClearBtn = document.getElementById('localClearBtn');
-        if(localStorage.getItem('localdata') || localStorage.getItem('currentData') || localStorage.getItem('currentPage')){
+        if(localStorage.getItem('localdata')){
             localClearBtn.style.display = 'block';
         }
+
         function resetForm()
         {
             let addressForm = document.querySelector('#addressForm');
