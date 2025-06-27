@@ -136,16 +136,6 @@ function checkPhone(e)
   }
 }
 
-// onload keep updated formdata object from localstorage localdata
-window.addEventListener('DOMContentLoaded', () => {
-  const localData = localStorage.getItem('localdata');
-  if(localData != null && localData.zipcode)
-  {
-    formdata = JSON.parse(localData);
-    // console.log(formdata);
-  }
-});
-
 //check local storage data
 function checkLocalStorage(){
   if(localStorage.getItem('localdata')){
@@ -194,14 +184,20 @@ function checkCurrentPage()
   // set editmode current condition
   editmode = localStorage.getItem('editmode');
   const local = getLocalData();
-  if(local){
-    if(local.vehicles.current){
+
+  if(local)
+  {
+    formdata = local;
+    if(local.vehicles.current)
+    {
       brand = local.vehicles.current[0];
       year = local.vehicles.current[1];
     }
   }
 
-  console.log('from current page:', local);
+  console.log('formdata:', formdata);
+
+  console.log('localdata:', local);
 
   const currentPage = localStorage.getItem('currentPage');
 
@@ -465,11 +461,6 @@ function createZIPCodePanel(e)
   {
     increasePercent(-6);
   }
-
-  // if(vehicleCounter > 0 && e != null && e.value == 'back')
-  // {
-  //   anotherVehicle();
-  // }
 }
 
 // check zip code
@@ -492,18 +483,9 @@ function ZIPCode(e)
         increasePercent(6);
       }
 
-      // currentData.zip.code = zipcode.value;
-      // setCurrentData(currentData);
-
-      let localdata = getLocalData();
-
-      if(localdata){
-        localdata.zipcode = zipcode.value;
-        setLocalData(localdata);
-      }else{
-        formdata.zipcode = zipcode.value;
-        setLocalData(formdata);
-      }
+      // let localdata = getLocalData();
+      formdata.zipcode = zipcode.value;
+      setLocalData(formdata);
 
       // execute brands
       brands(e);
@@ -622,15 +604,9 @@ function checkBrands(e)
     increasePercent(6);
   }
 
-  let localdata = getLocalData();
-
-  if(localdata){
-    localdata.vehicles.current[0] = e.name;
-    setLocalData(localdata);
-  }else{
-    formdata.vehicles.current[0] = e.name;
-    setLocalData(formdata);
-  }
+  // let localdata = getLocalData();
+  formdata.vehicles.current[0] = e.name;
+  setLocalData(formdata);
 
   //call to the write years
   writeYears(e);
@@ -707,7 +683,6 @@ function writeYears(e)
 
     // store brand to the object
     formdata.vehicles.current[0] = [brand, e.firstElementChild.firstElementChild.src];
-    // formDataStore(formdata);
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
 }
@@ -722,16 +697,9 @@ function checkYears(e)
   {
     increasePercent(6);
   }
-
-  let localdata = getLocalData();
-
-  if(localdata){
-    localdata.vehicles.current[1] = e.name;
-    setLocalData(localdata);
-  }else{
-    formdata.vehicles.current[1] = e.name;
-    setLocalData(formdata);
-  }
+  
+  formdata.vehicles.current[1] = e.name;
+  setLocalData(formdata);
 
   //call to the write years
   models(e);
@@ -830,14 +798,9 @@ function checkModel(e)
   }
   
   // store data to localstorage
-  let localdata = getLocalData();
-  if(localdata){
-    localdata.vehicles.current[2] = e.name;
-    setLocalData(localdata);
-  }else{
-    formdata.vehicles.current[2] = e.name;
-    setLocalData(formdata);
-  }
+
+  formdata.vehicles.current[2] = e.name;
+  setLocalData(formdata);
 
   owner(e);
 }
@@ -868,12 +831,6 @@ function owner(e)
       '</button>'+
   '</div>';
 
-  if(e.value != 'back')
-  {
-    // store model to the vehicle object
-    // formdata.vehicles.current[2] = e.name;
-  }
-
   if(vehicleCounter == 0 && e.value == 'back'){
     increasePercent(-6);
   }
@@ -891,14 +848,9 @@ function checkOwner(e)
   }
   
   // store data to localstorage
-  let localdata = getLocalData();
-  if(localdata){
-    localdata.vehicles.current[3] = e.value;
-    setLocalData(localdata);
-  }else{
-    formdata.vehicles.current[3] = e.value;
-    setLocalData(formdata);
-  }
+
+  formdata.vehicles.current[3] = e.value;
+  setLocalData(formdata);
   
   milage(e);
 }
@@ -931,11 +883,6 @@ function milage(e)
       '</button>'+
   '</div>';
 
-  if(e.value != 'back')
-  {
-    //store owner to the vehicle object
-    // formdata.vehicles.current[3] = e.innerHTML;
-  }
   if(vehicleCounter == 0 && e.value == 'back'){
     increasePercent(-6);
   }
@@ -953,14 +900,9 @@ function checkMilage(e)
   }
   
   // store data to localstorage
-  let localdata = getLocalData();
-  if(localdata){
-    localdata.vehicles.current[4] = e.value;
-    setLocalData(localdata);
-  }else{
-    formdata.vehicles.current[4] = e.value;
-    setLocalData(formdata);
-  }
+
+  formdata.vehicles.current[4] = e.value;
+  setLocalData(formdata);
 
   coverage(e);
 }
@@ -993,13 +935,8 @@ function coverage(e)
           '</svg> Back '+
       '</button>'+
   '</div>';
-
-  if(e.value != 'back')
-  {
-    //store milage to the vehicle object
-    // formdata.vehicles.current[4] = e.innerHTML;
-  }
-  if(vehicleCounter == 0 && e.value == 'back'){
+  
+  if(vehicleCounter == 0 && e != null && e.value == 'back'){
     increasePercent(-6);
   }
 }
@@ -1014,16 +951,10 @@ function checkCoverage(e)
   {
     increasePercent(6);
   }
-  
-  // store data to localstorage
-  let localdata = getLocalData();
-  if(localdata){
-    localdata.vehicles.current[5] = e.value;
-    setLocalData(localdata);
-  }else{
-    formdata.vehicles.current[5] = e.value;
-    setLocalData(formdata);
-  }
+
+
+  formdata.vehicles.current[5] = e.value;
+  setLocalData(formdata);
 
   anotherVehicle(e);
 }
@@ -1046,33 +977,26 @@ function anotherVehicle(e)
   '</div>';
 
   commonAgent('Yes');
-  
-  // if(e.value != 'back')
-  // {
-  // }
 }
 
 function checkAnotherVehicle(e)
 {
   //store coverage to the vehicle object
   formdata.vehicles.current[5] = e.innerHTML;
-  formdata.vehicles.list.push(formdata.vehicles.current);
+
+  //data restore to the localStorage
+  const local = getLocalData();
 
   if(e.name == 'Yes')
   {
     setPageUrl('vehicle-make');
     setCurrentPage('vehicle-make');
 
-    //data restore to the localStorage
-    const local = getLocalData();
-    if(formdata.vehicles.current)
-    {
-      local.vehicles.list.push(formdata.vehicles.current);
-      setLocalData(local);
-    }
+    formdata.vehicles.list.push(formdata.vehicles.current);
+    formdata.vehicles.current = [];
+    setLocalData(formdata);
 
     vehicleCounter = formdata.vehicles.list.length;
-    formdata.vehicles.current = [];
 
     brands(e);
   }
@@ -1080,6 +1004,10 @@ function checkAnotherVehicle(e)
   {
     setPageUrl('insurance-details');
     setCurrentPage('insurance-details');
+    
+    formdata.vehicles.list.push(formdata.vehicles.current);
+    formdata.vehicles.current = [];
+    setLocalData(formdata);
 
     if(editmode == 'Yes')
     {
@@ -1098,12 +1026,7 @@ function insurance(e)
   let insure = formdata.owner.insurance;
   // common agent text hide this section
   commonAgent('No');
-
-  // if(editmode == 'Yes' && getLocalData())
-  // {
-  //   localStorage.removeItem('submitted');
-  //   checkLocalData();
-  // }
+  
   const local = getLocalData();
   if(local){
     insure = local.owner.insurance;
@@ -1200,9 +1123,9 @@ function checkInsuranceForm(e)
         {
           formdata.owner.insurance = [career.value, coverage.value];
 
-          let local = getLocalData();
-          local.owner.insurance = [career.value, coverage.value];
-          setLocalData(local);
+          // let local = getLocalData();
+          formdata.owner.insurance = [career.value, coverage.value];
+          setLocalData(formdata);
 
           if(editmode == 'Yes')
           {
@@ -1295,7 +1218,7 @@ function driverMaritalStatus(e)
       '</button>'+
   '</div>';
 
-  if(e.value != 'back')
+  if(e != null && e.value != 'back')
   {
     setPageUrl('gender');
     setCurrentPage('gender');
@@ -1308,16 +1231,9 @@ function driverMaritalStatus(e)
   
     //store gender to driver array
     formdata.drivers.current.general[0] = e.innerHTML;
-  
-    // store data to localstorage
-    let localdata = getLocalData();
-    if(localdata){
-      localdata.drivers.current.general[0] = e.innerHTML;
-      setLocalData(localdata);
-    }else{
-      formdata.drivers.current.general[0] = e.innerHTML;
-      setLocalData(formdata);
-    }
+
+    formdata.drivers.current.general[0] = e.innerHTML;
+    setLocalData(formdata);
   }
 
   if(e.value == 'back'){
@@ -1376,16 +1292,7 @@ function birthMonth(e)
   
     //store marital status to the drivers general array
     formdata.drivers.current.general[1] = e.innerHTML;
-  
-    // store data to localstorage
-    let localdata = getLocalData();
-    if(localdata){
-      localdata.drivers.current.general[1] = e.innerHTML;
-      setLocalData(localdata);
-    }else{
-      formdata.drivers.current.general[1] = e.innerHTML;
-      setLocalData(formdata);
-    }
+    setLocalData(formdata);
   }
 
   if(e.value == 'back'){
@@ -1445,17 +1352,9 @@ function birthDay(e)
   
     //birth day store to current.dob array
     formdata.drivers.current.dob[0] = e.innerHTML;
-  
-    // store data to localstorage
-    let localdata = getLocalData();
-    if(localdata){
-      localdata.drivers.current.dob[0] = e.innerHTML;
-      setLocalData(localdata);
-    }else{
-      formdata.drivers.current.dob[0] = e.innerHTML;
-      setLocalData(formdata);
-    }
+    setLocalData(formdata);
   }
+
   if(e.value == 'back'){
     if(driverCounter == 0){
       increasePercent(-5);
@@ -1512,16 +1411,7 @@ function birthYear(e)
   
     //birth day push to birthDate array
     formdata.drivers.current.dob[1] = e.innerHTML;
-  
-    // store data to localstorage
-    let localdata = getLocalData();
-    if(localdata){
-      localdata.drivers.current.dob[1] = e.innerHTML;
-      setLocalData(localdata);
-    }else{
-      formdata.drivers.current.dob[1] = e.innerHTML;
-      setLocalData(formdata);
-    }
+    setLocalData(formdata);
   }
 
   if(e.value == 'back'){
@@ -1620,24 +1510,9 @@ function incident(e)
     setPageUrl('birth-year');
     setCurrentPage('birth-year');
   
-    //increase value for every action
-    // if(driverCounter == 0)
-    // {
-    //   // increasePercent(5);
-    // }
-  
     //birth year push to birthDate array
     formdata.drivers.current.dob[2] = e.innerHTML;
-  
-    // store data to localstorage
-    let localdata = getLocalData();
-    if(localdata){
-      localdata.drivers.current.dob[2] = e.innerHTML;
-      setLocalData(localdata);
-    }else{
-      formdata.drivers.current.dob[2] = e.innerHTML;
-      setLocalData(formdata);
-    }
+    setLocalData(formdata);
   }
 
   if(e != null && e.value == 'back'){
@@ -1822,16 +1697,7 @@ function checkAccidentForm(e)
     if(checkMonth && checkYear && checkDesc && checkFault && checkDamage)
     {
       formdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
-  
-      // store data to localstorage
-      let localdata = getLocalData();
-      if(localdata){
-        localdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
-        setLocalData(localdata);
-      }else{
-        formdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
-        setLocalData(formdata);
-      }
+      setLocalData(formdata);
 
       //push accident key to the backward object
       incidents.backward.push('accident');
@@ -1840,8 +1706,6 @@ function checkAccidentForm(e)
     }
 
   });
-
-  // formDataStore(formdata);
 }
 
 function ticket(e)
@@ -1948,8 +1812,6 @@ function checkTicketForm(e)
     }
 
   });
-
-  // formDataStore(formdata);
 }
 
 function dui(e)
@@ -2055,16 +1917,7 @@ function checkDuiForm(e)
     if(checkMonth && checkYear && checkState)
     {
       formdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
-  
-      // store data to localstorage
-      let localdata = getLocalData();
-      if(localdata){
-        localdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
-        setLocalData(localdata);
-      }else{
-        formdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
-        setLocalData(formdata);
-      }
+      setLocalData(formdata);
 
       incidents.backward.push('dui');
 
@@ -2176,16 +2029,7 @@ function checkNameForm(e)
     if(checkFirst && checkLast)
     {
       formdata.drivers.current.names = [first_name.value, last_name.value];
-  
-      // store data to localstorage
-      let localdata = getLocalData();
-      if(localdata){
-        localdata.drivers.current.names = [first_name.value, last_name.value];
-        setLocalData(localdata);
-      }else{
-        formdata.drivers.current.names = [first_name.value, last_name.value];
-        setLocalData(formdata);
-      }
+      setLocalData(formdata);
 
       anotherDriver(e);
     }
@@ -2261,31 +2105,13 @@ function checkAnotherDriver(e)
   setPageUrl('add-another-driver');
   setCurrentPage('add-another-driver');
 
-    // if(localStorage.getItem('localdata')){
-    //   let local = JSON.parse(localStorage.getItem('localdata'));
-    //   local.drivers.list.push(formdata.drivers.current);
-    //   localStorage.setItem('localdata', JSON.stringify(local));
-
-    //   formdata.drivers.current = {
-    //     names: [],
-    //     general: [],
-    //     dob: [],
-    //     incidents : {
-    //       part: [],
-    //       accident: [],
-    //       ticket: [],
-    //       dui: []
-    //     }
-    //   };
-    // }
-
   const local = getLocalData();
   if(e.value == 'YES')
   {
     driverCounter = local.drivers.list.length + 1;
 
-    local.drivers.list.push(formdata.drivers.current);
-    setLocalData(local);
+    formdata.drivers.list.push(formdata.drivers.current);
+    setLocalData(formdata);
 
     formdata.drivers.current = {
       names: [],
@@ -2305,8 +2131,8 @@ function checkAnotherDriver(e)
   {
     if(editmode == 'Yes')
     {
-      local.drivers.list.push(formdata.drivers.current);
-      setLocalData(local);
+      formdata.drivers.list.push(formdata.drivers.current);
+      setLocalData(formdata);
       //remove submitted counter
       localStorage.removeItem('submitted');
       localStorage.setItem('editmode', '');
@@ -2451,11 +2277,10 @@ function checkAddressForm(e)
       increasePercent(2);
 
       formdata.owner.address = [address.value, zip.value, state.value, city.value, country.value];
+      setLocalData(formdata);
 
 
       let local = getLocalData();
-      local.owner.address = [address.value, zip.value, state.value, city.value, country.value];
-      setLocalData(local);
       
       if(local && editmode == 'Yes')
       {
@@ -2519,8 +2344,8 @@ function checkOwnership(e)
     formdata.owner.contact[0] = e.value;
 
     const local = getLocalData();
-    local.owner.contact[0] = e.value;
-    setLocalData(local);
+    formdata.owner.contact[0] = e.value;
+    setLocalData(formdata);
 
     if(local && editmode == 'Yes')
     {
@@ -2574,9 +2399,7 @@ function emailAddress(e)
       '</div>'+
     '</div>';
 
-    // if(e.value != 'back'){}
-
-    if(e.value == 'back'){
+    if(e != null && e.value == 'back'){
       increasePercent(-2);
     }
 }
@@ -2592,8 +2415,8 @@ function emailForm(e)
   {
     formdata.owner.contact[1] = email.value;
     const local = getLocalData();
-    local.owner.contact[1] = email.value;
-    setLocalData(local);
+    formdata.owner.contact[1] = email.value;
+    setLocalData(formdata);
 
     if(editmode == 'Yes'){
 
@@ -2674,11 +2497,11 @@ function checkQuote(e)
   if(checkPhone(phone))
   {
     formdata.owner.contact[2] = phone.value;
+    setLocalData(formdata);
 
-    if(localStorage.getItem('localdata') && editmode == 'Yes'){
-      let local = JSON.parse(localStorage.getItem('localdata'));
-      local.owner.contact[2] = phone.value;
-      localStorage.setItem('localdata', JSON.stringify(local));
+    const local = getLocalData();
+
+    if(local && editmode == 'Yes'){
 
       // remove submit counter from local data
       localStorage.removeItem('submitted');
@@ -2686,12 +2509,12 @@ function checkQuote(e)
 
       // check formdata stored to the localstoage
       checkLocalData();
-      // sendToServer();
+      sendToServer();
     }
     else
     {
       //store data to the local storage
-      localStorage.setItem('localdata', JSON.stringify(formdata));
+      setLocalData(formdata);
       checkLocalData();
       loading.style.display = 'block';
       sendToServer();
@@ -2804,29 +2627,6 @@ function sendToServer()
   formData.drivers = driverObj;
   
   loading.style.display = 'block';
-
-  // let serialized = JSON.stringify(formData);
-
-  // fetch('https://services.leadconnectorhq.com/hooks/BiDDLrh6kezD2kEObkPo/webhook-trigger/c3d3342e-d75d-47cc-bffc-c6d642f5fbf4', {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.content // if using Laravel
-  //   },
-  //   body: serialized
-  // })
-  // .then(response => response.json())
-  // .then(data => {
-  //   console.log('Success:', data);
-  //   if(data.id){
-  //     localStorage.setItem('submitted', true);
-  //     document.getElementById('getMyQuote').style.display = 'none';
-  //     document.getElementById('ThankYouMsg').style.display = 'block';
-  //   }
-  // })
-  // .catch(error => {
-  //   console.error('Error:', error);
-  // });
 
   let form = formData;
 
