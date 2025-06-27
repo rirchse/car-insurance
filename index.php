@@ -485,7 +485,7 @@
     </noscript>
     <!-- End TrustedForm -->
     <!-- <?php echo $_SERVER["HTTP_HOST"]; ?> -->
-    <?php if($_SERVER["HTTP_HOST"] == 'localhost:8888' || $_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'qodebuzz.com'){ ?>
+    <?php if($_SERVER["HTTP_HOST"] == 'localhost:8888' || $_SERVER["HTTP_HOST"] == 'localhost' || $_SERVER["HTTP_HOST"] == 'mediumslateblue-panther-459349.hostingersite.com'){ ?>
       <link rel="stylesheet" href="styles.css?v=1.2.15">
       <script>
         const zipcodefile = 'zipcode.json?v=1.120';
