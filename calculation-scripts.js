@@ -1,4 +1,5 @@
 let formdata = {
+  editmode: "",
   drivers: {
     list: [],
     current: {
@@ -27,11 +28,6 @@ let formdata = {
     forward: []
   },
   zipcode: ""
-};
-
-let incidents = {
-  forward : [],
-  backward : []
 };
 
 let year = '', brand = '', model = '', editmode = '';
@@ -87,7 +83,6 @@ function checkErr(e)
 // check error input
 function checkErrInput(e)
 {
-  // let elm = e.nextElementSibling;
   if(e.value == ''){
     e.style.borderColor = 'red';
     return false;
@@ -182,7 +177,6 @@ function setCurrentPage(page)
 function checkCurrentPage()
 {
   // set editmode current condition
-  editmode = localStorage.getItem('editmode');
   const local = getLocalData();
 
   if(local)
@@ -194,10 +188,6 @@ function checkCurrentPage()
       year = local.vehicles.current[1];
     }
   }
-
-  console.log('formdata:', formdata);
-
-  console.log('localdata:', local);
 
   const currentPage = localStorage.getItem('currentPage');
 
@@ -377,6 +367,11 @@ function checkCurrentPage()
     createZIPCodePanel(null);
     homeInfo('Yes');
   }
+  // styleLoad();
+  // document.addEventListener('DOMContentLoaded', () => {
+  //   // initAutocomplete();
+  // });
+  
 }
 
 // Homepage more information section
@@ -417,6 +412,9 @@ function commonAgent(view)
 
 function createZIPCodePanel(e)
 {
+  setPageUrl('home-page');
+  setCurrentPage('home-page');
+
   let html = '<div class="step step-1">'+
     '<h2>Enter Your Zip Code</h2>'+
     '<form action="#" name="zipForm" onsubmit="event.preventDefault()">'+
@@ -433,10 +431,10 @@ function createZIPCodePanel(e)
         '<button class="action-btn btn" onclick="ZIPCode(this)">Get Started</button>'+
       '</div>';
 
-      if(e != null && e.value == 'back' || getLocalData())
+      if(getLocalData() && getLocalData().vehicles.length > 0 || getLocalData() && getLocalData().vehicles.list.length > 0)
       {
       html += '<div class="more-options inner-wrap-btn">'+
-        '<button class="show-more" onclick="checkCurrentPage()" value="next">'+
+        '<button type="button" class="show-more" onclick="brands(this)" value="next">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 +24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />'+
           '</svg>'+
@@ -466,9 +464,6 @@ function createZIPCodePanel(e)
 // check zip code
 function ZIPCode(e)
 {
-  setPageUrl('home-page');
-  setCurrentPage('home-page');
-
   let zipcode = e.form.elements.zipcode;
   let result = zipcode.parentNode.nextElementSibling;
 
@@ -508,6 +503,9 @@ function ZIPCode(e)
 //write brand
 function brands(e)
 {
+  setPageUrl('vehicle-make');
+  setCurrentPage('vehicle-make');
+  
   // hide home page information
   homeInfo('No');
 
@@ -595,16 +593,12 @@ function brands(e)
 
 function checkBrands(e)
 {
-  setPageUrl('vehicle-make');
-  setCurrentPage('vehicle-make');
-  
   //increase value for every action
   if(vehicleCounter == 0)
   {
     increasePercent(6);
   }
-
-  // let localdata = getLocalData();
+  
   formdata.vehicles.current[0] = e.name;
   setLocalData(formdata);
 
@@ -615,7 +609,10 @@ function checkBrands(e)
 
 // read years
 function writeYears(e)
-{  
+{
+  setPageUrl('vehicle-year');
+  setCurrentPage('vehicle-year');
+  
   if( getLocalData() ){
     vehicleCounter = getLocalData().vehicles.list.length;
   }
@@ -689,9 +686,6 @@ function writeYears(e)
 
 function checkYears(e)
 {
-  setPageUrl('vehicle-year');
-  setCurrentPage('vehicle-year');
-
   //increase value for every action
   if(vehicleCounter == 0)
   {
@@ -709,6 +703,9 @@ function checkYears(e)
 //write model
 function models(e)
 {
+  setPageUrl('vehicle-model');
+  setCurrentPage('vehicle-model');
+
   let model = '';
   
   if( getLocalData() ){
@@ -788,9 +785,6 @@ fetch(jsonfile) // Path to your JSON file
 
 function checkModel(e)
 {
-  setPageUrl('vehicle-model');
-  setCurrentPage('vehicle-model');
-
   //increase value for every action
   if(vehicleCounter == 0)
   {
@@ -807,6 +801,9 @@ function checkModel(e)
 
 function owner(e)
 {
+  setPageUrl('vehicle-ownership');
+  setCurrentPage('vehicle-ownership');
+
   let own = formdata.vehicles.current;
   if( getLocalData() ){
     const local = getLocalData();
@@ -837,10 +834,7 @@ function owner(e)
 }
 
 function checkOwner(e)
-{
-  setPageUrl('vehicle-ownership');
-  setCurrentPage('vehicle-ownership');
-  
+{  
   //increase value for every action
   if(vehicleCounter == 0)
   {
@@ -857,6 +851,9 @@ function checkOwner(e)
 
 function milage(e)
 {
+  setPageUrl('annual-mileage');
+  setCurrentPage('annual-mileage');
+ 
   let mile = formdata.vehicles.current;
   if( getLocalData() ){
     const local = getLocalData();
@@ -889,10 +886,7 @@ function milage(e)
 }
 
 function checkMilage(e)
-{
-  setPageUrl('annual-mileage');
-  setCurrentPage('annual-mileage');
-  
+{ 
   //increase value for every action
   if(vehicleCounter == 0)
   {
@@ -909,6 +903,9 @@ function checkMilage(e)
 
 function coverage(e)
 {
+  setPageUrl('desired-coverage-level');
+  setCurrentPage('desired-coverage-level');
+ 
   let cover = formdata.vehicles.current;
 
   if( getLocalData() ){
@@ -942,10 +939,7 @@ function coverage(e)
 }
 
 function checkCoverage(e)
-{
-  setPageUrl('desired-coverage-level');
-  setCurrentPage('desired-coverage-level');
-  
+{ 
   //increase value for every action
   if(vehicleCounter == 0)
   {
@@ -1006,10 +1000,8 @@ function checkAnotherVehicle(e)
     setCurrentPage('insurance-details');
     
     formdata.vehicles.list.push(formdata.vehicles.current);
-    formdata.vehicles.current = [];
-    setLocalData(formdata);
 
-    if(editmode == 'Yes')
+    if(formdata.editmode == 'Yes')
     {
       checkLocalData();
     }
@@ -1017,12 +1009,16 @@ function checkAnotherVehicle(e)
     {
       insurance(e);
     }
+    setLocalData(formdata);
     
   }
 }
 
 function insurance(e)
 {
+  setPageUrl('insurance-details');
+  setCurrentPage('insurance-details');
+
   let insure = formdata.owner.insurance;
   // common agent text hide this section
   commonAgent('No');
@@ -1106,9 +1102,6 @@ function insurance(e)
 
 function checkInsuranceForm(e)
 {
-  setPageUrl('insurance-details');
-  setCurrentPage('insurance-details');
-
   let form = document.querySelector('#insuranceForm');
     form.addEventListener('submit', function(event) {
         event.preventDefault();
@@ -1123,15 +1116,10 @@ function checkInsuranceForm(e)
         {
           formdata.owner.insurance = [career.value, coverage.value];
 
-          // let local = getLocalData();
-          formdata.owner.insurance = [career.value, coverage.value];
-          setLocalData(formdata);
-
-          if(editmode == 'Yes')
+          if(formdata.editmode == 'Yes')
           {
             localStorage.removeItem('submitted');
-            localStorage.setItem('editmode', '');
-            editmode = '';
+            formdata.editmode = '';
 
             checkLocalData();
           }
@@ -1141,6 +1129,8 @@ function checkInsuranceForm(e)
             increasePercent(5);
             addDriver();
           }
+
+          setLocalData(formdata);
         }
 
     });
@@ -1149,6 +1139,9 @@ function checkInsuranceForm(e)
 /** ------------------ Add Driver Section --------------- */
 function addDriver(e)
 {
+  setPageUrl('gender');
+  setCurrentPage('gender');
+
   let driver = formdata.drivers.current.general;
 
   const local = getLocalData();
@@ -1189,6 +1182,9 @@ function addDriver(e)
 
 function driverMaritalStatus(e)
 {
+  setPageUrl('marital-status');
+  setCurrentPage('marital-status');
+
   let driver = formdata.drivers.current.general;
 
   const local = getLocalData();
@@ -1220,9 +1216,6 @@ function driverMaritalStatus(e)
 
   if(e != null && e.value != 'back')
   {
-    setPageUrl('gender');
-    setCurrentPage('gender');
-  
     //increase value for every action
     if(driverCounter == 0)
     {
@@ -1236,7 +1229,7 @@ function driverMaritalStatus(e)
     setLocalData(formdata);
   }
 
-  if(e.value == 'back'){
+  if(e != null && e.value == 'back'){
     if(driverCounter == 0){
       increasePercent(-5);
     }
@@ -1245,6 +1238,9 @@ function driverMaritalStatus(e)
 
 function birthMonth(e)
 {
+  setPageUrl('birth-month');
+  setCurrentPage('birth-month');
+
   let dob = formdata.drivers.current.dob;
   const local = getLocalData();
   if( local.drivers.list )
@@ -1279,11 +1275,8 @@ function birthMonth(e)
       '</button>'+
   '</div>';
 
-  if(e.value != 'back')
+  if(e != null && e.value != 'back')
   {
-    setPageUrl('marital-status');
-    setCurrentPage('marital-status');
-  
     //increase value for every action
     if(driverCounter == 0)
     {
@@ -1295,7 +1288,7 @@ function birthMonth(e)
     setLocalData(formdata);
   }
 
-  if(e.value == 'back'){
+  if(e != null && e.value == 'back'){
     if(driverCounter == 0){
       increasePercent(-5);
     }
@@ -1304,6 +1297,9 @@ function birthMonth(e)
 
 function birthDay(e)
 {
+  setPageUrl('birth-day');
+  setCurrentPage('birth-day');
+
   let dob = formdata.drivers.current.dob;
   const local = getLocalData();
   if( local.drivers.list )
@@ -1339,11 +1335,8 @@ function birthDay(e)
     document.getElementById('birth_day').appendChild(day);
   }
 
-  if(e.value != 'back')
+  if(e != null && e.value != 'back')
   {
-    setPageUrl('birth-month');
-    setCurrentPage('birth-month');
-  
     //increase value for every action
     if(driverCounter == 0)
     {
@@ -1355,7 +1348,7 @@ function birthDay(e)
     setLocalData(formdata);
   }
 
-  if(e.value == 'back'){
+  if(e != null && e.value == 'back'){
     if(driverCounter == 0){
       increasePercent(-5);
     }
@@ -1364,6 +1357,9 @@ function birthDay(e)
 
 function birthYear(e)
 {
+  setPageUrl('birth-year');
+  setCurrentPage('birth-year');
+
   let dob = formdata.drivers.current.dob;
   const local = getLocalData();
   if( local.drivers.list )
@@ -1400,9 +1396,6 @@ function birthYear(e)
 
   if(e.value != 'back')
   {
-    setPageUrl('birth-day');
-    setCurrentPage('birth-day');
-  
     //increase value for every action
     if(driverCounter == 0)
     {
@@ -1424,6 +1417,9 @@ function birthYear(e)
 
 function incident(e)
 {
+  setPageUrl('incidents-in-the-past-3-years');
+  setCurrentPage('incidents-in-the-past-3-years');
+
   let parts = formdata.drivers.current.incidents.part;
   const local = getLocalData();
   if( local.drivers.list )
@@ -1507,9 +1503,6 @@ function incident(e)
 
   if(e != null && e.value != 'back')
   {
-    setPageUrl('birth-year');
-    setCurrentPage('birth-year');
-  
     //birth year push to birthDate array
     formdata.drivers.current.dob[2] = e.innerHTML;
     setLocalData(formdata);
@@ -1526,11 +1519,8 @@ function incident(e)
 /** selects incidents parts  */
 function checkIncident(e)
 {
-  setPageUrl('incidents-in-the-past-3-years');
-  setCurrentPage('incidents-in-the-past-3-years');
-
   let parts = formdata.drivers.current.incidents.part;
-  const local = getLocalData();
+  let incidents = formdata.incidents;
 
   if(e.value == 'Yes')
   {
@@ -1574,13 +1564,17 @@ function checkIncident(e)
       }
     }
   }
-  local.incidents = incidents;
-  local.drivers.current.incidents.part = parts;
-  setLocalData(local);
+
+  formdata.drivers.current.incidents.part = parts;
+  formdata.incidents = incidents;
+  setLocalData(formdata);
 }
 
 function accident(e)
 {
+  setPageUrl('accident-details');
+  setCurrentPage('accident-details');
+
   let act = formdata.drivers.current.incidents.accident;
   const local = getLocalData();
   if( local.drivers.list )
@@ -1674,9 +1668,6 @@ function accident(e)
 /** -------------------- check accident form ------------ */
 function checkAccidentForm(e)
 {
-  setPageUrl('accident-details');
-  setCurrentPage('accident-details');
-
   let form = document.querySelector('#accidentForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -1700,7 +1691,7 @@ function checkAccidentForm(e)
       setLocalData(formdata);
 
       //push accident key to the backward object
-      incidents.backward.push('accident');
+      formdata.incidents.backward.push('accident');
 
       nextIncident(e);
     }
@@ -1710,6 +1701,9 @@ function checkAccidentForm(e)
 
 function ticket(e)
 {
+  setPageUrl('driver-ticket');
+  setCurrentPage('driver-ticket');
+
   let act = formdata.drivers.current.incidents.ticket;
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1787,9 +1781,6 @@ function ticket(e)
 /** -------------------- check accident form ------------ */
 function checkTicketForm(e)
 {
-  setPageUrl('driver-ticket');
-  setCurrentPage('driver-ticket');
-
   let form = document.querySelector('#ticketForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -1806,7 +1797,7 @@ function checkTicketForm(e)
     {
       formdata.drivers.current.incidents.ticket = [month.value, year.value, description.value];
     
-      incidents.backward.push('ticket');
+      formdata.incidents.backward.push('ticket');
 
       nextIncident(e);
     }
@@ -1816,6 +1807,9 @@ function checkTicketForm(e)
 
 function dui(e)
 {
+  setPageUrl('dui-detail');
+  setCurrentPage('dui-detail');
+
   let state = '';
   let addr = formdata.drivers.current.incidents.dui;
   let act = formdata.drivers.current.incidents.dui;
@@ -1898,9 +1892,6 @@ function dui(e)
 /** -------------------- check accident form ------------ */
 function checkDuiForm(e)
 {
-  setPageUrl('dui-detail');
-  setCurrentPage('dui-detail');
-
   let form = document.querySelector('#duiForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -1919,7 +1910,7 @@ function checkDuiForm(e)
       formdata.drivers.current.incidents.dui = [month.value, year.value, state.value];
       setLocalData(formdata);
 
-      incidents.backward.push('dui');
+      formdata.incidents.backward.push('dui');
 
       nextIncident(e);
     }
@@ -1929,6 +1920,9 @@ function checkDuiForm(e)
 
 function driverName(e)
 {
+  setPageUrl('driver-name');
+  setCurrentPage('driver-name');
+
   let first_name = '', last_name = '';
   let names = formdata.drivers.current.names;
   const local = getLocalData();
@@ -1997,13 +1991,13 @@ function driverName(e)
       '</div>'+
     '</div>';
 
-  if(e.value != 'back'){
+  if(e != null && e.value != 'back'){
     if(driverCounter == 0){
       // increasePercent(5);
     }
   }
 
-  if(e.value == 'back'){
+  if(e != null && e.value == 'back'){
     if(driverCounter == 0){
       // increasePercent(-5);
     }
@@ -2013,9 +2007,6 @@ function driverName(e)
 /** -------------------- check accident form ------------ */
 function checkNameForm(e)
 {
-  setPageUrl('driver-name');
-  setCurrentPage('driver-name');
-
   let form = document.querySelector('#driverNameForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -2040,49 +2031,60 @@ function checkNameForm(e)
 /** ------------------- next incident ------------ */
 function nextIncident(e)
 {
-  const local = getLocalData();
-
+  let incidents = formdata.incidents;
   if(incidents.forward.includes('accident'))
   {
+    let index = incidents.forward.indexOf('accident');
+    incidents.forward.splice(index, 1);
     accident(e);
-    incidents.forward.splice(incidents.forward.indexOf('accident'), 1);
   }
   else if(incidents.forward.includes('dui'))
   {
+    let index = incidents.forward.indexOf('dui')
+    incidents.forward.splice(index, 1);
     dui(e);
-    incidents.forward.splice(incidents.forward.indexOf('dui'), 1);
   }
   else
   {
     driverName(e);
   }
 
+  formdata.incidents = incidents;
+  setLocalData(formdata);
 }
 
 /** ------------------- back incident ------------ */
 function backIncident(e)
 {
-  incidents.forward.push(e.value);
+  formdata.incidents.forward.push(e.value);
+  let incidents = formdata.incidents;
 
   if(incidents.backward.includes('dui'))
   {
+    let index = incidents.backward.indexOf('dui');
+    incidents.backward.splice(index, 1);
     dui(e);
-    incidents.backward.splice(incidents.backward.indexOf('dui'), 1);
   }
   else if(incidents.backward.includes('accident'))
   {
+    let index = incidents.backward.indexOf('accident');
+    incidents.backward.splice(index, 1);
     accident(e);
-    incidents.backward.splice(incidents.backward.indexOf('accident'), 1);
   }
   else
   {
     incident(e);
   }
-  
+
+  formdata.incidents = incidents;
+  setLocalData(formdata);  
 }
 
 function anotherDriver(e)
 {
+  setPageUrl('add-another-driver');
+  setCurrentPage('add-another-driver');
+
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Driver?</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="moreDriver">'+
@@ -2102,16 +2104,12 @@ function anotherDriver(e)
 
 function checkAnotherDriver(e)
 {
-  setPageUrl('add-another-driver');
-  setCurrentPage('add-another-driver');
-
   const local = getLocalData();
   if(e.value == 'YES')
   {
     driverCounter = local.drivers.list.length + 1;
 
     formdata.drivers.list.push(formdata.drivers.current);
-    setLocalData(formdata);
 
     formdata.drivers.current = {
       names: [],
@@ -2125,27 +2123,38 @@ function checkAnotherDriver(e)
       }
     };
 
+    setLocalData(formdata);
+
     addDriver();
   }
   else if(e.value == 'NO')
   {
-    if(editmode == 'Yes')
+    if(formdata.editmode == 'Yes')
     {
       formdata.drivers.list.push(formdata.drivers.current);
-      setLocalData(formdata);
       //remove submitted counter
       localStorage.removeItem('submitted');
-      localStorage.setItem('editmode', '');
-      editmode = '';
+      formdata.editmode = '';
+
+      setLocalData(formdata);
       checkLocalData();
     }
-    ownerAddress(e);
+    else
+    {
+      ownerAddress(e);
+    }
   }
 }
 
 /** ------------------ Owner Details -------------------- */
 function ownerAddress(e)
 {
+  let loading1 = document.getElementById('loading');
+  loading1.style.display = 'block';
+
+  setPageUrl('current-address');
+  setCurrentPage('current-address');
+
   let address = '', zip = '', state = '', city = '', country = '';
   let addr = formdata.owner.address;
   const local = getLocalData();
@@ -2176,9 +2185,10 @@ function ownerAddress(e)
 
   // state array creation
   let statelist = '<option value="">State</option>\n';
-  Object.entries(statedata).forEach(([k, s]) => {
-    statelist += '<option value="'+k+'" '+(state ? 'selected' : '')+'>'+s+'</option>\n';
-  });
+  setTimeout(()=> {
+    Object.entries(statedata).map(([k, s]) => {
+      statelist += '<option value="'+k+'" '+(state ? 'selected' : '')+'>'+s+'</option>\n';
+    });
 
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Current Address</h2>'+
@@ -2198,7 +2208,6 @@ function ownerAddress(e)
     '</div>'+
     '<div class="half-width">'+
         '<select name="state" id="address_state" class="select-box-address-state" onchange="checkErr(this);" required>'+
-        '<option value="'+state+'">'+state+'</option>'+
             statelist+
         '</select>'+
       '</div>'+
@@ -2245,16 +2254,16 @@ function ownerAddress(e)
     increasePercent(-2);
   }
 
-  styleLoad();
   initAutocomplete();
+  styleLoad();
+
+  loading1.style.display = 'none';
+  }, 1000);
 }
 
 /** -------------------- check accident form ------------ */
 function checkAddressForm(e)
 {
-  setPageUrl('current-address');
-  setCurrentPage('current-address');
-
   let form = document.querySelector('#addressForm');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -2277,22 +2286,22 @@ function checkAddressForm(e)
       increasePercent(2);
 
       formdata.owner.address = [address.value, zip.value, state.value, city.value, country.value];
-      setLocalData(formdata);
-
 
       let local = getLocalData();
       
-      if(local && editmode == 'Yes')
+      if(local && formdata.editmode == 'Yes')
       {
         // remove submit count from local data
         localStorage.removeItem('submitted');
-        editmode = '';
+        formdata.editmode = '';
         checkLocalData();
       }
       else
       {
         ownership(e);
       }
+
+      setLocalData(formdata);
     }
 
   });
@@ -2300,6 +2309,9 @@ function checkAddressForm(e)
 
 function ownership(e)
 {
+  setPageUrl('home-ownership');
+  setCurrentPage('home-ownership');
+
   let contact = formdata.owner.contact;
   const local = getLocalData();
   if(local)
@@ -2323,7 +2335,7 @@ function ownership(e)
       '</button>'+
   '</div>';
   
-  if(e.value != 'back'){
+  if(e != null && e.value != 'back'){
     // increasePercent(2);
   }
 
@@ -2335,9 +2347,6 @@ function ownership(e)
 
 function checkOwnership(e)
 {
-  setPageUrl('home-ownership');
-  setCurrentPage('home-ownership');
-
   if(e != null)
   {
     increasePercent(2);
@@ -2345,25 +2354,28 @@ function checkOwnership(e)
 
     const local = getLocalData();
     formdata.owner.contact[0] = e.value;
-    setLocalData(formdata);
 
-    if(local && editmode == 'Yes')
+    if(local && formdata.editmode == 'Yes')
     {
       // remove submit count from local data
       localStorage.removeItem('submitted');
-      editmode = '';
+      formdata.editmode = '';
       checkLocalData();
     }
     else
     {
       emailAddress(e);
     }
+    setLocalData(formdata);
   }
   
 }
 
 function emailAddress(e)
 {
+  setPageUrl('email-address');
+  setCurrentPage('email-address');
+
   let email = '';
   let contact = formdata.owner.contact;
   const local = getLocalData();
@@ -2406,9 +2418,6 @@ function emailAddress(e)
 
 function emailForm(e)
 {
-  setPageUrl('email-address');
-  setCurrentPage('email-address');
-
   let email = document.getElementById('email');
 
   if(checkEmail(email))
@@ -2416,19 +2425,19 @@ function emailForm(e)
     formdata.owner.contact[1] = email.value;
     const local = getLocalData();
     formdata.owner.contact[1] = email.value;
-    setLocalData(formdata);
 
-    if(editmode == 'Yes'){
+    if(formdata.editmode == 'Yes'){
 
       // remove submit count from local data
       localStorage.removeItem('submitted');
-      editmode = '';
+      formdata.editmode = '';
       checkLocalData();
     }
     else
     {
       getQuote(e);
     }
+    setLocalData(formdata);
     
     //increase value for every action
     increasePercent(2);
@@ -2437,6 +2446,9 @@ function emailForm(e)
 
 function getQuote(e)
 {
+  setPageUrl('contact-number');
+  setCurrentPage('contact-number');
+
   let phone = '';
   let contact = formdata.owner.contact;
   const local = getLocalData();
@@ -2489,23 +2501,19 @@ function getQuote(e)
 
 function checkQuote(e)
 {
-  setPageUrl('contact-number');
-  setCurrentPage('contact-number');
-
   let phone = document.getElementById('phone');
 
   if(checkPhone(phone))
   {
     formdata.owner.contact[2] = phone.value;
-    setLocalData(formdata);
 
     const local = getLocalData();
 
-    if(local && editmode == 'Yes'){
+    if(local && formdata.editmode == 'Yes'){
 
       // remove submit counter from local data
       localStorage.removeItem('submitted');
-      editmode = '';
+      formdata.editmode = '';
 
       // check formdata stored to the localstoage
       checkLocalData();
@@ -2519,6 +2527,7 @@ function checkQuote(e)
       loading.style.display = 'block';
       sendToServer();
     }
+    setLocalData(formdata);
 
     //increase value for every action
     increasePercent(2);
@@ -3093,8 +3102,7 @@ function showHide(e)
 
 function editData(e)
 {
-  editmode = 'Yes';
-  localStorage.setItem('editmode', editmode);
+  formdata.editmode = 'Yes';
 
   if(e.name == 'insurance')
   {
@@ -3124,6 +3132,8 @@ function editData(e)
   {
     getQuote(e);
   }
+
+  setLocalData(formdata);
 }
 
 // onload check current page
