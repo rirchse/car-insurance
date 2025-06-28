@@ -1075,7 +1075,7 @@ function insurance(e)
       '<p class="error" id="coverage_err"></p>'+
     '</div>'+
     '<div class="back-to-prev">'+
-      '<button type="button" class="back" onclick="'+(editmode == 'Yes' ? 'checkLocalData()' : 'anotherVehicle(this)')+'" name="" value="back">'+
+      '<button type="button" class="back" onclick="'+(formdata.editmode == 'Yes' ? 'checkLocalData()' : 'anotherVehicle(this)')+'" name="" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -1160,7 +1160,7 @@ function addDriver(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="'+(editmode == 'Yes' ? 'checkLocalData()' : 'insurance(this)')+'" name="back" value="back">'+
+      '<button class="back" onclick="'+(formdata.editmode == 'Yes' ? 'checkLocalData()' : 'insurance(this)')+'" name="back" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -2225,7 +2225,7 @@ function ownerAddress(e)
       '</div>'+
     '</div>'+
     '<div class="back-to-prev">'+
-      '<button class="back" onclick="'+(editmode == 'Yes' ? 'checkLocalData()' : 'anotherDriver(this)')+'" name="back" value="back">'+
+      '<button class="back" onclick="'+(formdata.editmode == 'Yes' ? 'checkLocalData()' : 'anotherDriver(this)')+'" name="back" value="back">'+
           '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
               '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -2328,7 +2328,7 @@ function ownership(e)
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
-      '<button class="back" onclick="'+(editmode == 'Yes' ? 'checkLocalData()': 'ownerAddress(this)')+'" name="back" value="back">'+
+      '<button class="back" onclick="'+(formdata.editmode == 'Yes' ? 'checkLocalData()': 'ownerAddress(this)')+'" name="back" value="back">'+
         '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
           '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
           '</svg> Back '+
@@ -2398,7 +2398,7 @@ function emailAddress(e)
         '</div>'+
       '</div>'+
     '<div class="back-to-prev">'+
-        '<button class="back" onclick="'+(editmode == 'Yes' ? 'checkLocalData()' : 'ownership(this)')+'" name="back" value="back">'+
+        '<button class="back" onclick="'+(formdata.editmode == 'Yes' ? 'checkLocalData()' : 'ownership(this)')+'" name="back" value="back">'+
             '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
                 '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
             '</svg> Back '+

@@ -511,24 +511,6 @@
           .catch(error => console.error('Error Loading JSON:', error));
         });
 
-
-      async function loadStateData() {
-        const res = await fetch(statefile);
-        return await res.json(); // assumed to be like: { "NY": "New York", ... }
-      }  
-
-      function populateStates(state = null) {
-        loadStateData().then(statedata => {
-          const options = Object.entries(statedata).map(([k, s]) => {
-            const selected = (k === state) ? ' selected' : '';
-            return `<option value="${k}"${selected}>${s}</option>`;
-          }).join('\n');
-
-          // document.getElementById('address_state').innerHTML = options;
-          return options;
-        });
-      }
-
       </script>
       <script src="calculation-scripts.js?v=2.7.95"></script>
       <?php } else { ?>
