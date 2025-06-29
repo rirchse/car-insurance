@@ -478,7 +478,7 @@ svg.agent-checkbox {
 }
 .start-from-begining {
   color: #666;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 3px;

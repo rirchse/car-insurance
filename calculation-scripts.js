@@ -191,106 +191,106 @@ function checkCurrentPage()
   else if(currentPage == 'vehicle-make')
   {
     homeInfo('No');
-    increasePercent(6); //25+6=31%
+    // increasePercent(6); //25+6=31%
     brands(null);
   }
   else if(currentPage == 'vehicle-year')
   {
     homeInfo('No');
     let e = document.createElement('button');
-    e.setAttribute('name', formdata.vehicles.current[0][0]);
-    increasePercent(12); //25+12=37
+    e.setAttribute('name', formdata.vehicles.current?formdata.vehicles.current[0][0]:'');
+    // increasePercent(12); //25+12=37
     writeYears(e);
   }
   else if(currentPage == 'vehicle-model')
   {
     homeInfo('No');
-    brand = formdata.vehicles.current[0][0];
-    year = formdata.vehicles.current[1];
+    brand = formdata.vehicles.current?formdata.vehicles.current[0][0]:'';
+    year = formdata.vehicles.current?formdata.vehicles.current[1]:'';
     let e = document.createElement('button');
     e.setAttribute('name', formdata.vehicles.current[1]);
-    increasePercent(18); //25+18=43
+    // increasePercent(18); //25+18=43
     models(e);
   }
   else if(currentPage == 'vehicle-ownership')
   {
     homeInfo('No');
-    increasePercent(24); //25+24=49
+    // increasePercent(24); //25+24=49
     owner(null);
   }
   else if(currentPage == 'annual-mileage')
   {
     homeInfo('No');
-    increasePercent(30); //25+30=55
+    // increasePercent(30); //25+30=55
     milage(null);
   }
   else if(currentPage == 'desired-coverage-level')
   {
     homeInfo('No');
-    increasePercent(36); //25+36=61
+    // increasePercent(36); //25+36=61
     coverage(null);
   }
   else if(currentPage == 'add-another-vehicle')
   {
     homeInfo('No');
 
-    increasePercent(42); //25+42=67
+    // increasePercent(42); //25+42=67
     anotherVehicle(null);
   }
   else if(currentPage == 'insurance-details')
   {
     homeInfo('No');
 
-    increasePercent(42); //25+42=67
+    // increasePercent(42); //25+42=67
     insurance(null);
   }
   else if(currentPage == 'gender')
   {
     homeInfo('No');
 
-    increasePercent(47); //25+47=72
+    increasePercent(72); //25+47=72
     addDriver(null);
   }
   else if(currentPage == 'marital-status')
   {
     homeInfo('No');
 
-    increasePercent(52); //25+52=77
+    // increasePercent(52); //25+52=77
     driverMaritalStatus(null);
   }
   else if(currentPage == 'birth-month')
   {
     homeInfo('No');
 
-    increasePercent(57); //25+57=82
+    // increasePercent(57); //25+57=82
     birthMonth(null);
   }
   else if(currentPage == 'birth-day')
   {
     homeInfo('No');
 
-    increasePercent(62); //25+62=87
+    // increasePercent(62); //25+62=87
     birthDay(null);
   }
   else if(currentPage == 'birth-year')
   {
     homeInfo('No');
 
-    increasePercent(67); //25+67=92
+    // increasePercent(67); //25+67=92
     birthYear(null);
   }
   else if(currentPage == 'incidents-in-the-past-3-years')
   {
     homeInfo('No');
 
-    increasePercent(67); //25+67=92
+    // increasePercent(67); //25+67=92
     incident(null);
   }
   else if(currentPage == 'accident-details')
   {
     homeInfo('No');
 
-    increasePercent(67); //25+67=92
+    // increasePercent(67); //25+67=92
     accident(null);
   }
   // else if(currentPage == 'driver-ticket')
@@ -304,49 +304,49 @@ function checkCurrentPage()
   {
     homeInfo('No');
 
-    increasePercent(67); //25+67=92
+    // increasePercent(67); //25+67=92
     dui(null);
   }
   else if(currentPage == 'driver-name')
   {
     homeInfo('No');
 
-    increasePercent(67); //25+67=92
+    // increasePercent(67); //25+67=92
     driverName(null);
   }
   else if(currentPage == 'add-another-driver')
   {
     homeInfo('No');
 
-    increasePercent(67); //25+67=92
+    // increasePercent(67); //25+67=92
     anotherDriver(null);
   }
   else if(currentPage == 'current-address')
   {
     homeInfo('No');
 
-    increasePercent(67); //25+67=92
+    // increasePercent(67); //25+67=92
     ownerAddress(null);
   }
   else if(currentPage == 'home-ownership')
   {
     homeInfo('No');
 
-    increasePercent(69); //25+69=94
+    // increasePercent(69); //25+69=94
     ownership(null);
   }
   else if(currentPage == 'email-address')
   {
     homeInfo('No');
 
-    increasePercent(71); //25+71=96
+    // increasePercent(71); //25+71=96
     emailAddress(null);
   }
   else if(currentPage == 'contact-number')
   {
     homeInfo('No');
 
-    increasePercent(73); //25+73=98
+    // increasePercent(73); //25+73=98
     getQuote(null);
   }
   else if(currentPage == 'thank-you')
@@ -443,11 +443,14 @@ function createZIPCodePanel(e)
 
   container.innerHTML = html;
 
-  if(vehicleCounter == 0 && e != null && e.value == 'back')
+  if(vehicleCounter == 0)
   {
-    // increasePercent(-6); // 25%
+    increasePercent(25); // 25%
   }
-  increasePercent(25); // 25%
+  else
+  {
+    increasePercent(67); // 25%
+  }
 }
 
 // check zip code
@@ -554,7 +557,7 @@ function brands(e)
     //create back button
     let back = document.createElement('div');
     back.setAttribute('class', 'back-to-prev');
-    back.innerHTML = '<button type="button" class="back" value="back" onclick="createZIPCodePanel(this)">'+
+    back.innerHTML = '<button type="button" class="back" value="back" onclick="'+(formdata.vehicles.list.length > 0 ? 'anotherVehicle(this)' : 'createZIPCodePanel(this)')+'">'+
     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
     '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
     '</svg> Back </button>';
@@ -562,21 +565,16 @@ function brands(e)
   }) // Use the data
   .catch(error => console.error('Error loading JSON:', error));
 
-  if(e != null && e.value == 'next')
-  {
-    if(vehicleCounter == 0){
-      // increasePercent(6); // 31%
-    }
-  }
 
-  if(e != null && e.value == 'back')
+  if(vehicleCounter == 0)
   {
-    if(vehicleCounter == 0){
-      // increasePercent(-6);
-    }
+    increasePercent(31); // 31%
   }
-
-  increasePercent(31); // 31%
+  else
+  {
+    increasePercent(67); // 25%
+  }
+  
 }
 
 function checkBrands(e)
@@ -659,11 +657,14 @@ function writeYears(e)
     '</svg> Back </div>';
     container.appendChild(back);
 
-    if(vehicleCounter == 0 && e != null && e.value == 'back')
+    if(vehicleCounter == 0)
     {
-      // increasePercent(-6); // 37%
+      increasePercent(37); // 37%
     }
-    increasePercent(37); // 37%
+    else
+    {
+      increasePercent(67); // 25%
+    }
 
     // store brand to the object
     formdata.vehicles.current[0] = [brand, e.firstElementChild.firstElementChild.src];
@@ -759,11 +760,14 @@ fetch(jsonfile) // Path to your JSON file
     formdata.vehicles.current[1] = year;
   }
 
-  if(vehicleCounter == 0 && e.value == 'back')
+  if(vehicleCounter == 0)
   {
-    // increasePercent(-6); // 43%
+    increasePercent(43); // 43%
   }
-  increasePercent(43); // 43%
+  else
+  {
+    increasePercent(67); // 25%
+  }
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
 }
@@ -809,10 +813,14 @@ function owner(e)
       '</button>'+
   '</div>';
 
-  if(vehicleCounter == 0 && e != null && e.value == 'back'){
-    // increasePercent(-6); //49%
+  if(vehicleCounter == 0)
+  {
+    increasePercent(49); //49%
   }
-  increasePercent(49); //49%
+  else
+  {
+    increasePercent(67); // 25%
+  }
 }
 
 function checkOwner(e)
@@ -858,10 +866,14 @@ function milage(e)
       '</button>'+
   '</div>';
 
-  if(vehicleCounter == 0 && e != null && e.value == 'back'){
-    // increasePercent(-6); //55%
+  if(vehicleCounter == 0)
+  {
+    increasePercent(55); //55%
   }
-  increasePercent(55); //55%
+  else
+  {
+    increasePercent(67); // 25%
+  }
 }
 
 function checkMilage(e)
@@ -907,10 +919,14 @@ function coverage(e)
       '</button>'+
   '</div>';
   
-  if(vehicleCounter == 0 && e != null && e.value == 'back'){
-    // increasePercent(-6); //61%
+  if(vehicleCounter == 0)
+  {
+    increasePercent(61); //61%
   }
-  increasePercent(61); //61%
+  else
+  {
+    increasePercent(67); // 25%
+  }
 }
 
 function checkCoverage(e)
@@ -939,14 +955,15 @@ function anotherVehicle(e)
       '<button class="input" onclick="checkAnotherVehicle(this)" name="Yes">YES</button>'+
       '<button class="input" onclick="checkAnotherVehicle(this)" name="No">NO</button>'+
     '</div>'+
-  '</div>'+
-  '<div class="back-to-prev">'+
-    '<button class="back" onclick="coverage(this)" value="back">'+
-      '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-        '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
-      '</svg> Back '+
-    '</button>'+
   '</div>';
+
+  // '<div class="back-to-prev">'+
+  //   '<button class="back" onclick="coverage(this)" value="back">'+
+  //     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+  //       '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+  //     '</svg> Back '+
+  //   '</button>'+
+  // '</div>';
 
   commonAgent('Yes');
 
@@ -956,31 +973,36 @@ function anotherVehicle(e)
 function checkAnotherVehicle(e)
 {
   //store coverage to the vehicle object
-  formdata.vehicles.current[5] = e.innerHTML;
-
-  //data restore to the localStorage
-  const local = getLocalData();
+  formdata.vehicles.current[6] = e.innerHTML;
 
   if(e.name == 'Yes')
   {
-    // setPageUrl('vehicle-make');
-    // setCurrentPage('vehicle-make');
+    const nullVehicle = Array.from(formdata.vehicles.current, x => x ?? null);
 
-    formdata.vehicles.list.push(formdata.vehicles.current);
-    formdata.vehicles.current = [];
-    brand = '', year = '';
+    if(!nullVehicle.some(item => item === null))
+    {
+      formdata.vehicles.list.push(formdata.vehicles.current);
+      formdata.vehicles.current = [];
+      brand = '', year = '';
+
+      vehicleCounter = formdata.vehicles.list.length;
+    }
+
+    if(formdata.vehicles.list.length >= 3)
+    {
+      alert('We are accepting up to 3 vehicles');
+      insurance(e);
+    }
+    else
+    {
+      brands(e);
+    }
 
     setLocalData(formdata);
-
-    vehicleCounter = formdata.vehicles.list.length;
-
-    brands(e);
+    
   }
   else if(e.name == 'No')
   {
-    // setPageUrl('insurance-details');
-    // setCurrentPage('insurance-details');
-
     if(formdata.editmode == 'Yes')
     {    
       formdata.vehicles.list.push(formdata.vehicles.current);
@@ -1139,18 +1161,24 @@ function addDriver(e)
       '</button>'+
   '</div>';
 
-  if(e != null && e.value != 'back'){
-    if(driverCounter == 0){
-      // increasePercent(5); //72%
-    }
+  if(driverCounter == 0)
+  {
+    increasePercent(72); //72%
+  }
+  else
+  {
+    increasePercent(92); //92%
   }
 
-  if(e != null && e.value == 'back'){
-    if(driverCounter == 0){
-      // increasePercent(-5);
-    }
-  }
-  increasePercent(72); //72%
+  // if(e != null && e.value != 'back')
+  // {
+  // }
+
+  // if(e != null && e.value == 'back'){
+  //   if(driverCounter == 0){
+  //     // increasePercent(-5);
+  //   }
+  // }
 }
 
 function driverMaritalStatus(e)
@@ -1181,25 +1209,28 @@ function driverMaritalStatus(e)
       '</button>'+
   '</div>';
 
+  //increase value for every action
+  if(driverCounter == 0)
+  {
+    increasePercent(77); //77%
+  }
+  else
+  {
+    increasePercent(92); //92%
+  }
+
   if(e != null && e.value != 'back')
   {
-    //increase value for every action
-    if(driverCounter == 0)
-    {
-      // increasePercent(5); //77%
-    }
-    increasePercent(77); //77%
-  
     //store gender to driver array
     formdata.drivers.current.general[0] = e.innerHTML;
     setLocalData(formdata);
   }
 
-  if(e != null && e.value == 'back'){
-    if(driverCounter == 0){
-      // increasePercent(-5);
-    }
-  }
+  // if(e != null && e.value == 'back'){
+  //   if(driverCounter == 0){
+  //     // increasePercent(-5);
+  //   }
+  // }
 }
 
 function birthMonth(e)
@@ -1236,25 +1267,28 @@ function birthMonth(e)
       '</button>'+
   '</div>';
 
+  //increase value for every action
+  if(driverCounter == 0)
+  {
+    increasePercent(82); //82%
+  }
+  else
+  {
+    increasePercent(92); //92%
+  }
+
   if(e != null && e.value != 'back')
   {
-    //increase value for every action
-    if(driverCounter == 0)
-    {
-      // increasePercent(5); //82%
-    }
-  
     //store marital status to the drivers general array
     formdata.drivers.current.general[1] = e.innerHTML;
     setLocalData(formdata);
   }
-  increasePercent(82); //82%
 
-  if(e != null && e.value == 'back'){
-    if(driverCounter == 0){
-      // increasePercent(-5);
-    }
-  }
+  // if(e != null && e.value == 'back'){
+  //   if(driverCounter == 0){
+  //     // increasePercent(-5);
+  //   }
+  // }
 }
 
 function birthDay(e)
@@ -1292,25 +1326,28 @@ function birthDay(e)
     document.getElementById('birth_day').appendChild(day);
   }
 
-  if(e != null && e.value != 'back')
+  //increase value for every action
+  if(driverCounter == 0)
   {
-    //increase value for every action
-    if(driverCounter == 0)
-    {
-      // increasePercent(5); //92%
-    }
-  
+    increasePercent(87); //87%
+  }
+  else
+  {
+    increasePercent(92); //92%
+  }
+
+  if(e != null && e.value != 'back')
+  {  
     //birth day store to current.dob array
     formdata.drivers.current.dob[0] = e.innerHTML;
     setLocalData(formdata);
   }
-  increasePercent(87); //87%
 
-  if(e != null && e.value == 'back'){
-    if(driverCounter == 0){
-      // increasePercent(-5);
-    }
-  }
+  // if(e != null && e.value == 'back'){
+  //   if(driverCounter == 0){
+  //     // increasePercent(-5);
+  //   }
+  // }
 }
 
 function birthYear(e)
@@ -1347,26 +1384,29 @@ function birthYear(e)
     document.getElementById('birth_year').appendChild(y);
   }
 
+  //increase value for every action
+  if(driverCounter == 0)
+  {
+    increasePercent(92); //92%
+  }
+  else
+  {
+    increasePercent(92); //92%
+  }
+
   if(e != null && e.value != 'back')
   {
-    //increase value for every action
-    if(driverCounter == 0)
-    {
-      // increasePercent(5);
-    }
-  
     //birth day push to birthDate array
     formdata.drivers.current.dob[1] = e.innerHTML;
     setLocalData(formdata);
   }
-  increasePercent(92); //92%
 
-  if(e != null && e.value == 'back'){
-    if(driverCounter == 0)
-    {
-      // increasePercent(-5);
-    }
-  }
+  // if(e != null && e.value == 'back'){
+  //   if(driverCounter == 0)
+  //   {
+  //     // increasePercent(-5);
+  //   }
+  // }
 }
 
 function incident(e)
@@ -1456,15 +1496,11 @@ function incident(e)
     formdata.drivers.current.dob[2] = e.innerHTML;
     setLocalData(formdata);
   }
-
-  if(e != null && e.value == 'back'){
-    if(driverCounter == 0)
-    {
-      // increasePercent(-5); // 92%
-    }
+  
+  if(driverCounter == 0)
+  {
+    increasePercent(92); // 92%
   }
-
-  increasePercent(92); // 92%
 }
 
 /** selects incidents parts  */
@@ -1932,20 +1968,24 @@ function driverName(e)
         '</p>'+
       '</div>'+
     '</div>';
-  
-    increasePercent(92) //92%
 
-  if(e != null && e.value != 'back'){
-    if(driverCounter == 0){
-      // increasePercent(5);
+    if(driverCounter == 0)
+    {
+      increasePercent(92) //92%
     }
-  }
+    else
+    {
+      increasePercent(92) //92%
+    }
 
-  if(e != null && e.value == 'back'){
-    if(driverCounter == 0){
-      // increasePercent(-5);
-    }
-  }
+  // if(e != null && e.value != 'back'){
+  // }
+
+  // if(e != null && e.value == 'back'){
+  //   if(driverCounter == 0){
+  //     // increasePercent(-5);
+  //   }
+  // }
 }
 
 /** -------------------- check accident form ------------ */
@@ -2035,14 +2075,15 @@ function anotherDriver(e)
       '<button class="input" onclick="checkAnotherDriver(this)" value="YES">YES</button>'+
       '<button class="input" onclick="checkAnotherDriver(this)" value="NO">NO</button>'+
     '</div>'+
-  '</div>'+
-  '<div class="back-to-prev">'+
-    '<button class="back" onclick="backIncident(this)" name="back" value="back">'+
-      '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
-        '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
-      '</svg> Back '+
-    '</button>'+
   '</div>';
+
+  // '<div class="back-to-prev">'+
+  //   '<button class="back" onclick="backIncident(this)" name="back" value="back">'+
+  //     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">'+
+  //       '<path stroke-linecap="round" stroke-linejoin="round" d="m18.75 4.5-7.5 7.5 7.5 7.5m-6-15L5.25 12l7.5 7.5" />'+
+  //     '</svg> Back '+
+  //   '</button>'+
+  // '</div>';
   
   increasePercent(92) //92%
 
@@ -2054,23 +2095,34 @@ function checkAnotherDriver(e)
   {
     driverCounter = formdata.drivers.list.length + 1;
 
-    formdata.drivers.list.push(formdata.drivers.current);
+    if(formdata.drivers.current.names.length > 0)
+    {
+      formdata.drivers.list.push(formdata.drivers.current);
 
-    formdata.drivers.current = {
-      names: [],
-      general: [],
-      dob: [],
-      incidents : {
-        part: [],
-        accident: [],
-        ticket: [],
-        dui: []
-      }
-    };
+      formdata.drivers.current = {
+        names: [],
+        general: [],
+        dob: [],
+        incidents : {
+          part: [],
+          accident: [],
+          ticket: [],
+          dui: []
+        }
+      };
+    }
 
     setLocalData(formdata);
 
-    addDriver();
+    if(formdata.drivers.list.length >= 3)
+    {
+      alert('We are accepting up to 3 drivers.');
+      ownerAddress(e);
+    }
+    else
+    {
+      addDriver();
+    }
   }
   else if(e.value == 'NO')
   {
@@ -2450,14 +2502,16 @@ function checkQuote(e)
   {
     formdata.owner.contact[2] = phone.value;
 
-    if(formdata.vehicles.current)
+    const nullVehicle = Array.from(formdata.vehicles.current, x => x ?? null);
+
+    if(!nullVehicle.some(item => item === null))
     {
       formdata.vehicles.list.push(formdata.vehicles.current);
       formdata.vehicles.current = [];
       brand = '', year = '';
     }
 
-    if(formdata.drivers.current)
+    if(formdata.drivers.current.names.length > 0)
     {
       formdata.drivers.list.push(formdata.drivers.current);
       formdata.drivers.current = {
@@ -2639,7 +2693,7 @@ function sendToServer()
     "requested_property_damage": "", //139
     "multiple_drivers": Object.values(formData.drivers).length > 1 ? "Yes" : "No",
     "multiple_vehicles": Object.values(form.vehicles).length > 1 ? "Yes" : "No",
-    "home_owner": "", //Yes/No
+    "home_owner": form.owner.owner == 'OWN' ? 'Yes': 'No', //Yes/No
     "married": "", //Yes/No
     "active_military": "", //Yes/No
     "status": "",
