@@ -991,7 +991,15 @@ function checkAnotherVehicle(e)
     if(formdata.vehicles.list.length >= 3)
     {
       alert('We are accepting up to 3 vehicles');
-      insurance(e);
+
+      if(formdata.editmode == 'Yes')
+      {
+        checkLocalData();
+      }
+      else
+      {
+        insurance(e);
+      }
     }
     else
     {
@@ -2117,7 +2125,14 @@ function checkAnotherDriver(e)
     if(formdata.drivers.list.length >= 3)
     {
       alert('We are accepting up to 3 drivers.');
-      ownerAddress(e);
+      if(formdata.editmode == 'Yes')
+      {
+        checkLocalData();
+      }
+      else
+      {
+        ownerAddress(e);
+      }
     }
     else
     {
@@ -2504,28 +2519,28 @@ function checkQuote(e)
 
     const nullVehicle = Array.from(formdata.vehicles.current, x => x ?? null);
 
-    if(!nullVehicle.some(item => item === null))
+    if(!nullVehicle.some(item => item === null) && formdata.vehicles.list.length <= 3)
     {
       formdata.vehicles.list.push(formdata.vehicles.current);
-      formdata.vehicles.current = [];
-      brand = '', year = '';
     }
+    formdata.vehicles.current = [];
+    brand = '', year = '';
 
-    if(formdata.drivers.current.names.length > 0)
+    if(formdata.drivers.current.names.length > 0 && formdata.drivers.list.length <= 3)
     {
       formdata.drivers.list.push(formdata.drivers.current);
-      formdata.drivers.current = {
-        names: [],
-        general: [],
-        dob: [],
-        incidents : {
-          part: [],
-          accident: [],
-          ticket: [],
-          dui: []
-        }
-      };
     }
+    formdata.drivers.current = {
+      names: [],
+      general: [],
+      dob: [],
+      incidents : {
+        part: [],
+        accident: [],
+        ticket: [],
+        dui: []
+      }
+    };
 
     setLocalData(formdata);
 
@@ -3144,6 +3159,7 @@ function showHide(e)
 
 function editData(e)
 {
+  document.getElementById('ThankYouMsg').style.display = 'block';
   formdata.editmode = 'Yes';
 
   if(e.name == 'insurance')
@@ -3152,11 +3168,27 @@ function editData(e)
   }
   else if(e.name == 'vehicle')
   {
-    editAddVehicle(e);
+    if(formdata.vehicles.list.length >= 3)
+    {
+      alert('We are accepting up to 3 vehicles.');
+      checkLocalData();
+    }
+    else
+    {
+      editAddVehicle(e);
+    }
   }
   else if(e.name == 'driver')
   {
-    editAddDriver(e);
+    if(formdata.drivers.list.length >= 3)
+    {
+      alert('We are accepting up to 3 drivers.');
+      checkLocalData();
+    }
+    else
+    {
+      editAddDriver(e);
+    }
   }
   else if(e.name == 'ownerAddress')
   {
