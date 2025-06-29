@@ -1,5 +1,4 @@
 let formdata = {
-  editmode: "",
   drivers: {
     list: [],
     current: {
@@ -14,6 +13,11 @@ let formdata = {
       }
     }
   },
+  editmode: "",
+  incidents:{
+    backward: [],
+    forward: []
+  },
   owner: {
     insurance: [],
     address: [],
@@ -22,10 +26,6 @@ let formdata = {
   vehicles: {
     list: [],
     current: []
-  },
-  incidents:{
-    backward: [],
-    forward: []
   },
   zipcode: ""
 };
@@ -39,12 +39,12 @@ let percent_line = document.getElementById('percent-line');
 let percent_number = document.getElementById('percent-number');
 let loading = document.getElementById('loading2');
 
-function increasePercent(increase)
+function increasePercent(number)
 {   
-  let number = Number(percent_number.getAttribute('number')) + increase;
-  if(number >= 100){
-    number = 100;
-  }
+  // let number = Number(percent_number.getAttribute('number')) + increase;
+  // if(number >= 100){
+  //   number = 100;
+  // }
   percent_number.innerHTML = number+'%';
   percent_number.style.left = number+'%';
   percent_line.style.width = number+'%';
@@ -176,18 +176,10 @@ function setCurrentPage(page)
 // onload check current page
 function checkCurrentPage()
 {
-  // set editmode current condition
-  const local = getLocalData();
+  console.log('formdata:', formdata);
 
-  if(local)
-  {
-    formdata = local;
-    if(local.vehicles.current)
-    {
-      brand = local.vehicles.current[0];
-      year = local.vehicles.current[1];
-    }
-  }
+  brand = formdata.vehicles.current[0] ? formdata.vehicles.current[0][0] : '';
+  year = formdata ? formdata.vehicles.current[1] : '';
 
   const currentPage = localStorage.getItem('currentPage');
 
@@ -206,17 +198,17 @@ function checkCurrentPage()
   {
     homeInfo('No');
     let e = document.createElement('button');
-    e.setAttribute('name', local.vehicles.current[0]);
+    e.setAttribute('name', formdata.vehicles.current[0][0]);
     increasePercent(12); //25+12=37
     writeYears(e);
   }
   else if(currentPage == 'vehicle-model')
   {
     homeInfo('No');
-    brand = local.vehicles.current[0];
-    year = local.vehicles.current[1];
+    brand = formdata.vehicles.current[0][0];
+    year = formdata.vehicles.current[1];
     let e = document.createElement('button');
-    e.setAttribute('name', local.vehicles.current[1]);
+    e.setAttribute('name', formdata.vehicles.current[1]);
     increasePercent(18); //25+18=43
     models(e);
   }
@@ -367,10 +359,6 @@ function checkCurrentPage()
     createZIPCodePanel(null);
     homeInfo('Yes');
   }
-  // styleLoad();
-  // document.addEventListener('DOMContentLoaded', () => {
-  //   // initAutocomplete();
-  // });
   
 }
 
@@ -431,7 +419,7 @@ function createZIPCodePanel(e)
         '<button class="action-btn btn" onclick="ZIPCode(this)">Get Started</button>'+
       '</div>';
 
-      if(getLocalData() && getLocalData().vehicles.length > 0 || getLocalData() && getLocalData().vehicles.list.length > 0)
+      if(getLocalData())
       {
       html += '<div class="more-options inner-wrap-btn">'+
         '<button type="button" class="show-more" onclick="brands(this)" value="next">'+
@@ -457,8 +445,9 @@ function createZIPCodePanel(e)
 
   if(vehicleCounter == 0 && e != null && e.value == 'back')
   {
-    increasePercent(-6);
+    // increasePercent(-6); // 25%
   }
+  increasePercent(25); // 25%
 }
 
 // check zip code
@@ -475,7 +464,7 @@ function ZIPCode(e)
     {
       if(vehicleCounter == 0){
         //increase value for every action
-        increasePercent(6);
+        // increasePercent(6);
       }
 
       // let localdata = getLocalData();
@@ -512,10 +501,7 @@ function brands(e)
   commonAgent('Yes');
 
   let xvehicle = formdata.vehicles.current[0];
-  
-  if( getLocalData() ){
-    vehicleCounter = getLocalData().vehicles.list.length;
-  }
+  vehicleCounter = formdata.vehicles.list.length;
 
   let number = 0;
   container.innerHTML = '<div class="step step-make">'+
@@ -579,16 +565,18 @@ function brands(e)
   if(e != null && e.value == 'next')
   {
     if(vehicleCounter == 0){
-      increasePercent(6);
+      // increasePercent(6); // 31%
     }
   }
 
   if(e != null && e.value == 'back')
   {
     if(vehicleCounter == 0){
-      increasePercent(-6);
+      // increasePercent(-6);
     }
   }
+
+  increasePercent(31); // 31%
 }
 
 function checkBrands(e)
@@ -596,10 +584,10 @@ function checkBrands(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(6);
+    // increasePercent(6);
   }
   
-  formdata.vehicles.current[0] = e.name;
+  formdata.vehicles.current[0] = [e.name, e.firstElementChild.firstElementChild.src];
   setLocalData(formdata);
 
   //call to the write years
@@ -612,10 +600,8 @@ function writeYears(e)
 {
   setPageUrl('vehicle-year');
   setCurrentPage('vehicle-year');
-  
-  if( getLocalData() ){
-    vehicleCounter = getLocalData().vehicles.list.length;
-  }
+
+  vehicleCounter = formdata.vehicles.list.length;
 
   let number = 0;
   container.innerHTML = '<div class="step step-2" id="">'+
@@ -673,10 +659,11 @@ function writeYears(e)
     '</svg> Back </div>';
     container.appendChild(back);
 
-    if(vehicleCounter == 0 && e.value == 'back')
+    if(vehicleCounter == 0 && e != null && e.value == 'back')
     {
-      increasePercent(-6);
+      // increasePercent(-6); // 37%
     }
+    increasePercent(37); // 37%
 
     // store brand to the object
     formdata.vehicles.current[0] = [brand, e.firstElementChild.firstElementChild.src];
@@ -689,7 +676,7 @@ function checkYears(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(6);
+    // increasePercent(6);
   }
   
   formdata.vehicles.current[1] = e.name;
@@ -707,12 +694,9 @@ function models(e)
   setCurrentPage('vehicle-model');
 
   let model = '';
-  
-  if( getLocalData() ){
-    const local = getLocalData();
-    vehicleCounter = local.vehicles.list.length;
-    model = local.vehicles.current[2];
-  }
+
+  vehicleCounter = formdata.vehicles.list.length;
+  model = formdata.vehicles.current[2];
 
   let number = 0;
   container.innerHTML = '<div class="step step-make">'+
@@ -738,9 +722,9 @@ fetch(jsonfile) // Path to your JSON file
     btn.setAttribute('onclick', 'checkModel(this)');
     btn.innerHTML = b;
 
-    if (e.value == 'more') {
+    if (e != null && e.value == 'more') {
       document.getElementById('model').appendChild(btn);
-    } else if (e.value != 'more' && n < 12) {
+    } else if (e != null && e.value != 'more' && n < 12) {
       document.getElementById('model').appendChild(btn);
     }
   });
@@ -755,7 +739,7 @@ fetch(jsonfile) // Path to your JSON file
         'Load More...'+
     '</button>';
 
-  if (e.value != 'more' && number > 12)
+  if (e != null && e.value != 'more' && number > 12)
   {
     container.appendChild(moreBtn);
   }
@@ -769,7 +753,7 @@ fetch(jsonfile) // Path to your JSON file
   '</svg> Back';
   container.appendChild(back);
 
-  if(e.value != 'back')
+  if(e != null && e.value != 'back')
   {
     // store year to the vehicle object
     formdata.vehicles.current[1] = year;
@@ -777,8 +761,9 @@ fetch(jsonfile) // Path to your JSON file
 
   if(vehicleCounter == 0 && e.value == 'back')
   {
-    increasePercent(-6);
+    // increasePercent(-6); // 43%
   }
+  increasePercent(43); // 43%
 }) // Use the data
 .catch(error => console.error('Error loading JSON:', error));
 }
@@ -788,7 +773,7 @@ function checkModel(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(6);
+    // increasePercent(6);
   }
   
   // store data to localstorage
@@ -805,11 +790,7 @@ function owner(e)
   setCurrentPage('vehicle-ownership');
 
   let own = formdata.vehicles.current;
-  if( getLocalData() ){
-    const local = getLocalData();
-    vehicleCounter = local.vehicles.list.length;
-    own = local.vehicles.current;
-  }
+  vehicleCounter = formdata.vehicles.list.length;
 
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -828,9 +809,10 @@ function owner(e)
       '</button>'+
   '</div>';
 
-  if(vehicleCounter == 0 && e.value == 'back'){
-    increasePercent(-6);
+  if(vehicleCounter == 0 && e != null && e.value == 'back'){
+    // increasePercent(-6); //49%
   }
+  increasePercent(49); //49%
 }
 
 function checkOwner(e)
@@ -838,7 +820,7 @@ function checkOwner(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(6);
+    // increasePercent(6);
   }
   
   // store data to localstorage
@@ -855,11 +837,7 @@ function milage(e)
   setCurrentPage('annual-mileage');
  
   let mile = formdata.vehicles.current;
-  if( getLocalData() ){
-    const local = getLocalData();
-    vehicleCounter = local.vehicles.list.length;
-    mile = local.vehicles.current;
-  }
+  vehicleCounter = formdata.vehicles.list.length;
 
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -880,9 +858,10 @@ function milage(e)
       '</button>'+
   '</div>';
 
-  if(vehicleCounter == 0 && e.value == 'back'){
-    increasePercent(-6);
+  if(vehicleCounter == 0 && e != null && e.value == 'back'){
+    // increasePercent(-6); //55%
   }
+  increasePercent(55); //55%
 }
 
 function checkMilage(e)
@@ -890,7 +869,7 @@ function checkMilage(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(6);
+    // increasePercent(6);
   }
   
   // store data to localstorage
@@ -907,12 +886,7 @@ function coverage(e)
   setCurrentPage('desired-coverage-level');
  
   let cover = formdata.vehicles.current;
-
-  if( getLocalData() ){
-    const local = getLocalData();
-    vehicleCounter = local.vehicles.list.length;
-    cover = local.vehicles.current;
-  }
+  vehicleCounter = formdata.vehicles.list.length;
 
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h4>'+(vehicleCounter > 0 ? countArr[vehicleCounter]+' Vehicle' : "")+' </h4>'+
@@ -934,8 +908,9 @@ function coverage(e)
   '</div>';
   
   if(vehicleCounter == 0 && e != null && e.value == 'back'){
-    increasePercent(-6);
+    // increasePercent(-6); //61%
   }
+  increasePercent(61); //61%
 }
 
 function checkCoverage(e)
@@ -943,7 +918,7 @@ function checkCoverage(e)
   //increase value for every action
   if(vehicleCounter == 0)
   {
-    increasePercent(6);
+    // increasePercent(6);
   }
 
 
@@ -955,6 +930,9 @@ function checkCoverage(e)
 
 function anotherVehicle(e)
 {
+  setPageUrl('add-another-vehicle');
+  setCurrentPage('add-another-vehicle');
+
   container.innerHTML = '<div class="step step-number step-content-basic yes-no-box">'+
   '<h2>Add Another Vehicle?</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
@@ -971,6 +949,8 @@ function anotherVehicle(e)
   '</div>';
 
   commonAgent('Yes');
+
+  increasePercent(67); //67%
 }
 
 function checkAnotherVehicle(e)
@@ -983,11 +963,13 @@ function checkAnotherVehicle(e)
 
   if(e.name == 'Yes')
   {
-    setPageUrl('vehicle-make');
-    setCurrentPage('vehicle-make');
+    // setPageUrl('vehicle-make');
+    // setCurrentPage('vehicle-make');
 
     formdata.vehicles.list.push(formdata.vehicles.current);
     formdata.vehicles.current = [];
+    brand = '', year = '';
+
     setLocalData(formdata);
 
     vehicleCounter = formdata.vehicles.list.length;
@@ -996,13 +978,14 @@ function checkAnotherVehicle(e)
   }
   else if(e.name == 'No')
   {
-    setPageUrl('insurance-details');
-    setCurrentPage('insurance-details');
-    
-    formdata.vehicles.list.push(formdata.vehicles.current);
+    // setPageUrl('insurance-details');
+    // setCurrentPage('insurance-details');
 
     if(formdata.editmode == 'Yes')
-    {
+    {    
+      formdata.vehicles.list.push(formdata.vehicles.current);
+      formdata.vehicles.current = [];
+      formdata.editmode = '';
       checkLocalData();
     }
     else
@@ -1022,12 +1005,6 @@ function insurance(e)
   let insure = formdata.owner.insurance;
   // common agent text hide this section
   commonAgent('No');
-  
-  const local = getLocalData();
-  if(local){
-    insure = local.owner.insurance;
-    console.log(insure);
-  }
   
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Insurance Details</h2>'+
@@ -1090,12 +1067,13 @@ function insurance(e)
   '</div>';
 
   if(e != null && e.value == 'back') {
-    increasePercent(-5);
+    // increasePercent(-5); //67%
     if(driverCounter > 0){
       driverCounter--;
       anotherDriver();
     }
   }
+  increasePercent(67); //67%
 
   styleLoad();
 }
@@ -1126,7 +1104,7 @@ function checkInsuranceForm(e)
           else
           {
             // increase percentage
-            increasePercent(5);
+            // increasePercent(5);
             addDriver();
           }
 
@@ -1143,13 +1121,7 @@ function addDriver(e)
   setCurrentPage('gender');
 
   let driver = formdata.drivers.current.general;
-
-  const local = getLocalData();
-  if(local)
-  {
-    driverCounter = local.drivers.list.length;
-    driver = local.drivers.current.general;
-  }
+  driverCounter = formdata.drivers.list.length;
 
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1169,15 +1141,16 @@ function addDriver(e)
 
   if(e != null && e.value != 'back'){
     if(driverCounter == 0){
-      increasePercent(5);
+      // increasePercent(5); //72%
     }
   }
 
   if(e != null && e.value == 'back'){
     if(driverCounter == 0){
-      increasePercent(-5);
+      // increasePercent(-5);
     }
   }
+  increasePercent(72); //72%
 }
 
 function driverMaritalStatus(e)
@@ -1186,13 +1159,7 @@ function driverMaritalStatus(e)
   setCurrentPage('marital-status');
 
   let driver = formdata.drivers.current.general;
-
-  const local = getLocalData();
-  if( local.drivers.list )
-  {
-    driverCounter = local.drivers.list.length;
-    driver = local.drivers.current.general;
-  }
+  driverCounter = formdata.drivers.list.length;
 
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1219,19 +1186,18 @@ function driverMaritalStatus(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(5);
+      // increasePercent(5); //77%
     }
+    increasePercent(77); //77%
   
     //store gender to driver array
-    formdata.drivers.current.general[0] = e.innerHTML;
-
     formdata.drivers.current.general[0] = e.innerHTML;
     setLocalData(formdata);
   }
 
   if(e != null && e.value == 'back'){
     if(driverCounter == 0){
-      increasePercent(-5);
+      // increasePercent(-5);
     }
   }
 }
@@ -1242,12 +1208,7 @@ function birthMonth(e)
   setCurrentPage('birth-month');
 
   let dob = formdata.drivers.current.dob;
-  const local = getLocalData();
-  if( local.drivers.list )
-  {
-    driverCounter = local.drivers.list.length;
-    dob = local.drivers.current.dob;
-  }
+  driverCounter = formdata.drivers.list.length;
 
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1280,17 +1241,18 @@ function birthMonth(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(5);
+      // increasePercent(5); //82%
     }
   
     //store marital status to the drivers general array
     formdata.drivers.current.general[1] = e.innerHTML;
     setLocalData(formdata);
   }
+  increasePercent(82); //82%
 
   if(e != null && e.value == 'back'){
     if(driverCounter == 0){
-      increasePercent(-5);
+      // increasePercent(-5);
     }
   }
 }
@@ -1301,12 +1263,7 @@ function birthDay(e)
   setCurrentPage('birth-day');
 
   let dob = formdata.drivers.current.dob;
-  const local = getLocalData();
-  if( local.drivers.list )
-  {
-    driverCounter = local.drivers.list.length;
-    dob = local.drivers.current.dob;
-  }
+  driverCounter = formdata.drivers.list.length;
 
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1340,17 +1297,18 @@ function birthDay(e)
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(5);
+      // increasePercent(5); //92%
     }
   
     //birth day store to current.dob array
     formdata.drivers.current.dob[0] = e.innerHTML;
     setLocalData(formdata);
   }
+  increasePercent(87); //87%
 
   if(e != null && e.value == 'back'){
     if(driverCounter == 0){
-      increasePercent(-5);
+      // increasePercent(-5);
     }
   }
 }
@@ -1361,12 +1319,7 @@ function birthYear(e)
   setCurrentPage('birth-year');
 
   let dob = formdata.drivers.current.dob;
-  const local = getLocalData();
-  if( local.drivers.list )
-  {
-    driverCounter = local.drivers.list.length;
-    dob = local.drivers.current.dob;
-  }
+  driverCounter = formdata.drivers.list.length;
 
   container.innerHTML = '<div class="step step-number step-content-basic three-items">'+
     '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1394,20 +1347,21 @@ function birthYear(e)
     document.getElementById('birth_year').appendChild(y);
   }
 
-  if(e.value != 'back')
+  if(e != null && e.value != 'back')
   {
     //increase value for every action
     if(driverCounter == 0)
     {
-      increasePercent(5);
+      // increasePercent(5);
     }
   
     //birth day push to birthDate array
     formdata.drivers.current.dob[1] = e.innerHTML;
     setLocalData(formdata);
   }
+  increasePercent(92); //92%
 
-  if(e.value == 'back'){
+  if(e != null && e.value == 'back'){
     if(driverCounter == 0)
     {
       // increasePercent(-5);
@@ -1421,12 +1375,7 @@ function incident(e)
   setCurrentPage('incidents-in-the-past-3-years');
 
   let parts = formdata.drivers.current.incidents.part;
-  const local = getLocalData();
-  if( local.drivers.list )
-  {
-    driverCounter = local.drivers.list.length;
-    parts = local.drivers.current.incidents.part;
-  }
+  driverCounter = formdata.drivers.list.length;
   
   container.innerHTML = '<div class="step step-number step-content-basic five-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1511,9 +1460,11 @@ function incident(e)
   if(e != null && e.value == 'back'){
     if(driverCounter == 0)
     {
-      // increasePercent(-5);
+      // increasePercent(-5); // 92%
     }
   }
+
+  increasePercent(92); // 92%
 }
 
 /** selects incidents parts  */
@@ -1522,7 +1473,7 @@ function checkIncident(e)
   let parts = formdata.drivers.current.incidents.part;
   let incidents = formdata.incidents;
 
-  if(e.value == 'Yes')
+  if(e != null && e.value == 'Yes')
   {
     if(e.name == 'sr-22')
     {
@@ -1576,12 +1527,7 @@ function accident(e)
   setCurrentPage('accident-details');
 
   let act = formdata.drivers.current.incidents.accident;
-  const local = getLocalData();
-  if( local.drivers.list )
-  {
-    driverCounter = local.drivers.list.length;
-    act = local.drivers.current.incidents.accident;
-  }
+  driverCounter = formdata.drivers.list.length;
 
   container.innerHTML ='<div class="step step-number step-content-basic three-items">'+
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
@@ -1661,6 +1607,8 @@ function accident(e)
     '</div>'+
     '</form>'+
     '</div>';
+  
+    increasePercent(92) //92%
 
   styleLoad();
 }
@@ -1688,10 +1636,10 @@ function checkAccidentForm(e)
     if(checkMonth && checkYear && checkDesc && checkFault && checkDamage)
     {
       formdata.drivers.current.incidents.accident = [month.value, year.value, description.value, fault.value, damage.value];
-      setLocalData(formdata);
 
       //push accident key to the backward object
       formdata.incidents.backward.push('accident');
+      setLocalData(formdata);
 
       nextIncident(e);
     }
@@ -1774,6 +1722,8 @@ function ticket(e)
     '</div>'+
     '</form>'+
   '</div>';
+  
+  increasePercent(92) //92%
 
   styleLoad();
 }
@@ -1798,6 +1748,7 @@ function checkTicketForm(e)
       formdata.drivers.current.incidents.ticket = [month.value, year.value, description.value];
     
       formdata.incidents.backward.push('ticket');
+      setLocalData(formdata);
 
       nextIncident(e);
     }
@@ -1807,19 +1758,13 @@ function checkTicketForm(e)
 
 function dui(e)
 {
-  setPageUrl('dui-detail');
-  setCurrentPage('dui-detail');
+  setPageUrl('dui-details');
+  setCurrentPage('dui-details');
 
   let state = '';
   let addr = formdata.drivers.current.incidents.dui;
   let act = formdata.drivers.current.incidents.dui;
-  const local = getLocalData();
-  if( local.drivers.list )
-  {
-    driverCounter = local.drivers.list.length;
-    act = local.drivers.current.incidents.dui;
-    addr = local.drivers.current.incidents.dui;
-  }
+  driverCounter = formdata.drivers.list.length;
 
   if(addr[2])
   {
@@ -1885,6 +1830,8 @@ function dui(e)
       '</div>'+
       '</form>'+
   '</div>';
+  
+  increasePercent(92) //92%
 
   styleLoad();
 }
@@ -1925,12 +1872,7 @@ function driverName(e)
 
   let first_name = '', last_name = '';
   let names = formdata.drivers.current.names;
-  const local = getLocalData();
-  if( local.drivers.list )
-  {
-    driverCounter = local.drivers.list.length;
-    names = local.drivers.current.names;
-  }
+  driverCounter = formdata.drivers.list.length;
 
   if(names[0])
   {
@@ -1990,6 +1932,8 @@ function driverName(e)
         '</p>'+
       '</div>'+
     '</div>';
+  
+    increasePercent(92) //92%
 
   if(e != null && e.value != 'back'){
     if(driverCounter == 0){
@@ -2099,15 +2043,16 @@ function anotherDriver(e)
       '</svg> Back '+
     '</button>'+
   '</div>';
+  
+  increasePercent(92) //92%
 
 }
 
 function checkAnotherDriver(e)
 {
-  const local = getLocalData();
   if(e.value == 'YES')
   {
-    driverCounter = local.drivers.list.length + 1;
+    driverCounter = formdata.drivers.list.length + 1;
 
     formdata.drivers.list.push(formdata.drivers.current);
 
@@ -2135,6 +2080,17 @@ function checkAnotherDriver(e)
       //remove submitted counter
       localStorage.removeItem('submitted');
       formdata.editmode = '';
+      formdata.drivers.current = {
+        names: [],
+        general: [],
+        dob: [],
+        incidents : {
+          part: [],
+          accident: [],
+          ticket: [],
+          dui: []
+        }
+      };
 
       setLocalData(formdata);
       checkLocalData();
@@ -2157,10 +2113,6 @@ function ownerAddress(e)
 
   let address = '', zip = '', state = '', city = '', country = '';
   let addr = formdata.owner.address;
-  const local = getLocalData();
-  if(local){
-    addr = local.owner.address;
-  }
 
   if(addr[0])
   {
@@ -2249,9 +2201,11 @@ function ownerAddress(e)
       '</p>'+
     '</div>'+
     '</div>';
+  
+    increasePercent(92) //92%
 
   if(e != null && e.value == 'back'){
-    increasePercent(-2);
+    // increasePercent(-2);
   }
 
   initAutocomplete();
@@ -2283,7 +2237,7 @@ function checkAddressForm(e)
     if(checkAddr && checkZip && checkState && checkCity && checkCountry)
     {
       //increase value for every action
-      increasePercent(2);
+      // increasePercent(2);
 
       formdata.owner.address = [address.value, zip.value, state.value, city.value, country.value];
 
@@ -2313,11 +2267,6 @@ function ownership(e)
   setCurrentPage('home-ownership');
 
   let contact = formdata.owner.contact;
-  const local = getLocalData();
-  if(local)
-  {
-    contact = local.owner.contact;
-  }
 
   container.innerHTML = '<div class="step step-number step-content-basic">'+
   '<h2>Home Ownership</h2>'+
@@ -2334,13 +2283,15 @@ function ownership(e)
           '</svg> Back '+
       '</button>'+
   '</div>';
+
+  increasePercent(94) //94%
   
   if(e != null && e.value != 'back'){
-    // increasePercent(2);
+    // increasePercent(2); //94%
   }
 
-  if(e.value == 'back'){
-    increasePercent(-2);
+  if(e != null && e.value == 'back'){
+    // increasePercent(-2);
   }
   
 }
@@ -2349,13 +2300,10 @@ function checkOwnership(e)
 {
   if(e != null)
   {
-    increasePercent(2);
+    // increasePercent(2);
     formdata.owner.contact[0] = e.value;
 
-    const local = getLocalData();
-    formdata.owner.contact[0] = e.value;
-
-    if(local && formdata.editmode == 'Yes')
+    if(formdata.editmode == 'Yes')
     {
       // remove submit count from local data
       localStorage.removeItem('submitted');
@@ -2378,10 +2326,6 @@ function emailAddress(e)
 
   let email = '';
   let contact = formdata.owner.contact;
-  const local = getLocalData();
-  if(local.owner.contact){
-    contact = local.owner.contact;
-  }
 
   if(contact[1])
   {
@@ -2411,8 +2355,10 @@ function emailAddress(e)
       '</div>'+
     '</div>';
 
+    increasePercent(96) //96%
+
     if(e != null && e.value == 'back'){
-      increasePercent(-2);
+      // increasePercent(-2); //96%
     }
 }
 
@@ -2422,8 +2368,6 @@ function emailForm(e)
 
   if(checkEmail(email))
   {
-    formdata.owner.contact[1] = email.value;
-    const local = getLocalData();
     formdata.owner.contact[1] = email.value;
 
     if(formdata.editmode == 'Yes'){
@@ -2440,7 +2384,7 @@ function emailForm(e)
     setLocalData(formdata);
     
     //increase value for every action
-    increasePercent(2);
+    // increasePercent(2);
   }
 }
 
@@ -2451,10 +2395,6 @@ function getQuote(e)
 
   let phone = '';
   let contact = formdata.owner.contact;
-  const local = getLocalData();
-  if(local){
-    contact = local.owner.contact;
-  }
 
   if(contact[2])
   {
@@ -2494,8 +2434,11 @@ function getQuote(e)
   '<div class="tcpa-wrap">'+
       '<form><p><label><input type="hidden" id="leadid_tcpa_disclosure"/> We take your privacy seriously. By clicking the "Submit" button above, I give my express written consent by electronic signature to Erase Your Bills and its <a href="https://www.px.com/offer-guidelines/top-auto-insurance-companies-in-us/">Marketing Partners, agents, affiliates or third parties</a> acting on its behalf to receive marketing communications, or to obtain additional information for such purposes via telephone calls or SMS/MMS text message, calls using a live agent, automatic telephone dialing system, artificial or AI generated voice/pre-recorded message, or email from this website and/or partner companies or their agents at the landline or wireless number I provided, even if my number/email is currently listed on any federal, state, or company Do Not Call/Do Not Email list. Carrier message and data rates may apply. I understand that my consent is not required as a condition of purchasing any goods or services and that I may revoke my consent at any time. I also acknowledge that I am at least 18 years of age and I have read and agree to this website\'s <a href="https://eraseyourbills.com/privacy-policy/" target="_blank">Privacy Policy</a> and <a href="https://eraseyourbills.com/terms-of-use/" target="_blank">Terms and Conditions</a>.</label></p></form>'+
   '</div>';
+  
+  increasePercent(98) //98%
+
   if(e != null && e.value == 'back'){
-    increasePercent(-2);
+    // increasePercent(-2); //98%
   }
 }
 
@@ -2507,30 +2450,50 @@ function checkQuote(e)
   {
     formdata.owner.contact[2] = phone.value;
 
-    const local = getLocalData();
+    if(formdata.vehicles.current)
+    {
+      formdata.vehicles.list.push(formdata.vehicles.current);
+      formdata.vehicles.current = [];
+      brand = '', year = '';
+    }
 
-    if(local && formdata.editmode == 'Yes'){
+    if(formdata.drivers.current)
+    {
+      formdata.drivers.list.push(formdata.drivers.current);
+      formdata.drivers.current = {
+        names: [],
+        general: [],
+        dob: [],
+        incidents : {
+          part: [],
+          accident: [],
+          ticket: [],
+          dui: []
+        }
+      };
+    }
 
+    setLocalData(formdata);
+
+    if(formdata.editmode == 'Yes')
+    {
       // remove submit counter from local data
       localStorage.removeItem('submitted');
       formdata.editmode = '';
+      setLocalData(formdata);
 
       // check formdata stored to the localstoage
       checkLocalData();
-      sendToServer();
     }
     else
     {
-      //store data to the local storage
-      setLocalData(formdata);
       checkLocalData();
       loading.style.display = 'block';
       sendToServer();
     }
-    setLocalData(formdata);
 
     //increase value for every action
-    increasePercent(2);
+    // increasePercent(2);
     setCurrentPage('thank-you');
   }
 }
@@ -2807,7 +2770,7 @@ function checkLocalData()
   setCurrentPage('thank-you');
 
   let vehicleList = '', driverList = '';
-  const local = getLocalData();
+  const local = formdata;
   if(local){
     // hide homepage addtional information
     homeInfo('No');
@@ -2976,7 +2939,8 @@ function checkLocalData()
 
     document.getElementById('localClearBtn').style.display = 'block';
     
-    increasePercent(75);
+    increasePercent(100); //100%
+
     styleLoad();
 
     // on reload the page and call to the checkLocalData() then check the data submitted.
@@ -3042,14 +3006,38 @@ function removeLocal(e)
   localStorage.removeItem('submitted');
   localStorage.removeItem('currentPage');
   formdata = {
-    zipcode: "",
-    vehicles: { list: [], current: [] },
-    drivers: { list: [],
-      current: { names: [], general: [], dob: [], 
-        incidents: { part:[], accident: [], ticket: [], dui: [] }
-      }},
-    owner: { insurance: [], address: [], contact: [] }
+    drivers: {
+      list: [],
+      current: {
+        names: [],
+        general: [],
+        dob: [],
+        incidents: {
+          part:[],
+          accident: [],
+          ticket: [],
+          dui: []
+        }
+      }
+    },
+    editmode: "",
+    incidents:{
+      backward: [],
+      forward: []
+    },
+    owner: {
+      insurance: [],
+      address: [],
+      contact: []
+    },
+    vehicles: {
+      list: [],
+      current: []
+    },
+    zipcode: ""
   };
+
+  brand = '', year = '';
 
   document.getElementById('localClearBtn').style.display = 'none';
 
@@ -3138,5 +3126,13 @@ function editData(e)
 
 // onload check current page
 window.addEventListener('DOMContentLoaded', () => {
+  const local = getLocalData();
+
+  console.log('localdata:', local);
+
+  if(local){
+    formdata = local;
+  }
+
   checkCurrentPage();
 });
