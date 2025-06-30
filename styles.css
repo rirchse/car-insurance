@@ -837,9 +837,9 @@ a.related-read-more:hover {
 }
 .modal {
     position: fixed;
-    top: 50%;
+    top: 3vh;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(-50%);
     background-color: #fff;
     padding: 20px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -847,16 +847,35 @@ a.related-read-more:hover {
     transition: transform 0.3s ease, opacity 0.3s ease;
     opacity: 0;
     pointer-events: none;
+    border-radius: 4px;
+    width: 90%;
+    max-width: 475px;
+    box-sizing: border-box;
+}
+.modal-inner h3 {
+    margin: 5px 0;
+    text-align: center;
+    font-size: 2em;
+}
+.modal-inner ul {
+    line-height: 1.4;
+    margin: 10px 0;
+    padding-left: 30px;
+}
+.modal-inner{
+    overflow: scroll;
+    height: 88vh;
 }
 .modal-content {
     position: relative;
 }
 .close-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
+    top: -15px;
+    right: -5px;
+    font-size: 2em;
     cursor: pointer;
+    color: #0070e9;
 }
 .hidden {
     display: none;
@@ -865,10 +884,6 @@ a.related-read-more:hover {
     opacity: 1;
     pointer-events: auto;
 }
-.trans-appear {
-    transform: translate(-50%, -45%);
-}
-
 @media only screen and (max-width: 767px){
   .feature-box, .how-text, .how-image {
       max-width: 100%;
@@ -909,5 +924,8 @@ a.related-read-more:hover {
   .related-topics-inner > a {
       flex: 0 0 50%;
       max-width: 50%;
+  }
+  .modal-inner h3 {
+      font-size: 1.5em;
   }
 }
