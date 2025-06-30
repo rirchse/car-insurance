@@ -999,6 +999,7 @@ function checkAnotherVehicle(e)
 
       if(formdata.editmode == 'Yes')
       {
+        localStorage.removeItem('submitted');
         checkLocalData();
       }
       else
@@ -1017,7 +1018,8 @@ function checkAnotherVehicle(e)
   else if(e.name == 'No')
   {
     if(formdata.editmode == 'Yes')
-    {    
+    {
+      localStorage.removeItem('submitted');
       formdata.vehicles.list.push(formdata.vehicles.current);
       formdata.vehicles.current = [];
       formdata.editmode = '';
@@ -2164,6 +2166,7 @@ function checkAnotherDriver(e)
   {
     if(formdata.editmode == 'Yes')
     {
+      localStorage.setItem('submitted', true);
       formdata.drivers.list.push(formdata.drivers.current);
       //remove submitted counter
       localStorage.removeItem('submitted');
@@ -2579,7 +2582,8 @@ function checkQuote(e)
     if(formdata.editmode == 'Yes')
     {
       // remove submit counter from local data
-      localStorage.removeItem('submitted');
+      // localStorage.removeItem('submitted');
+      localStorage.setItem('submitted', true);
       formdata.editmode = '';
       setLocalData(formdata);
 
@@ -2637,7 +2641,7 @@ function formatObjectWithLineBreaks(data) {
 function sendToServer()
 {
   setPageUrl('thank-you');
-  
+
   let leadid_token = document.getElementById('leadid_token');
   let formData = {
     LeadiD: leadid_token.value,
@@ -2763,6 +2767,7 @@ function sendToServer()
     "vehicle_1_weekly_days": "", //156
     "vehicle_1_collision": "", //$500
     "vehicle_1_comprehensive": "", //$100
+    "vehicle_1_coverage_level": form.vehicles[0].DesiredCoverageLevel,
     "driver_1_first_name": form.drivers[0].FirstName,
     "driver_1_last_name": form.drivers[0].LastName,
     "driver_1_dob": dateFormat(form.drivers[0].BirthDate),
@@ -2789,6 +2794,7 @@ function sendToServer()
     "vehicle_2_weekly_days": "", //912
     "vehicle_2_collision": "", //$2000
     "vehicle_2_comprehensive": "", //$1500
+    "vehicle_2_coverage_level": Object.values(form.vehicles).length > 1 ? form.vehicles[1].DesiredCoverageLevel : "",
     "vehicle_3_year": Object.values(form.vehicles).length > 2 ? form.vehicles[2].VehicleYear : "",
     "vehicle_3_make": Object.values(form.vehicles).length > 2 ? form.vehicles[2].VehicleMake : "",
     "vehicle_3_model": Object.values(form.vehicles).length > 2 ? form.vehicles[2].VehicleModel : "",
@@ -2802,6 +2808,7 @@ function sendToServer()
     "vehicle_3_weekly_days": "", //244
     "vehicle_3_collision": "", //$250
     "vehicle_3_comprehensive": "", //$1000
+    "vehicle_3_coverage_level": Object.values(form.vehicles).length > 2 ? form.vehicles[2].DesiredCoverageLevel : "",
     "driver_2_first_name": Object.values(form.drivers).length > 1 ? form.drivers[1].FirstName : "",
     "driver_2_last_name": Object.values(form.drivers).length > 1 ? form.drivers[1].LastName : "",
     "driver_2_dob": Object.values(form.drivers).length > 1 ? dateFormat(form.drivers[1].BirthDate) : "",
@@ -3182,6 +3189,7 @@ function removeVehicle(e)
   {
     formdata.vehicles.list.splice(e.id, 1);
     setLocalData(formdata);
+    localStorage.removeItem('submitted');
 
     e.parentNode.style.display = 'none';
     document.getElementById('getMyQuote').style.display = 'inline-block';
@@ -3200,6 +3208,7 @@ function removeDriver(e)
   {
     formdata.drivers.list.splice(e.id, 1);
     setLocalData(formdata);
+    localStorage.removeItem('submitted');
 
     e.parentNode.style.display = 'none';
     document.getElementById('getMyQuote').style.display = 'inline-block';
