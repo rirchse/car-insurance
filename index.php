@@ -170,7 +170,6 @@
                 </a>
             </div>
         </div>
-        <button onclick="callModal()">call modal</button>
         <div class="container">
             <div class="form-wrap" id="container">
               <form action="#" name="zipForm" onsubmit="event.preventDefault()" >
@@ -350,7 +349,7 @@
         // window.addEventListener('DOMContentLoaded', function () {
           const modal = document.getElementById('modal');
           const overlay = document.getElementById('overlay');
-          const openModalButton = document.getElementById('openModal');
+          // const openModalButton = document.getElementById('openModal');
           const closeModalButton = document.getElementById('closeModal');
           const openModal = () => {
             modal.classList.remove('hidden');
@@ -369,7 +368,7 @@
               modal.ontransitionend = null; // Clean up
             };
           };
-          openModalButton.addEventListener('click', openModal);
+          // openModalButton.addEventListener('click', openModal);
           closeModalButton.addEventListener('click', closeModal);
           overlay.addEventListener('click', closeModal);
         // });

@@ -2332,6 +2332,8 @@ function getQuote(e)
   '</div>';
   
   increasePercent(98) //98%
+
+  openModal();
 }
 
 function checkQuote(e)
