@@ -297,6 +297,80 @@
     <form>
       <input id="leadid_token" name="universal_leadid" type="hidden" value=""/>
     </form>
+    <!-- modal -->
+     <div id="overlay" class="overlay hidden"></div>
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="closeModal" class="close-button">&times;</span>
+            <div class="modal-inner">
+                <h3>Top Auto Insurance Companies in U.S.</h3>
+                <ul>
+                    <li>123 Auto </li>
+                    <li>Above TheFold Auto </li>
+                    <li>Adcanopus INC  </li>
+                    <li>Allstate </li>
+                    <li>American Family Insurance</li>
+                    <li>Auto Policy Center  </li>
+                    <li>Auto Cricket </li>
+                    <li>Avenge Digital  </li>
+                    <li>Capital One</li>
+                    <li>Drive Smart  </li>
+                    <li>Ever Quote  </li>
+                    <li>Farmers Insurance </li>
+                    <li>Geico</li>
+                    <li>Hometown Quotes  </li>
+                    <li>Insurance Pro Agencies Inc  </li>
+                    <li>Insurance Agents </li>
+                    <li>Insuring U  </li>
+                    <li>Intelligent Delivery  </li>
+                    <li>KO Marketing  </li>
+                    <li>Leadspring ISA  </li>
+                    <li>Liberty Mutual</li>
+                    <li>Loan Bright  </li>
+                    <li>Nationwide Insurance </li>
+                    <li>Peyton Pettus State Farm Agencies </li> 
+                    <li>Progressive </li>
+                    <li>Quote Scout  </li>
+                    <li>Rate Quote  </li>
+                    <li>Seafront Marketing LLC  </li>
+                    <li>Serenity Insurance  </li>
+                    <li>State Farm  </li>
+                    <li>The General </li>
+                    <li>Travelers</li>
+                    <li>Univista  </li>
+                    <li>USAA</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const modal = document.getElementById('modal');
+            const overlay = document.getElementById('overlay');
+            const openModalButton = document.getElementById('openModal');
+            const closeModalButton = document.getElementById('closeModal');
+            const openModal = () => {
+                modal.classList.remove('hidden');
+                overlay.classList.remove('hidden');
+                // Trigger reflow before adding class for animation
+                void modal.offsetWidth;
+                modal.classList.add('show', 'trans-appear');
+                overlay.classList.add('show');
+            };
+            const closeModal = () => {
+                modal.classList.remove('show', 'trans-appear');
+                overlay.classList.remove('show');
+                modal.ontransitionend = () => {
+                    modal.classList.add('hidden');
+                    overlay.classList.add('hidden');
+                    modal.ontransitionend = null; // Clean up
+                };
+            };
+            openModalButton.addEventListener('click', openModal);
+            closeModalButton.addEventListener('click', closeModal);
+            overlay.addEventListener('click', closeModal);
+        });
+    </script>
     <!-- script for slim select form butify library -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
 
