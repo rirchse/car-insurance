@@ -170,6 +170,7 @@
                 </a>
             </div>
         </div>
+        <button onclick="callModal()">call modal</button>
         <div class="container">
             <div class="form-wrap" id="container">
               <form action="#" name="zipForm" onsubmit="event.preventDefault()" >
@@ -344,32 +345,32 @@
         </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const modal = document.getElementById('modal');
-            const overlay = document.getElementById('overlay');
-            const openModalButton = document.getElementById('openModal');
-            const closeModalButton = document.getElementById('closeModal');
-            const openModal = () => {
-                modal.classList.remove('hidden');
-                overlay.classList.remove('hidden');
-                // Trigger reflow before adding class for animation
-                void modal.offsetWidth;
-                modal.classList.add('show', 'trans-appear');
-                overlay.classList.add('show');
+        // window.addEventListener('DOMContentLoaded', function () {
+          const modal = document.getElementById('modal');
+          const overlay = document.getElementById('overlay');
+          const openModalButton = document.getElementById('openModal');
+          const closeModalButton = document.getElementById('closeModal');
+          const openModal = () => {
+            modal.classList.remove('hidden');
+            overlay.classList.remove('hidden');
+            // Trigger reflow before adding class for animation
+            void modal.offsetWidth;
+            modal.classList.add('show', 'trans-appear');
+            overlay.classList.add('show');
+          };
+          const closeModal = () => {
+            modal.classList.remove('show', 'trans-appear');
+            overlay.classList.remove('show');
+            modal.ontransitionend = () => {
+              modal.classList.add('hidden');
+              overlay.classList.add('hidden');
+              modal.ontransitionend = null; // Clean up
             };
-            const closeModal = () => {
-                modal.classList.remove('show', 'trans-appear');
-                overlay.classList.remove('show');
-                modal.ontransitionend = () => {
-                    modal.classList.add('hidden');
-                    overlay.classList.add('hidden');
-                    modal.ontransitionend = null; // Clean up
-                };
-            };
-            openModalButton.addEventListener('click', openModal);
-            closeModalButton.addEventListener('click', closeModal);
-            overlay.addEventListener('click', closeModal);
-        });
+          };
+          openModalButton.addEventListener('click', openModal);
+          closeModalButton.addEventListener('click', closeModal);
+          overlay.addEventListener('click', closeModal);
+        // });
     </script>
     <!-- script for slim select form butify library -->
     <script src="https://unpkg.com/slim-select@latest/dist/slimselect.min.js"></script>
