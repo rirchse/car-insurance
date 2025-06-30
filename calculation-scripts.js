@@ -354,6 +354,10 @@ function checkCurrentPage()
     homeInfo('No');
     checkLocalData();
   }
+  // else if(currentPage == 're-submit')
+  // {
+  //   //
+  // }
   else
   {
     createZIPCodePanel(null);
@@ -402,6 +406,7 @@ function createZIPCodePanel(e)
 {
   setPageUrl('home-page');
   setCurrentPage('home-page');
+  // setCurrentPage('thank-you');
 
   let html = '<div class="step step-1">'+
     '<h2>Enter Your Zip Code</h2>'+
@@ -1157,8 +1162,8 @@ function addDriver(e)
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Gender</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(driver[0] == 'Male' ? 'active' : '')+'" onclick="driverMaritalStatus(this)">Male</button>'+
-      '<button class="input '+(driver[0] == 'Female' ? 'active' : '')+'" onclick="driverMaritalStatus(this)">Female</button>'+
+      '<button class="input '+(driver[0] == 'Male' ? 'active' : '')+'" onclick="driverMaritalStatus(this)" value="Male">Male</button>'+
+      '<button class="input '+(driver[0] == 'Female' ? 'active' : '')+'" onclick="driverMaritalStatus(this)" value="Female">Female</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -1201,12 +1206,12 @@ function driverMaritalStatus(e)
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Marital Status</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(driver[1] == 'Married' ? 'active' : '')+'" onclick="birthMonth(this)">Married</button>'+
-      '<button class="input '+(driver[1] == 'Single' ? 'active' : '')+'" onclick="birthMonth(this)">Single</button>'+
-      '<button class="input '+(driver[1] == 'Divorced' ? 'active' : '')+'" onclick="birthMonth(this)">Divorced</button>'+
-      '<button class="input '+(driver[1] == 'Domestic Partner' ? 'active' : '')+'" onclick="birthMonth(this)">Domestic Partner</button>'+
-      '<button class="input '+(driver[1] == 'Separated' ? 'active' : '')+'" onclick="birthMonth(this)">Separated</button>'+
-      '<button class="input '+(driver[1] == 'Widowed' ? 'active' : '')+'" onclick="birthMonth(this)">Widowed</button>'+
+      '<button class="input '+(driver[1] == 'Married' ? 'active' : '')+'" onclick="birthMonth(this)" value="Married">Married</button>'+
+      '<button class="input '+(driver[1] == 'Single' ? 'active' : '')+'" onclick="birthMonth(this)" value="Single">Single</button>'+
+      '<button class="input '+(driver[1] == 'Divorced' ? 'active' : '')+'" onclick="birthMonth(this)" value="Divorced">Divorced</button>'+
+      '<button class="input '+(driver[1] == 'Domestic Partner' ? 'active' : '')+'" onclick="birthMonth(this)" value="Domestic Partner">Domestic Partner</button>'+
+      '<button class="input '+(driver[1] == 'Separated' ? 'active' : '')+'" onclick="birthMonth(this)" value="Separated">Separated</button>'+
+      '<button class="input '+(driver[1] == 'Widowed' ? 'active' : '')+'" onclick="birthMonth(this)" value="Widowed">Widowed</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -1230,7 +1235,7 @@ function driverMaritalStatus(e)
   if(e != null && e.value != 'back')
   {
     //store gender to driver array
-    formdata.drivers.current.general[0] = e.innerHTML;
+    formdata.drivers.current.general[0] = e.value;
     setLocalData(formdata);
   }
 
@@ -1253,18 +1258,18 @@ function birthMonth(e)
   '<h5 style="color: #666">'+countArr[driverCounter]+' Driver</h5>'+
   '<h2>Birth Month</h2>'+
     '<div class="inner-wrap inner-wrap-btn" id="model">'+
-      '<button class="input '+(dob[0] == 'January'? 'active' : '')+'" onclick="birthDay(this)">January</button>'+
-      '<button class="input '+(dob[0] == 'February'? 'active' : '')+'" onclick="birthDay(this)">February</button>'+
-      '<button class="input '+(dob[0] == 'March'? 'active' : '')+'" onclick="birthDay(this)">March</button>'+
-      '<button class="input '+(dob[0] == 'April'? 'active' : '')+'" onclick="birthDay(this)">April</button>'+
-      '<button class="input '+(dob[0] == 'May'? 'active' : '')+'" onclick="birthDay(this)">May</button>'+
-      '<button class="input '+(dob[0] == 'June'? 'active' : '')+'" onclick="birthDay(this)">June</button>'+
-      '<button class="input '+(dob[0] == 'July'? 'active' : '')+'" onclick="birthDay(this)">July</button>'+
-      '<button class="input '+(dob[0] == 'August'? 'active' : '')+'" onclick="birthDay(this)">August</button>'+
-      '<button class="input '+(dob[0] == 'September'? 'active' : '')+'" onclick="birthDay(this)">September</button>'+
-      '<button class="input '+(dob[0] == 'October'? 'active' : '')+'" onclick="birthDay(this)">October</button>'+
-      '<button class="input '+(dob[0] == 'November'? 'active' : '')+'" onclick="birthDay(this)">November</button>'+
-      '<button class="input '+(dob[0] == 'December'? 'active' : '')+'" onclick="birthDay(this)">December</button>'+
+      '<button class="input '+(dob[0] == 'January'? 'active' : '')+'" onclick="birthDay(this)" value="January">January</button>'+
+      '<button class="input '+(dob[0] == 'February'? 'active' : '')+'" onclick="birthDay(this)" value="February">February</button>'+
+      '<button class="input '+(dob[0] == 'March'? 'active' : '')+'" onclick="birthDay(this)" value="March">March</button>'+
+      '<button class="input '+(dob[0] == 'April'? 'active' : '')+'" onclick="birthDay(this)" value="April">April</button>'+
+      '<button class="input '+(dob[0] == 'May'? 'active' : '')+'" onclick="birthDay(this)" value="May">May</button>'+
+      '<button class="input '+(dob[0] == 'June'? 'active' : '')+'" onclick="birthDay(this)" value="June">June</button>'+
+      '<button class="input '+(dob[0] == 'July'? 'active' : '')+'" onclick="birthDay(this)" value="July">July</button>'+
+      '<button class="input '+(dob[0] == 'August'? 'active' : '')+'" onclick="birthDay(this)" value="August">August</button>'+
+      '<button class="input '+(dob[0] == 'September'? 'active' : '')+'" onclick="birthDay(this)" value="September">September</button>'+
+      '<button class="input '+(dob[0] == 'October'? 'active' : '')+'" onclick="birthDay(this)" value="October">October</button>'+
+      '<button class="input '+(dob[0] == 'November'? 'active' : '')+'" onclick="birthDay(this)" value="November">November</button>'+
+      '<button class="input '+(dob[0] == 'December'? 'active' : '')+'" onclick="birthDay(this)" value="December">December</button>'+
     '</div>'+
   '</div>'+
   '<div class="back-to-prev">'+
@@ -1288,7 +1293,7 @@ function birthMonth(e)
   if(e != null && e.value != 'back')
   {
     //store marital status to the drivers general array
-    formdata.drivers.current.general[1] = e.innerHTML;
+    formdata.drivers.current.general[1] = e.value;
     setLocalData(formdata);
   }
 
@@ -1321,7 +1326,7 @@ function birthDay(e)
       '</button>'+
   '</div>';
   
-  for(let d = 1; d < 31; d++)
+  for(let d = 1; d <= 31; d++)
   {
     let day = document.createElement('button');
     day.setAttribute('class', 'input');
@@ -1347,7 +1352,7 @@ function birthDay(e)
   if(e != null && e.value != 'back')
   {  
     //birth day store to current.dob array
-    formdata.drivers.current.dob[0] = e.innerHTML;
+    formdata.drivers.current.dob[0] = e.value;
     setLocalData(formdata);
   }
 
@@ -1388,6 +1393,7 @@ function birthYear(e)
       y.setAttribute('class', 'input active');
     }
     y.setAttribute('onclick', 'incident(this)');
+    y.value = d;
     y.innerHTML = d;
     document.getElementById('birth_year').appendChild(y);
   }
@@ -1405,7 +1411,7 @@ function birthYear(e)
   if(e != null && e.value != 'back')
   {
     //birth day push to birthDate array
-    formdata.drivers.current.dob[1] = e.innerHTML;
+    formdata.drivers.current.dob[1] = e.value;
     setLocalData(formdata);
   }
 
@@ -1501,14 +1507,21 @@ function incident(e)
   if(e != null && e.value != 'back')
   {
     //birth year push to birthDate array
-    formdata.drivers.current.dob[2] = e.innerHTML;
+    formdata.drivers.current.dob[2] = e.value;
     setLocalData(formdata);
   }
   
-  if(driverCounter == 0)
-  {
-    increasePercent(92); // 92%
-  }
+  // if(driverCounter == 0)
+  // {
+  //   increasePercent(92); // 92%
+  // }
+  // else
+  // {
+  //   increasePercent(92); // 92%
+  // }
+
+  increasePercent(92); // 92%
+  
 }
 
 /** selects incidents parts  */
@@ -1560,7 +1573,10 @@ function checkIncident(e)
     }
   }
 
+  console.log('check incident:', incidents.forward);
+
   formdata.drivers.current.incidents.part = parts;
+  // formdata.incidents.forward = parts;
   formdata.incidents = incidents;
   setLocalData(formdata);
 }
@@ -2118,6 +2134,11 @@ function checkAnotherDriver(e)
           dui: []
         }
       };
+
+      formdata.incidents = {
+        backward : [],
+        forward : []
+      };
     }
 
     setLocalData(formdata);
@@ -2157,6 +2178,11 @@ function checkAnotherDriver(e)
           ticket: [],
           dui: []
         }
+      };
+
+      formdata.incidents = {
+        backward : [],
+        forward : []
       };
 
       setLocalData(formdata);
@@ -2530,6 +2556,7 @@ function checkQuote(e)
     {
       formdata.drivers.list.push(formdata.drivers.current);
     }
+
     formdata.drivers.current = {
       names: [],
       general: [],
@@ -2540,6 +2567,11 @@ function checkQuote(e)
         ticket: [],
         dui: []
       }
+    };
+
+    formdata.incidents = {
+      forward: [],
+      backward: []
     };
 
     setLocalData(formdata);
@@ -2559,6 +2591,7 @@ function checkQuote(e)
       checkLocalData();
       loading.style.display = 'block';
       sendToServer();
+      localStorage.setItem('submitted', true);
     }
 
     //increase value for every action
@@ -2603,6 +2636,8 @@ function formatObjectWithLineBreaks(data) {
 // send data to the go heigh level
 function sendToServer()
 {
+  setPageUrl('thank-you');
+  
   let leadid_token = document.getElementById('leadid_token');
   let formData = {
     LeadiD: leadid_token.value,
@@ -2612,39 +2647,42 @@ function sendToServer()
   };
   let local = JSON.parse(localStorage.getItem('localdata'));
   local.vehicles.list.forEach((v, n) => {
-    formData.vehicles.push({
-      VehicleMake:v[0][0],
-      VehicleYear:v[1],
-      VehicleModel:v[2],
-      VehicleOwnership:v[3],
-      AnnualMileage:v[4],
-      DesiredCoverageLevel:v[5]
-    });
+    if(v.length > 0){
+      formData.vehicles.push({
+        VehicleMake:v[0][0],
+        VehicleYear:v[1],
+        VehicleModel:v[2],
+        VehicleOwnership:v[3],
+        AnnualMileage:v[4],
+        DesiredCoverageLevel:v[5]
+      });
+    }
   });
 
   local.drivers.list.forEach((d, n) => {
-
-    formData.drivers.push({
-      FirstName: d.names[0],
-      LastName: d.names[1],
-      Gender: d.general[0],
-      MaritalStatus: d.general[1],
-      BirthDate: d.dob[0]+' '+d.dob[1]+' '+d.dob[2],
-      IncidentAccident: d.incidents.part.includes('accident') ? 'Yes': 'No',
-      IncidentTicket: d.incidents.part.includes('ticket') ? 'Yes': 'No',
-      IncidentDui: d.incidents.part.includes('dui') ? 'Yes': 'No',
-      IncidentSr22: d.incidents.part.includes('Yes') ? 'Yes': 'No',
-
-      AccidentMonth: d.incidents.accident[0],
-      AccidentYear: d.incidents.accident[1],
-      AccidentDescription: d.incidents.accident[2],
-      AccidentFault: d.incidents.accident[3],
-      AccidentDamaged: d.incidents.accident[4],
-
-      DuiMonth: d.incidents.dui[0],
-      DuiYear: d.incidents.dui[1],
-      DuiState: d.incidents.dui[2],
-    });
+    if(d){
+      formData.drivers.push({
+        FirstName: d.names[0],
+        LastName: d.names[1],
+        Gender: d.general[0],
+        MaritalStatus: d.general[1],
+        BirthDate: d.dob[0]+' '+d.dob[1]+' '+d.dob[2],
+        IncidentAccident: d.incidents.part.includes('accident') ? 'Yes': 'No',
+        IncidentTicket: d.incidents.part.includes('ticket') ? 'Yes': 'No',
+        IncidentDui: d.incidents.part.includes('dui') ? 'Yes': 'No',
+        IncidentSr22: d.incidents.part.includes('Yes') ? 'Yes': 'No',
+  
+        AccidentMonth: d.incidents.accident[0],
+        AccidentYear: d.incidents.accident[1],
+        AccidentDescription: d.incidents.accident[2],
+        AccidentFault: d.incidents.accident[3],
+        AccidentDamaged: d.incidents.accident[4],
+  
+        DuiMonth: d.incidents.dui[0],
+        DuiYear: d.incidents.dui[1],
+        DuiState: d.incidents.dui[2],
+      });
+    }
   });
 
   formData.owner = {
@@ -2835,38 +2873,51 @@ function sendToServer()
 // check local data exist
 function checkLocalData()
 {
-  setPageUrl('thank-you');
+  let page = 'thank-you';
+
+  if(!localStorage.getItem('submitted'))
+  {
+    page = 're-submit';
+  }
+
+  setPageUrl(page);
   setCurrentPage('thank-you');
 
   let vehicleList = '', driverList = '';
-  const local = formdata;
-  if(local){
+  if(formdata){
     // hide homepage addtional information
     homeInfo('No');
-    if(local.vehicles.list)
+    if(formdata.vehicles.list)
     {
-      local.vehicles.list.forEach((v, n) => {
-        vehicleList += '<p>'+
-          '<img src="'+v[0][1]+'" alt="" width="50">'+
-          '<span>'+v[0][0]+'</span>'+
-          '<span class="xbtn" onclick="removeVehicle(this)" id="'+n+'">x</span>'+
-        '</p>';
+      formdata.vehicles.list.forEach((v, n) => {
+        if(v.length > 0)
+        {
+          vehicleList += '<p>'+
+            '<img src="'+v[0][1]+'" alt="" width="50">'+
+            '<span>'+v[0][0]+'</span>'+
+            '<span class="xbtn" onclick="removeVehicle(this)" id="'+n+'">x</span>'+
+          '</p>';
+        }
       });
     }
     
-    if(local.drivers.list){
-      local.drivers.list.forEach((d, n) => {
-        driverList += '<p>'+
-          '<svg class="" width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="48" rx="24"></rect><g transform="translate(16 12)" stroke="#000" stroke-width="2"><circle cx="8.471" cy="5.647" r="5.647"></circle><path d="M16.941 24A8.47 8.47 0 0 0 0 24"></path></g></g></svg>'+
-          '<span>'+d.names[0]+'</span>'+
-          '<span>'+d.names[1]+'</span>'+
-          '<span class="xbtn" onclick="removeDriver(this)" id="'+n+'">x</span>'+
-      '</p>';
+    if(formdata.drivers.list)
+    {
+      formdata.drivers.list.forEach((d, n) => {
+        if(d)
+        {
+          driverList += '<p>'+
+            '<svg class="" width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><rect fill="#FFF" width="48" height="48" rx="24"></rect><g transform="translate(16 12)" stroke="#000" stroke-width="2"><circle cx="8.471" cy="5.647" r="5.647"></circle><path d="M16.941 24A8.47 8.47 0 0 0 0 24"></path></g></g></svg>'+
+            '<span>'+d.names[0]+'</span>'+
+            '<span>'+d.names[1]+'</span>'+
+            '<span class="xbtn" onclick="removeDriver(this)" id="'+n+'">x</span>'+
+        '</p>';
+        }
       });
     }
 
     let html = '<div class="welcome-back-wrap">'+
-        '<h5 style="color: #0070e9; text-transform: uppercase;">Hey <strong>'+local.drivers.list[0].names[0]+'</strong>!</h5>'+
+        '<h5 style="color: #0070e9; text-transform: uppercase;">Hey <strong>'+formdata.drivers.list[0].names[0]+'</strong>!</h5>'+
         '<h2 style="text-transform: uppercase;">Your Auto Quotes Are Almost Ready For You!</h2>'+
         '<div class="continue-btn">'+
           '<button class="action-btn btn get-my-quote" onclick="sendToServer(this)" value="" id="getMyQuote">Get my Quote<span class="notifiy">1</span></button>'+
@@ -2933,8 +2984,8 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>'+local.owner.insurance[0]+'</p>'+
-                  '<p>'+local.owner.insurance[1]+'</p>'+
+                  '<p>'+formdata.owner.insurance[0]+'</p>'+
+                  '<p>'+formdata.owner.insurance[1]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="editData(this)" name="insurance">Change</button>'+
@@ -2947,7 +2998,7 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>'+local.owner.address[0]+' <br> '+local.owner.address[1]+'<br>'+local.owner.address[2]+'<br>'+local.owner.address[3]+'<br>'+local.owner.address[4]+'</p>'+
+                  '<p>'+formdata.owner.address[0]+' <br> '+formdata.owner.address[1]+'<br>'+formdata.owner.address[2]+'<br>'+formdata.owner.address[3]+'<br>'+formdata.owner.address[4]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="editData(this)" name="ownerAddress">Change</button>'+
@@ -2960,7 +3011,7 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>'+local.owner.contact[0]+'</p>'+
+                  '<p>'+formdata.owner.contact[0]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="editData(this)" name="ownerContact">Change</button>'+
@@ -2973,7 +3024,7 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>'+local.owner.contact[1]+'</p>'+
+                  '<p>'+formdata.owner.contact[1]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="editData(this)" name="email">Change</button>'+
@@ -2987,7 +3038,7 @@ function checkLocalData()
               '</div>'+
               '<div class="data-column item-details">'+
                 '<div class="item-details-content">'+
-                  '<p>'+local.owner.contact[2]+'</p>'+
+                  '<p>'+formdata.owner.contact[2]+'</p>'+
                 '</div>'+
                 '<div class="item-details-action">'+
                   '<button class="edit" onclick="editData(this)" name="contact">Change</button>'+
@@ -3013,7 +3064,8 @@ function checkLocalData()
     styleLoad();
 
     // on reload the page and call to the checkLocalData() then check the data submitted.
-    setTimeout(function(){
+    setTimeout(function()
+    {
       if(localStorage.getItem('submitted')){
         document.getElementById('getMyQuote').style.display = 'none';
       }
@@ -3033,9 +3085,9 @@ function checkLocalData()
 // user query data edit section
 function editAddVehicle(e)
 {
-  const local = getLocalData();
-  if(local.vehicles.list){
-    vehicleCounter = local.vehicles.list.length;
+  if(formdata.vehicles.list)
+  {
+    vehicleCounter = formdata.vehicles.list.length;
   }
   formdata.vehicles.current = [];
   
@@ -3043,11 +3095,13 @@ function editAddVehicle(e)
 }
 
 // user driver query data edit section
-function editAddDriver(e){
-  const local = getLocalData();
-  if(local.drivers.list){
-    driverCounter = local.drivers.list.length;
+function editAddDriver(e)
+{
+  if(formdata.drivers.list)
+  {
+    driverCounter = formdata.drivers.list.length;
   }
+
   formdata.drivers.current = {
     names: [],
     general: [],
@@ -3058,6 +3112,11 @@ function editAddDriver(e){
       ticket: [],
       dui: []
     }
+  };
+
+  formdata.incidents = {
+    forward : [],
+    backward : []
   };
   
   addDriver(e);
@@ -3119,34 +3178,36 @@ function removeLocal(e)
 // remove vehicle
 function removeVehicle(e)
 {
-  let local = getLocalData();
-  if(local.vehicles.list.length > 1)
+  if(formdata.vehicles.list.length > 1)
   {
-    local.vehicles.list.splice(e.id, 1);
-    setLocalData(local);
+    formdata.vehicles.list.splice(e.id, 1);
+    setLocalData(formdata);
+
     e.parentNode.style.display = 'none';
-    document.getElementById('getMyQuote').style.display = 'block';
+    document.getElementById('getMyQuote').style.display = 'inline-block';
+    document.getElementById('ThankYouMsg').style.display = 'none';
   }
   else
   {
-    alert('Please add more vehicles to remove this one.');
+    alert('Add another vehicle to remove this one.');
   }
 }
 
 // remove vehicle
 function removeDriver(e)
 {
-  let local = JSON.parse(localStorage.getItem('localdata'));
-  if(local.drivers.list.length > 1)
+  if(formdata.drivers.list.length > 1)
   {
-    local.drivers.list.splice(e.id, 1);
-    localStorage.setItem('localdata', JSON.stringify(local));
+    formdata.drivers.list.splice(e.id, 1);
+    setLocalData(formdata);
+
     e.parentNode.style.display = 'none';
-    document.getElementById('getMyQuote').style.display = 'block';
+    document.getElementById('getMyQuote').style.display = 'inline-block';
+    document.getElementById('ThankYouMsg').style.display = 'none';
   }
   else
   {
-    alert('Please add more drivers to remove this one.');
+    alert('Add another driver to remove this one.');
   }
 }
 
