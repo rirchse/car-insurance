@@ -297,8 +297,7 @@
     <form>
       <input id="leadid_token" name="universal_leadid" type="hidden" value=""/>
     </form>
-    <!-- modal 
-    <button id="openModal">Open Modal</button>-->
+    <!-- modal -->
 
     <div id="overlay" class="overlay hidden"></div>
     <div id="modal" class="modal hidden">
@@ -346,10 +345,10 @@
         </div>
     </div>
     <script>
-        // window.addEventListener('DOMContentLoaded', function () {
+        // document.addEventListener('DOMContentLoaded', function () {
           const modal = document.getElementById('modal');
           const overlay = document.getElementById('overlay');
-          // const openModalButton = document.getElementById('openModal');
+          const openModalButton = document.getElementById('openModal');
           const closeModalButton = document.getElementById('closeModal');
           const openModal = () => {
             modal.classList.remove('hidden');
