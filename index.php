@@ -512,7 +512,7 @@
         });
 
       </script>
-      <script src="calculation-scripts.js?v=2.8.01"></script>
+      <script src="calculation-scripts.js?v=2.8.2"></script>
       <?php } else { ?>
         <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/styles.css">
         <script>
