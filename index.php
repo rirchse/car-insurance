@@ -298,8 +298,10 @@
     <form>
       <input id="leadid_token" name="universal_leadid" type="hidden" value=""/>
     </form>
-    <!-- modal -->
-     <div id="overlay" class="overlay hidden"></div>
+    <!-- modal 
+    <button id="openModal">Open Modal</button>-->
+
+    <div id="overlay" class="overlay hidden"></div>
     <div id="modal" class="modal hidden">
         <div class="modal-content">
             <span id="closeModal" class="close-button">&times;</span>
